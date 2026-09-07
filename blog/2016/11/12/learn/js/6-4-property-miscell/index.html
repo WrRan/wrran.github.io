@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Give an object. I will upset you.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript查缺补漏 - 属性杂项">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/11/12/learn/js/6-4-property-miscell/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Give an object. I will upset you.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-12T07:23:07.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.698Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="object">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/11/12/learn/js/6-4-property-miscell/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/11/12/learn/js/6-4-property-miscell/","path":"blog/2016/11/12/learn/js/6-4-property-miscell/","title":"JavaScript查缺补漏 - 属性杂项"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript查缺补漏 - 属性杂项 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E5%B1%9E%E6%80%A7"><span class="nav-text">检测属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#in%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">in运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hasownproperty"><span class="nav-text">hasOwnProperty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#propertyisenumerable"><span class="nav-text">propertyIsEnumerable</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E5%B1%9E%E6%80%A7"><span class="nav-text">枚举属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7getter%E5%92%8Csetter"><span class="nav-text">属性getter和setter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-text">属性的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-text">属性描述符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%87%E6%B3%A8"><span class="nav-text">备注</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/11/12/learn/js/6-4-property-miscell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript查缺补漏 - 属性杂项 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript查缺补漏 - 属性杂项
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-11-12 15:23:07" itemprop="dateCreated datePublished" datetime="2016-11-12T15:23:07+08:00">2016-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>Give an object. I will upset you.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>本博文介绍JS中对象的属性的检测方法、可枚举性、可读可写性、特性。</p>
+<h1 id="检测属性">检测属性</h1>
+<p>JS对象实质是就是属性的集合，我们可以通过如下方式来检测某个属性是否存在于某个对象中：</p>
+<ul>
+<li><code>in</code>运算符</li>
+<li><code>hasOwnProperty()</code></li>
+<li><code>propertyIsEnumerable()</code></li>
+</ul>
+<h2 id="in运算符">in运算符</h2>
+<p>in运算符的左侧是属性名（字符串），右侧是对象。如果对象的自有属性或继承属性中包含这个属性则返回<code>true</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;;</span><br><span class="line"><span class="string">&#x27;x&#x27;</span> <span class="keyword">in</span> o; <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="string">&#x27;y&#x27;</span> <span class="keyword">in</span> o; <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="string">&#x27;toString&#x27;</span> <span class="keyword">in</span> o; <span class="comment">// o继承toString的属性 =&gt; true</span></span><br></pre></td></tr></table></figure>
+<p>除了使用<code>in</code>操作符，我们还可以使用<code>!==</code>判断一个属性是否是<code>undefined</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;;</span><br><span class="line">o.<span class="property">x</span> !== <span class="literal">undefined</span>; <span class="comment">// =&gt; true</span></span><br><span class="line">o.<span class="property">y</span> !== <span class="literal">undefined</span>; <span class="comment">// =&gt; false</span></span><br><span class="line">o.<span class="property">toString</span> !== <span class="literal">undefined</span>; <span class="comment">// o继承toString的属性 =&gt; true</span></span><br></pre></td></tr></table></figure>
+<h2 id="hasownproperty">hasOwnProperty</h2>
+<p>对象的<code>hasOwnProperty()</code>方法用来检测给定的名字是否是对象的<strong>自有属性</strong>。对于继承属性它将返回<code>false</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;;</span><br><span class="line">o.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;x&#x27;</span>); <span class="comment">// =&gt; true</span></span><br><span class="line">o.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;y&#x27;</span>); <span class="comment">// =&gt; false</span></span><br><span class="line">o.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;toString&#x27;</span>); <span class="comment">// =&gt; false</span></span><br></pre></td></tr></table></figure>
+<p><em>注意</em>：上述代码中使用<code>!==</code>而不是<code>!=</code>，<code>!==</code>可以区分<code>undefined</code>和<code>null</code>。</p>
+<p>但还有一种场景只能使用<code>in</code>运算符而不能使用<code>!==</code>，<code>in</code>可以<strong>区分不存在的属性和存在但值为<code>undefined</code>的属性</strong>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">x</span>: <span class="literal">undefined</span>&#125;;</span><br><span class="line">o.<span class="property">x</span> !== <span class="literal">undefined</span>; <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="string">&#x27;x&#x27;</span> <span class="keyword">in</span>  o; <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+<h2 id="propertyisenumerable">propertyIsEnumerable</h2>
+<p><code>propertyIsEnumerable()</code>是<code>hasOwnProperty()</code>的增强版，只有检测到<strong>自有属性且这个属性的可枚举性为<code>true</code></strong>时，它才返回<code>true</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// inherit() 返回了一个继承自原型对象p的属性的新对象</span></span><br><span class="line"><span class="comment">// 这里使用了ECMAScript 5中的Object.create()函数 （如果存在的话）</span></span><br><span class="line"><span class="comment">// 如果不存在Object.create()，则退化使用其他方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">inherit</span>(<span class="params">p</span>) &#123;</span><br><span class="line"><span class="title function_">trueif</span> (p == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="title class_">TypeError</span>();</span><br><span class="line"><span class="title function_">trueif</span> (<span class="title class_">Object</span>.<span class="property">create</span>) <span class="keyword">return</span> <span class="title class_">Object</span>.<span class="title function_">create</span>(p);</span><br><span class="line">truevar t = <span class="keyword">typeof</span> p;</span><br><span class="line"><span class="title function_">trueif</span> (t !== <span class="string">&#x27;object&#x27;</span> &amp;&amp; t !== <span class="string">&#x27;function&#x27;</span>) <span class="keyword">throw</span> <span class="title class_">TypeError</span>();</span><br><span class="line"><span class="literal">true</span><span class="keyword">function</span> <span class="title function_">f</span>(<span class="params"></span>) &#123;&#125;; <span class="comment">// 定义一个空构造函数</span></span><br><span class="line">truef.<span class="property"><span class="keyword">prototype</span></span> = p; <span class="comment">// 将其原型属性设置为p</span></span><br><span class="line">truereturn <span class="keyword">new</span> <span class="title function_">f</span>();  <span class="comment">// 使用f()创建p的继承对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="title function_">inherit</span>(&#123;<span class="attr">y</span>: <span class="number">2</span>&#125;);</span><br><span class="line">o.<span class="property">x</span> = <span class="number">1</span>;</span><br><span class="line">o.<span class="title function_">propertyIsEnumerable</span>(<span class="string">&#x27;x&#x27;</span>); <span class="comment">// =&gt; true</span></span><br><span class="line">o.<span class="title function_">propertyIsEnumerable</span>(<span class="string">&#x27;y&#x27;</span>); <span class="comment">// y是继承来的 =&gt; false</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="title function_">propertyIsEnumerable</span>(<span class="string">&#x27;toString&#x27;</span>); <span class="comment">// toString 不可枚举 =&gt; false</span></span><br></pre></td></tr></table></figure>
+<h1 id="枚举属性">枚举属性</h1>
+<p>在JS中我们可以使用for/in循环遍历对象中所有可枚举的属性（包括自由属性和继承的属性）。<strong>对象继承的内置方法是不可枚举的</strong>，但在代码中给对象添加的属性都是可枚举的（可以通过下文介绍的方式，将其转换为不可枚举的）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">x</span>:<span class="number">1</span>, <span class="attr">y</span>:<span class="number">2</span>, <span class="attr">z</span>:<span class="number">3</span>&#125;;</span><br><span class="line">o.<span class="title function_">propertyIsEnumerable</span>(<span class="string">&#x27;toString&#x27;</span>); <span class="comment">// =&gt; false</span></span><br><span class="line"><span class="keyword">for</span> (p <span class="keyword">in</span> o)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(p);</span><br><span class="line"><span class="comment">// =&gt; 输出x、y和z，不会输出toString</span></span><br></pre></td></tr></table></figure>
+<p>在ES5之前，这些新添加的方法是不能定义为不可枚举的。但我们可以通过如下的代码过滤for/in循环中返回的属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (p <span class="keyword">in</span> o) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!o.<span class="title function_">hasOwnProperty</span>(p)) <span class="keyword">continue</span>; <span class="comment">// 跳过继承的属性</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (p <span class="keyword">in</span> o) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> o[p] === <span class="string">&#x27;function&#x27;</span>) <span class="keyword">continue</span>; <span class="comment">// 跳过方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在ES5中有两个用以<strong>枚举属性名称</strong>的函数，第一个是<code>Object.keys()</code>，它返回一个数组，这个数组由对象中<strong>可枚举的自有属性的名称</strong>组成；第二个枚举属性的函数是<code>Object.getOwnPropertyNames()</code>，它与<code>Object.keys()</code>类似，只是它返回对象的<strong>所有自有属性的名称</strong>，而不仅仅是可枚举的自有属性。在ES3中因为没有提供任何方法来获取对象的不可枚举属性，故无法实现类似的函数。</p>
+<h1 id="属性getter和setter">属性getter和setter</h1>
+<p>对象属性是由名字、值和一组特性构成的。在ES5中，属性值可以用一个或两个方法代替，这两个方法是<code>getter</code>和<code>setter</code>。由<code>getter</code>和<code>setter</code>定义的属性称作“存取器属性”（accessor
+property），而将以前只是一个值的称为“数据属性”（data property）。</p>
+<p>当程序查询存取器属性时，JS将会调用<code>getter</code>方法（无参数），这个方法的返回值就是属性存取表达式的值；当程序设置一个存取器属性的值时，JS调用<code>setter</code>方法，将赋值表达式右侧的值当作参数传入<code>setter</code>。从某种意义上讲，这个方法负责设置属性值，可以忽略<code>setter</code>方法的返回值。<br />
+和数据属性不同，存取器属性不具有可写性。如果属性同时具有<code>getter</code>和<code>setter</code>方法，那么它是一个可读可写的属性；如果只有<code>getter</code>方法，那么它是一个只读属性；如果它只有<code>setter</code>方法，那么它是一个只写属性，读取只写属性总是返回<code>undefined</code>。</p>
+<p>定义存取器属性最简单的方法是使用对象直接量：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">    <span class="attr">data_prop</span>: value, <span class="comment">// 数据属性</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 存取器属性都是成对定义的函数</span></span><br><span class="line">    <span class="comment">// accessor_prop是属性的名称</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">accessor_prop</span>() &#123; <span class="comment">/* 函数体 */</span>&#125;,</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">accessor_prop</span>(<span class="params">value</span>) &#123; <span class="comment">/* 函数体 */</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>存取器属性定义为一个或两个和属性同名的函数，这个函数定义没有使用<code>function</code>关键字，而是使用<code>get</code>或<code>set</code>。同时，也没有使用冒号将属性名和函数体分隔开来，但在函数体的结束有逗号分隔。</p>
+<p>下面是使用存取器属性的示例，用来将直角坐标系转换为极坐标系：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = &#123;</span><br><span class="line">    <span class="comment">// 数据属性</span></span><br><span class="line">    <span class="comment">// 存储直角坐标系的信息</span></span><br><span class="line">    <span class="attr">x</span>: <span class="number">1.0</span>,</span><br><span class="line">    <span class="attr">y</span>: <span class="number">1.0</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 可读可写的存取器属性</span></span><br><span class="line">    <span class="comment">// 存储极坐标系的信息(r)</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">r</span>() &#123; <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">sqrt</span>(<span class="variable language_">this</span>.<span class="property">x</span>*<span class="variable language_">this</span>.<span class="property">x</span> + <span class="variable language_">this</span>.<span class="property">y</span>*<span class="variable language_">this</span>.<span class="property">y</span>);&#125;,</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">r</span>(<span class="params">value</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> old = <span class="title class_">Math</span>.<span class="title function_">sqrt</span>(<span class="variable language_">this</span>.<span class="property">x</span>*<span class="variable language_">this</span>.<span class="property">x</span> + <span class="variable language_">this</span>.<span class="property">y</span>*<span class="variable language_">this</span>.<span class="property">y</span>);</span><br><span class="line">        <span class="keyword">var</span> ratio = value/old;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">x</span> *= ratio;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">y</span> *= ratio;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只读存取器属性</span></span><br><span class="line">    <span class="comment">// 存储极坐标的信息(theta)</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">theta</span>() &#123; <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">atan2</span>(<span class="variable language_">this</span>.<span class="property">y</span>, <span class="variable language_">this</span>.<span class="property">x</span>);&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>getter</code>和<code>setter</code>中<code>this</code>关键字的用法，JS把这些函数当作对象的方法来调用，即在函数体中的<code>this</code>指向表示这个点的对象。</p>
+<p>和数据属性一样，存取器属性是<strong>可以继承</strong>的。<br />
+至于如何给一个已经存在的对象添加一个存取器属性，可参见
+节<strong>属性的特性</strong>。</p>
+<h1 id="属性的特性">属性的特性</h1>
+<p>在上文提到，属性除了名字和值之外，还有一些标识它们可写、可枚举和可配置的特性。在ES3中无法设置这些特性，所有通过ES3的程序创建的属性都是可写的、可枚举的和可配置的，且无法对这些特性进行修改。在ES5中，你将可以查询并设置这些属性特性。<br />
+属性特性的作用有：</p>
+<ul>
+<li>可以在给原型对象添加方法之后，将它们设置成不可枚举的，让他们看起来更像内置方法</li>
+<li>可以通过给对象定义不能修改或删除的属性，借此锁定这个对象</li>
+</ul>
+<p>如果我们将存取器属性的<code>getter</code>和<code>setter</code>看成属性的特性，那么我们就可以认为一个属性包含一个名字和4个特性，分别是<strong>值（value）、可写性（writable）、可枚举性（enumerable）和可配置型（configurable）</strong>。</p>
+<p><strong>存取器属性不具有值特性和可写性</strong>，它们的可写性是由<code>setter</code>方法存在与否决定的。因此，存取器属性的4个特性是<strong>可读性（get）、可写性（set）、可枚举性（enumerable）和可配置型（configurable）</strong>。</p>
+<h2 id="属性描述符">属性描述符</h2>
+<p>为实现上述属性特性，在ES5中定义了一个名为“属性描述符”（property
+descriptor）的对象，这个对象代表上述的4个特性。且描述符对象的属性和它们所描述的属性特性是同名的。</p>
+<ul>
+<li>对于数据属性的描述符对象的属性分别是：<code>value</code>、<code>writable</code>、<code>enumerable</code>和<code>configurable</code></li>
+<li>对于存取器属性的描述对象的属性分别是：<code>get</code>、<code>set</code>、<code>enumerable</code>和<code>configurable</code></li>
+</ul>
+<p>其中，<code>writable</code>、<code>enumerable</code>和<code>configurable</code>是布尔类型，<code>get</code>和<code>set</code>是函数值。</p>
+<p>通过调用<code>Object.getOwnPropertyDescriptor()</code>可以获得某个对象特定属性的属性描述符：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptor</span>(&#123;<span class="attr">x</span>: <span class="number">1</span>&#125;, <span class="string">&#x27;x&#x27;</span>); <span class="comment">// =&gt; &#123;value: 1, writable: true, enumerable: true, configurable: true&#125;</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptor</span>(&#123;<span class="keyword">get</span> <span class="title function_">x</span>() &#123;<span class="keyword">return</span> <span class="number">1</span>;&#125;&#125;, <span class="string">&#x27;x&#x27;</span>); <span class="comment">// =&gt; &#123;get: function x()&#123;...&#125;, set: undefined, enumerable: true, configurable: true&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptor</span>(&#123;&#125;, <span class="string">&#x27;x&#x27;</span>); <span class="comment">// 没有这个属性 =&gt; undefined</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptor</span>(&#123;&#125;, <span class="string">&#x27;toString&#x27;</span>); <span class="comment">// 继承属性 =&gt; undefined</span></span><br></pre></td></tr></table></figure>
+<p><em>注意</em>：<code>Object.getOwnPropertyDescriptor()</code>只能得到自有属性的描述符。要想获得继承属性的特性，需要遍历原型链。</p>
+<p>要想设置属性特性，或者想让新建属性具有某种特性，可以调用<code>Object.defineProperty()</code>，传入要修改的对象、要创建的或者要修改的属性的名称以及属性描述符对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line"><span class="comment">// 添加一个不可枚举的数据属性`x`</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(o, <span class="string">&#x27;x&#x27;</span>, </span><br><span class="line">                     &#123;</span><br><span class="line">                         <span class="attr">value</span>: <span class="number">1</span>,</span><br><span class="line">                         <span class="attr">writable</span>: <span class="literal">true</span>,</span><br><span class="line">                         <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">                         <span class="attr">configurable</span>: <span class="literal">true</span></span><br><span class="line">                     &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">x</span>); <span class="comment">// =&gt; 1</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">keys</span>(o);   <span class="comment">// =&gt; []</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在对属性`x`做修改，让它变成只读</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(o, <span class="string">&#x27;x&#x27;</span>, &#123; <span class="attr">writable</span>: <span class="literal">false</span>&#125;);</span><br><span class="line"></span><br><span class="line">o.<span class="property">x</span> = <span class="number">2</span>; <span class="comment">// =&gt; 操作失败但不报错，在严格模式下抛出类型异常</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">x</span>); <span class="comment">// =&gt; 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 属性依然是可以配置的</span></span><br><span class="line"><span class="comment">// 所以通过如下方法对它进行修改</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(o, <span class="string">&#x27;x&#x27;</span>, &#123;<span class="attr">value</span>: <span class="number">2</span>&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">x</span>); <span class="comment">// =&gt; 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在将`x`从数据属性修改为存取器属性</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(o, <span class="string">&#x27;x&#x27;</span>, &#123; <span class="attr">get</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">x</span>); <span class="comment">// =&gt; 0</span></span><br></pre></td></tr></table></figure>
+<p><em>注意</em>：传入<code>Object.defineProperty()</code>的属性描述符对象不必包含所有4个特性，对于新创建的属性来说，默认的特性值为<code>false</code>或<code>undefined</code>。对于修改的已有属性来说，默认的特性值没有做任何修改。并且<strong>这个方法要么修改已有属性要么新建自有属性，但不能修改继承的属性</strong>。</p>
+<p>如果要同时修改或创建多个属性，可以使用<code>Object.defineProperties()</code>，第一个参数为要修改的对象，第二个参数是一个映射表，它包含了要新建或修改的属性的名称，以及它们的属性描述符。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = <span class="title class_">Object</span>.<span class="title function_">defineProperties</span>(&#123;&#125;, &#123;</span><br><span class="line">    <span class="attr">x</span>: &#123; <span class="attr">value</span>: <span class="number">1</span>, <span class="attr">writable</span>: <span class="literal">true</span>, <span class="attr">enumerable</span>: <span class="literal">true</span>, <span class="attr">configurable</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">    <span class="attr">y</span>: &#123; <span class="attr">value</span>: <span class="number">1</span>, <span class="attr">writable</span>: <span class="literal">true</span>, <span class="attr">enumerable</span>: <span class="literal">true</span>, <span class="attr">configurable</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">    <span class="attr">r</span>: &#123;</span><br><span class="line">        <span class="attr">get</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">sqrt</span>(<span class="variable language_">this</span>.<span class="property">x</span>*<span class="variable language_">this</span>.<span class="property">x</span> + <span class="variable language_">this</span>.<span class="property">y</span>*<span class="variable language_">this</span>.<span class="property">y</span>); &#125;,</span><br><span class="line">        <span class="attr">enumerable</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">configurable</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>对于那些不允许创建或者修改的属性来说，如果用<code>Object.defineProperty</code>和<code>Object.defineProperties</code>对其操作就会抛出类型错误异常。</strong>如，给一个不可扩展的对象新增属性时。具体来说，当违反虾类规则时会抛出错误：</p>
+<ul>
+<li>如果对象是不可扩展的，则可以编辑已有的自有属性，但不能给它们添加新属性</li>
+<li>如果属性是不可配置的，则不能修改它的可配置性和可枚举性</li>
+<li>如果存取器属性是不可配置的，则不能修改其<code>getter</code>和<code>setter</code>方法，也不能将它转成数据属性</li>
+<li>如果数据属性是不可配置的，则不能将它转换为存取器属性</li>
+<li>如果数据属性的不可配置的，则不能将他的可写性从<code>false</code>修改为<code>true</code>，但可以从<code>true</code>修改为<code>false</code></li>
+<li>如果数据属性是不可配置且不可写的，则不能修改它的值；然而可配置但不可写的属性的值可以修改（将它们先标记成可写的，修改值之后改会不可写）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 给Object.prototype添加一个不可枚举的extend()方法</span></span><br><span class="line"><span class="comment"> * 这个方法继承调用它的对象，将作为参数传入的对象的属性一一复制</span></span><br><span class="line"><span class="comment"> * 除了值之外，也复制属性的所有特性，除非在目标对象中存在同名的属性</span></span><br><span class="line"><span class="comment"> * 参数对象的所有自有属性（包括不可枚举的属性）也会一一复制</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>, <span class="string">&#x27;extend&#x27;</span>,</span><br><span class="line">                     &#123;</span><br><span class="line">                         <span class="attr">writable</span>: <span class="literal">true</span>,</span><br><span class="line">                         <span class="attr">enumerable</span>: <span class="literal">false</span>, <span class="comment">// 将其定义为不可枚举的</span></span><br><span class="line">                         <span class="attr">configurable</span>: <span class="literal">true</span>,</span><br><span class="line">                         <span class="attr">value</span>: <span class="keyword">function</span>(<span class="params">o</span>) &#123;</span><br><span class="line">                             <span class="comment">// 得到所有的自有属性，包括不可枚举属性</span></span><br><span class="line">                             <span class="keyword">var</span> names = <span class="title class_">Object</span>.<span class="title function_">getOwnPropertyNames</span>(o);</span><br><span class="line">                             <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; names.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">                                 <span class="comment">// 属性已经存在，则跳过</span></span><br><span class="line">                                 <span class="keyword">if</span> (names[i] <span class="keyword">in</span> <span class="variable language_">this</span>) <span class="keyword">continue</span>;</span><br><span class="line">                                 <span class="keyword">var</span> desc = <span class="title class_">Object</span>.<span class="title function_">getOwnPropertyDescriptor</span>(o, names[i]);</span><br><span class="line">                                 <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(<span class="variable language_">this</span>, names[i], desc);</span><br><span class="line">                             &#125;</span><br><span class="line">                         &#125;</span><br><span class="line">                     &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="其他">其他</h1>
+<p>在ES5标准被采纳前，已经有一些非标准方法被用来实现存取器属性的特性了。这些方法一共有4个，所有对象都拥有这些方法：</p>
+<ul>
+<li><code>__lookupGetter__()</code>和<code>__lookupSetter__()</code>用以返回一个命名属性的<code>getter</code>和<code>setter</code>方法</li>
+<li><code>__defineGetter__()</code>和<code>__defineSetter__()</code>用以定义<code>getter</code>和<code>setter</code>方法</li>
+</ul>
+<p>我们也可以注意到，这些方法都是以两条下划线作为前缀、两条下划线作为后缀，以表明它们是非标准方法。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/10549733/">JavaScript权威指南(第六版)</a></p>
+<h1 id="备注">备注</h1>
+<p>JS: JavaScript<br />
+ES5: ECMAScript5</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/11/12/learn/js/6-4-property-miscell/" title="JavaScript查缺补漏 - 属性杂项">https://wrran.github.io/blog/2016/11/12/learn/js/6-4-property-miscell/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/object/" rel="tag"># object</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/12/learn/js/6-3-property-crud/" rel="prev" title="JavaScript查缺补漏 - 属性的CRUD">
+                  <i class="fa fa-angle-left"></i> JavaScript查缺补漏 - 属性的CRUD
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/12/learn/js/6-5-object-attribute/" rel="next" title="JavaScript查缺补漏 - 对象的三个属性">
+                  JavaScript查缺补漏 - 对象的三个属性 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

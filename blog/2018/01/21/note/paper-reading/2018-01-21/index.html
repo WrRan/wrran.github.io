@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="重要的是观众，还是哈姆雷特?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Empower Sequence Labeling with Task-Aware Neural Language Model">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/01/21/note/paper-reading/2018-01-21/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="重要的是观众，还是哈姆雷特?">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-21T01:45:12.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.724Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="transfer learning">
+<meta property="article:tag" content="multi-task learning">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/01/21/note/paper-reading/2018-01-21/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/01/21/note/paper-reading/2018-01-21/","path":"blog/2018/01/21/note/paper-reading/2018-01-21/","title":"Empower Sequence Labeling with Task-Aware Neural Language Model"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Empower Sequence Labeling with Task-Aware Neural Language Model | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/01/21/note/paper-reading/2018-01-21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Empower Sequence Labeling with Task-Aware Neural Language Model | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Empower Sequence Labeling with Task-Aware Neural Language Model
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-01-21 09:45:12" itemprop="dateCreated datePublished" datetime="2018-01-21T09:45:12+08:00">2018-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>重要的是观众，还是哈姆雷特?</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>本文令我印象深刻的是该文介绍部分的内容，逻辑严密，推理谨慎。值得细读。下面我用自己的语言，刻画下该部分的逻辑线。</p>
+<h1 id="背景">背景</h1>
+<p>语言学中的序列标注是一个常用框架，应用于许多任务，如POS标注，NER等。而这些任务无不在自然语言理解中发挥着重要作用，并为下游应用提供了有力支撑，如关系抽取等。<br />
+解决序列标注问题的传统手段是HMM、CRF等，这些都取得了很好性能表现。但这些方法的最大问题在于需要手动制定特征(如，字符是否大写)及需要与语种相关的语料。因此，很难将之应用于新任务或者迁移到新领域上。而神经网络技术可以克服这个缺陷，它可以在模型学习过程中自动抽取特征。然而，鉴于神经网络模型中巨量训练参数和相对小规模的序列标注语料，仅仅依靠标注数据可能无法充分训练好如此复杂的模型。对此，一个直观且有效的选择就是用外部知识来指导学习过程。<br />
+以上所述，为了利用这些外部知识，迁移学习及多任务学习成为有力的工具。举例来说，NER的实验效果可以在类似entity
+linking或chunking等任务的共同训练过程中得到提高。这种做法终归也有令人为难的地方，它内在要求更多相关任务的监督数据，而这些数据是难以获取的，甚至在某些语种或特定任务中根本不存在。<br />
+那有没有两全其美的办法呢?有的：从原始语料中抽取出冗余的知识，进而提高不同任务的性能表现。以词向量技术来说，我们可以通过词向量技术在连续空间中得到了词语之间的语义关联，即词向量。而实践表明，这些词向量对多个任务都是有益的。不过，现如今大多数使用词向量的技术都只是将词语当作一个基本单位，换言之，只利用到了词层面的知识。然而在所有尖端的神经网络模型中，感知到字符层面是相当重要且富有价值的。<br />
+仅考虑序列标注任务的话，近些年来已经有将字符层面信息融入到模型学习过程中，并被实验证明有利于任务的实践了。一种常见的做法是直接运用预训练的语言模型，将字符级别的知识作为上下文整合到任务处理中。这种做法的不足在于从预训练过程是与后续任务无关的，因此可能包含大量无关信息。这也导致了该方法要求更大的模型、外部的语料、更长的训练时间。<br />
+在本文中，作者设计了一个名为<code>LM-LSTM-CRF</code>的高效的序列标注框架，该模型可以高效地利用词层面信息及字符层面信息。</p>
+<h1 id="模型">模型</h1>
+<p><code>LM-LSTM-CRF</code>可以高效利用词层面及字符层面信息。针对字符层面的知识，我们将神经网络语言模型与序列标注任务联系在一起，并尝试运用多任务学习来指导语言模型获取任务相关的知识。但也应注意到这样的训练过程中，可能引入的一个问题就是：如果任务之间有某些矛盾的地方，则语言模型的学习并不能在传统共同训练的设置下提高序列标注任务的性能。为此，作者引入了Highway
+Networks，以便将字符层面的知识直接映射到不同的语义空间中，以平衡这俩个任务。针对词语层面的只是，作者采用的是微调预训练好的词向量，而非共同训练或者直接使用预训练的词向量，因为后者要么太耗费资源，要么并不能反应多任务学习的好处。</p>
+<p>设一个句子的标注信息为<span
+class="math display"><em>y</em><sub>1</sub><sup><em>n</em></sup> = (<em>y</em><sub>1</sub>, ⋯, <em>y</em><sub><em>n</em></sub>)</span>，具体词语序列为<span
+class="math display"><em>x</em><sub>1</sub><sup><em>n</em></sup> = (<em>x</em><sub>1</sub>, ⋯, <em>x</em><sub><em>n</em></sub>)</span>，对应的字符序列为<span
+class="math display">$$c=(c_{0,_},c_{1,1},c_{1,2}, \cdots, c_{1,_},
+c_{2,1}, \cdots, c_{n,_})$$</span>，其中<span
+class="math display"><em>c</em><sub><em>i</em>, <em>j</em></sub></span>表示的是第<span
+class="math display"><em>i</em></span>个单词的第<span
+class="math display"><em>j</em></span>个字符，<span
+class="math display">$$c_{i,_}$$</span>表示的是第<span
+class="math display"><em>i</em></span>个词语之后的空格字符。<br />
+模型整体框架如下图所示：<br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com//image/180121/LM-LSTM-CRF%20Neural%20Architecture.PNG"
+alt="LM-LSTM-CRF Neural Architecture" /></p>
+<p>从上图中可以看出模型的几个重要组件，其中字符级别的组件char-LSTM、词语级别的组件word-LSTM及最上层的序列标注组件CRF-SL;另外，还有几个Highway
+Networks。此处不再一一赘述，只列举出该模型中比较具有特色的设计。<br />
+作者在试验中注意到语言建模与序列标注任务不一定相合，底层的语言模型训练可能损害序列标注任务的性能。为此的解决方案就是使用Highway
+Networks，将字符级别的信息与词语级别的信息输入到上层，同时也让不同的Highway
+Networks组件学习需要的变换以满足任务需求。<br />
+在序列标注中，使用的还是传统的CRF模型，只是特征使用了低层的语言模型的隐层变量，并无太多新奇的地方。<br />
+新奇的地方体现在语言建模上，考虑到词向量是语言模型参数的主体，为了加快训练速度，如上所述作者采用的是微调预训练的词向量;比较特别的是，在预测下一个词语时使用的信息不再是上一个词语的词向量，转而设计为上一个词对应的字符序列经过LSTM输出的向量。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1709.04109">Empower Sequence Labeling
+with Task-Aware Neural Language Model</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/01/21/note/paper-reading/2018-01-21/" title="Empower Sequence Labeling with Task-Aware Neural Language Model">https://wrran.github.io/blog/2018/01/21/note/paper-reading/2018-01-21/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/transfer-learning/" rel="tag"># transfer learning</a>
+              <a href="/tags/multi-task-learning/" rel="tag"># multi-task learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/01/20/people-say/luxun/180120-01/" rel="prev" title="题辞">
+                  <i class="fa fa-angle-left"></i> 题辞
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/01/22/note/paper-reading/graph%20representation/2018-01-22/" rel="next" title="node2vec - Scalable Feature Learning for Networks">
+                  node2vec - Scalable Feature Learning for Networks <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

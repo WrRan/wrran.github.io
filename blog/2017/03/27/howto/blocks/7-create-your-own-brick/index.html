@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Blocks is a framework that helps you build and manage neural network models on using Theano.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blocks学习手册（八） - 定制Bricks">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/03/27/howto/blocks/7-create-your-own-brick/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Blocks is a framework that helps you build and manage neural network models on using Theano.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-27T09:25:39.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.667Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="theano">
+<meta property="article:tag" content="blocks">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/03/27/howto/blocks/7-create-your-own-brick/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/03/27/howto/blocks/7-create-your-own-brick/","path":"blog/2017/03/27/howto/blocks/7-create-your-own-brick/","title":"Blocks学习手册（八） - 定制Bricks"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Blocks学习手册（八） - 定制Bricks | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89bricks%E9%9C%80%E8%A6%81%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">自定义bricks需要的条件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95application"><span class="nav-text">方法application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#application-properties"><span class="nav-text">application properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#using-application-calls"><span class="nav-text">using application calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lazy-initialization"><span class="nav-text">lazy initialization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89bricks%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="nav-text">自定义bricks的示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/03/27/howto/blocks/7-create-your-own-brick/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Blocks学习手册（八） - 定制Bricks | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Blocks学习手册（八） - 定制Bricks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-03-27 17:25:39" itemprop="dateCreated datePublished" datetime="2017-03-27T17:25:39+08:00">2017-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/" itemprop="url" rel="index"><span itemprop="name">howto</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/theano/" itemprop="url" rel="index"><span itemprop="name">theano</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/theano/blocks/" itemprop="url" rel="index"><span itemprop="name">blocks</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p><code>Blocks</code> is a framework that helps you build and manage
+neural network models on using Theano.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>该部分就是来解释下我们该如何自定义bricks的，这可以用来封装一些常用的操作（这些操作也可以是bricks），以便之后复用。</p>
+<p>下述第一部分用来解释自定义bricks的必需和非必需的一些操作；第二部分则自定义一个简单的bricks。</p>
+<p><em>注意</em>：该教程假设读者已经熟悉<em>bricks</em>这个概念并且能够熟练使用。</p>
+<h1 id="自定义bricks需要的条件">自定义bricks需要的条件</h1>
+<p>在<em>Blocks</em>中的bricks要么直接要么间接地继承于<code>Brick</code>。<em>Blocks</em>已经定义了不少类，所以在自己定制前选择合适的brick可以省下不少精力。</p>
+<p>下列是一些常用的brick类：</p>
+<ul>
+<li><code>Sequence</code>: a sequence of bricks</li>
+<li><code>Initializable</code>: a brick that defines a same
+initialization scheme (weights and biases) for all its children</li>
+<li><code>Feedforward</code>: declares an interface for bricks with one
+input and one output</li>
+<li><code>Linear</code>: a linear transformation with optional bias.
+Inherits from <code>Initializable</code> and
+<code>Feedforward</code></li>
+<li><code>BaseRecurrent</code>: the base class for recurrent
+bricks.</li>
+</ul>
+<p>倘若你想从头开始自定义一个brick，你需要集成类<code>Brick</code>并考虑复写以下方法（严格来说，这些方法都是可选的，实际定义过程中记得参考<code>Brick</code>的内部文档）：</p>
+<ul>
+<li><code>Brick.__init__()</code>: you should pass by argument the
+attributes of your brick. It is also in this method you should create
+the protential <em>children bricks</em> that belongs to your brick (in
+that case, you have to pass the children bricks to
+<code>super().__init__</code>). The initialization of the attributes can
+be lazy as described later in the tutorial.</li>
+<li><code>apply()</code>: you need to implement a method that actually
+implements the operation of the brick, taking as arguments the inputs of
+the brick and returing its outputs. It can have any name and for simple
+bricks is often named <code>apply</code>. You should decorate it with
+the <code>application()</code> decorator, as explained in the next
+section. If you design a recurrent brick, you should decorate it with
+the <code>recurrent()</code> decorator as explained in the <a
+target="_blank" rel="noopener" href="http://localhost:8080/blog/2017/03/27/howto-blocks-5-recurrent-neural-networks/">blogs
+about rnns</a>.</li>
+<li><code>Brick._allocate()</code>: you should implement this method to
+allocate the shared variables (often representing parameters) of the
+bricks. In Blocks, by convention, the built-in bricks allocate their
+shared variables with nan values and we recommend you to do the
+same.</li>
+<li><code>Brick._initialize()</code>: you should implement this method
+to initialize the shared variables of your brick. This method is called
+after the allocation.</li>
+<li><code>Brick._push_allocation_config()</code>: you should consider
+overwriting this method if you want to change configuration of the
+children bricks before they allocate their parameters.</li>
+<li><code>Brick._push_initialization_config()</code>: you should
+consider overwriting this method if you want to change the
+initialization schemes of the children before they get initialied. If
+the children bricks need to be initialized with the same scheme, then
+you should inherit your brick from <code>Initializable</code>, which
+automatically pushes the initialization schemes of your brick (provided
+as arguments <code>weights_init</code> and <code>biases_init</code> of
+the constructor) to the children bricks.</li>
+<li><code>get_dim()</code>: implementing this function is useful if you
+want to provide a simple way to get the dimensions of the inputs and
+outputs of the bricks.</li>
+</ul>
+<p>如果从其他类型的brick继承的话，也要记得查看对应类的文档，确定要复写哪些方法/属性。</p>
+<h2 id="方法application">方法application</h2>
+<p>上述方法中，<code>apply()</code>可以说是最为重要的一者。因为它完成了读入theano
+variable，并处理输出的工作。我们应当记住用<code>application()</code>来装饰该方法，它会帮我们命名变量并创建一些辅助变量。好比如说这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">Brick</span>):</span><br><span class="line"><span class="meta">    @application(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="meta">        inputs=[<span class="string">&#x27;input1&#x27;</span>, <span class="string">&#x27;input2&#x27;</span>],</span></span></span><br><span class="line"><span class="params"><span class="meta">        outputs=[<span class="string">&#x27;output&#x27;</span>]</span></span></span><br><span class="line"><span class="params"><span class="meta">    </span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">apply</span>(<span class="params">self, input1, input2</span>):</span><br><span class="line">        y = input1 + input2</span><br><span class="line">        <span class="keyword">return</span> y</span><br></pre></td></tr></table></figure>
+<p>如上例所示，如此做后它将自动将theano tensor
+variable<code>input1</code>重命名为<code>Foo_apply_input1</code>，<code>input2</code>重命名为<code>Foo_apply_input2</code>，并将该方法的输出命名为<code>foo_apply_output</code>。并且它也会将对应的角色与名字赋值给该变量的<code>tag</code>属性。如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">foo = Foo()</span><br><span class="line">i1 = tensor.matrix(<span class="string">&#x27;i1&#x27;</span>)</span><br><span class="line">i2 = tensor.matrix(<span class="string">&#x27;i2&#x27;</span>)</span><br><span class="line">y = foo.apply(x)</span><br><span class="line">theano.printing.debugprint(y)</span><br><span class="line"><span class="comment"># Elemwise&#123;identity&#125; [id A] &#x27;foo_apply_output&#x27;</span></span><br><span class="line"><span class="comment">#  |Elemwise&#123;add,no_inplace&#125; [id B] &#x27;&#x27;</span></span><br><span class="line"><span class="comment">#    |Elemwise&#123;identity&#125; [id C] &#x27;foo_apply_input1&#x27;</span></span><br><span class="line"><span class="comment">#    | |i1 [id D]</span></span><br><span class="line"><span class="comment">#    |Elemwise&#123;identity&#125; [id E] &#x27;foo_apply_input2&#x27;</span></span><br><span class="line"><span class="comment">#      |i2 [id F]</span></span><br><span class="line"><span class="built_in">print</span>(y.name)</span><br><span class="line"><span class="comment"># foo_apply_output</span></span><br><span class="line"><span class="built_in">print</span>(y.tag.name)</span><br><span class="line"><span class="comment"># output</span></span><br><span class="line"><span class="built_in">print</span>(y.tag.roles)</span><br><span class="line"><span class="comment"># [OUTPUT]</span></span><br></pre></td></tr></table></figure>
+<p>其实，装饰器<code>@application</code>实际创建了一个类型为<code>Application</code>的类，并命名为<code>apply</code>，并赋值给了brick的一个属性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(Foo.apply))</span><br></pre></td></tr></table></figure>
+<h2 id="application-properties">application properties</h2>
+<p>在前面的示例中，我们通过<code>@application</code>这个装饰器直接指定了参数的名称。我们也可以通过其他方式指定参数名称，例如下例中通过使用装饰器<code>apply.property</code>指定参数名称为<code>self.fancy_name</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">Brick</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, fancy_name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.fancy_name = fancy_name</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @application</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">apply</span>(<span class="params">self, <span class="built_in">input</span></span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @apply.property(<span class="params"><span class="string">&#x27;inputs&#x27;</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">apply_inputs</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># Note that you can use any python code to define the name</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.fancy_name</span><br></pre></td></tr></table></figure>
+<h2 id="using-application-calls">using application calls</h2>
+<p>在某些场景下你可能希望在<code>apply</code>中定义某些辅助变量，以方便后面使用，如定义一些辅助量来监测训练过程。为此，你只需要将<code>application_call</code>作为<code>apply</code>的参数，并使用<code>add_auxiliary_variable</code>注册你需要的变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">Brick</span>):</span><br><span class="line"><span class="meta">    @application</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">apply</span>(<span class="params">self, x, application_call</span>):</span><br><span class="line">        application_call.add_auxiliary_variable(</span><br><span class="line">            x.mean()</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> x + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><code>add_auxiliary_variable</code>将注解变量<code>x.mean()</code>为辅助bain两，因此你可以通过<code>ComputationGraph</code>取出该辅助变量，并使用<code>VariableFilter</code>进行过滤。如上例中，我们可以通过如下方式取出<code>x.mean()</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bricks.graph <span class="keyword">import</span> ComputationGraph</span><br><span class="line">x = tensor.fmatrix(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">y = Foo().apply(x)</span><br><span class="line">cg = ComputationGraph(y)</span><br><span class="line"><span class="built_in">print</span>(cg.auxiliary_variable)</span><br><span class="line"><span class="comment"># [mean]</span></span><br></pre></td></tr></table></figure>
+<h2 id="lazy-initialization">lazy initialization</h2>
+<p>为了防止强迫用户在创建brick时就要指定所有属性，我们可以通过用<code>@lazy</code>注解<code>__init__</code>方法。来让用户可以在创建brick之后，再设定属性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@lazy(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="meta">    allocation=[<span class="string">&#x27;attr1&#x27;</span>, <span class="string">&#x27;attr2&#x27;</span>]</span></span></span><br><span class="line"><span class="params"><span class="meta"></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, attr1, attr2</span>):</span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p>上例中，就允许用户在创建了brick之后，在指定属性<code>attr1</code>与<code>attr2</code>。</p>
+<p>再举个例子，我们创建一个由两个<code>Feedforward</code>组成的<code>ChainOfTwoFeedforward</code>。我们不必在创建该类时就指定<code>bricks</code>的属性<code>input_dim</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ChainOfTwoFeedforward</span>(<span class="title class_ inherited__">Feedforward</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Two sequential Feedforward bricks.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, brick1, brick2, **kwargs</span>):</span><br><span class="line">        <span class="variable language_">self</span>.brick1 = brick1</span><br><span class="line">        <span class="variable language_">self</span>.brick2 = brick2</span><br><span class="line">        children = [<span class="variable language_">self</span>.brick1, <span class="variable language_">self</span>.brick2]</span><br><span class="line">        kwargs.setdefaults(<span class="string">&#x27;children&#x27;</span>, []).extend(children)</span><br><span class="line">        <span class="built_in">super</span>(Feedforward, <span class="variable language_">self</span>).__init__(**kwargs)</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">input_dim</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.brick1.input_dim</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @input_dim.setter</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">input_dim</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="variable language_">self</span>.brick1.input_dim = value</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">output_dim</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.brick2.output_dim</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @output_dim.setter</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">output_dim</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="variable language_">self</span>.brick2.output_dim = value</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_push_allocation_config</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.brick2.input_dim = <span class="variable language_">self</span>.brick1.get_dim(<span class="string">&#x27;output&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @application</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">apply</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.brick2.apply(</span><br><span class="line">            <span class="variable language_">self</span>.brick1.apply(x)</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p>之后我们就可以如下例使用<code>ChainOfTwoFeedforward</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">brick1 = Linear(</span><br><span class="line">    input_dim=<span class="number">3</span>, output_dim=<span class="number">2</span>, use_bias=<span class="literal">False</span>,</span><br><span class="line">    weights_init=Constant(<span class="number">2</span>)</span><br><span class="line">)</span><br><span class="line">brick2 = Linear(</span><br><span class="line">    output_dim=<span class="number">4</span>, use_bias=<span class="literal">False</span>,</span><br><span class="line">    weights_init=Constant(<span class="number">2</span>)</span><br><span class="line">)</span><br><span class="line">seq = ChainOfTwoFeedforward(brick1, brick2)</span><br><span class="line">seq.initialize()</span><br><span class="line">brick2.input_dim</span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+<h1 id="自定义bricks的示例">自定义bricks的示例</h1>
+<p>为了巩固上面提到的知识点，我们假设一个场景：需要我们分别读取两个batch的输入，分别乘上不同的矩阵后，输出两个输出。</p>
+<p>设计brick的第一步是考虑该选用哪一个brick。很明显我们这儿实现的是<code>Linear</code>的变种。与<code>Linear</code>不同的是，此处我们有两个输入和两个输出。这意味着我们不能不能从要求只有一个输入、一个输出<code>Feedforward</code>继承而来。我们的brick需要用两个不同的矩阵。我们想用同样的方式初始化这两个矩阵时，可以继承<code>Initializable</code>。它将自动将parent
+brick的初始化模式复制给children
+bricks。初始化模式可以由构造函数的参数<code>weights_init</code>与<code>biases_init</code>指出（包含在参数<code>kwargs</code>中）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ParallelLinear</span>(<span class="title class_ inherited__">Initializable</span>):</span><br><span class="line">    <span class="string">r&quot;&quot;&quot; Two linear transformations without biases.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Brick which applies two linear (affine) transformations by</span></span><br><span class="line"><span class="string">    multiplying its two inputs with two weight matries, resulting in</span></span><br><span class="line"><span class="string">    two outputs.</span></span><br><span class="line"><span class="string">    The two inputs, weights and outputs can have different dimensions.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Parameters</span></span><br><span class="line"><span class="string">    ----------</span></span><br><span class="line"><span class="string">    input_dim&#123;1, 2&#125; : int</span></span><br><span class="line"><span class="string">        The dimensions of the two inputs.</span></span><br><span class="line"><span class="string">    output_dim&#123;1, 2&#125;: int</span></span><br><span class="line"><span class="string">        The dimensions of the two outputs.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"><span class="meta">    @lazy(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="meta">        allocation=[</span></span></span><br><span class="line"><span class="params"><span class="meta">            <span class="string">&#x27;input_dim1&#x27;</span>, <span class="string">&#x27;input_dim2&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">            <span class="string">&#x27;output_dim1&#x27;</span>, <span class="string">&#x27;output_dim2&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="meta">        ]</span></span></span><br><span class="line"><span class="params"><span class="meta">    </span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(ParallelLinear, <span class="variable language_">self</span>).__init__(**kwargs)</span><br><span class="line">         <span class="variable language_">self</span>.input_dim1 = input_dim1</span><br><span class="line">         <span class="variable language_">self</span>.input_dim2 = input_dim2</span><br><span class="line">         <span class="variable language_">self</span>.output_dim1 = output_dim1</span><br><span class="line">         <span class="variable language_">self</span>.output_dim2 = output_dim2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__allocate</span>(<span class="params">self, input_dim, output_dim, number</span>):</span><br><span class="line">        W = shared_floatx_nans(</span><br><span class="line">            (input_dim, output_dim),</span><br><span class="line">            name=<span class="string">&#x27;W&#x27;</span>+number</span><br><span class="line">        )</span><br><span class="line">        add_role(W, WEIGHT)</span><br><span class="line">        <span class="variable language_">self</span>.parameter.append(W)</span><br><span class="line">        <span class="variable language_">self</span>.add_auxiliary_variable(W.norm(<span class="number">2</span>), name=<span class="string">&#x27;W&#x27;</span>+number+<span class="string">&#x27;_norm&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_allocate</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.__allocate(<span class="variable language_">self</span>.input_dim1, <span class="variable language_">self</span>.output_dim1, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.__allocate(<span class="variable language_">self</span>.input_dim2, <span class="variable language_">self</span>.output_dim2, <span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_initialize</span>(<span class="params">self</span>):</span><br><span class="line">        W1, W2 = <span class="variable language_">self</span>.parameters</span><br><span class="line">        <span class="variable language_">self</span>.weights_init.initialize(W1, <span class="variable language_">self</span>.rng)</span><br><span class="line">        <span class="variable language_">self</span>.weights_init.initialize(W2, <span class="variable language_">self</span>.rng)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">apply</span>(<span class="params">self, input1_, input2_</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; Apply the two linear transformations.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Parameters</span></span><br><span class="line"><span class="string">        ----------</span></span><br><span class="line"><span class="string">        input1&#123;1, 2&#125;_: :class:`~tensor.TensorVariable`</span></span><br><span class="line"><span class="string">            The two inputs on which to apply the transformations.</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        output&#123;1, 2&#125;: :class:`~tensor.TensorVariable`</span></span><br><span class="line"><span class="string">            The two inputs multiplied by their respective matrices.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        W1, W2 = <span class="variable language_">self</span>.parameters</span><br><span class="line">        output1 = tensor.dot(input1_, W1)</span><br><span class="line">        output2 = tensor.dot(input2_, W2)</span><br><span class="line">        <span class="keyword">return</span> output1, output2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_dim</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">&#x27;input1_&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.input_dim1</span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">&#x27;input2_&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.input_dim2</span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">&#x27;output1&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.output_dim1</span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">&#x27;output2&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.output_dim2</span><br><span class="line">        <span class="built_in">super</span>(ParallelLinear, <span class="variable language_">self</span>).get_dim(name)</span><br></pre></td></tr></table></figure>
+<p>你可以如下使用上述定义的brick：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">input_dim1, input_dim2, output_dim1, output_dim2 = <span class="number">10</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">1</span></span><br><span class="line">batch_size1, batch_size2 = <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"></span><br><span class="line">x1_mat = <span class="number">3</span> * numpy.ones(</span><br><span class="line">    (batch_size1, input_dim1),</span><br><span class="line">    dtype=theano.config.floatX</span><br><span class="line">)</span><br><span class="line">x2_dim = <span class="number">4</span> * numpy.ones(</span><br><span class="line">    (batch_size2, input_dim2),</span><br><span class="line">    dtype=theano.config.floatX</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">x1 = theano.tensor.matrix(<span class="string">&#x27;x1&#x27;</span>)</span><br><span class="line">x2 = theano.tensor.matrix(<span class="string">&#x27;x2&#x27;</span>)</span><br><span class="line"></span><br><span class="line">parallel1 = ParallelLinear(</span><br><span class="line">    input_dim1, input_dim2, output_dim1, output_dim2,</span><br><span class="line">    weights_init=Constant(<span class="number">2</span>)</span><br><span class="line">)</span><br><span class="line">parallel1.initialize()</span><br><span class="line">output1, output2 = parallel1.apply(x1, x2)</span><br><span class="line"></span><br><span class="line">f1 = theano.function([x1, x2], [output1, output2])</span><br><span class="line"></span><br><span class="line">f1(x1_mat, x2_mat)</span><br></pre></td></tr></table></figure>
+<p>你也可以使用<code>Linear</code>来实现该brick：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ParallelLinear2</span>(<span class="title class_ inherited__">Initializable</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, input_dim1, input_dim2,</span></span><br><span class="line"><span class="params">                 output_dim1, output_dim2,</span></span><br><span class="line"><span class="params">                 **kwargs</span>):</span><br><span class="line">        <span class="variable language_">self</span>.linear1 = Linear(input_dim1, output_dim1,</span><br><span class="line">                              use_bias=<span class="literal">False</span>, **kwargs)</span><br><span class="line">        <span class="variable language_">self</span>.linear2 = Linear(input_dim2, output_dim2,</span><br><span class="line">                              use_bias=<span class="literal">False</span>, **kwargs)</span><br><span class="line">        children = [<span class="variable language_">self</span>.linear1, <span class="variable language_">self</span>.linear2]</span><br><span class="line">        kwargs.setdefault(<span class="string">&#x27;children&#x27;</span>, []).extend(children)</span><br><span class="line">        <span class="built_in">super</span>(ParallelLinear2, <span class="variable language_">self</span>).__init__(**kwargs)</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @application(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="meta">        inputs=[<span class="string">&#x27;input1_&#x27;</span>, <span class="string">&#x27;input2_&#x27;</span>],</span></span></span><br><span class="line"><span class="params"><span class="meta">        outputs=[<span class="string">&#x27;output1&#x27;</span>, <span class="string">&#x27;output2&#x27;</span>]</span></span></span><br><span class="line"><span class="params"><span class="meta">    </span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">apply</span>(<span class="params">self, input1_, input2_</span>):</span><br><span class="line">        output1 = <span class="variable language_">self</span>.linear1.apply(input1_)</span><br><span class="line">        output2 = <span class="variable language_">self</span>.linear2.apply(input2_)</span><br><span class="line">        <span class="keyword">return</span> output1, output2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_dim</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">in</span> [<span class="string">&#x27;input1_&#x27;</span>, <span class="string">&#x27;output1&#x27;</span>]:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.linear1.get_dim(name)</span><br><span class="line">        <span class="keyword">if</span> name <span class="keyword">in</span> [<span class="string">&#x27;input2_&#x27;</span>, <span class="string">&#x27;output2&#x27;</span>]:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.linear2.get_dim(name)</span><br><span class="line">        <span class="built_in">super</span>(ParallelLinear2, <span class="variable language_">self</span>).get_dim(name)</span><br></pre></td></tr></table></figure>
+<p>这个版本则可以如下使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">parallel2 = ParallelLinear2(</span><br><span class="line">    input_dim1, input_dim2, </span><br><span class="line">    output_dim1, output_dim2,</span><br><span class="line">    weights_init=Constant(<span class="number">2</span>)</span><br><span class="line">)</span><br><span class="line">parallel2.initialize()</span><br><span class="line"><span class="comment"># The weights_init initialization scheme is pushed to the children</span></span><br><span class="line"><span class="comment"># bricks. We can verify it as follow:</span></span><br><span class="line">w = parallel2.weights_init</span><br><span class="line">w0 = parallel2.children[<span class="number">0</span>].weights_init</span><br><span class="line">w1 = parallel2.children[<span class="number">1</span>].weights_init</span><br><span class="line"><span class="built_in">print</span>(w == w0 == w1)</span><br><span class="line"><span class="comment"># True</span></span><br><span class="line"></span><br><span class="line">output1, output2 = parallel2.apply(x1, x2)</span><br><span class="line"></span><br><span class="line">f2 = theano.function([x1, x2], [output1, output2])</span><br><span class="line">f2(x1_mat, x2_mat)</span><br></pre></td></tr></table></figure>
+<p>实际我们完全没有必要因为上述的需求自己写一个brick，因为<em>Blocks</em>提供了类<code>Parallel</code>(which
+applies the same prototype brick to several inputs.)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">parallel3 = Parallel(</span><br><span class="line">    prototype=Linear(use_bias=<span class="literal">False</span>),</span><br><span class="line">    input_names=[<span class="string">&#x27;input1_&#x27;</span>, <span class="string">&#x27;input2_&#x27;</span>],</span><br><span class="line">    input_dims=[input_dim1, input_dim2],</span><br><span class="line">    output_dims=[output_dim1, output_dim2],</span><br><span class="line">    weights_init=Constant(<span class="number">2</span>)</span><br><span class="line">)</span><br><span class="line">parallel3.initialize()</span><br><span class="line"></span><br><span class="line">output1, output2 = parallel3.apply(x1, x2)</span><br><span class="line">f3(x1_mat, x2_mat)</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="http://blocks.readthedocs.io/en/latest/create_your_own_brick.html">Blocks’
+doc - Create Your Own Brick</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/03/27/howto/blocks/7-create-your-own-brick/" title="Blocks学习手册（八） - 定制Bricks">https://wrran.github.io/blog/2017/03/27/howto/blocks/7-create-your-own-brick/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/theano/" rel="tag"># theano</a>
+              <a href="/tags/blocks/" rel="tag"># blocks</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/03/27/howto/blocks/6-configuration/" rel="prev" title="Blocks学习手册（七） - 配置Blocks">
+                  <i class="fa fa-angle-left"></i> Blocks学习手册（七） - 配置Blocks
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/03/27/howto/blocks/8-serialization/" rel="next" title="Blocks学习手册（九） - Serialization">
+                  Blocks学习手册（九） - Serialization <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

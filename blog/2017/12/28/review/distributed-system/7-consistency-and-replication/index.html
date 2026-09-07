@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统 - 一致性和复制">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-28T03:19:15.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.787Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="distributed system">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/","path":"blog/2017/12/28/review/distributed-system/7-consistency-and-replication/","title":"分布式系统 - 一致性和复制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式系统 - 一致性和复制 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E5%A4%8D%E5%88%B6%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-text">进行复制的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%BA%E6%89%A9%E5%B1%95%E6%8A%80%E6%9C%AF%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="nav-text">作为扩展技术的复制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E6%95%B0%E6%8D%AE%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7%E6%A8%A1%E5%9E%8B"><span class="nav-text">以数据为中心的一致性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">持续一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E7%9A%84%E6%93%8D%E4%BD%9C%E9%A1%BA%E5%BA%8F"><span class="nav-text">一致的操作顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">顺序一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">因果一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%93%8D%E4%BD%9C"><span class="nav-text">分组操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E7%9B%B8%E5%B9%B2%E6%80%A7"><span class="nav-text">一致性与相干性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E5%AE%A2%E6%88%B7%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7%E6%A8%A1%E5%9E%8B"><span class="nav-text">以客户为中心的一致性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">最终一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E8%AF%BB"><span class="nav-text">单调读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E5%86%99"><span class="nav-text">单调写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">读写一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E8%AF%BB%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">写读一致性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%AE%A1%E7%90%86"><span class="nav-text">复制管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%94%BE%E7%BD%AE"><span class="nav-text">副本服务器的放置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E4%B8%8E%E6%94%BE%E7%BD%AE"><span class="nav-text">内容复制与放置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E5%89%AF%E6%9C%AC"><span class="nav-text">永久副本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E7%9A%84%E5%89%AF%E6%9C%AC"><span class="nav-text">服务器启动的副本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E5%90%AF%E5%8A%A8%E7%9A%84%E5%89%AF%E6%9C%AC"><span class="nav-text">客户启动的副本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E5%88%86%E5%8F%91"><span class="nav-text">内容分发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E4%B8%8E%E6%93%8D%E4%BD%9C"><span class="nav-text">状态与操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%89%E5%8D%8F%E8%AE%AE%E4%B8%8E%E6%8E%A8%E5%8D%8F%E8%AE%AE"><span class="nav-text">拉协议与推协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E6%92%AD%E4%B8%8E%E5%A4%9A%E6%92%AD"><span class="nav-text">单播与多播</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE"><span class="nav-text">一致性协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E4%B8%80%E8%87%B4%E6%80%A7-1"><span class="nav-text">持续一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E5%A4%8D%E5%88%B6%E7%9A%84%E6%95%B0%E5%AD%97%E5%81%8F%E5%B7%AE"><span class="nav-text">限定复制的数字偏差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E5%A4%8D%E5%88%B6%E7%9A%84%E6%96%B0%E6%97%A7%E7%A8%8B%E5%BA%A6%E5%81%8F%E5%B7%AE"><span class="nav-text">限定复制的新旧程度偏差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E9%A1%BA%E5%BA%8F%E5%81%8F%E5%B7%AE"><span class="nav-text">限定顺序偏差</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%B8%BB%E5%A4%87%E4%BB%BD%E7%9A%84%E5%8D%8F%E8%AE%AE"><span class="nav-text">基于主备份的协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E5%86%99%E5%8D%8F%E8%AE%AE"><span class="nav-text">远程写协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%86%99%E5%8D%8F%E8%AE%AE"><span class="nav-text">本地写协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%9A%84%E5%86%99%E5%8D%8F%E8%AE%AE"><span class="nav-text">复制的写协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E5%8A%A8%E5%A4%8D%E5%88%B6"><span class="nav-text">主动复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%A4%9A%E6%95%B0%E8%A1%A8%E5%86%B3%E7%9A%84%E5%8D%8F%E8%AE%AE"><span class="nav-text">基于多数表决的协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E7%9B%B8%E5%85%B3%E6%80%A7%E5%8D%8F%E8%AE%AE"><span class="nav-text">高速缓存相关性协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%BB%A5%E5%AE%A2%E6%88%B7%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-text">实现以客户为中心的一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0"><span class="nav-text">简单实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98%E6%95%88%E7%8E%87"><span class="nav-text">提高效率</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式系统 - 一致性和复制 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式系统 - 一致性和复制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-28 11:19:15" itemprop="dateCreated datePublished" datetime="2017-12-28T11:19:15+08:00">2017-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/distributed-system/" itemprop="url" rel="index"><span itemprop="name">distributed-system</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>三个臭皮匠赛过诸葛亮</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概览">概览</h1>
+<p>分布式系统的一个重要问题是数据的复制。对数据进行复制一般是为了增强系统的可靠性或提高性能。实现数据复制的一个主要难题是保持各个副本的一致性。通俗地说,这意味着在更新一个副本时,必须确保同时更新其他副本;否则,数据的各个副本将不再相同。本章将深入讨论复制数据的一致性的真正含义,以及实现这种一致性的各种方法。<br />
+首先,我们概要地介绍复制的用途,以及它与可扩展性的关系。然后介绍什么是真正的一致性。一种重要的一致性模型是多个进程同时访问共享数据的情况。在这种情况下,根据什么进程希望何时读取和更新共享数据,同时知道其他进程正在访问该数据,就可以明确地表示一致性。<br />
+通常,在大规模分布式系统中有效地实现共享数据的一致性模型是很困难的。而且,在很多情况下可以采用较为简单的模型。它们也往往比较容易实现。以客户为中心的一致性模型就是其中一种。这种模型从一个单一的(可能是移动的)客户的角度来关注一致性。我们将在单独的一节中讨论这种以客户为中心的一致性模型。<br />
+一致性仅仅是问题的一个方面,我们还要考虑如何真正地实现一致性。这里主要有两个问题需要考虑。首先,我们关注的是副本的管理,这不仅要考虑到副本服务器的放置,还有考虑到内容是如何在这些服务器之间分发的。<br />
+第二个问题是如何保持多个副本的一致性。在大多数情况下,应用程序都要求数据保持很强的一致性。简单地说,这意味着数据更新必须快速地传播给每个副本。实现这种强致性有多种不同的方法,这些方法将在单独的章节中进行讨论。另外,我们还将讨论一类特殊的一致性协议,即缓存协议。</p>
+<h1 id="概述">概述</h1>
+<p>本节首先讨论进行数据复制的主要原因。我们将复制作为一种实现可扩展性的技术进行讨论，并指出一致性如此重要的原因。</p>
+<h2 id="进行复制的原因">进行复制的原因</h2>
+<p>进行数据复制主要处于两个目的：可靠性和性能。首先，数据复制可以提高系统的可靠性。如果一个文件系统已经实现数据复制,那么当一个副本被破坏后,文件系统只需转换到另一个数据副本就可以继续运行下去。同样,通过维护多个副本,系统可以更好地防止数据破坏。例如,假设一个文件存在三个副本,而且每个读写操作都在各个副本上执行。这样,可以保护数据不会因为一个失败的写操作而受到破坏,因为此时至少两个副本的值是正确的。<br />
+进行数据复制的另一个目的是提高性能。当分布式系统需要在服务器数量和地理区域上进行扩展时,复制对于提高性能是相当重要的。例如,当需要访问由单一服务器管理的数据的进程数不断增加时,系统就需要进行服务器数量上的扩充。在这种情况下,通过对服务器进行复制,随后让它们分担工作负荷,就可以提高性能。<br />
+地理区域上的扩展也可能需要进行数据复制。其基本思想是,如果在使用数据的进程附近放置一份该数据的副本,那么进程访问数据所花费的时间将减少。对于这个进程来说性能就相对地提高了。但这个示例也说明了复制给性能带来的益处是难以评估的。虽然一个客户进程可能获得较好的性能,但是这也可能导致为维持所有副本的更新而消耗了更多的网络带宽。</p>
+<p>如果复制有助于提高可靠性和性能,那么谁还会反对呢?然而,进行数据复制是需要付出代价的。复制所带来的问题是多个副本可能导致一致性方面的问题。一旦某个副本被修改了,那么它将不同于其他所有的副本。因此,必须对所有的副本进行同样的修改以确保一致性。执行这些修改的确切时间和方式决定了复制代价的大小。</p>
+<p>为了便于理解这个问题,来看看改善Web页面访问时间的示例。如果不采用特别的方法,从远程Web服务器获取一个页面有时甚至需要几秒的时间才能完成。为了提高性能,web浏览器通常都在本地存储一个以前获取的该Web页面的副本(也就是说,web浏览器对Web页面进行<strong>缓存(cache)</strong>。如果用户需要再次访问那个页面,浏览器会自动返回本地副本。这样,用户所觉察到的访问时间是非常短的。然而,如果用户总是想获得最新版本的页面,他可能就会不那么走运了。问题在于,如果此时对页面进行了更新,而这些更新还没有传播到被缓存的副本,那么缓存的副本就是过时的了。<br />
+为了解决这个问题,一种方法是禁止浏览器保存本地副本,由服务器完全负责复制事宜。然而,如果用户附近没有数据副本,这种方法会导致访问时间的延长。另一种方法是由Web服务器标识出无效的缓存副本并对它们进行更新,但是这种方法要求服务器跟踪所有的高速缓存,并向它们发送消息。这可能会降低服务器的整体性能。我们将在下面接着讨论性能与可扩展性的问题。</p>
+<h2 id="作为扩展技术的复制">作为扩展技术的复制</h2>
+<p>为了提高性能,<strong>复制</strong>和<strong>缓存</strong>作为扩展技术得到了广泛的应用。可扩展性问题往往以性能问题的形式出现。将数据和对象的副本放置在使用它们的进程的附近,可以减少访问时间,提高性能,从而解决可扩展性问题。<br />
+可能要一个付出的代价是使副本保持为最新的数据要求更多的网络带宽。例如,一个进程P每秒访问一个本地副本N次,而这个副本自身每秒更新M次。假设每次更新都完全刷新本地副本的原有版本。如果N&lt;&lt;M,也就是说,访问与更新的比率很低,那么我们所面临的情况是,很多本地副本的更新版本从未被P访问过,使得为这些版本更新而付出的网络通信毫无用处。在这种情况下,最好不要在P附近安装本地副本,或者应该采用其他更新副本的策略。后面还会继续讨论这一问题.<br />
+然而,一个更为严重的问题是,保持多个副本间的一致性本身就可能存在严重的可扩展性问题。直观地看,当多个副本总保持相同的时候,这些副本的集合是一致的。这意味着在任何副本上执行读操作都将返回相同的结果。因此,在一个副本上执行更新操作时,无论这操作是在哪个副本上启动或执行的,这一更新操作都应该在后续操作发生前传播到所有副本。</p>
+<p>这种类型的一致性有时不规范地(也不准确地)称为<strong>强一致性</strong>,如同所谓的同步复制所提供的一致性(我们将在下一节给出一致性的准确定义,并引入一系列一致性模型)。其关键思想是<strong>以单个的原子操作或事务的形式在所有副本上执行更新</strong>。不幸的是,当这种原子操作涉及到大量的、可能广泛散布在大型网络中的副本,同时要求原子操作快速完成时,实现这些操作是相当困难的。<br />
+其中的困难来自于需要同步化所有副本这一事实。从本质上说,这意味着所有副本首先需要就本地执行更新的确切时间达成共识。例如,副本可能需要使用Lamport时间戳来决定执行操作的全局顺序,或由一个协调器来分配这样一个顺序。全局同步需占用大量通信时间,特别是副本散布于广域网时更是如此。</p>
+<p>现在我们处于进退两难的境地。一方面,可扩展性问题可以通过采用复制和缓存技术得到缓解。而另一方面,保持所有副本的一致性通常要求全局同步,而全局同步必然造成性能的严重下降。这似乎有些得不偿失<br />
+在很多情况下,唯一可行的解决方法是放宽在一致性方面的限制。也就是说,如果可以<strong>放松“更新必须以原子操作的方式执行”</strong>这一要求,就可以避免进行(瞬间的)全局同步,从而可以获得较好的性能。所付出的代价是各个副本可能并不总是相同的。事实表明,<strong>一致性可被放宽的程度主要取决于复制数据的访问和更新模式,同时还取决于这些数据的用途。</strong></p>
+<p>在以下几节中,我们将先讨论一系列一致性模型。这些模型提供一致性的准确定义。然后,我们将讨论通过分发和一致性协议实现一致性模型的不同方法。有关一致性和复制的不同分类方法可以参见(Gray等1996;
+Wiesmann等2000)。</p>
+<h1 id="以数据为中心的一致性模型">以数据为中心的一致性模型</h1>
+<p>通常,总是在讨论共享数据的读操作和写操作时讨论一致性问题。这些共享数据是通过分布式共享存储器、分布式共享数据库或分布式文件系统实现的。在本节中,我们将使用更广义的术语,即<strong>数据存储(data
+store)</strong>。数据存储可以物理地分布在多台机器上。特别是,假设每个可以访问数据存储中的数据的进程都有整个数据存储的一个本地或邻近的副<br />
+本,写操作将传播到其他副本,如图所示。一个更改数据的数据操作被归类为写操作,否则归类为读操作。</p>
+<p><strong>一致性模型(consistency
+model)</strong>实质上是进程和数据存储之间的一个约定。即,如果进程同意遵守某些规则,那么数据存储将正常运行。正常情况下,一个进程在一个数据项上执行读操作时,它期待该操作返回的是该数据在其最后一次写操作之后的结果。<br />
+在没有全局时钟的情况下,精确地定义哪次写操作是最后一次写操作是十分困难的。作为替代的方法,我们需要提供其他的定义,因此产生了一系列的一致性模型。每种模型都有效地限制了在一个数据项上执行一次读操作所应返回的值。正如可以预料到的,带有较少限制的模型比较容易使用,而带有较多限制的模型使用起来则比较困难。当然,在另一方面,容易使用的模型的执行效果不如较复杂的模型那样好。这就是生活。</p>
+<h2 id="持续一致性">持续一致性</h2>
+<p>从前面的讨论可以清楚地看出,对复制数据问题没有最好的解决方法。复制数据会导致一致性问题,这用一般方法不能有效地解决。除非放宽对一致性的限制才有希望获得有效的解决方法。但是也没有放宽一致性的通用标准:哪些东西可以容忍很大程度上是取决于应用程序。</p>
+<p>有多种不同的方法来为应用程序指定它们能容忍哪些不一致性。(Yu和Vahdat
+2002)给出了一种通用方法,为定义不一致性区分了<em>三个相互独立的坐标轴</em>:副本之间的数值偏差、副本之间新旧程度的偏差以及更新操作顺序的偏差。他们称这些偏差形成了<strong>持续一致性(continuous
+consistency)</strong>的范围。</p>
+<p>其数据具有数值语义的应用程序可以用按数值偏差来度量不一致性。一个明显的示例是股票市场价格记录的复制。在这种情况下,应用程序可能会指定两个副本的偏差不能超过0.02美元,这就是<strong>绝对数值偏差(absolute
+numerical deviation)</strong>。也可以指定<strong>相对数值偏差(relative
+numerical
+deviation)</strong>,表示两个副本之间的差别不能超过多少(例如0.5%)。数值偏差可以这样来理解:已应用于给定的副本但还没有应用于其他副本的更新数目。例如,一个Web缓存可能还没有得到Web服务器执行的一批操作。在这种情况下,数值的相关偏差又称为权重。</p>
+<p>新旧偏差与副本最近一次更新有关。对某些应用程序来说,只要副本提供的旧数据不是太旧,它是可以容忍的。例如,天气预报通常要滞后一段时间(如几个小时)。在这种情况下,主服务器会定期地接收更新信息,但在一段时间内只给副本传播一次更新信息。</p>
+<p>最后,在有些应用程序中,只要可以界定副本之间的差异,就允许不同的副本采用不同的更新顺序。这些更新的一种方法是,暂时性地把这些更新应用到一个本地副本,等待所有副本达成全局一致。因此,可能需要回滚某些更新,在成为永久更新之前,以不同的顺序进行更新。直观上来看,顺序偏差比另外两种一致性偏差更难掌握。我们将给出一些示例来阐述清楚。</p>
+<p><strong>一致性单元</strong></p>
+<p>为了定义非一致性,Yu和
+Vahdat引入了<strong>一致性单元</strong>(consistency
+unit,简称为conit)。一致性单元表示的是其一致性可以度量的单元。例如,在股票交易的示例中,就可以把表示单个股票的记录定义为一个一致性单元。另一个示例就是单个的天气预报。</p>
+<p>为了给出一致性单元的一个示例,同时解释数值偏差和顺序偏差,请看下图所示的两个副本。每个副本i维护一个二维向量时钟VC。我们使用(t,i)来表示副本i在逻辑时间t中执行的一个操作。</p>
+<p>在这个示例中,我们可以看到两个副本作用在一个含有数据项x和y的一致性单元上。这两个变量都假设被初始化为0。副本A从副本B接收操作<code>5,B: x&lt;-x+2</code>并使其为永久性的(也就是说,该操作被提交给A,且不能回滚)。副本A有三个暂时的更新操作(8,A)、(12,A)和(14,A),这给它带来的顺序偏差为3。还要注意的是,由于最后的操作是(14,A),A的向量时钟变成了(15,5).<br />
+A还没有看到来自B的唯一操作是(10,B),使其数值偏差为1。这本示例中,该偏差的权重可以表示为A的(已提交)值x和y,与A还没有接收到的来自B的操作产生的结果之间的最大差分。A的已提交值是(x,y)=(2,0),而(A还没有接收到的)B操作产生了y=5的差分。<br />
+同样的推理可以证明,B有两个暂时的更新操作(5,B)和(10,B),这意味着它的顺序偏差为2。因为B没有接收到来自A的操作,因此其向量时钟变成了(0,11)。数值偏差为3,总权重为6。</p>
+<p>注意,<strong>这里需要在维护细颗粒的一致性单元与粗颗粒的一致性单元之间进行平衡</strong>。如果一致性单元表示的是大量数据,如一个完整的数据库,那么为所有数据的更新汇集成一个一致性单元。因此,迟早会使得副本处于非一致的状态。例如,在下图中,假设两个副本之间相差不超过一个输出更新。在这种情况下,当图(a)的数据项更新了第一个副本,那么第二个也需要被更新。如果如图(b)所示的那样选择更小的一致性单元,那么情况就不是这样了。这里副本仍认为是最新的。这个问题重要的部分原因是,包含在一致性单元中的数据项是完全独立使用的,这种情况被称为<strong>虚假共享(falsely
+share)</strong>一个一致性单元。</p>
+<p>但是,使得一致性单元太小并不是好主意,原因很简单,这样的话,需要管理的一致性单元总数也增加了。换句话说,这里需要考虑到管理一致性单元的费用。管理费用可能会对整体性能有负面影响,因此需要给予考虑。<br />
+从概念上来说,一致性单元为满足一致性需求提供了一种很吸引人的方法,但在把它们放到实际使用中之前,还需要处理两个重要的问题。首先,为了确保一致性,需要一些协议关于持续一致性的协议将在本章后面讨论。</p>
+<p>第二个问题是,持续程序开发人员必须为他们的应用程序指出一致性需求。实践表明,获得这种需求可能会非常困难。编程人员往往不熟悉处理复制问题,更不要说让他们去理解一致性的详细信息了。因此,编程接口必须是简单且容易理解的。可以把持续一致性实现为一种工具包,对编程人员来说,这种工具包就像是一个函数库,他们可以把它链接到他们的应用程序中去。可以把一个一致性单元声明为只是一个数据项的一次更新。例如,下面伪代码段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AffectsConit(ConitQ, 1);</span><br><span class="line">appen messege m to queue Q;</span><br></pre></td></tr></table></figure>
+<p>表示把一个消息附加到队列Q中,其中队列Q属于一个名为ConitQ的一致性单元。同样,现在也可以如下声明与一致性单元有关的操作:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DependsOnConit(ConitQ, 4, 0, 60);</span><br><span class="line">read message m from head of queue Q;</span><br></pre></td></tr></table></figure>
+<p>在这种情况下,对DependsOnConit的调用指明,数值偏差、顺序偏差和新旧程度偏差必须分别限制在4、0和60(秒)。这可以解释为,其他副本最多只能有4个未接收到的更新操作,无暂时的本地更新,在60秒钟内必须检查Q的本地副本的新旧程度。如果这些需求没有完全满足,底层中间件将把Q的本地副本置于可以执行读操作的状态。</p>
+<h2 id="一致的操作顺序">一致的操作顺序</h2>
+<p>过去的几十年以来,除了持续一致性以外,人们对以数据为中心的一致性模型做了大量工作。一种重要的模型来自并发程序设计。在并行和分布式计算中,面临着这样一个事实:多个进程需要同时共享资源并访问这些资源,研究人员寻求描述当共享资源被复制时的并发访问的语义。这就至少产生了一种重要的、被广泛使用的一致性模型。下面,我们来关注顺序一致性,我们还将讨论一种更弱的变体,即因果一致性。</p>
+<h3 id="顺序一致性">顺序一致性</h3>
+<p>下面我们将使用一种特殊的表示法,沿一个时间轴来绘制一个进程的操作。时间轴总是水平绘制的,时间从左到右增长。符合<span
+class="math display"><em>W</em><sub><em>i</em></sub>(<em>x</em>)<em>a</em></span>和<span
+class="math display"><em>R</em><sub><em>i</em></sub>(<em>x</em>)<em>b</em></span>分别表示进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>把数值a写入数据项x,以及进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>从数据项x读取数据后返回数值b。假设每个数据项初始时为NIL。当不会混淆是哪个进程访问数据时,我们将把W和R的索引省略掉。</p>
+<p>上图所示的示例往数据项x写入数据,把数据项x的值修改为a。注意,原则上,操作<span
+class="math display"><em>W</em><sub>1</sub>(<em>x</em>)<em>a</em></span>首先在<span
+class="math display"><em>P</em><sub>1</sub></span>的本地副本上执行,然后传播给其他副本。在这个示例中,<span
+class="math display"><em>P</em><sub>2</sub></span>随后读取值NIL,然后后(从其本地副本中)读取值a。这里我们可以看到,把x的更新传播给<span
+class="math display"><em>P</em><sub>2</sub></span>花费了一些时间,这是可以接受的。</p>
+<p><strong>顺序一致性(sequential
+consistency)</strong>是一种重要的以数据为中心的一致性模型。它是由Lamport(1979)在解决多处理器系统的共享存储器时首次提出的。通常,数据存储满足以下条件时,称为是顺序一致的:<strong>任何执行结果都是相同的,就好像所有进程对数据存储的读、写操作是按某种序列顺序执行的,并且每个进程的操作按照程序所制定的顺序出现在这个序列中</strong>。<br />
+以上定义的意思是,当进程在多台(可能)不同机器上并发运行时,任何读、写操作的有效交叉都是可接受的行为,但是所有进程都看到相同的操作交叉。注意,这里并未提及时间,也就是说,这里并未提及“最近一次”对一个对象的写操作。在这里,进程可以“看到”所有进程的写操作,但是只能看到它自己的读操作。</p>
+<p>从图中可以看出,时间不起作用。假设有4个进程对同一数据项x进行操作。图(a)中的进程<span
+class="math display"><em>P</em><sub>1</sub></span>对数据项x执行W(x)a写操作,随后(绝对时间),进程<span
+class="math display"><em>P</em><sub>2</sub></span>也执行了一次写操作,将x的值设置为b。然而,进程P3和P4先读到值b,然后才读到值a。换句话说,进程P2的写操作发生在进程P1的写操作之前。<br />
+而图(b)违背了顺序一致性,因为不是所有的进程看到了相同的写操作交叉。特别是对进程<span
+class="math display"><em>P</em><sub>3</sub></span>而言,数据项好像首先变为b,然后变为a。而进程<span
+class="math display"><em>P</em><sub>4</sub></span>却得到数据项的最终值b</p>
+<p>为了更具体地理解顺序一致性的含义,让我们来看看下图。(Dubois等1988)所示的三个并发执行的进程<span
+class="math display"><em>P</em><sub>1</sub></span>、<span
+class="math display"><em>P</em><sub>2</sub></span>和<span
+class="math display"><em>P</em><sub>3</sub></span>。在这个例子中,数据项是三个整型变量x、y和z,它们存储在顺序一致(也可能是分布的)的共享数据存储中。假设每个变量的初始值都是0。在本例中,赋值语句与写操作对应,而显示语句与该时刻它所带两个参数的读操作对应。假定所有语句都是不可分割的。</p>
+<p>各种交叉执行序列都是可能的。对于6个独立的语句而言,将有720(即6!)种可能的执行序列,其中某些序列可能违背了程序顺序。假设120(即5!)种序列以<code>x&lt;-11</code>开始,一半的序列(即60种)在<code>y&lt;-1</code>之前执行了<code>print(x,z)</code>,那么这些序列就违背了程序顺序。然后这其中的一半(即30种)序列在<code>z&lt;-1</code>之前执行了<code>print(x,y</code>),也违背了程序顺序。这样,只有120种的四分之一的序列(即30种)是有效的。以<code>y&lt;-1</code>开始的序列有30种有效序列,以<code>z&lt;-1</code>开始的有效序列也有30种。因此,总共有90种有效的执行序列。下面是其中4种有效序列。</p>
+<p>在图(a)中,三个进程以如下顺序运行:首先运行<span
+class="math display"><em>P</em><sub>1</sub></span>,然后运行<span
+class="math display"><em>P</em><sub>2</sub></span>,最后运行<span
+class="math display"><em>P</em><sub>3</sub></span>.而另外三个示例则说明了虽然在时间上不同但同时有效的语句的交叉。三个进程都输出两个变量的值。因为每个变量可取的唯一值都是初始值(0)或所赋的值(1),所以每个进程生成一个两位的字符串。<code>Prints</code>后的数字是显示在输出设备上的实际输出。<br />
+如果将<span class="math display"><em>P</em><sub>1</sub></span>、<span
+class="math display"><em>P</em><sub>2</sub></span>和<span
+class="math display"><em>P</em><sub>3</sub></span>的输出按照输出顺序连接起来,那么所得到的6位字符串说明了每种语句交叉的特点,如图所示的<code>Signature</code>字符串。下面我们将使用该字符串(而不是输出结果)来表示语句的执行顺序。<br />
+不是所有64个签名模式都是允许的。例如,<code>00000</code>就是不允许的,因为它意味着显示语句在赋值语句之前执行,这违反了语句必须按程序顺序执行的要求。另一个例子是<code>001001</code>。前两位为<code>00</code>,意味着当<span
+class="math display"><em>P</em><sub>1</sub></span>执行显示语句时,b和c的值都是0。只有<span
+class="math display"><em>P</em><sub>1</sub></span>在<span
+class="math display"><em>P</em><sub>2</sub></span>或<span
+class="math display"><em>P</em><sub>3</sub></span>启动之前执行这条语句才会出现这种情况。接下来的两位为<code>10</code>,意味着<span
+class="math display"><em>P</em><sub>2</sub></span>必须在<span
+class="math display"><em>P</em>1</span>启动后而<span
+class="math display"><em>P</em><sub>3</sub></span>仍未启动前执行。最后两位为<code>01</code>,意味着<span
+class="math display"><em>P</em><sub>3</sub></span>必须在<span
+class="math display"><em>P</em><sub>1</sub></span>启动前完成。而我们已经看到<span
+class="math display"><em>P</em><sub>1</sub></span>必须先执行,所以,<code>001001</code>也是不允许的。</p>
+<p>简而言之,90个不同的有效语句顺序产生各种各样不同的程序结果(虽然少于64种)，这些都是满足顺序一致性假设前提的结果。<strong>进程与分布式的共享数据存储间的协议是,进程必须只接受有效的程序结果。</strong>换句话说,进程必须只将上所示的4种结果以及所有其他有效结果视为正确答案。如果出现其中任何一种结果,进程都必须正常地运行。仅对其中部分结果可以运行,而对另一些结果不能运行的程序违背了数据存储的协议,是不正确的。</p>
+<h3 id="因果一致性">因果一致性</h3>
+<p><strong>因果一致性(causal consistency)模型</strong>(Hutto和
+Ahamad1990)表示的是一种弱化的顺序一致性模型,因为它将具有潜在因果关系的事件和没有因果关系的事件区分开来。在前面讨论向量时间戳时,我们已经遇到了因果关系的问题。如果事件B是由事件A引起的,或受到事件A的影响,那么因果关系必然要求其他每个人先看到事件A,再看到事件B.</p>
+<p>考虑一个分布式数据库的示例。假设进程<span
+class="math display"><em>P</em><sub>1</sub></span>对数据项x执行了写操作。然后,进程<span
+class="math display"><em>P</em><sub>2</sub></span>先读取x,然后对y执行写操作。这里,对x的读操作和对y的写操作具有潜在因果关系,因为y的计算可能依赖于<span
+class="math display"><em>P</em><sub>2</sub></span>所读取的x的值(也就是<span
+class="math display"><em>P</em><sub>1</sub></span>所写的值)。另一方面,如果两个进程自发且同时地对两个不同的数据项执行写操作,这两个事件就不具备因果关系。无因果关系的操作称为是<strong>并发的(concurrent)</strong>。</p>
+<p>如果数据库是因果一致的,那么它必须服从以下条件:<strong>所有进程必须以相同的顺序看到具有潜在因果关系的写操作。不同机器上可以以不同的顺序看到并发的写操作</strong>。</p>
+<p>上图是一个因果一致性的示例。这里的事件顺序是因果一致的存储所允许的,但该顺序是顺序一致的存储或严格一致的存储所禁止的。值得注意的是,写操作<span
+class="math display"><em>W</em><sub>2</sub>(<em>x</em>)<em>b</em></span>和<span
+class="math display"><em>W</em><sub>1</sub>(<em>x</em>)<em>c</em></span>是并发的,所以没有必要要求所有进程以相同的顺序看到它们。</p>
+<p>现在,我们看看另一个示例。图(a)中,<span
+class="math display"><em>W</em><sub>2</sub>(<em>x</em>)<em>b</em></span>潜在地依赖于<span
+class="math display"><em>W</em><sub>1</sub>(<em>x</em>)<em>a</em></span>,这是因为b可能是使用<span
+class="math display"><em>R</em><sub>2</sub>(<em>x</em>)<em>a</em></span>所读取的值进行计算的结果。两个写操作是因果相关的,所以所有进程必须以相同的顺序看到这两个操作。因此,图(a)是不正确的。但是,图(b)删除了读操作,所以<span
+class="math display"><em>W</em><sub>1</sub>(<em>x</em>)<em>a</em></span>和<span
+class="math display"><em>W</em><sub>2</sub>(<em>x</em>)<em>b</em></span>现在是并发的写操作了。因果一致的存储并不要求并发的写操作是全局有序的，所以图(b)是正确的。图(b)反映了顺序一致性存储所不能接收的一种情况。</p>
+<p>实现因果一致性要求追踪哪些进程看到了哪些写操作。这就意味着必须构建和维护一张记录哪些操作与哪些操作有关的关系图。一种实现方式就是前面所讨论的向量时间戳。后续也将继续讨论使用向量时间戳捕获因果关系的方法。</p>
+<h3 id="分组操作">分组操作</h3>
+<p>顺序一致性和因果一致性是在读写操作层面上定义的。这种粒度层是有历史原因的：这些模型最初是为了共享内存的多处理器系统开发的,在硬件层面上真正实现的。<br />
+这些一致性模型的粒度在很大情况下与应用程序提供的粒度并不匹配。我们可以看到,共享数据的程序之间的并发性往往是通过互斥和事务的同步化机制来控制的。在程序层面的读写操作包含在ENTER_CS和LEVEL_CS两个操作中了,其中CS表示的是<strong>临界区(critical
+section)</strong>。正如在之前所介绍的那样,进程间的同步化是通过这两个操作来完成的。在分布式数据存储中,这意味着已成功运行ENTER_CS的进程可以确保在它的本地存储中的数据是最新的。此时,它就可以在其本地数据存储中安全地运行一系列的读写操作,然后通过调用LEVEL_CS封装起来。</p>
+<p>基本上,在程序中由一系列读写操作所作用的数据是被保护的,不让并发地访问,从而不会有该读写操作系列作为一个整体所产生的结果之外的其他东西。封装在一起的读写操作系列又分成了自动运行的单元,从而产生了粒度层。</p>
+<p>为了实现这一点,我们需要有关于ENTER_CS和LEVEL_CS操作的精确语义。这些语义可以以共享的<strong>同步化变量(synchronization
+variable)</strong>来描述。有不同的方法来使用这些变量。我们将介绍常用的方法,其中的每个变量具有某些相关的数据,这些数据合起来就是共享数据的完整集。我们采用的约定是,当某个进程进入临界区时,它必须获得相关的同步化变量,同样,当它离开临界区时,要释放这些变量。注意,进程的临界区中的数据可能与不同的同步化变量相关。</p>
+<p>每个同步化变量都有其当前拥有者,即最后获得它的进程。该拥有者可以反复进入和退出临界区,无需在网络上发送任何消息。如果某个进程现在不拥有某个同步化变量但想要获得它,该进程就必须往该变量的当前拥有者发送一个消息,请求拥有权以及与该同步化变量相关的数据的当前值。也有可能在非互斥模式中,多个进程同时拥有某个同步化变量,它们可以读取但不能写有关的数据。<br />
+现在,我们就可以提出如下应满足的标准:</p>
+<ol type="1">
+<li>在一个进程对被保护的共享数据的所有更新操作执行完之前，不允许另一个进程执行对同步化变量的获取访问</li>
+<li>如果一个进程对某个同步化变量正进行互斥模式访问，那么其他进程就不能拥有该同步化变量，即使是非互斥模式也不行</li>
+<li>某个进程对某个同步化变量的互斥模型访问完成后，除非该变量的拥有者执行完操作，否则任何其他进程对该变量的下一个非互斥模型访问也是不允许的.</li>
+</ol>
+<p>第一个条件表示,当一个进程获得拥有权后,这种拥有权直到所有被保护的数据都已更新为止。换句话说,对被保护数据的所有远程修改都是可见的。第二个条件表示,在更新一个共享数据项之前,进程必须以互斥模式进入临界区,以确保不会有其他进程试图同时更新该共享数据。第三个条件表示,如果一个进程要以非互斥模式进入临界区,必须首先与该同步化变量的拥有者进行协商,确保临界区获得了被保护共享数据的最新副本。</p>
+<p>下图显示了一个名为<strong>入口一致性(entry
+consistency)</strong>的示例。在这个示例中,不是作用在整个共享数据上,而是把锁与每个数据项关联起来。在这种情况下,<span
+class="math display"><em>P</em><sub>1</sub></span>获得了x,修改x一次,然后在获得y。进程<span
+class="math display"><em>P</em><sub>2</sub></span>获得了x,但没有获得y,因此它可以从x读取值a,但如果读取y则为NIL。因为进程<span
+class="math display"><em>P</em><sub>3</sub></span>首先获得了y,所以当<span
+class="math display"><em>P</em><sub>1</sub></span>释放y时,P3可以读得值b。</p>
+<p>人口一致性的编程问题之一是,<strong>正确地把数据与同步化变量相关联</strong>。一种简单的方法是显式地告诉中间件将要访问哪个数据,就像声明哪个数据库表将被一个事务修改一样。在基于对象的方法中,我们可以隐式地把唯一的同步化变量与每个已声明的对象相关联,有效地串行化对该对象的所有调用。</p>
+<h3 id="一致性与相干性">一致性与相干性</h3>
+<p>至此,有必要澄清两个很有关联的概念的区别。到此为止,我们所讨论的模型都是用于处理在一个数据项集上进行读写操作的进程。<strong>一致性模型(consistency
+model)</strong>描述的是多个进程并发地作用于数据的数据集。如果该数据集遵守该模型描述的规则,那么就称之为一致性的。<br />
+数据一致性关注的是数据项集,而<strong>相干性模型(coherence
+model)</strong>关注的只是单个数据项(Cantin等2005)。在这种情况下,我们假设某个数据项在多个地方被复制,当各个副本遵守相干模型定义的规则时,我们称之为相干的。一种常见的模型是顺序一致性模型,现在只应用于单个数据项。它表示,在并发写数据的情况下,所有进程最终都将看到相同的更新顺序。</p>
+<h1 id="以客户为中心的一致性模型">以客户为中心的一致性模型</h1>
+<p>上一节讲述的一致性模型的目的在于从数据存储的角度提供系统级别的一致性。一个重要的假设是并发进程可能同时更新数据存储,而在发生这种并发更新时,必须提供一致性。例如,在基于对象的人口一致性的情况下,数据存储保证向调用对象的进程提供该对象的一个副本。这个副本可以反映出对该对象所做的所有改变,而这些改变可能是其他进程做出的。在调用的过程中,也可以保证其他的进程不会干扰调用,也就是说,向调用进程提供的是独占性访问。<br />
+维持共享数据的顺序一致性的同时能够处理共享数据上的并发操作,对于分布式系统而言是非常重要的。由于性能原因,可能只有当进程使用诸如事务处理和锁一类的同步机制时,系统才能保证顺序一致性。</p>
+<p>本节中,我们将讨论一类特殊的分布式数据存储。这里讨论的数据存储的特点是:不会出现同时发生的更新操作,或者当出现同时发生的更新操作时,可以容易地解决它们。大部分操作是读取数据的操作。我们将讨论的数据存储提供一种很弱的一致性模型,称为最终一致性。通过引人特殊的以客户为中心的一致性模型,事实证明,可以以一种开销相对低的方法隐藏许多不一致性。</p>
+<h2 id="最终一致性">最终一致性</h2>
+<p>进程实际以并发方式操作的程度与所需保证的一致性的程度可能不同。并发操作只以有限的形式出现的示例很多。例如,在许多数据库系统中,大多数进程几乎从不执行更新操作,而只从数据库读取数据,有时只有一个或少数几个进程会执行更新操作。那么,现在的问题是应该以多快的速度进行更新操作,才能使更新对只读进程有效。</p>
+<p>另一个示例是世界范围的命名系统,例如DNS。DNS名称空间被划分成域,每个域分配一个命名授权机构,由该命名授权机构担当这个域的所有者。只有授权机构才被允许更新名称空间中它所负责的部分。因此,这个系统根本不会出现两个更新相同数据的操作所导致的冲突(即,<strong>写-写操作冲突(write-write
+conflict)</strong>)。唯一需要处理的情况是<strong>读写操作冲突(read-write
+conflict)</strong>。事实证明,这种情况通常允许以懒惰方式传播更新操作,也就是说,读进程只有在更新操作执行一段时间后才能看到这个更新操作。<br />
+还有一个示例是WWW。实际上,在所有的情况下,Web页面是由单一的授权机构更新的,例如,Web站点管理员或页面的实际所有者。通常情况下,不存在需要解决的写写操作冲突的问题。但是,为了提高效率,通常配置浏览器和Web代理在本地高速缓存中保存一份已下载页面,并在用户下次请求该页面时返回高速缓存中的副本。两种类型的Web高速缓存都存在一个重要问题,那就是它们可能返回过时的Web页面。也就是说,与实际可从Web服务器获得的页面相比,向客户返回的高速缓存页面是一个较旧版本的页面。事实证明,许多用户认为这种不一致性是可接受的。</p>
+<p>这些示例可以看作是能容忍相对较高程度的不一致性的（大规模的）分布式复制的数据库的案例。它们的共同之处是，如果在一段很长的时间内没有更新操作，那么所有的副本将逐渐称为一致的。这种形式的一致性被称为<strong>最终一致性(eventual
+consistency)</strong>.</p>
+<p>因此,满足最终一致性的数据存储具有<strong>以下属性</strong>:没有更新操作时,所有副本逐渐成为相互完全相同的副本。最终一致性实际上只要求更新操作被保证传播到所有副本。如果假设只有一小部分进程可以执行更新,那么写写操作冲突就相对比较容易解决了。因此,最终一致性的实现通常开销比较小。<br />
+只要客户总是访问同一副本,最终一致的数据存储就会工作得很好。但是,当客户访问不同的副本时,问题就出现了。下图所示的移动用户访问分布式数据库的示例较好地描述了这一问题。</p>
+<p>移动用户是以透明的方式连接到一个数据库副本来访问数据库的,也就是说,运行在用户便携式计算机上的应用程序不知道它实际在哪个副本上进行操作。假设用户执行几个更新操作,然后断开了与数据库的连接。后来,他要再次访问数据库时,他可能移动到了其他位置,或者他可能使用不同的接入设备访问数据库。此时,用户可能连接到一个与上次连接不同的副本,如上图所示。然而,如果先前执行的更新操作还没有传播到这个副本,那么用户就会注意到这个不一致。特别是,他可能期望看到所有先前所做的改变,但是相反,他所看到的可能是好像根本没有做过任何改变一样</p>
+<p>对于最终一致性的数据存储而言,这个示例很有代表性。问题是由用户有时可能对不同的副本进行操作的事实引起的,引入<strong>以客户为中心的一致性(client-centric
+consistency)</strong>可以缓解这一问题。<strong>本质上,以客户为中心的一致性为单一的客户提供一致性保证,保证该客户对数据存储的访问的一致性。它并不为不同客户的并发访问提供任何一致性保证。</strong></p>
+<p>以客户为中心的一致性模型起源于关于Bayou的工作(请参见(Terry等1994,和Terry等1998))。
+Bayou是为移动计算开发的数据库系统,该系统假设网络连接是不可靠的,而且易于受到多种性能问题的影响。无线网络和跨越范围较广的网络,例如因特网,都属于这类网络。</p>
+<p>Bayou本质上区分了4种不同类型的一致性模型。为了解释这些模型,我们将再次讨论物理上分布于多台机器上的数据存储。当一个进程访问这个数据存储时,它通常连接到其本地(或最近)可用的副本上,尽管原则上任何副本都可以很好地为其提供数据。所有读写操作都是对这个本地副本进行操作。数据更新最终将被传播到其他副本。为了简化问题,我们假设数据项拥有一个关联的所有者,这个所有者就是那个唯一被允许修改该数据项的进程。通过这种方法,我们可以避免写写操作冲突。</p>
+<p>我们使用以下的标记法描述以客户为中心的一致性模型。设<span
+class="math display"><em>x</em><sub><em>i</em></sub>[<em>t</em>]</span>表示<span
+class="math display"><em>t</em></span>时刻本地副本<span
+class="math display"><em>L</em><sub><em>i</em></sub></span>中数据项<span
+class="math display"><em>x</em></span>的版本。初始化后,对<span
+class="math display"><em>L</em><sub><em>i</em></sub></span>中的<span
+class="math display"><em>x</em></span>进行一系列写操作将得到版本<span
+class="math display"><em>x</em><sub><em>i</em></sub>[<em>t</em>]</span>。我们将这些操作的集合记为<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub><em>i</em></sub>[<em>t</em>])</span>。如果在随后的<span
+class="math display"><em>t</em><sub>2</sub></span>时刻,<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub><em>i</em></sub>[<em>t</em><sub>1</sub>])</span>中的操作也已经在本地副本<span
+class="math display"><em>L</em><sub><em>i</em></sub></span>上执行完毕,那么我们记为<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub><em>i</em></sub>[<em>t</em><sub>1</sub>]; <em>x</em><sub><em>j</em></sub>[<em>t</em><sub>2</sub>]</span>)。如果从上下文环境可以清楚地判断出操作顺序或时间顺序,那么时间下标将被省略。</p>
+<h2 id="单调读">单调读</h2>
+<p>第一个以客户为中心的一致性模型是单调读的一致性模型。如果数据存储满足以下条件,那么称该数据存储提供<strong>单调读一致性(monotonic-
+readconsistency)</strong>:如果一个进程读取数据项x的值,那么该进程对x执行的任何后续读操作将总是得到第一次读取的那个值或更新的值.也就是说,单调读一致性保证,如果一个进程已经在t时刻看到x的值,那么以后它不再会看到较老版本的x的值。</p>
+<p>下面,我们讨论一个分布式的电子邮件数据库,作为应用单调读一致性的一个示例。在这个数据库中,每个用户的邮箱可能分布式复制于多台机器上。邮件可以被插入到在任何位置的邮箱中。但是,数据更新是以一种懒惰(即,按需更新)方式传播的。假设一个用户在旧金山读取他的邮件。假定只读取邮件不会影响邮箱,也就是说,消息不会被删除,不会被存储到子目录下,甚至不会被标记为已读。当用户飞到纽约后,再次打开他的邮箱时,单调读一致性可以保证当他在纽约打开他的邮箱时,邮箱中仍然有旧金山的邮箱里的那些消息。</p>
+<p>下图以图形的方式描述了单调读一致性,其中的标记法与以数据为中心的一致性模型所用的标记法相似。在垂直轴上,<span
+class="math display"><em>L</em><sub>1</sub></span>和<span
+class="math display"><em>L</em><sub>2</sub></span>表示数据存储的两个不同的本地副本。水平轴表示时间.</p>
+<p>在图中,进程P先在<span
+class="math display"><em>L</em><sub>1</sub></span>对x执行了一次读操作,得到值<span
+class="math display"><em>x</em><sub>1</sub></span>(在那一时刻)。该值是在<span
+class="math display"><em>L</em><sub>1</sub></span>执行的<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>1</sub>)</span>中的写操作的结果。后来,P在<span
+class="math display"><em>L</em><sub>2</sub></span>对x执行了一次读操作,即图中的<span
+class="math display"><em>R</em>(<em>x</em><sub>2</sub>)</span>。为了保证单调读一致性,<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>1</sub>)</span>中的所有操作都应该在执行第二个读操作前传播到L2。也就是说,我们需要确保<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>1</sub>)</span>是<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>2</sub>)</span>的一部分,记为<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>1</sub>; <em>x</em><sub>2</sub>)</span>。<br />
+与之相对照,图(b)表示不保证单调读一致性的情况。进程P在<span
+class="math display"><em>L</em><sub>1</sub></span>读取<span
+class="math display"><em>x</em><sub>1</sub></span>后,又在<span
+class="math display"><em>L</em><sub>1</sub></span>执行<span
+class="math display"><em>R</em>(<em>x</em><sub>2</sub>)</span>操作。然而,<span
+class="math display"><em>L</em><sub>2</sub></span>只执行了<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>2</sub>)</span>中的写操作。此时,不能保证集合<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>2</sub>)</span>同样包含<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>1</sub>)</span>中的所有操作.</p>
+<h2 id="单调写">单调写</h2>
+<p>在很多情况下,写操作以正确的顺序传播到数据存储的所有副本是非常重要的。这种性质被描述为单调写一致性。<strong>单调写一致性(monotonic-
+write
+consistency)</strong>的数据存储应满足以下条件:一个进程对数据项x执行的写操作必须在该进程对x执行任何后续写操作之前完成。<br />
+因而,完成一个写操作意味着不管后续操作的启动位置,执行这个后续操作的副本都能反映出同一进程先前执行的写操作的结果。也就是说,在数据项x的副本上执行的写操作只有在该副本已经通过任何先前的写操作进行更新之后才能被执行,而这些先前执行的写操作可能发生在x的其他副本上。<br />
+注意,单调写一致性与以数据为中心的FIFO一致性相似。<strong>FIFO一致性的本质是，同进程执行的写操作必须在任何地方以正确的顺序执行</strong>。这一顺序限制也适用于单调写致性,只是我们这里考虑的是仅为单一进程维持的一致性,而不是为许多并发进程维持的一致性。</p>
+<p>每个写操作完全覆盖x的当前值时,没有必要将x的副本更新为最新值。然而,写操作通常只修改数据项的部分状态。让我们来考虑一个软件库。在很多情况下,更新这种库是通过替换一个或多个函数来实现下一版本的。单调写一致性保证,如果在库的一个副本上执行数据更新,那么前面(在其他副本上)执行的所有数据更新都将首先执行。此后,所得的库将确实是最新版本的库,并将包括所有以前各个版本的更新。</p>
+<p>上图是单调写一致性的例子。图(a)中,进程P在本地副本<span
+class="math display"><em>L</em><sub>1</sub></span>对x执行一次写操作,记为操作<span
+class="math display"><em>W</em>(<em>x</em><sub>1</sub>)</span>。然后,进程P对x再执行一次写操作,但是这次是在<span
+class="math display"><em>L</em><sub>2</sub></span>处执行,如图中的<span
+class="math display"><em>W</em>(<em>x</em><sub>2</sub>)</span>。为了保证单调写一致性,先前在<span
+class="math display"><em>L</em><sub>1</sub></span>执行的写操作必须已经传播到<span
+class="math display"><em>L</em><sub>2</sub></span>。这就解释了图中<span
+class="math display"><em>L</em><sub>2</sub></span>处出现操作<span
+class="math display"><em>W</em>(<em>x</em><sub>1</sub>)</span>,以及它出现在<span
+class="math display"><em>W</em>(<em>x</em><sub>2</sub>)</span>之前的原因。<br />
+与之相对照,图(b)表示不保证单调写一致性的情况。与图(a)相比,图中没有向副本<span
+class="math display"><em>L</em><sub>2</sub></span>传播的<span
+class="math display"><em>W</em>(<em>x</em><sub>1</sub>)</span>。也就是说,它不能保证在x的副本上执行第二次写操作时,x的副本的值与执行完<span
+class="math display"><em>W</em>(<em>x</em><sub>1</sub>)</span>时的值相同或比之更新。</p>
+<p>注意,在单调写一致性的定义中,同一进程的写操作的执行顺序与这些操作的启动顺序相同。一个相对较弱的单调写形式是写操作的结果仅当所有先前的写操作也都已经执行完毕才能被看到，但是它们的执行顺序可能与这些操作的最初启动顺序不同。这种一致性可应用于写操作是可交换的情况，此时写操作的顺序的确是不必要的。</p>
+<h2 id="读写一致性">读写一致性</h2>
+<p>下面介绍一种与单调写一致性有密切关系的以客户为中心的一致性模型。如果数据存储满足以下条件,那么称该数据存储提供<strong>读写一致性(read-your-writes
+consistency)</strong>:一个进程对数据项x执行一次写操作的结果总是会被该进程对x执行的后续读操作看见。也就是说，一个写操作总是在同一个进程执行的后续读操作之前完成，而不管这个后续读操作发生在什么位置。</p>
+<p>在更新Web的HTML页面后浏览更新效果时,经常遇到缺乏读写一致性的情况。更新操作通常是通过标准的编辑器或文字处理器实现的,它们将新版本页面存储在Web服务器所共享的文件系统上。用户的web浏览器可能在它从本地Web服务器请求这个文件之后,再访问这个文件。但是,一旦文件已经被访问过,服务器或浏览器通常都会为以后的访问缓存一个本地副本。因此,当Web页面被更新时,如果浏览器或服务器返回高速缓存的副本而不返回原文件的话,用户将看不到更新的结果。读写一致性可以保证,如果编辑器和浏览器被集成到一个单一的程序中,那么页面更新后,高速缓存是无效的,所以将获取和显示被更新的文件。<br />
+更新密码时也会出现相同的情况。例如,Web上的电子图书馆通常要求输入账号和相应的密码。但是,密码的修改可能需要一些时间才能生效,这可能导致用户有几分钟的时间不能进入图书馆。这种延迟可能是由于系统使用一个单独的服务器管理密码,而加密的密码传播到图书馆的多个服务器可能需要一定时间造成的。</p>
+<p>图(a)表示了一个提供写读一致性的数据存储。注意,图(a)与之前单调读非常相像,只是这里的一致性是通过进程P执行的最后一次写操作确定的,而不是通过进程P的最后一次读操作确定的。<br />
+在图(a)中,进程P执行了一次写操作<span
+class="math display"><em>W</em>(<em>x</em><sub>1</sub>)</span>,然后在一个不同的本地副本处执行了一次读操作。读写一致性保证,写操作的结果可以被所有后续的读操作看到。这一过程表示为<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>1</sub>; <em>x</em><sub>2</sub>)</span>,它表示<span
+class="math display"><em>W</em>(<em>x</em><sub>1</sub>)</span>是<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>2</sub>)</span>的一部分。与之相对照,在图(b)中,<span
+class="math display"><em>W</em>(<em>x</em><sub>1</sub>)</span>不在<span
+class="math display"><em>W</em><em>S</em>(<em>x</em><sub>2</sub>)</span>之中,这意味着进程P执行的前一个写操作的结果还没有传播到。</p>
+<h2 id="写读一致性">写读一致性</h2>
+<p>最后一种以客户为中心的一致性模型是这样的模型,即更新是作为前一个读操作的结果传播的。如果数据存储满足以下条件,那么称该数据存储提供<strong>写读一致性(writes-follow-reads
+consistency)</strong>:同一个进程对数据项x执行的读操作之后的写操作,保证发生在与x读取值相同或比之更新的值上。<br />
+也就是说,进程对数据项x所执行的任何后续的写操作都会在x的副本上执行,而该副本是用该进程最近读取的值更新的。</p>
+<p>写读一致性可以用于保证,网络新闻组的用户只有在已经看到原文章之后才能看到它的回应文章。为了理解这个问题,我们假设一个用户先读了一篇文章A.然后,他回应了一篇文章B。通过要求保证写读一致性,B被写入新闻组的任何副本之前,A也必须已经被写入那个副本。注意,只读取文章的用户不需要任何特定的以客户为中心的一致性模型。读写一致性保证,当且仅当原文章存储在某个本地副本上时,该文章的回应文章才被存储在这个本地副本上。</p>
+<p>上图表示了这种一致性。在图(a)中,一个进程在本地副本<span
+class="math display"><em>L</em><sub>1</sub></span>处读取x。写入刚才所读取值的写操作也出现在<span
+class="math display"><em>L</em><sub>2</sub></span>处的写操作集合中。稍后,同一进程在<span
+class="math display"><em>L</em><sub>2</sub></span>处执行了一次写操作。注意,<span
+class="math display"><em>L</em><sub>2</sub></span>处的其他进程也看到了那些写操作。而图(b)中的数据存储无法保证<span
+class="math display"><em>L</em><sub>2</sub></span>处执行的操作是在与L1处所读的那个副本一致的副本上执行的。</p>
+<h1 id="复制管理">复制管理</h1>
+<p>对任何支持复制的分布式系统来说，一个关键的问题是决定何处、何时、由谁来放置副本，以及用何种机制来保持副本的一致性。副本放置的问题本身又要分成两个子问题：副本服务器放置问题和内容放置问题。这两者之间的差别很微妙但很重要，且这两个问题的界线往往不是很清楚。副本服务器的放置关心的是，找到放置托管（部分）数据存储的服务器的最佳位置。内容放置负责找到放置内容的最佳服务器。注意，这往往意味着，我们所找寻的是单个数据项的最佳位置。显然，在内容放置发生之前，必须先放置副本服务器。接下来将介绍这两种不同的放置问题，然后讨论管理被复制内容的基本机制。</p>
+<h2 id="副本服务器的放置">副本服务器的放置</h2>
+<p>副本服务器的放置问题之所以没有被集中地研究,其原因很简单,它往往更多的是管理和商业问题而不是优化问题。然而,对客户和网络属性的分析有助于做出决策。</p>
+<p>计算副本服务器的最佳位置的方法有很多,但都要归结到优化问题,其中,需要从N个位置中选出K个来(K&lt;N)。这些问题是计算复杂性的,只能通过探索式求解。(Qiu等2001)以客户与位置之间的距离作为起点。距离可以通过延时或带宽来度量。假定已放置了k个服务器(即还剩<span
+class="math display"><em>N</em> − <em>k</em></span>个位置),该解决方法在某个时间里选取一个服务器,使得服务器与其客户之间的平均距离最小。<br />
+(Radoslavov等2001)提出的另一种方法是忽略客户的位置,只采用由自治系统形成的因特网拓扑。把<strong>自治系统(autonomous
+systen,AS)</strong>看作为一个网络是最好不过了,其中,所有结点都运行相同的路由协议,该协议由单个组织来管理。到2006年1月为止才20000个自治系统。
+Radoslavov等首次考虑了最大的自治系统,在含有最大数量的网络接口(即链接)的路由器上放置一台服务器。然后,对第二大的自治系统反复使用该算法,以此类推。<br />
+事实证明,假定客户均匀地分布在因特网中(与现有的拓扑结构有关),对客户不敏感的服务器的放置可以获得与对客户敏感的服务器的放置类似的结果。这种假设在多大程度上为真的并不清楚。人们仍没有很好地研究它.</p>
+<p>这些算法的一个问题是,它们的计算代价高。例如,前面两种算法的复杂度都高于<span
+class="math display"><em>O</em>(<em>N</em><sup>2</sup>)</span>,其中<span
+class="math display"><em>N</em></span>为要查看的位置点。在实践中,这意味着,即使是几千个位置点,一个计算可能就需要运行几十分钟。这是不可接受的,特别是在出现<strong>瞬时拥塞(flash
+crowds)</strong>(即对某个站点有一个突然的高峰请求,这在因特网中是经常发生的)时。在这种情况下,快速地确定副本服务器的位置很重要,然后就可以为内容放置选择一个特定服务器。</p>
+<p>(Szymaniak等2006)开发了一种方法,利用这种方法,可以快速地标识放置副本的一个区域。一个区域被标识为访问相同内容的结点集,且结点之间的延时小。这种算法的目标是首先选择最能满足需要的区域,即具有最多结点的,然后让该区域中的某个结点作为副本服务器。</p>
+<p>最后,设想在m维空间中定位结点,正如前面所介绍的那样。其基本思想是,标识K个最大集群,把每个集群中的结点赋给托管已复制内容。要标识这些集群,可以把整个空间划分为多个单元。选择K个密度最大的单元放置副本服务器。一个单元就是一个m维的超立方体。对二维空间来说,它对应的是一个长方形。<br />
+显然,单元的大小很重要,如图所示。如果单元选择过大,那么会有多个结点的集群包含在同一个单元中。在这种情况下,为这些集群选择的副本服务器就会太少了。另方面,单元过多,又会导致选择了太多的副本服务器。</p>
+<p>事实证明,合适的单元大小可以以一个简单的函数形式来计算,该函数计算两结点之间的距离,以及所需副本的数量。可以证明,有了单元的大小,该算法的性能与近似最佳算法的同样好(Qiu等2001),而且复杂性要低得多,为<span
+class="math display"><em>O</em>(<em>N</em> × <em>m</em><em>a</em><em>x</em>log(<em>N</em>), <em>K</em>)</span>。实践表明,为64000个结点计算20个最佳副本放置点大约需要50,000次。因此,副本服务器的放置可以实时完成。</p>
+<h2 id="内容复制与放置">内容复制与放置</h2>
+<p>让我们把视线从服务器放置转移到内容放置上来。有关内容复制与放置，从逻辑上可以组织为三种不同类型的副本，如下图所示。</p>
+<h3 id="永久副本">永久副本</h3>
+<p>永久副本可以被视为构成分布式数据存储的副本的初始集。很多情况下,永久副本的数量很小。以Web站点为例。一个Web站点的分布通常采用以下两种形式之一。第一种形式的分布是,在单个位置的有限数量的服务器上复制构成站点的文件。一旦接收到请求,就将该请求转发到其中一台服务器,例如,使用循环提示器策略来进行转发。<br />
+分布式Web站点的第二种形式是<strong>镜像(mirroring)</strong>。在这种情况下,Web站点被复制到有限数量的服务器上,这些服务器称为<strong>镜像站点(mirror
+site)</strong>,它们在地理上散布于因特网之中。在很多情况下,客户只是从提供给他们的镜像站点列表中选择一个镜像站点。被镜像的站点与基于群集的Web站点有共同之处,即站点只有少量的副本,而这些副本或多或少是使用静态配置的。</p>
+<p>相似的静态组织方式也出现在分布式数据库中。同样,数据库可以被分布地复制在很多服务器上,这些服务器一起形成服务器群通常称之为<strong>无共享体系结构(shared-nothing
+architecture)</strong>,该体系结构强调处理器既不共享磁盘也不共享内存,另外,数据库也可能分布地被复制在地理上分散的几台服务器上。在联合数据库中通常部署这种体系结构。</p>
+<h3 id="服务器启动的副本">服务器启动的副本</h3>
+<p>与永久副本相对,服务器启动的副本是为提高性能而存在的数据存储的副本,该副本是在初始化数据存储的所有者时创建的。例如,位于纽约的一个Web服务器就是这样的般,这台服务器可以相当方便地处理输入的请求,但是可能发生以下情况:它突然在几天内接收到来自远离服务器的意外位置的大量请求(最近的Web历史中已经在一些场合出现过这种突发大量请求情况)。在这种情况下,在产生请求的地区安装一些暂时副本可能是值得的。</p>
+<p>Web托管服务解决了动态放置副本的问题。这些服务在本质上提供了一个散布于因特网的(相对静态的)服务器集。这些服务器可以维护属于第三方的web文件,并提供对这些文件访问。为了提供优化的功能,这些托管服务可以动态地把文件复制到需要这些文件以提高性能的服务器,也就是接近发出请求的客户的服务器那里。</p>
+<p>服务器启动的副本的一个问题是决定创建或删除副本的确切位置和时间。(Rabinovich等1999)描述了一种Web托管服务中实现文件动态复制的方法。设计该算法的目的是为了支持Web页面可在哪些原因下假设更新的个数与读请求的个数相比相对较少。该算法使用文件作为数据单元,其工作方式如下所述。<br />
+动态复制的算法需要考虑两个问题。第一,复制可能是为了减轻一台服务器的负载而进行的;第二,一台服务器上的指定文件可能被转移或复制到对这些文件提出很多请求的客户附近的服务器。下面,我们只集中考虑第二个问题。我们也不考虑一些细节问题,关于这些细节问题请见(Rabinovich等1999).</p>
+<p>每台服务器跟踪每个文件的访问计数以及提出这些访问请求的位置。特别是,假设对于一个给定的客户C,每台服务器都可以确定Web托管服务中的哪台服务器最靠近C(例如,可以从路由数据库获得这一信息)。如果客户端C1和客户端C2共享最靠近的服务器P,那么所有来自C1和C2对服务器Q的文件F的访问请求一起被Q记入单一的访问计数cntQ(P,F)之中。下图显示了这种情形。</p>
+<p>当对服务器S上的指定文件F的请求数量下降到删除阈值del(S,F)之下时,服务器S可以删除该文件。因而,该文件的副本的数目减少了,这可能导致其他服务器的工作负载增加。可采用特殊的方法来保证每个文件至少仍存在一个副本。<br />
+复制阈值rep(S,F)指出对指定文件的请求数量过高,以至于值得将该文件复制到另一台服务器上。通常所选择的复制阈值比删除阈值高。如果请求的数量位于删除阈值和复制阈值之间,那么只允许转移该文件。也就是说,在这种情况下,至少保持该文件的副本的个数不变,这一点是十分重要的。</p>
+<p>当服务器Q决定重新评估它存储的文件的位置时,它检查每个文件的访问计数。如果服务器Q上文件F的访问请求的总数低于删除阈值del(Q,F),那么它将删除F,除非F是最后一个副本。此外,如果对于某台服务器P,cntQ(P,F)超过Q上F的请求总数的半数以上,服务器Q请求服务器P接管F的副本。也就是说,服务器Q将试图把F转移到P。</p>
+<p>向服务器P转移文件F不可能总能成功。例如,因为P的负载总是很重或者P没有磁盘空间就会造成文件转移不成功。在这种情况下,Q将试图在其他服务器上复制F。当然,只有对Q上的F的访问请求的总数超过复制阈值rep(Q,F)时才会发生复制。服务器从Web托管服务中最远的服务器开始,检查其中所有的服务器。如果对于某台服务器R,cntQ(R,F)超过对Q上的F的所有请求,并达到某个比例,Q就会试图把F复制到R.</p>
+<p>服务器启动的复制正在逐渐地流行起来,特别是在上面介绍的Web托管服务的环境下。注意,只要可以保证每个数据项至少由一台服务器托管,那么只使用服务器启动的复制而不使用任何永久副本就足够了。然而,永久副本仍常常用作备份工具或用作允许被修改以保证一致性的唯一副本,而服务器启动的副本则被用于在客户附近放置只读副本.</p>
+<h3 id="客户启动的副本">客户启动的副本</h3>
+<p>一类重要的副本是在客户初始化时创建的副本。普遍将客户启动的副本称为<strong>客户高速缓存(Client
+cache)</strong>。其实,高速缓存是一种本地存储工具,客户使用它暂时存储刚刚请求的数据的副本。在原则上,高速缓存的管理是完全由客户负责的。客户从中获取数据的数据存储不负责保持高速缓存数据的一致。然而,如同我们所看到的,在很多情况下,客户可能要依靠数据存储通知它被缓存的数据什么时候过时。</p>
+<p>客户高速缓存只用于改善数据的访问时间。通常,当一个客户想要访问某些数据时,它连接该数据存储的最近的副本,从该副本获得它想读取的数据,或者将它刚刚修改的数据写入该副本。当大部分操作仅是读取数据时,客户在附近的高速缓存中存储所请求的数据可以提高性能。这个高速缓存可以位于客户所在的机器中,也可以位于客户所在局域网中的另一台单独的机器中。下一次需要读取该数据时,客户可以简单地从这个本地高速缓存中获得数据。只要读取所获得的数据时,数据没有被改变,这种模式会工作得很好。</p>
+<p>例如,通常数据将在高速缓存中保存一段有限的时间,这样做是为防止使用完全过时的数据,或只是为其他数据腾出空间。当被请求的数据可以从本地副本获得时,我们称其为<strong>高速缓存命中(cache
+hit)</strong>。为了提高高速缓存命中数量,可以让多个客户共享高速缓存。其基本假设是来自客户C1的数据请求可能也对来自客户C2附近的其他客户的请求有用。<br />
+这一假设的正确性在很大程度上取决于数据存储的类型。例如,传统文件系统几乎不共享文件,这使得共享高速缓存毫无意义。同样,事实证明,使用Web高速缓存来共享数据已失去市场了,部分原因是由于网络和服务器性能的提高。</p>
+<p>客户高速缓存的放置也相对简单:通常将高速缓存放置在客户所在的机器上,或者将其放置在客户所在的局域网上由各个客户共享的机器上。然而,在某些情况下,系统管理员会引入更高级的高速缓存。他们在一些部门或组织之间放置共享高速缓存,或者甚至在整个地区,例如省或国家内放置共享高速缓存。</p>
+<p>另一种方法是在广域网的几个特定点放置高速缓存服务器,让客户查找距离最近的服务器。当客户查找到最近的服务器后,它请求这台服务器保留它先前从其他服务器获得的数据的副本。我们将在本章后面讨论一致性协议时再继续讨论缓存问题。</p>
+<h2 id="内容分发">内容分发</h2>
+<p>复制管理还负责（已更新）内容往相关副本服务器上的传播。这是有代价的，稍后我们将介绍。</p>
+<h3 id="状态与操作">状态与操作</h3>
+<p>一个重要的设计问题是将要实际传播哪些信息。基本上有三种可能:</p>
+<ol type="1">
+<li>只传播更新的通知;</li>
+<li>把数据从一个副本传送到另一个副本;</li>
+<li>把更新操作传播到其他副本。</li>
+</ol>
+<p><strong>无效化协议(invalidation
+protocol)</strong>使用传播通知方式。无效化协议通知其他副本已发生了更新操作,这些副本所包含的数据不再有效。无效化消息可以指定数据存储的哪些部分被更新了,那么实际上只有部分副本是无效的。重要的问题是只传播一个通知而不传播别的消息。每当请求在无效的副本上执行操作时,一般需要先根据数据存储支持的特定的一致性模型更新那个副本。<br />
+无效化协议的主要优点是它几乎不占用网络带宽。所需传送的唯一信息是关于哪些数据不再有效的说明。当更新操作与读操作相比较多时,也就是说,读写比率相对很小时,这种协议通常工作得非常好。</p>
+<p>例如,在一个数据存储中,更新是通过向所有副本发送被修改的数据传播的。如果被修改的数据很多,并且更新操作与读操作相比发生得更频繁,那么我们可能遇到以下情况:接连发生两个更新操作,而这两个更新操作之间没有读操作。因而,第一次向所有副本传播的更新实际上是无用的,因为它将被第二个更新操作的结果覆盖。相反,在这种情况下,发送数据已被修改的通知可能更加高效。</p>
+<p>在多个副本间传送被修改的数据是第二种选择,在读对写比率相对较高时,这种方法十分有用。在这种情况下,更新是有效的可能性较高,因为从某种意义上来说,被修改的数据会在下一个更新操作发生前被读取。不传播被修改的数据,而将这些修改记入日志,然后仅传送那些日志以节约带宽也是可以的。另外,更新经常是通过将多个修改压缩到一个消息中的方式被组合传送的,从而减少通信开销。</p>
+<p>第三种方法根本不传送任何数据修改,而告诉每个副本它应该执行的更新操作,这种方法又称为<strong>主动复制(active
+replication)</strong>。它假设每个副本由一个进程代表,该进程能够通过执行操作来“主动地”保持它所关联的数据为最新的数据(Schneider1990)。主动复制的主要优点是假设一个操作所关联的参数相对较少,传播更新的带宽代价通常可以达到最小。另一方面,每个副本可以获得更多的处理能力,在操作相对复杂的情况下更是如此。</p>
+<h3 id="拉协议与推协议">拉协议与推协议</h3>
+<p>另一个设计问题是,更新是拉式的还是推式的。<strong>基于推式的方法(push-based
+approach)</strong>又称为<strong>基于服务器的协议(server-based
+protocol)</strong>。在这种方法中,甚至不需要其他副本请求更新,这些更新就被传播到那些副本那里。永久副本和服务器启动的副本之间通常使用基于推式的方法。基于服务器的协议应用于多个副本常常需要维持相对较高程度的一致性的时候,也就是说,当副本需要保持完全相同的时候。</p>
+<p>需要保持较高程度的一致性是基于这样一个事实:通常有许多客户共享永久副本和服务器启动的副本,以及较大的共享的高速缓存,而这些客户轮流地执行操作,主要执行读操作。因而,每个副本上读与更新之比率相对较高。在这些情况下,基于推式的协议是高效的,因为每个被推的更新可以对一个或更多读程序有用。另外,基于推式的协议使一致的数据在被请求时立即有效。</p>
+<p>相反,在<strong>基于拉式的方法(pull-based
+approach)</strong>中,一台服务器或客户请求其他服务器向它发送该服务器此时持有的任何更新。基于拉式的协议,又称为<strong>基于客户的协议(client-based
+protocol)</strong>,通常被用于客户高速缓存。例如,Web高速缓存使用的一种通用策略是先检查被缓存的数据项是否仍然是最新的。当高速缓存接收到对数据项的请求,而该数据项仍对本地有效的时候,高速缓存查看原始的Web服务器,以确定那些数据项自从被缓存后是否被修改过。如果那些数据项被修改过,那么被修改的数据首先被传送到高速缓存,然后才被返回给请求数据的客户。如果那些数据项没有被修改过,那么就向客户返回被缓存的数据。也就是说,客户轮询服务器以查看是否需要更新高速缓存.</p>
+<p>在读与更新之比率相对较低时,基于拉式的方法是高效的。非共享的客户高速缓存通常属于这种情况,此时客户高速缓存只有一个客户。然而,即使在许多客户共享一个高速缓存,在被缓存的数据项很少被共享时,也可证明基于拉式的方法是高效的。与基于推式的方法相比,基于拉式的策略的主要缺点是在高速缓存没有命中时,响应时间会增大.</p>
+<p>比较基于推式的方法和基于拉式的方法时,需要做出一些权衡,如下表所示。简单起见,我们以一个客户服务器系统为例,该系统由一个单一的、非分布式的服务器和一些客户进程构成,每个客户进程都有它们自己的高速缓存。</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>基于推式</th>
+<th>基于拉式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务器的状态</td>
+<td>客户副本和高速缓存的列表</td>
+<td>无</td>
+</tr>
+<tr>
+<td>发送的消息</td>
+<td>更新(以及以后可能获取的更新)</td>
+<td>轮询和更新</td>
+</tr>
+<tr>
+<td>客户响应时间</td>
+<td>立即(或获取更新的时间)</td>
+<td>获取更新的时间</td>
+</tr>
+</tbody>
+</table>
+<p>基于推式的协议中的一个重要问题是服务器需要跟踪所有的客户高速缓存。状态较多的服务器不但通常缺少容错能力,而且跟踪所有的客户高速缓存也可能在服务器端引入相当大的额外开销。例如,在基于推式的方法中,Web服务器可能需要跟踪数以万计的客户高速缓存。每次Web页面被更新时,服务器将需要遍历持有该页面的副本的客户高速缓存的列表,然后向这些客户高速缓存传播更新。但是更糟的是,如果客户由于缺少空间而清除了一个页面,那么它必须通知服务器,这又导致了更多的通信.<br />
+在这两种方法中,需要在客户和服务器之间发送的消息也有所不同。在基于推式的方法中,唯一的通信是服务器向每个客户发送更新。当更新实际上仅是无效化消息时,客户需要进行其他通信以获取被修改的数据。在基于拉式的方法中,客户必须轮询服务器,并在必要时获取被修改的数据<br />
+最后,在两种方法中客户响应时间也是不同的。当服务器将被修改的数据推入客户时,客户的响应时间显然是0。当推入无效化消息时,响应时间与基于拉式的方法中的响应时间相同,该响应时间由客户从服务器获取被修改的数据的时间决定。</p>
+<p>这些代价权衡导致出现了一种更新传播的混合形式————<strong>基于租用的更新传播</strong>。<strong>租用(lease)</strong>是服务器所作的承诺,它将在指定的时间内把更新推给客户。当租用到期时,客户被迫轮询服务器以实现更新,并在必要时拉出被修改的数据。另一种方法是在前一个租用到期时,客户请求一个新的租用以实现更新的推入。</p>
+<p>租用的概念最初是由Gray和Cheriton(1989)提出的。这是他们为基于推式的策略和基于拉式的策略之间的动态转换提供的一种便利机制。(Duvyuri等2000)描述了一种灵活的租用系统,该系统允许租用期限根据不同租用标准动态调整。他们对以下三种类型的租用进行区分(注意,在所有的情况下,只要租用没有到期,更新都是由服务器负责推入的)。</p>
+<p>首先,是一种基于数据项“年龄”的租用,数据项的“年龄”取决于该数据项最后一次被修改后的延续时间。其基本假设是长时间内未被修改的数据可能会在将来的一段时间内仍不会被修改。基于Web的数据已表明这一假设是合理的。与所有租用具有相同过期时间的方式相比,为预期保持不变的数据项授予一个长期的租用可以使更新消息的个数大大地减少。<br />
+另一种租用是基于特定客户请求更新高速缓存副本的频率的租用。使用基于更新频率的租用时,服务器将为需要经常刷新其高速缓存的客户分配一个长期的租用,而为只偶尔请求特定数据项的客户分配一个使用该数据项的短期租用。该策略的效果是服务器基本上只跟踪其数据受欢迎的那些客户,此外,那些客户端也被提供了较高程度的一致性。<br />
+最后一种租用是基于服务器的状态空间开销的租用。当服务器意识到它会逐渐过载时,它会降低分配给客户的新租用的使用期限。这一策略的效果是服务器需要跟踪的客户变少,这是因为租用到期很快。也就是说,服务器动态地转换到一个状态较少的操作模式从而减轻了服务器负载以使其可以更高效地处理请求。</p>
+<h3 id="单播与多播">单播与多播</h3>
+<p>与推式更新或拉式更新相关的一个问题是决定应使用单播还是多播。在单播通信中,当作为数据存储的一部分的服务器向其他N台服务器发送其更新时,它通过发送N个单独的消息实现,即向每台服务器发送一个消息。使用多播通信时,底层的网络负责向多个接收者高效地发送一个消息。<br />
+在很多情况下,使用可用的多播工具是比较廉价的。一种极端的情况是所有副本都位于同一个局域网,此时,硬件广播是可用的。在这种情况下,广播或多播一个消息的开销并不比一个单一的点对点消息传送开销大。但单播更新的效率会较低。</p>
+<p>与基于推式的方法结合时,多播常常可以高效地传播更新。在这种情况下,一个决定向其他一些服务器推出更新的服务器仅使用一个单一的多播组来发送它的更新。相反,使用基于拉式的方法时,通常只有一个单一的客户或服务器请求更新其副本。在这种情况下,单播可能是最高效的方法</p>
+<h1 id="一致性协议">一致性协议</h1>
+<p>到目前为止,我们的注意力主要集中在各种一致性模型和一致性协议的一般设计问题。本节我们通过几个一致性协议的示例来集中讨论一致性模型的实际实现。<strong>一致性协议(consistency
+protocol)</strong>描述了特定一致性模型的实现。我们按照有关一致性模型的组织结构,先介绍以数据为中心的模型,然后介绍以客户为中心的模型。</p>
+<h2 id="持续一致性-1">持续一致性</h2>
+<p>作为关于持续一致性工作的一部分，Yu和Vahdat还开发了一些处理三种一致性的协议。下面我们将简要介绍一些解决方法，为清楚起见，省去了一些细节内容。</p>
+<h3 id="限定复制的数字偏差">限定复制的数字偏差</h3>
+<p>我们首先来看一种把数值偏差限定在一定范围内的解决方法。这里的目的同样不是深入每个协议的细节,而是给出一般的思想。</p>
+<p>我们来看看往单个数据项x写数据的操作。每个写操作W(x)都有一个相关的权重,表示一个用于更新x的数值,记作weight(W(x)),或简写为weight(w)。为简单起见,我们假设weight(W)&gt;0。开始时,每个写操作W被提交给N个可用副本服务器之中的一个服务器,在这种情况下,该服务器就成为了该写操作的源,记作origin(W)。当我们在某个特定的时间考察系统时,可以看到会有多个已提交的写操作需要传播给所有服务器。最后,每个服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>会保持一个写操作日志<span
+class="math display"><em>L</em><sub><em>i</em></sub></span>,该日志记录了服务器在其本地副本x上执行的写操作。<br />
+设如下的TWL[i,j]是源自服务器<span
+class="math display"><em>S</em><sub><em>j</em></sub></span>并由服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>运行的写操作:<br />
+<span class="math display">$$
+\mathrm{TW}[i,j]=\sum{\mathrm{weight}(W)\vert\mathrm{origin}(W)=S_j&amp;W\in
+L_i}
+$$</span></p>
+<p>注意,Tw[i,j]表示的是提交给<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>的总的写操作。我们的目标是,对任意时间t,使得服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>的当前值<span
+class="math display"><em>v</em><sub><em>i</em></sub></span>在数据项x的实际值<span
+class="math display">v(<em>t</em>)</span>的一定范围内发生偏差。该实际值完全由所有已提交的写操作来确定。即,如果v(0)是x的初始值,那么<br />
+<span
+class="math display">$$v(t)=v(0)+\sum_{k=1}^{N}\mathrm{TW}[k,k]$$</span><br />
+<span
+class="math display">$$v_i=v(0)+\sum_{k=1}^N\mathrm{TW}[i,k]$$</span><br />
+注意,其中<span
+class="math display"><em>v</em><sub><em>i</em></sub> ≤ <em>v</em>(<em>t</em>)</span>。这里我们只关注绝对偏差。特别地,对每个服务器S,指定一个限<span
+class="math display"><em>δ</em></span>,这样就需要确保<span
+class="math display"><em>v</em>(<em>t</em>) − <em>v</em><sub><em>i</em></sub> ≤ <em>δ</em></span></p>
+<p>提交给服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>的写操作需要传播给其他所有服务器。这里有不同的方法来完成,其<br />
+中,感染协议可以实现更新的快速传播。在任何情况下,当服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>把来自<span
+class="math display"><em>S</em><sub><em>j</em></sub></span>的一个写操作<br />
+传播给<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>时,<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>可以知道写操作发送时的值TW[i,j]。换句话说,<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>可以维护一个视图<br />
+<span
+class="math display">TW<sub><em>k</em></sub>[<em>i</em>, <em>j</em>]</span>,它相信<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>会有一个Tw[i,j]值。显然,<br />
+<span
+class="math display">0 ≤ TW<sub><em>k</em></sub>[<em>i</em>, <em>j</em>] ≤ TW[<em>i</em>, <em>j</em>] ≤ TW[<em>j</em>, <em>j</em>]</span></p>
+<p>整个思想是,当服务器<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>知道<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>与提交给<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>的更新操作步调不一致时,它就把写操作<br />
+从其日志中转发给<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>。该转发操作可以有效地把<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>的视图<span
+class="math display">TW<sub><em>k</em></sub>[<em>i</em>, <em>k</em>]</span>往<span
+class="math display">TW[<em>i</em>, <em>k</em>]</span>靠近,使得偏差<span
+class="math display">(TW[<em>i</em>, <em>k</em>] − TW<sub><em>k</em></sub>[<em>i</em>, <em>k</em>])</span>更小。尤其是当应用程序提交一个新的写操作时,<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>会把其视图往<span
+class="math display">TW[<em>i</em>, <em>k</em>]</span>推进,这将使得<span
+class="math display">(TW[<em>i</em>, <em>k</em>] − TW<sub><em>k</em></sub>[<em>i</em>, <em>k</em>])</span>大于<span
+class="math display"><em>δ</em>/(<em>N</em> − 1)</span>。本章后面有个练习,证明这种推进可以确保<span
+class="math display"><em>v</em>(<em>t</em>) − <em>v</em><sub><em>i</em></sub> ≤ <em>δ</em></span>。</p>
+<h3 id="限定复制的新旧程度偏差">限定复制的新旧程度偏差</h3>
+<p>有很多种方法把副本的新旧程度限定在指定的范围内。一种简单的方法让服务器<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>保持一个实时的向量时钟<span
+class="math display">RVC<sub><em>k</em></sub></span>,其中,<span
+class="math display">RVC<sub><em>k</em></sub>[<em>i</em>] = <em>T</em>(<em>i</em>)</span>意为到时间T(i)时,<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>看到了已提交给<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>的所有写操作。在这种情况下,我们假定每个已提交的写操作由其初始服务器添加时间戳,T(i)表示的是<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>的本地时间。</p>
+<p>如果副本服务器之间的时钟是松散同步化的,那么一个可接受的限定新旧程度的协议是这样的:只要服务器<span
+class="math display"><em>S</em><sub><em>k</em></sub></span>通知<span
+class="math display"><em>T</em>[<em>k</em>] − RVC<sub><em>k</em></sub>[<em>i</em>]</span>将超出指定的界限,那么它就开始拉入来自<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>的时间戳晚于<span
+class="math display">RVC<sub><em>k</em></sub>[<em>i</em>]</span>的写操作.</p>
+<p>注意,在这种情况下,副本服务器按照在其他地方发出的写操作,负责使其x的副本保持为最新的。相反,当要维护数值界限时,使用的是一个推方法,通过转发写操作来让原始服务器使副本保存为最新的。在限定新旧程度的情况下,推写操作的问题是,当事先不知道最大的传播时间时,无法保证一致性。这种情况可以通过拉入更新得到改善,因为多个服务器有助于使服务器的x的副本保持为最新的。</p>
+<h3 id="限定顺序偏差">限定顺序偏差</h3>
+<p>在持续一致性中,顺序偏差是由以下事实引起的:副本服务器会暂时性地应用已提交给它的更新。因此,每个服务器都有一个暂时写操作的本地队列,这些写操作应用到x的本地副本中的顺序还需确定。通过指定暂时写操作队列的最大长度,就可以限定顺序偏差.</p>
+<p>因此,检测何时需要执行顺序一致性很简单:当本地队列的长度超过指定的最大长度时。此时,服务器不再接受任何新提交的写操作,而是按照应执行的写操作的顺序,通过与其他服务器协商,尝试提交暂时写操作。换句话说,就是需要执行一个暂时写操作的全局一致的顺序。要这样做有很多种方法,但在实践中使用较多的是基于主备份的协议和基于法定数量的协议。下面我们来讨论这些协议。</p>
+<h2 id="基于主备份的协议">基于主备份的协议</h2>
+<p>在实践中,我们可以看到,分布式应用程序所遵循的一致性模型往往是相当容易理解的。这些模型包含有用于限定新旧偏差的模型,以及用于限定数值偏差的模型。关于处理操作的一致顺序的模型,顺序一致性,尤其是其操作可以通过加锁或事务来分组的模型很流行。<br />
+对应用程序开发人员来说,一致性模型一旦变得稍微有些难以理解,即使性能可以提高,它们也会被忽视。这里的底线是,如果一致性模型的语义直观上不清楚,应用程序开发人员要构建正确的应用程序就很困难。简单性是值得肯定的(合理性大概也是如此)。<br />
+事实证明,在顺序一致性中,基于主备份的协议比较盛行。在这些协议中,数据存储中的每个数据项有一个相关的主备份,该主备份负责协调在x上的写操作。根据主备份是否固定在一个远程服务器上,还是将主备份移动到启动写操作的进程那里之后写操作是否可在本地执行,可以区分各种基于主备份的协议。下面我们来看看这类协议。</p>
+<h3 id="远程写协议">远程写协议</h3>
+<p>支持复制的基于主备份的最简单协议是一种所有读操作和写操作都转发给单个固定的远程服务器的协议。读操作可以在本地执行。这种方案又称为<strong>主备份协议(primary-backup
+protocol)</strong>。主备份协议的工作原理如下图所示。要在数据项x上执行一个写操作的进程,会把该操作转发给x的主服务器。该主服务器在其x的本地副本上执行更新操作,随后把该更新转发给备份服务器。每个备份服务器也执行这个更新操作,并往主服务器回送一个确认消息。当所有备份服务器都更新了它们的本地副本后,主服务器回送一个确认消息给初始进程。</p>
+<p>这种方法存在一个潜在的性能问题,就是启动更新的进程在被允许继续执行前,可能需要等待相对较长的时间。实际上,在这种方法中,更新是以一种阻塞操作的方法来实现的。另一种方法是使用非阻塞的方法。只要主服务器已经更新了其x的本地副本,它就返回一个确认消息。然后,它再通知备份服务器也执行这个更新。<br />
+非阻塞的主备份协议中的主要问题是它的容错能力。在阻塞方法中,客户端进程确切地知道其他若干台服务器备份了更新操作。但是在非阻塞的方法中,情况并不是这样。我们将在后面内容展开讨论容错问题。</p>
+<p>主备份协议提供了一种实现顺序一致性的简单方法,因为主服务器可以对所有进来的写操作进行全局时间排序。显然,无论使用哪个备份服务器执行读操作,所有进程都会以相同的顺序看到所有的写操作。同样,在阻塞协议中,进程将总会看到它们最近执行的写操作的结果(注意,非阻塞协议不采取特殊措施时不能保证这一点)。</p>
+<h3 id="本地写协议">本地写协议</h3>
+<p>主备份协议的一种变体是,其主副本在要执行写操作的进程之间迁移。如前所述,当某个进程要更新数据项x时,它先定位x的主副本,然后把它移到自己的位置上,如下图所示。这种方法的主要优点是,可以在本地执行多个连续的写操作,而读操作仍可以访问其本地副本。但是,只有使用非阻塞协议,在主备份完成更新后,通过该协议将更新传播到其他副本时,才可能实现这个优点。</p>
+<p>主备份的本地写协议也可应用于能够在离线模式下操作的移动计算机。离线前,移动计算机成为每个它期望更新的数据项的主服务器。离线时,所有更新操作都在本地执行,而其他进程仍可以执行读操作(但不能执行更新操作)。稍后,再次连接时,更新从主服务器传播到备份服务器,使数据存储再次达到一致的状态。</p>
+<p>非阻塞、本地写的基于主机的协议是这种方案的最后一个变体,它常常用于分布式系统。在这种情况下,有一个固定的中心服务器,通过它,可以进行所有的写操作,就像是远程写主备份一样。但是,该服务器可以临时允许一个副本服务器执行一系列的本地更新操作,因此可以显著地提高性能。当副本服务器完成后,更新操作被传播给中心服务器,从这里再把它们分发给其他的副本服务器</p>
+<h2 id="复制的写协议">复制的写协议</h2>
+<p>在复制的写协议中，写操作可以在多个副本上执行，而不是像基于主备份的副本那样只在一个副本上执行。主动复制和基于多数表决的一致性协议的区别在于：主动复制中的操作被转发到所有副本。</p>
+<h3 id="主动复制">主动复制</h3>
+<p>在主动复制中,每个副本有一个相关联的进程,该进程执行更新操作。与其他协议相比,更新通常是通过引起更新的写操作来传播的。也就是说,该操作被发送到每个副本。但是,使用前面讨论的方法发送更新也是可以的。</p>
+<p>主动复制的一个问题是操作需要在各地以相同的顺序执行,因而需要一种全序的多播机制。这种多播可以用Lamport时间戳来实现。但是,Lamport时间戳用于大型分布式系统时的扩展性不好。一种替代的方法是使用中心协调器,又称为<strong>定序器(sequencer)</strong>来实现全序。一种方法是先将所有操作转发到定序器,由定序器为每个操作分配一个唯一的序列号,随后将这些操作转发给所有副本。操作按照其序列号顺序执行。显然,这种全序多播的实现与基于主备份的一致性协议非常相似。注意,使用定序器并不能解决可扩展性问题。事实上,如果需要全序的多播机制,那么结合Lamport时间戳和定序器的对称多播可能是必不可少的。这种解决方法在(Rodrigues等1996)中有所描述。</p>
+<h3 id="基于多数表决的协议">基于多数表决的协议</h3>
+<p>支持复制的写协议的另一种方法是使用<strong>表决(voting)</strong>,该方法最先由Thomas(1979)提出,并由Gifford(1979)一般化。其<strong>基本思想</strong>是要求客户在读或写一个复制的数据项之前向多个服务器提出请求,并获得它们的许可。</p>
+<p>下面以一个简单的示例来说明该算法工作原理。考虑一个分布式文件系统,假设其文件被复制在N个服务器上。我们规定:要更新一个文件,客户必须先联系至少半数加一个服务器(即多数服务器),并得到它们同意后执行更新。一旦它们同意更新,该文件将被修改,这个新文件也将与一个新版本号关联。该版本号用于识别文件的版本,对于所有新更新的文件,它们的版本号是相同的。<br />
+要读取一个复制文件,客户也必须联系至少半数加一个服务器,请求它们返回该文件关联的版本号。如果所有的版本号一致,那么该版本必定是最新的版本,这是因为剩余服务器的个数不够半数以上,试图只更新剩余服务器的请求将会失败。<br />
+例如,如果系统有5个服务器,一个客户确定其中3个服务器持有第8版本的文件,那么其余2个服务器不可能持有第9版本的文件。毕竟,所有成功地从第8版本到第9版本的更新需要得到3个而不只是2个服务器的许可。</p>
+<p>实际上,Gifford的方案比这个方法更加通用。在Gifford的方案中,一个客户要读取具有N个副本的文件,它必须组织一个<strong>读团体(read
+quorum)</strong>,该读团体是<span
+class="math display"><em>N</em><sub><em>R</em></sub></span>个以上服务器的任意集合。同样地,要修改一个文件,客户必须组织一个至少有<span
+class="math display"><em>N</em><sub><em>W</em></sub></span>个服务器的<strong>写团体(write
+quorum)</strong>。<span
+class="math display"><em>N</em><sub><em>R</em></sub></span>和<span
+class="math display"><em>N</em><sub><em>W</em></sub></span>的值应满足以下两个限制条件:</p>
+<ol type="1">
+<li><span
+class="math display"><em>N</em><sub><em>R</em></sub> + <em>N</em><sub><em>W</em></sub> &gt; <em>N</em></span></li>
+<li><span
+class="math display"><em>N</em><sub><em>W</em></sub> &gt; <em>N</em>/2</span></li>
+</ol>
+<p>第一个限制条件用于防止读写操作冲突,而第二个限制条件用于防止写写操作冲突。只有在适当个数的服务器同意参与文件的读写后,客户才能读或写该文件。</p>
+<p>为了理解该算法的工作方式,我们以图(a)为例,其中<span
+class="math display"><em>N</em><sub><em>R</em></sub> = 3</span>且<span
+class="math display"><em>N</em><sub><em>W</em></sub> = 10</span>。假设最近的写团体由服务器C~L的10个服务器组成。任何随后由三个服务器组成的读团体必须至少包含一个该集合中的服务器。客户查看版本号时,它会知道哪个服务器是最新的,并选择那个服务器。<br />
+在图(b)和(c)中,我们看到了另外两个示例。图(b)中的示例可能发生写写操作冲突,这是因为<span
+class="math display"><em>N</em><sub><em>W</em></sub> ≤ <em>N</em>/2</span>。特别地,如果一个客户选择{A,B,C,E,F,G}作为它的写操作集,而另一个客户选择{D,H,1,J,K,L}作为它的写操作集,那么显然会遇到麻烦,因为我们接受了这两个更新,没有检测是否会发生冲突。<br />
+图(c)所示的情形特别有趣,因为它设置<span
+class="math display"><em>N</em><sub><em>R</em></sub></span>为1,这使它可以通过找到并使用复制的文件的任何副本来读取该文件。但是,它所付出的代价是写更新需要获取所有副本。这种方法通常称为<strong>“读一个,写全部”(read-one,write-ll,
+ROWA)</strong>。</p>
+<h2 id="高速缓存相关性协议">高速缓存相关性协议</h2>
+<p>高速缓存形成了一类特殊的复制,因为它们通常由客户而不是服务器控制。高速缓存相关性协议保证高速缓存与服务器启动的副本一致,在原理上,高速缓存相关性与迄今为止我们讨论的各种一致性协议有没有多大差别。</p>
+<p>关于高速缓存的设计与实现方面的研究很多,特别是在共享存储器的多处理器系统环境中。很多方法基于底层硬件的支持,例如假设可以实现侦听或高效的广播。基于中间件的分布式系统建立在通用的操作系统之上,在这种环境中,基于软件来解决高速缓存问题的方法备受关注。此时,通常使用两个单独的标准来划分高速缓存协议。</p>
+<p>首先,不同的高速缓存解决方法在<strong>相关性检测策略(coherence
+detection
+strategy)</strong>上有区别,即实际检测不一致性的时间不同。静态的解决方法假定编译器在运行之前执行必要的分析,并确定哪些数据可能因为它们被缓存而实际导致了不一致性。编译器仅插入一些避免不一致性的指令。动态解决方法通常应用于本书所研究的各种分布式系统。在这些解决方法中,不一致性是在运行时检测的。例如,检查服务器,查看被缓存的数据自从被缓存后是否被改变过</p>
+<p>在分布式数据库中,根据事务处理期间进行检测的确切时间,可将动态的基于检测的协议进一步精确分类。Franklin等(1997)将其分为以下三类。第一类,在事务处理期间访问高速缓存的数据项时,客户需要检验该数据项是否仍与(可能是复制的)服务器中的该数据项一致。在检查完一致性之前,事务处理不能开始使用缓存的数据。<br />
+第二类方法是在进行一致性检验时,继续执行事务处理,该方法是最优的方法。它假设事务处理启动时高速缓存的数据是最新的。如果稍后证实该假设是错误的,那么事务处理将不得不异常中止。<br />
+第三类方法是只有事务处理委托检验时才检验高速缓存的数据是否是最新的。这类方法与上一章所讨论的乐观并发控制方法类似。实际上,事务处理只是启动对缓存的数据的操作,并希望得到令人满意的结果。在所有工作都完成后,再检验被访问的数据的一致性。如果事务处理使用的是过时的数据,那么事务处理被异常中止。</p>
+<p>高速缓存相关性的另一个设计问题是<strong>相关性实施策略(coherence
+enforcement
+strategy)</strong>,该策略决定高速缓存如何与服务器存储的各副本保持一致。最简单的解决方法是完全不允许缓存共享数据,而是将共享数据仅保存在服务器上。服务器使用前面讨论的基于主备份的协议或复制的写协议来维护一致性,客户只允许缓存私有数据。显然,这种解决方法只能提供有限的性能改善。<br />
+当共享数据可以被缓存时,实现高速缓存的一致性可采用两种方法。第一种方法是每当一个数据项被修改后,服务器都向所有高速缓存发送无效化消息。第二种方法是仅传播更新。大多数高速缓存系统使用其中一种方法来实现高速缓存的一致性。有时,一些客户服务器数据库动态地选择发送无效化消息或发送更新。</p>
+<p>最后,我们还需要考虑进程修改被缓存的数据时可能发生的情况。使用只读高速缓存时,更新操作只能由服务器执行,然后服务器根据某个分发协议来确保更新被传播到各个高速缓存。很多系统使用基于拉式的方法。此时,如果客户检测到它的高速缓存已经过时,它就向服务器请求更新</p>
+<p>另一种方法是允许客户直接修改被缓存的数据,并将更新转发给服务器。<strong>直写式高速缓存(write-through
+cache)</strong>采用这种方法,分布式文件系统常使用这种直写式高速缓存。实际上,直写式高速缓存类似于基于主备份的本地写协议,客户的高速缓存成为一个临时的主备份。为了保证顺序一致性,客户必须被授予独占写的特权,否则可能发生写写操作冲突。<br />
+直写式高速缓存潜在地提供较其他方法更好的性能,这是因为所有的操作都可以在本地执行。如果我们通过允许在通知服务器更新之前执行多个写操作来推迟传播更新,那么性能可以得到进一步的改善。这种方法导致了<strong>回写式高速缓存(
+write-back
+cache)</strong>的出现,这种回写式高速缓存也主要应用于分布式文件系统。</p>
+<h2 id="实现以客户为中心的一致性">实现以客户为中心的一致性</h2>
+<p>作为一致性协议的最后一个主题，让我们来看看如何实现以客户为中心的一致性。如果忽略性能问题，实现以客户为中心的一致性相对来说还是简单的。下面我们先描述一下这种实现，然后介绍一个更为实际的实现。</p>
+<h3 id="简单实现">简单实现</h3>
+<p>在以客户为中心的一致性的一种简化实现中,每个写操作W都被分配一个全局唯一的标识符。服务器把该标识符赋给提交写操作的客户。在持续一致性中,我们称该服务器为W的源。然后,对于每个客户,我们跟踪两个操作集。客户的读操作集是由客户所执行的读操作相关的写操作组成的。同样,写操作集由客户执行的写操作的标识符组成。</p>
+<p>单调读一致性的实现如下。当一个客户在一台服务器上执行一个读操作时,该服务器获得客户的读操作集,检查所有已标识的写操作是否已经在本地执行(这个集的大小可能会引起性能问题,下面将讨论这一问题的解决方案)。如果没有,那么它就联系其他服务器以确保执行读操作之前将本地副本更新。另一种方法是将读操作转发到已经执行了这些写操作的服务器那里执行。读操作执行后,在所选择的服务器上执行的写操作以及与读操作相关的写操作会被加入客户的读操作集。<br />
+注意,这里应该可以确定在读操作集中标识的写操作所发生的确切位置。例如,写操作标识符可能包括启动该操作的服务器的标识符。例如,要求那台服务器将写操作记入日志以便在其他服务器上重新执行这个写操作。另外,写操作应该以启动它们的顺序执行。让客户生成一个全局唯一的序列号,并将这个序列号包含于写操作标识符之中,就可以实现写操作的排序。如果每个数据项只能被它的所有者修改,那么后者就可以提供这个序列号。</p>
+<p>单调写一致性的实现方式与单调读一致性的实现方式类似。每当一个客户在服务器上启动一个新的写操作,客户的写操作集都会转交到该服务器(同样,由于性能需求,这个写操作集的不能过大。下面将讨论另一种可选择的解决方案)。然后,该服务器确保先执行被标识的写操作,并按正确的顺序执行这些写操作。执行新操作之后,该操作的写标识符将被加入写操作集。注意,使用客户的写操作集更新当前服务器可能会造成客户的响应时间的大幅增加。</p>
+<p>同样,写后读一致性要求执行读操作的服务器已经看到客户的写操作集的所有写操作执行读操作之前,可以简单地从其他服务器获取这些操作,尽管这可能导致较差的响应时间。或者,客户端软件可以查找已经执行了已标识写操作的服务器,写操作在客户的写操作集中标识。</p>
+<p>最后,读后写一致性可以通过这一方法实现,即先使用在客户的读操作集中标识了的写操作更新所选择服务器,然后将写操作的标识符以及读操作集中的标识符(这些操作现在已经成为与刚刚执行的写操作相关的操作)加入到写操作集中。</p>
+<h3 id="提高效率">提高效率</h3>
+<p>很容易看出,与每个客户关联的读操作集和写操作集可能变得非常大。为了维持这些集合的可控制性,客户的读操作和写操作根据会话分成组。通常,一个<strong>会话(session)</strong>与一个应用程序关联:应用程序启动时,打开会话,应用程序结束时,关闭会话。但是,会话也可能与暂时结束的应用程序关联,例如用于电子邮件程序的用户代理就是这样的。每当客户结束会话,其关联的集合将被完全清空。当然,如果一个客户打开一个从不关闭的会话时与该客户所关联的读操作集和写操作集仍可能变得非常大。</p>
+<p>简单实现的主要问题在于<strong>如何表示读操作集和写操作集</strong>。每个集合由一些写操作的标识符组成。每当客户向服务器转发一个读请求或写请求时,标识符的集合也将被转交给这台服务器,以查看该服务器是否已经执行了所有与该请求相关的写操作。</p>
+<p>按照如下方式使用向量时间戳可以更高效地表示这一信息。首先,每当服务器接受个新的写操作W时,它首先按上面所述方法为该操作分配一个全局唯一的标识符和一个时间戳ts(W)。随后在该服务器上执行的写操作将被分配一个更高值的时间戳。每台服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>都维护一个向量时间戳<span
+class="math display">WVC<sub><em>i</em></sub></span>,其中<span
+class="math display">WVC<sub><em>i</em></sub>[<em>j</em>]</span>的值等于<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>已接受并执行的、由服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>启动的最后一个写操作的时间戳。<br />
+每当客户发出在一个特定的服务器上执行读或写操作O的请求时,该服务器都返回该操作当前的时间戳和该操作O的结果。然后,用向量时间戳表示读操作集和写操作集。对于任何会话A,我们构造一个向量时间戳<span
+class="math display">SVC<sub><em>A</em></sub></span>,其中<span
+class="math display">SVC<sub><em>A</em></sub>[<em>i</em>]</span>被设置为集合A中所有由服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>启动的操作的时间戳的最大值:<span
+class="math display">$$\mathrm{SVC}_A[i]=\max{ts(W)\vert W\inA &amp;
+origin(W)=S_i}$$</span>.<br />
+换句话说,会话的时间戳总是表示应用程序所看到的最后一个写操作,其中该应用程序作为会话的一部分正在运行中。使用来自同一个服务器的单个时间戳来表示所有的写操作,就可以进行简化。</p>
+<p>另一个示例是，假设作为会话A的一部分的客户登录到服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>。该客户把<span
+class="math display">SVC<sub><em>A</em></sub></span>传递给<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>.假设<span
+class="math display">SVC<sub><em>A</em></sub>[<em>j</em>] &gt; WVC<sub><em>i</em></sub>[<em>j</em>]</span>.这意味着<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>还没看到来自<span
+class="math display"><em>S</em><sub><em>j</em></sub></span>的写操作。根据一致性的要求，服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>在回复客户之前必须获取这些写操作。一旦执行了这些操作，服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>将返回其当前的时间戳<span
+class="math display">WVC<sub><em>i</em></sub></span>。此时,<span
+class="math display">SVC<sub><em>A</em></sub></span>调整为：<span
+class="math display">SVC<sub><em>A</em></sub>[<em>j</em>] = max SVC<sub><em>A</em></sub>[<em>j</em>], WVC<sub><em>i</em></sub>[<em>j</em>]</span><br />
+同样，我们可以看到，在分布式系统中，向量时间戳提供了一种表示历史记录的优雅而紧凑的方法。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/" title="分布式系统 - 一致性和复制">https://wrran.github.io/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/distributed-system/" rel="tag"># distributed system</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/28/review/distributed-system/6-synchronization/" rel="prev" title="分布式系统 - 同步化">
+                  <i class="fa fa-angle-left"></i> 分布式系统 - 同步化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/28/review/distributed-system/8-fault-tolerance/" rel="next" title="分布式系统 - 容错性">
+                  分布式系统 - 容错性 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Do you remember?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Memory Networks及其变体">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/09/29/note/paper-reading/2017-09-30/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Do you remember?">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-09-29T12:20:31.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.723Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="memory networks">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/09/29/note/paper-reading/2017-09-30/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/09/29/note/paper-reading/2017-09-30/","path":"blog/2017/09/29/note/paper-reading/2017-09-30/","title":"Memory Networks及其变体"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Memory Networks及其变体 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#memory-networks"><span class="nav-text">Memory Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%A1%86%E6%9E%B6"><span class="nav-text">一般框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%9E%E7%8E%B0"><span class="nav-text">基本实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%89%A9%E5%B1%95"><span class="nav-text">基本实现的扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-text">我的理解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#end-to-end-memory-networks"><span class="nav-text">End-to-End Memory Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E5%B1%82%E7%BB%93%E6%9E%84"><span class="nav-text">单层结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%B1%82%E7%BB%93%E6%9E%84"><span class="nav-text">多层结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E7%90%86%E8%A7%A3-1"><span class="nav-text">我的理解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%9C%A8%E9%98%85%E8%AF%BB"><span class="nav-text">正在阅读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/09/29/note/paper-reading/2017-09-30/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Memory Networks及其变体 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Memory Networks及其变体
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-09-29 20:20:31" itemprop="dateCreated datePublished" datetime="2017-09-29T20:20:31+08:00">2017-09-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>Do you remember?</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>QA问题中求解模型往往是与<code>Memory Networks</code>相关。本次论文笔记主要顺着该模型的演变进行，在介绍完模型的框架之后，分析其不足及（可能的）解决方案。限于篇幅，每个模型应用的任务及实验结果都未予介绍。</p>
+<h1 id="memory-networks">Memory Networks</h1>
+<p>本文是Memory
+Networks系列的奠基之作。该文着眼于解决长距离情况下的知识利用问题：当前主流解决长距离依赖的RNN模型中虽然有“内存”（即模型的隐状态与权重），但因为实在太小而不能很好的应用在QA情形下。</p>
+<h2 id="一般框架">一般框架</h2>
+<p>作者们为了解决该问题，提出了Memory
+Networks这一通用框架，记为MemNN：<br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com//image/170930/Memory%20Network%20Architecture.png"
+title="Memory Network Architecture, from [2]"
+alt="Memory Network Architecture" /></p>
+<p>如上图所示，MemNN除了组件<strong>memory</strong>外，还含有四个主要组件：</p>
+<ul>
+<li>Input : 将输入转换到内部特征空间</li>
+<li>Generalization : 根据输入更新内存。</li>
+<li>Output :
+根据输入与当前内存状态得到输出（位于特征空间），或者说是有助于输出正确答案的“支持内容”</li>
+<li>Response : 将Output输出的值转换为需要的格式，如自然语言。</li>
+</ul>
+<p>形式化的说，假定输入为<span
+class="math display"><em>x</em></span>，则模型处理的流程如下：</p>
+<ol type="1">
+<li>将<span class="math display"><em>x</em></span>转化为特征表示<span
+class="math display">I(<em>x</em>)</span></li>
+<li>根据新的输入更新memory <span
+class="math display"><strong>m</strong><sub><em>i</em></sub></span>：<span
+class="math display"><strong>m</strong><sub><em>i</em></sub> = G(<strong>m</strong><sub><em>i</em></sub>, I(<em>x</em>), <strong>m</strong>), ∀<em>i</em></span></li>
+<li>根据新的输入与内存状态计算输出的特征<span
+class="math display"><em>o</em></span>：<span
+class="math display"><em>o</em> = O(I(<em>x</em>), <strong>m</strong>)</span></li>
+<li>将输出状态<span
+class="math display"><em>o</em></span>解码为最终的响应：<span
+class="math display"><em>r</em> = R(<em>o</em>)</span></li>
+</ol>
+<p>这一框架的提出贡献<em>可能</em>是有效的将QA问题分解为两步：先根据给定的问题找到最相关的内存，再根据这些信息产生答案。（注：之所以说是可能，是因为并没有太关注该文发出之前QA的解决方案。该结论来自于文[2]。）</p>
+<h2 id="基本实现">基本实现</h2>
+<p>作者为了验证这一框架的可行性，使用神经网络实现了上述的框架并应用于多个任务上。限于篇幅，这里从简介绍。</p>
+<ol type="1">
+<li>Input : 将文档与问题转换为稠密表示</li>
+<li>Generation :
+此处只是简单的将组件input的输出存放到内存的空余位置上</li>
+<li>Output : 假定需要找出的支持内容有<span
+class="math display"><em>k</em> = 2</span>个时，<br />
+<span class="math display">$$o_1 = \mathrm{O}_1(x, \mathbf{m}) =
+\underset{i=1, \cdots, N}{\mathrm{argmax}}\ \mathrm{s}_O(x,
+\mathbf{m}_1)$$</span><br />
+<span class="math display">$$o_2 = \mathrm{O}_2(x, \mathbf{m}) =
+\underset{i=1, \cdots, N}{\mathrm{argmax}}\ \mathrm{s}_O([x,
+\mathbf{m}_{o_1}], \mathbf{m}_i)$$</span><br />
+其中，<span
+class="math display">s<sub><em>O</em></sub></span>是关于句子<span
+class="math display"><em>x</em></span>与内存<span
+class="math display"><strong>m</strong><sub><em>i</em></sub></span>的匹配打分函数。</li>
+<li>Response : 经过上述处理，输入到组件response的就会是<span
+class="math display">[<em>x</em>, <strong>m</strong><sub><em>o</em><sub>1</sub></sub>, <strong>m</strong><sub><em>o</em><sub>2</sub></sub>]</span>。该组件将根据这些信息选择最合适的单词作为答案（限制题型的正确答案为单词）：<br />
+<span class="math display">$$r =
+\underset{w\in\mathbf{W}}{\mathrm{argmax}}\ \mathrm{s}_R([x,
+\mathbf{m}_{o_1}, \mathbf{m}_{o_2}], w)$$</span><br />
+其中<span
+class="math display"><em>W</em></span>是单词表中的所有单词，<span
+class="math display">s<sub><em>R</em></sub></span>为匹配打分函数。</li>
+</ol>
+<p>还有一个关键就是目标函数的制定，对于上述任务的优化函数如下：<br />
+<span
+class="math display">∑<sub><em>f̄</em>≠ <strong>m</strong><sub><em>o</em><sub>1</sub></sub></sub> max(0, <em>γ</em> − s<sub><em>O</em></sub>(<em>x</em>, <strong>m</strong><sub><em>o</em><sub>1</sub></sub>) + s<sub><em>O</em></sub>(<em>x</em>, <em>f̄</em>)) +</span><br />
+<span
+class="math display">∑<sub><em>f̄</em><sup>‘</sup>≠ <strong>m</strong><sub><em>o</em><sub>2</sub></sub></sub> max(0, <em>γ</em> − s<sub><em>O</em></sub>([<em>x</em>, <strong>m</strong><sub><em>o</em><sub>1</sub></sub>], <strong>m</strong><sub><em>o</em><sub>2</sub></sub>) + s<sub><em>O</em></sub>([<em>x</em>, <strong>m</strong><sub><em>o</em><sub>1</sub></sub>], <em>f̄</em><sup>‘</sup>)) +</span><br />
+<span
+class="math display">∑<sub><em>r̄</em>≠ <em>r</em></sub> max(0, <em>γ</em> − s<sub><em>R</em></sub>([<em>x</em>, <strong>m</strong><sub><em>o</em><sub>1</sub></sub>, <strong>m</strong><sub><em>o</em><sub>2</sub></sub>], <em>r</em>) + s<sub><em>R</em></sub>([<em>x</em>, <strong>m</strong><sub><em>o</em><sub>1</sub></sub>, <strong>m</strong><sub><em>o</em><sub>2</sub></sub>], <em>r̄</em>))</span><br />
+其中，<span class="math display"><em>x</em></span>为问题输入，<span
+class="math display"><em>r</em></span>、<span
+class="math display"><strong>m</strong><sub><em>o</em><sub>1</sub></sub></span>、<span
+class="math display"><strong>m</strong><sub><em>o</em><sub>2</sub></sub></span>为正确的响应信息与支持语句，而<span
+class="math display"><em>f̄</em></span>、<span
+class="math display"><em>f̄</em><sup>‘</sup></span>和<span
+class="math display"><em>r̄</em></span>都是随机抽取的负样例，<span
+class="math display"><em>γ</em></span>则是正负样例的间隔。</p>
+<h2 id="基本实现的扩展">基本实现的扩展</h2>
+<p>作者还在基本实现下对更多情形下的情况进行了扩展：</p>
+<ol type="1">
+<li>输入不是完整的句子而是字符时，可以通过在组件input中加入“分块”功能实现</li>
+<li>当组件memory将存放海量数据时，如上的操作（涉及到<span
+class="math display">argmax</span>）性能将大幅下降，此时可以考虑哈希或聚类的方法来减少计算量</li>
+<li>组件memory内存储的内容时效性并不相同，对于某些任务可能最近的信息最有用，为此可以将时间信息融入到函数<span
+class="math display">s<sub><em>O</em><sub><em>t</em></sub></sub></span>中</li>
+<li>处理自然语言问题时，未登录词也是需要关注的：可以通过上下文信息来估计未登录词的含义</li>
+<li>低维稠密的向量表示有个缺陷就是无法有效利用词语的匹配信息，而这可以通过设计适当的匹配打分函数来改善</li>
+</ol>
+<h2 id="我的理解">我的理解</h2>
+<p>模型可改进的地方有：</p>
+<ol type="1">
+<li>观察模型的目标函数可以看到我们需要两部分的标记数据：答案与支持语句，而在很多问答任务上很难获取到支持语句。</li>
+<li>在Output查找支持内容时需要指定<span
+class="math display"><em>k</em></span>的取值，而支持语句的多少往往与问题有关，是否可以让模型自动选取一个合适的<span
+class="math display"><em>k</em></span>呢？</li>
+</ol>
+<p>可能的解决方案：<br />
+关于问题一，<br />
+<strong>改动一</strong>：去除目标函数中的关于 <em>支持语句</em>
+的评分项。但这样去除之后很可能导致模型性能受制于组件output挑选的“支持内容”，最终导致模型训练困难或者训练缓慢。为此采用改动二。<br />
+<strong>改动二</strong>：将组件output的计算函数由<span
+class="math display">argmax</span>换成类似attention机制的<span
+class="math display">softmax</span>，输出关于各个内存槽的权重；而组件response在计算输出时除了接收到该权值外，还可以利用读取组件memory的内容。这样做的代价可能是组件response的计算性能下降。</p>
+<p>关于问题二，<br />
+<strong>改动一</strong>：借鉴<code>RNN</code>的思路，是否可以让组件output循环的选择支持内容，但停止的标准呢？直观的选择是人工指定一个上限，达到该上限时停止循环。但更有效的方法可能是改动二的内容。<br />
+<strong>改动二</strong>：将组件response挑选出的答案的 <em>置信度</em>
+（如匹配打分函数输出的分数）发送给组件output，达到一定阈值之后停止循环。但这个过程中又引入了一个超参，是否有方法让这个阈值也通过模型自动学习呢？值得思考。</p>
+<h1 id="end-to-end-memory-networks">End-to-End Memory Networks</h1>
+<p>本文的题目明确的表达了工作致力解决的问题：让MemNN可以端到端的训练。下文中将这样的模型记为MemN2N。</p>
+<h2 id="模型">模型</h2>
+<p>该文的主要贡献就是提出了方案去除了MemNN需要大量标记数据的弊端；除此之外，还借鉴了RNNsearch的方法，对于需要多步推导的问题使用多个计算步骤进行解决。作者将其中的每个计算步骤称为<strong>hop</strong>。<br />
+模型整体框架如下图，<code>(a)</code>是单次计算过程的示意图，即只有一个hop；<code>(b)</code>是有多次计算步骤的示意图。</p>
+<figure>
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com//image/170930/MemN2N%20Architecture.PNG"
+title="MemN2N Architecture, from [3]" alt="MemN2N Architecture" />
+<figcaption aria-hidden="true">MemN2N Architecture</figcaption>
+</figure>
+<p>简单的说，模型要处理的问题就是：读入多个输入 <span
+class="math display"><strong>x</strong><sub>1</sub>, <strong>x</strong><sub>2</sub>, ⋯, <strong>x</strong><sub><em>n</em></sub></span>，转化为稠密向量之后存入到组件memory中；之后读入问题
+<span class="math display"><strong>q</strong></span>，经过计算后输出答案
+<span class="math display"><strong>a</strong></span>。其中，<span
+class="math display"><strong>x</strong><sub><em>i</em></sub>, <strong>q</strong>, <strong>a</strong></span>
+的词都来自于一个大小为 <span class="math display">|<em>V</em>|</span>
+的词表。</p>
+<h3 id="单层结构">单层结构</h3>
+<p>与MemNN中类似，MemN2N也有组件memory，但去除了组件Generalization：</p>
+<ul>
+<li>Input Memory Representation : 如图<code>(a)</code>所示，句子 <span
+class="math display"><strong>x</strong><sub><em>i</em></sub></span>
+在向量化之后与矩阵 <span
+class="math display"><strong>A</strong>, <strong>C</strong></span>
+相乘得到表示 <span
+class="math display"><strong>m</strong><sub><em>i</em></sub>, <strong>c</strong><sub><em>i</em></sub></span>，同样向量化之后的问题
+<span class="math display"><strong>q</strong></span> 与矩阵 <span
+class="math display"><strong>B</strong></span> 相乘得到表示 <span
+class="math display"><strong>u</strong></span>。其中，表示 <span
+class="math display"><strong>c</strong><sub><em>i</em></sub></span>
+输入到组件output中，表示 <span
+class="math display"><strong>m</strong><sub><em>i</em></sub></span> 再与
+<span class="math display"><strong>u</strong></span>
+经过下述计算得到权重再输入到组件output中：<br />
+<span
+class="math display"><strong>p</strong> = softmax(<strong>u</strong><sup><em>T</em></sup> <strong>m</strong>)</span></li>
+<li>Output Memory Representation : 该处类似于attention机制，通过计算
+<span class="math display"><strong>p</strong>, <strong>c</strong></span>
+得到 <span class="math display"><strong>o</strong></span>：<br />
+<span
+class="math display"><strong>o</strong> = ∑<sub><em>i</em></sub> <em>p</em><sub><em>i</em></sub> <strong>c</strong><sub><em>i</em></sub></span></li>
+<li>Generating the Final Prediction :
+如图所示，将通过如下公式选出单词：<br />
+<span
+class="math display"><em>â</em> = softmax(<strong>W</strong> (<strong>o</strong> + <strong>u</strong>))</span></li>
+</ul>
+<p>之后就可以根据真实答案与输出答案计算交叉熵，利用误差反向传播算法优化模型。</p>
+<p><em>注</em>：MemN2N与MemNN并不完全对应。</p>
+<h3 id="多层结构">多层结构</h3>
+<p>如图<code>(b)</code>所示，多层memory通过以下方式堆叠在一起：</p>
+<ul>
+<li>除第一层外，其他层的输入 <span
+class="math display"><strong>u</strong><sup><em>k</em> + 1</sup> = <strong>u</strong><sup><em>k</em></sup> + <strong>o</strong><sup><em>k</em></sup></span></li>
+<li>每一层都有自己独立的矩阵 <span
+class="math display"><strong>A</strong>, <strong>C</strong></span>，下文会接着介绍如何共享参数</li>
+<li>最后一层产生答案的方式为 <span
+class="math display"><em>â</em> = softmax(<strong>W</strong>(<strong>o</strong><sup><em>k</em></sup> + <strong>u</strong><sup><em>k</em></sup>))</span></li>
+</ul>
+<p>作者提出了两种共享参数的方式：</p>
+<ol type="1">
+<li>Adjacent :
+<ol type="a">
+<li><span
+class="math display"><strong>A</strong><sup><em>k</em> + 1</sup> = <strong>C</strong><sup><em>k</em></sup></span><br />
+</li>
+<li><span
+class="math display"><strong>W</strong><sup><em>T</em></sup> = <strong>C</strong><sup><em>k</em></sup></span><br />
+</li>
+<li><span
+class="math display"><strong>B</strong> = <strong>A</strong><sup>1</sup></span></li>
+</ol></li>
+<li>Layer-wise :
+<ol type="a">
+<li><span
+class="math display"><strong>A</strong><sup>1</sup> = <strong>A</strong><sup>2</sup> = ⋯ = <strong>A</strong><sup><em>k</em></sup></span><br />
+</li>
+<li><span
+class="math display"><strong>C</strong><sup>1</sup> = <strong>C</strong><sup>2</sup> = ⋯ = <strong>C</strong><sup><em>k</em></sup></span><br />
+</li>
+<li>添加一个矩阵 <span class="math display"><strong>H</strong></span>
+用于更新hops之间的 <span
+class="math display"><strong>u</strong></span>，即 <span
+class="math display"><strong>u</strong><sup><em>k</em> + 1</sup> = <strong>H</strong><strong>u</strong><sup><em>k</em></sup> + <strong>o</strong><sup><em>k</em></sup></span></li>
+</ol></li>
+</ol>
+<h2 id="我的理解-1">我的理解</h2>
+<p>MemN2N的整体结构与MemNN对应关系并不十分明确。若是按照MemNN的划分，组件memory的功能更多的由在多个hop间传递的矩阵
+<span class="math display"><strong>A</strong>, <strong>C</strong></span>
+来担当；组件input隐含到将文档与问题转换为稠密表示的过程中，而这个过程使用的是词袋模型，会丢失顺序信息；没有功能对应组件generation；组件output与组件response基本与
+<em>Output Memory Representaion</em> 和 <em>Generating the Final
+Predication</em>
+相对应。另外，作者在文中提到使用<code>Layer-wise</code>进行参数共享时，该模型就类似于<code>RNN</code>模型。但是区别在于该模型更新隐层状态
+<span
+class="math display"><strong>u</strong><sub><em>k</em></sub></span>
+时，会根据文档进行更有针对的更新（描述不全面，待补充）。</p>
+<p>模型可改进的地方有：</p>
+<ol type="1">
+<li>如上分析，该模型实质上使用的是
+<em>词袋模型</em>，会丧失语序信息</li>
+<li>需要手动指定hops的数量</li>
+</ol>
+<p>可能的解决方案：<br />
+关于问题一，<br />
+<strong>方案一</strong>：使用<code>RNN</code>类的模型对句子进行建模，但是可能会过度压缩语义信息。为此可以采用方法是保存词语层面的稠密向量表示来取代矩阵
+<span
+class="math display"><strong>A</strong>, <strong>C</strong></span>，但这种方案只限于文档的句子数量不多的情形。<br />
+<strong>方案二</strong>：针对方案一的局限，可以考虑先筛选出无关的句子，再花费资源到词语层面进行计算。例如，使用<code>RNN</code>类模型得出句子向量与问题对应句子向量计算，若不相关则不进行词语层面的分析，直接进入下一个hop。</p>
+<p>关于问题二，<br />
+<strong>方案</strong>：与MemNN类似的方案类似，并且由于MemN2N的端到端特性更容易进行，即根据最终输出词语的
+<em>置信度</em> 选择是否要停止，并制定相关阈值与hops的上限值。</p>
+<p>作者其实针对问题一，也提出了解决方案，就是在将文档与问题编码为稠密向量时也考虑
+<em>词语在句中位置</em> 的影响。另外，他们还针对输入文档时缺少
+<em>时序</em> 信息提出了类似的解决方案，在编码稠密向量的时候考虑
+<em>时序</em>
+的影响。（此处略去公式，但依旧存疑的是为什么选用这样的公式？）</p>
+<h1 id="正在阅读">正在阅读</h1>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1605.07427.pdf">Chandar, A. P. Sarath
+et al. “Hierarchical Memory Networks.” CoRR abs/1605.07427 (2016):
+n. pag.</a> 介绍了当面对海量数据，存入到内存后的应对方法；<br />
+<a
+target="_blank" rel="noopener" href="https://pdfs.semanticscholar.org/6451/3b5a06e1d1bbd1eaeb11c40fea06e1c0938c.pdf?_ga=2.28667452.1088239169.1506774601-1994181370.1506067544">Xu,
+Jiaming et al. “Hierarchical Memory Networks for Answer Selection on
+Unknown Words.” COLING (2016).</a>
+介绍了如何缓解将文档中的句子信息过度压缩的方法；<br />
+<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1506.07285.pdf">Bradbury, J., Gulrajani,
+I., Irsoy, O., Iyyer, M., Kumar, A., Ondruska, P., Paulus, R., Socher,
+R., &amp; Zhong, V. (2016). Ask Me Anything: Dynamic Memory Networks for
+Natural Language Processing. ICML.</a>
+介绍了解决通用QA问题的模型，思路上与MemN2N不尽相同。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1410.3916.pdf">[1] Weston, J., Chopra,
+S., &amp; Bordes, A. (2015). Memory Networks. In ICLR-2015.</a><br />
+<a target="_blank" rel="noopener" href="http://cs224d.stanford.edu/reports/KapashiDarshan.pdf">[2]
+Darshan K., Parath S. (2015). Answering Reading Comprehension Using
+Memory Networks. In CS224d Reports</a><br />
+<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1503.08895.pdf">[3] Sukhbaatar, S.,
+Szlam, A., Weston, J., &amp; Fergus, R. (2015). End-to-end memory
+networks. Computer Science.</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/09/29/note/paper-reading/2017-09-30/" title="Memory Networks及其变体">https://wrran.github.io/blog/2017/09/29/note/paper-reading/2017-09-30/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/memory-networks/" rel="tag"># memory networks</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/09/22/cheatsheet/tools/common-tools/" rel="prev" title="常用工具索引表">
+                  <i class="fa fa-angle-left"></i> 常用工具索引表
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/10/16/note/paper-reading/2017-10-16/" rel="next" title="Efficient Attention">
+                  Efficient Attention <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="先筛后选">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Efficient and Robust Question Answering from Minimal Context over Documents">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/07/29/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-07-29/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="先筛后选">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-07-29T02:02:07.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.729Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="document question answering">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/07/29/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-07-29/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/07/29/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-07-29/","path":"blog/2018/07/29/note/paper-reading/question and answering/reading comprehension/2018-07-29/","title":"Efficient and Robust Question Answering from Minimal Context over Documents"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Efficient and Robust Question Answering from Minimal Context over Documents | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="nav-text">模型介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/07/29/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-07-29/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Efficient and Robust Question Answering from Minimal Context over Documents | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Efficient and Robust Question Answering from Minimal Context over Documents
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-29 10:02:07" itemprop="dateCreated datePublished" datetime="2018-07-29T10:02:07+08:00">2018-07-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/" itemprop="url" rel="index"><span itemprop="name">question and answering</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/reading-comprehension/" itemprop="url" rel="index"><span itemprop="name">reading comprehension</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>先筛后选</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概览">概览</h1>
+<p>本篇论文的思路是通过深度学习的句子编码器对文档D中的各个句子进行编码，并针对句子包含答案的可能性进行打分。倘若分数高过一定阈值则保留；否则从D中删除。之后将精简过的文档作为神经网络阅读理解模型进行求解。<br />
+这样做的好处有两点，一是由于输入到阅读理解模型中的数据变少，模型求解的速度加快了；二是同样由于输入数据变少，也压缩了模型的解空间（答案是文档中的某个片段）。但该做法的隐患是在于倘若前者直接删除了包含正确答案的句子，则后一步骤中一定无法正确求解。好在作者通过数据分析及一些训练技巧有效的保证了前一步骤（“句子选择”）的高准确率（在SQuAD数据上高达99.3%，在NewsQA数据上高达94.6%）。</p>
+<h1 id="数据分析">数据分析</h1>
+<p>作者在本文中对SQuAD及NewsQA进行了详尽的数据分析。这为后期实验的开展打下了数据基础，也让我们认识到该方法有效的原有。<br />
+作者从SQuAD中随机采样了50个数据组，发现其中98%的问题是可回答的，而剩余2%的问题即便是通览全文也无法回答。举例来说，在阅读完一篇关于Charles
+Dickens的文档之后也无法正确回答问题“The papers of which famous English
+Victorian author are collected in the
+library?”，这是由于外部知识的缺乏。而在可回答的问题集合中，作者进一步调研回答问题时需要的语句数量，发现其中92%的问题仅仅需要阅读一句之后就可以进行回答，6%的问题需要文档中的两句，而只有2%的问题需要三句乃至更多。<br />
+作者同样也在TriviaQA上进行了数据分析：与SQuAD平均每个文档仅包含5句的数据特征不同，TriviaQA平均每个文档包含有488句；其中88%的问题是可以回答的，而这其中的95%只需要一或两句就已经足够进行回答了。<br />
+为了进一步验证先进行句子筛选，再利用当前阅读理解模型进行问题求解的做法不会损害模型的性能。作者在DCN+模型上进行了实验。总体来看，在全文档（即不进行句子筛选）上训练的模型最终的F1为83.1；而在筛选过句子上训练的模型最终的F1为85.1。接着，作者分析后者模型回答错误的原因：40%是已经选择了正确的句子，但阅读理解模型回答错误；58%是由于模型预测部分正确答案，但并没有和标准答案完全一致；2%是由于问题在给予全文的情况下也无法正确回答。另外，作者还比较了全文档模型与筛选过句子模型回答正确的问题集合关系，发现：后者分别在SQuAD和NewsQA上可以正确回答93%和86%的问题。基于上述数据，作者认为采用“筛选-回答”的模式可以提供一个有效且高效的阅读理解模型。</p>
+<h1 id="模型介绍">模型介绍</h1>
+<p>下图是本篇论文的模型总体框架。如前所述，该模型可分为“句子筛选”与“阅读理解”两部分。而阅读理解部分，作者直接采用较为成熟的阅读理解模型：DCN+。此处将着重介绍该文的“句子筛选”部分，关于DCN+模型的细节请参见文[5]。</p>
+<figure>
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180729/Our%20Model%20Architecture.png"
+alt="Our Model Architecture." />
+<figcaption aria-hidden="true">Our Model Architecture.</figcaption>
+</figure>
+<p>句子编码器首先将文档中的句子与问题作为输入，分别计算出句子的编码<span
+class="math inline"><em>D</em> ∈ ℝ<sup><em>h</em><sub><em>d</em></sub> × <em>L</em><sub><em>d</em></sub></sup></span>和问题的编码<span
+class="math inline"><em>Q</em> ∈ ℝ<sup><em>h</em><sub><em>d</em></sub> × <em>L</em><sub><em>q</em></sub></sup></span>（其中<span
+class="math inline"><em>h</em><sub><em>d</em></sub></span>是词向量的维度，<span
+class="math inline"><em>L</em><sub><em>d</em></sub></span>和<span
+class="math inline"><em>L</em><sub><em>q</em></sub></span>分别是文档与问题的序列长度）。之后通过下式计算融入问题表示的句子表示<span
+class="math inline"><em>D</em><sup><em>q</em></sup> ∈ ℝ<sup><em>h</em><sub><em>d</em></sub> × <em>L</em><sub><em>d</em></sub></sup></span>：<br />
+<span class="math display">$$
+\begin{align}
+\alpha_i = \mathbf{softmax}(D_i^T W_1 Q)\in\mathbb{R}^{L_q}\
+D_i^q = \sum_{j=1}^{L_q} (\alpha_{i,j} Q_j) \in\mathbb{R^{h_d}}
+\end{align}
+$$</span></p>
+<p>其中<span
+class="math inline"><em>D</em><sub><em>i</em></sub> ∈ ℝ<sup><em>h</em><sub><em>d</em></sub></sup></span>是句子中第<span
+class="math inline"><em>i</em></span>个词语的表示，<span
+class="math inline"><em>W</em><sub>1</sub> ∈ ℝ<sup><em>h</em><sub><em>d</em></sub> × <em>h</em><sub><em>d</em></sub></sup></span>是训练参数。为了交互句子中词语之间的信息，作者将上述分布式表示通过BiLSTM进行编码：<br />
+<span class="math display">$$
+\begin{align}
+D^{\text{enc}}=\mathbf{BiLSTM}([D_i;D_i^q])\in\mathbb{R}^{h\times L_d}\
+Q^{\text{enc}}=\mathbf{BiLSTM}(Q_j )\in\mathbb{R}^{h\times L_q}\
+\end{align}
+$$</span><br />
+其中，;表示向量拼接的操作，h是BiLSTM的隐层表示的维度。<br />
+之后，解码器对于上述得到的文档表示及问题表示进行打分：<br />
+<span class="math display">$$
+\begin{align}
+\beta= \mathbf{softmax}(w^T Q^\text{enc})\in \mathbb{R}^{L_q}\
+\tilde{q}^{\text{enc}}= \sum_{j=1}^{L_q} (\beta_j Q_j^{\text{enc}}) \in
+\mathbb{R}^h\
+\tilde{h}_i=(D_i^{\text{enc}} W_2 q^\text{enc})\in \mathbb{R}^h\
+\tilde{h}=\max(h_1, h_2, \cdots, h_{L_d})\
+\text{score}=W_3^T \tilde{h}\in\mathbb{R}^2
+\end{align}
+$$</span><br />
+其中，<span
+class="math inline"><em>w</em><sup><em>T</em></sup> ∈ ℝ<sup><em>h</em></sup></span>，<span
+class="math inline"><em>W</em><sub>2</sub> ∈ ℝ<sup><em>h</em> × <em>h</em> × <em>h</em></sup></span>,<span
+class="math inline"><em>W</em><sub>3</sub> ∈ ℝ<sup><em>h</em> × 2</sup></span>都是模型训练的参数。而最终得到的score的两维分别代表给定问题下该句是支撑语句或不是支撑语句的打分。</p>
+<p>除了上述训练模型外，作者还引入了三个训练技巧：一是将句子筛选的句子编码器作为后续阅读理解模型的句子（问题）编码部分，二是倘若后续阅读理解没有正确回答问题，则将该句标记为错误句子（无论其是否包含正确答案），三是计算出的打分函数在段落上进行归一化。上述三种方式都被后续实验验证为可以切实提高模型表现的。</p>
+<p>在最终确定句子时，作者使用了基于阈值的方法，而不是基于Top-K的筛选算法。这是由于作者认为不同的问题需要不同数量的支持语句。后续实验也表明，基于阈值的筛选方法不仅能够提高筛选的准确率，还能挑选出（平均）更少数量的句子。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="http://aclweb.org/anthology/P18-1160">Efficient and Robust
+Question Answering from Minimal Context over Documents</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/07/29/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-07-29/" title="Efficient and Robust Question Answering from Minimal Context over Documents">https://wrran.github.io/blog/2018/07/29/note/paper-reading/question and answering/reading comprehension/2018-07-29/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/document-question-answering/" rel="tag"># document question answering</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/05/26/note/paper-reading/word%20embedding/2018-05-27/" rel="prev" title="分布式单词表示综述（一）">
+                  <i class="fa fa-angle-left"></i> 分布式单词表示综述（一）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/08/05/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-08-05/" rel="next" title="Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering">
+                  Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

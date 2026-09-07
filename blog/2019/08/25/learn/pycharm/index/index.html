@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="用着学，学着用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Step 0 - Before you start &lt; Quick Start Guide @ PyCharm">
+<meta property="og:url" content="https://wrran.github.io/blog/2019/08/25/learn/pycharm/index/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="用着学，学着用">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-08-25T01:32:12.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.705Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="pycharm">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2019/08/25/learn/pycharm/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2019/08/25/learn/pycharm/index/","path":"blog/2019/08/25/learn/pycharm/index/","title":"Step 0 - Before you start \u003c Quick Start Guide @ PyCharm"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Step 0 - Before you start < Quick Start Guide @ PyCharm | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#step-0.-before-you-start"><span class="nav-text">Step 0. Before you start</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#which-languages-does-pycharm-support"><span class="nav-text">Which languages does
+PyCharm support?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-platforms-can-i-run-pycharm-on"><span class="nav-text">What platforms can I run
+PyCharm on?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-do-i-need-to-start-with-pycharm"><span class="nav-text">What do I need to start
+with PyCharm?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-1.-opencreate-a-project-in-pycharm"><span class="nav-text">Step 1. Open&#x2F;Create a
+project in PyCharm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-2.-look-around"><span class="nav-text">Step 2. Look around</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-3.-customize-your-environment"><span class="nav-text">Step 3. Customize your
+environment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#appearance"><span class="nav-text">Appearance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#editor"><span class="nav-text">Editor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code-style"><span class="nav-text">Code style</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keymap"><span class="nav-text">Keymap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-4.-code-with-smart-assistance"><span class="nav-text">Step 4. Code with smart
+assistance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#code-completion"><span class="nav-text">Code completion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intention-actions"><span class="nav-text">Intention actions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-5.-keep-your-code-neat"><span class="nav-text">Step 5. Keep your code neat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-6.-generate-some-code"><span class="nav-text">Step 6. Generate some code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-7.-find-you-way-through"><span class="nav-text">Step 7. Find you way through</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#basic-search"><span class="nav-text">Basic search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#search-for-usages"><span class="nav-text">Search for usages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#project-navigation"><span class="nav-text">Project navigation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#navigate-through-the-timeline"><span class="nav-text">Navigate through the
+timeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#search-everywhere"><span class="nav-text">Search Everywhere</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-8.-run-debug-and-test"><span class="nav-text">Step 8. Run, debug and test</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-9.-kepp-your-source-code-under-version-control"><span class="nav-text">Step 9.
+Kepp your source code under Version Control</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-10.-remote-development"><span class="nav-text">Step 10. Remote development</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-11.-databases"><span class="nav-text">Step 11. Databases</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#step-12.-thats-it-go-ahead-and-develope-with-pleasure"><span class="nav-text">Step 12.
+That’s it! Go ahead and develope with pleasure!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2019/08/25/learn/pycharm/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Step 0 - Before you start &lt; Quick Start Guide @ PyCharm | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Step 0 - Before you start < Quick Start Guide @ PyCharm
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-25 09:32:12" itemprop="dateCreated datePublished" datetime="2019-08-25T09:32:12+08:00">2019-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/pycharm/" itemprop="url" rel="index"><span itemprop="name">pycharm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>用着学，学着用</p>
+</blockquote>
+<span id="more"></span>
+<p>This Quick Start Guide is designed to introduce the key concepts and
+help you make a quick start with the IDE.</p>
+<h1 id="step-0.-before-you-start">Step 0. Before you start</h1>
+<h2 id="which-languages-does-pycharm-support">Which languages does
+PyCharm support?</h2>
+<p>With PyCharm you can develop applications in Python. In addition, in
+the Professional edition, one can develop Django, Flask and Pyramid
+applications. Also, it fully supports HTML (including HTML5), CSS,
+JavaScript, and XML; these languages and bundles in the IDE via plugins
+and are switched on for you by default. Support for the other languages
+and frameworks can also be added via plugins (go to <strong>Settings |
+Plugins</strong> or <strong>PyCharm | Preferences | Plugins</strong> for
+macOS users, to find out more or set them up during the first IDE
+launch).</p>
+<h2 id="what-platforms-can-i-run-pycharm-on">What platforms can I run
+PyCharm on?</h2>
+<p>PyCharm is a cross-platform IDE that works on Windows, macOS, and
+Linux.</p>
+<p>If you need assistance installing PyCharm, see the installation
+instuctions: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/installation-guide.html">https://www.jetbrains.com/help/pycharm/installation-guide.html</a></p>
+<h2 id="what-do-i-need-to-start-with-pycharm">What do I need to start
+with PyCharm?</h2>
+<p>In general to start developing in Python with PyCharm you need to
+download, install and start PyCharm (depending on your platform).</p>
+<h1 id="step-1.-opencreate-a-project-in-pycharm">Step 1. Open/Create a
+project in PyCharm</h1>
+<p><strong>Why do I need a project?</strong><br />
+Everything you do in PyCharm is done within the context of a project. It
+serves as a basis for coding assistance, bulk refactoring, coding style
+consistency, and so on.</p>
+<p>You have three options to start working on a project inside the
+IDE.</p>
+<ol type="1">
+<li>open an existing project: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#open-project">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#open-project</a></li>
+<li>check out an existing project from version control: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#checkout-from-vcs">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#checkout-from-vcs</a></li>
+<li>create a project from scratch: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#create-project-from-scratch">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#create-project-from-scratch</a></li>
+</ol>
+<p>These infomations may be helpful.</p>
+<ol type="1">
+<li>creating a Python file: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#create-file">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#create-file</a></li>
+<li>configure project interpreter: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#interpreter">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#interpreter</a></li>
+</ol>
+<h1 id="step-2.-look-around">Step 2. Look around</h1>
+<p>When you launch PyCharm for the very first time, or when there are no
+open projects, you see the <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/welcome-screen.html">Welcome
+screen</a>. It gives you the main entry points into the IDE: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/creating-and-managing-projects.html">creating
+or opening a project</a>, checking out a project from version control,
+<a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/viewing-reference-information.html">view
+documentation</a>, and <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/configuring-project-and-ide-settings.html">configure
+the IDE</a>.</p>
+<p>When a project is opened, you see the main window divided into
+several logical areas. Let’s take a moment to see the key UI elements
+here:</p>
+<p><img
+src="https://www.jetbrains.com/help/img/idea/2019.2/py_QST_lookAroundThumb.png"
+title="Look Around Thumb" /></p>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/project-tool-window.html">Project
+View</a> on the left side displays your project files.</li>
+<li><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/using-code-editor.html">Editor</a>
+on the right side, where you actually write your code. It has tabs for
+easy navigation between open files.</li>
+<li>Navigation bar above the editor additionally allows you to quickly
+run and debug your application as well as do the basic <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/version-control-integration.html">VCS
+actions</a>.</li>
+<li><strong>Left gutter</strong>, the vertical stripe next to the
+editor, shows the breakpoints you have, and provides a convenient way to
+navigate through the code hierarchy like going to
+definition/declaration. It also shows line numbers and per-line VCS
+history.</li>
+<li><strong>Rigut gutter</strong>, on the right side of the editor.
+PyCharm constantly monitors the quality of your code and always shows
+the results of its <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/code-inspection.html">code
+inspections</a> in the right gutter: errors, warnings, and so on. The
+indicator in the top right-hand corner shows the overall status of code
+insepctions for the entire file.</li>
+<li><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/tool-windows.html">Tool
+windows</a> are specialized windows attached to the bottom and sides of
+the workspace and provide access to typical tasks such as project
+management, source code search and navigation, integration with version
+control systems, and so on.</li>
+<li><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/guided-tour-around-the-user-interface.html#status-bar">The
+status bar</a> indicates the status of your project and the entire IDE,
+and shows various warnings and information messages like file encoding,
+line separator, inspection profile, and so on. It also provides quick
+access to the probject interpreter settings.</li>
+</ol>
+<p>Also, in the bottom-left corner of the PyCharm window, in the Status
+bar, you see the button. This button toggles the showing of the tool
+window bars. If you hover your mouse pointer over this button, the list
+of the currently available tool windows show up.</p>
+<p>See the pages <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/guided-tour-around-the-user-interface.html">Overview
+of the user interface</a> and <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/manipulating-the-tool-windows.html#show-all">Hide
+or showing the tool window bars</a> to learn more about showing or
+hiding tool windows.</p>
+<h1 id="step-3.-customize-your-environment">Step 3. Customize your
+environment</h1>
+<p>Feel free to <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/configuring-project-and-ide-settings.html">tweak
+the IDE</a> so it suits your needs perfectly and is as helpful and
+comfortable as it can be. Go to <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/settings-preferences-dialog.html">File
+| Setting</a> (<strong>PyCharm | Perferences | Appearance and Behavior |
+Appearance</strong> for macOS user)</p>
+<h2 id="appearance">Appearance</h2>
+<p>The first thing to fine-tune is the general “look and feel.” More
+information please see <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#appearance">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#appearance</a>.</p>
+<h2 id="editor">Editor</h2>
+<p>The many pages available under <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/settings-editor.html">File
+| Settings | Editor</a> (<strong>PyCharm | Preferences | Editor</strong>
+for macOS users) help you adjust every aspect of the editor’s behavior.
+More info please see <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#editor">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#editor</a>.</p>
+<h2 id="code-style">Code style</h2>
+<p>Code style can be defined for each language under <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/settings-code-style.html">File
+| Settings | Editor | Code Style</a> (<strong>PyCharm | Preferences |
+Editor | Code Style</strong> for macOS users). You can also create and
+save your own coding style scheme.</p>
+<p>Refer to <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/configuring-code-style.html">Configuring
+code style</a> and [Code Quality Assistance Tips and Tricks, or <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/tutorial-code-quality-assistance-tips-and-tricks.html">How
+to Make Your Code Look Pretty?</a> for details.</p>
+<h2 id="keymap">Keymap</h2>
+<p>PyCharm uses the keyboard-centric approach, meaning that nearly all
+actions possible in the IDE are mapped to keyboard shortcuts.</p>
+<p>The [set of keyboard shortcuts] you work with is one of your most
+intimate habits – your fingers “remember” certain combinations of keys,
+and changing this habit is easier said than done. PyCharms supplies you
+with a default keymap making you coding really productive and
+convenient. However, you can always <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/configuring-keyboard-and-mouse-shortcuts.html">change
+it</a> going to <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/settings-keymap.html">File
+| Settings | Keymap</a> (<strong>PyCharm | Preferences | Keymap</strong>
+for macOS users).</p>
+<p>There are also some pre-defined keymaps (like Emacs, Visual Studio,
+Eclipse, NetBeans and so on), and you can also create your own keymap
+based on an existing one.</p>
+<p>If you feel most productive with vi/vim, an emulation mode will give
+you the best of both worlds. Enable the IdeaVim plugin in the IDE and
+select the vim keymap.</p>
+<p>Refer to the section <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/configuring-keyboard-and-mouse-shortcuts.html">Configuring
+keyboard shortcuts</a> for details.</p>
+<h1 id="step-4.-code-with-smart-assistance">Step 4. Code with smart
+assistance</h1>
+<p>PyCharm takes care of the routine so that you can focus on the
+important. Use the following coding capabilities to create error-free
+applications without wasting precious time.</p>
+<h2 id="code-completion">Code completion</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/auto-completing-code.html">Code
+completion</a> is a great time-saver, regardless of the type of file
+you’re working with.</p>
+<p>Basic completion works as you type and completes any name
+instantly.</p>
+<p>Smart type completion analyzes the context you’re currently working
+in and offers more accurate suggestions based on that analysis.</p>
+<h2 id="intention-actions">Intention actions</h2>
+<p>PyCharm keeps an eye on what you are currently doing and makes smart
+suggestions, called intention actions, to save more of your time.
+Indicated with a lightbulb, intention actions let you apply automatic
+changes to code that is <strong>correct</strong> (in contract to code
+inspections that provides quick-fixes for code that <strong>may be
+incorrect</strong>). Did you forget to add some parameters and field
+initializers to the constructor&gt; Not a problem with PyCharm. Clik the
+lightbuib and select one of the suggested options.</p>
+<p>The full list of available intention actions can be found in
+<strong>File | Settings | Editor | Intentions</strong> or
+<strong>PyCharm | Preferences | Editor | Intentions</strong> for macOS
+users.</p>
+<h1 id="step-5.-keep-your-code-neat">Step 5. Keep your code neat</h1>
+<p>PyCharm monitors your code and tries to keep it accurate and clean.
+It delects potential errors and problems and suggests <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/intention-actions.html">quick-fixes</a>
+for them.</p>
+<p>Every time the IDE finds unused codes, and endless loop, and many
+other things that likely require your attention, you’ll see a lightbulb.
+Click it to apply a fix.</p>
+<p>The complete list of available <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/code-inspection.html">inspections</a>
+can be found under <strong>Settings | Editor | Inspections</strong> (or
+<strong>PyCharm | Preferences | Editor | Inspections</strong> for macOS
+users). Disable some of them, or enable others, plus adjust the severity
+of each inspection. You decide whether it should be considered an error
+or just a warning.</p>
+<h1 id="step-6.-generate-some-code">Step 6. Generate some code</h1>
+<p>Writing code can be a lot easier and quicker when you use the <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/generating-code.html">code
+generation options</a> available in PyCharm. The <strong>Code |
+Generate</strong> menu <code>N/A</code> will help you with creating
+symbols from usage, as well as suggest overriding/implementing some
+functions.</p>
+<p>Use live templates (choose <strong>Code | Insert Live
+Templeate</strong>) to produce the entire code constructs. You can
+explore the available ready-to-use live templates in the
+<strong>Settings/Preferences</strong> dialog (<a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/settings-live-templates.html">Settings
+| Editor | Live templates</a> or <strong>PyCharm | Preferences | Editor
+| Live Templates</strong> if you are a macOS user).</p>
+<p>If you see that you are lacking something especially important for
+your development, extend this set of templeates with your own. Also,
+consider quickly <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/generate-custom-code-constructs-using-live-templates.html">surrounding</a>
+your code with complete constructs (choose <strong>Code | Surround
+With</strong>).</p>
+<h1 id="step-7.-find-you-way-through">Step 7. Find you way through</h1>
+<p>When your project is big, or when you have to work with someone
+else’s code, it’s vital to be able to quickly find what you are looking
+for and dig into the code. This is why PyCharm comes with a set of <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/navigating-through-the-source-code.html">navigation</a>
+and <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/finding-and-replacing-text-in-file.html">search</a>
+features that help you find your way through any code no matter how
+tangled it is.</p>
+<h2 id="basic-search">Basic search</h2>
+<p>With these search facilities, you can find and replace any fragment
+of code both in the <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/finding-and-replacing-text-in-file.html">currentluy
+opened file</a>, or in an <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/finding-and-replacing-text-in-project.html">entire
+project</a>.</p>
+<h2 id="search-for-usages">Search for usages</h2>
+<p>To find where a particular symbol is used, PyCharm suggests
+full-scale search via <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/finding-usages.html">Find
+Usages</a>.</p>
+<h2 id="project-navigation">Project navigation</h2>
+<p>You can tell a lot just looking at your File Structure, with its
+imports or call hierarchies.</p>
+<p>Also, you can naviagte to:</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/searching-everywhere.html">Class,
+file, or symbol by its name.</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/navigating-through-the-source-code.html">Declaration.</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/navigating-through-the-source-code.html#go_to_implementation">Base
+class/base function.</a></li>
+</ul>
+<p>The icons in the left-hand gutter can also help you with
+navigation.</p>
+<h2 id="navigate-through-the-timeline">Navigate through the
+timeline</h2>
+<p>Remembering all your activity in the project, PyCharm can easily
+navigate you to the <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/navigating-through-the-source-code.html#recent_files">Recent
+Files</a> or <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/viewing-changes-information.html">Recently
+Changed Files</a>.<br />
+To go through the history of changes, try using Back/Forward navigation
+and/or go to last edit location.</p>
+<h2 id="search-everywhere">Search Everywhere</h2>
+<p>If you have a general idea of what you’re looking for, you can always
+locate the corresponding element using one of the existing navigation
+features. But what if you really want to look for something in every
+look and cranny? The answer is to use <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/searching-everywhere.html">Search
+Everywhere</a>!</p>
+<p>To try it, click the magnifying glass button in the upper right-hand
+corner of the window, or invoke it with <strong>Double Shift</strong>
+(press Shift twice).</p>
+<h1 id="step-8.-run-debug-and-test">Step 8. Run, debug and test</h1>
+<p>TODO<br />
+<a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html#step8">https://www.jetbrains.com/help/pycharm/quick-start-guide.html#step8</a></p>
+<h1 id="step-9.-kepp-your-source-code-under-version-control">Step 9.
+Kepp your source code under Version Control</h1>
+<h1 id="step-10.-remote-development">Step 10. Remote development</h1>
+<h1 id="step-11.-databases">Step 11. Databases</h1>
+<h1 id="step-12.-thats-it-go-ahead-and-develope-with-pleasure">Step 12.
+That’s it! Go ahead and develope with pleasure!</h1>
+<p>We hope this brief overview of essential PyCharm features will give
+you a quick start. There are many important features that make a
+developer’s life easier and more fun, and the source code neater and
+cleaner. Take these first few steps now, and then dig deeper when you
+fell the time is right. Enjoy PyCharm!</p>
+<p>With any questions visit our <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/support/community/#section=communities">Discussion
+Forum</a>, <a target="_blank" rel="noopener" href="https://twitter.com/jetbrains">twitter</a>, and <a
+target="_blank" rel="noopener" href="https://blog.jetbrains.com/">blog</a>, where you can find news,
+updates, and useful tips and tricks. Also, don’t hesitate to report any
+problems to our <a
+target="_blank" rel="noopener" href="https://intellij-support.jetbrains.com/hc/en-us">support team</a>
+or the PyCharm <a target="_blank" rel="noopener" href="https://youtrack.jetbrains.com/issues/">issue
+tracker</a>.</p>
+<h1 id="reference">Reference</h1>
+<p>Quick Start Guide: <a
+target="_blank" rel="noopener" href="https://www.jetbrains.com/help/pycharm/quick-start-guide.html">https://www.jetbrains.com/help/pycharm/quick-start-guide.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2019/08/25/learn/pycharm/index/" title="Step 0 - Before you start &lt; Quick Start Guide @ PyCharm">https://wrran.github.io/blog/2019/08/25/learn/pycharm/index/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/pycharm/" rel="tag"># pycharm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/24/learn/python/command-line-and-env/" rel="prev" title="Command Line@python">
+                  <i class="fa fa-angle-left"></i> Command Line@python
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/25/learn/pycharm/working_with_run_or_debug_config/" rel="next" title="Creating and Editing Run&#x2F;Debug Configurations">
+                  Creating and Editing Run/Debug Configurations <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

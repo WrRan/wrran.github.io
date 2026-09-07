@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Give an object. I will upset you.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript查缺补漏 - 属性的CRUD">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/11/12/learn/js/6-3-property-crud/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Give an object. I will upset you.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-12T05:57:05.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.698Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="object">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/11/12/learn/js/6-3-property-crud/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/11/12/learn/js/6-3-property-crud/","path":"blog/2016/11/12/learn/js/6-3-property-crud/","title":"JavaScript查缺补漏 - 属性的CRUD"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript查缺补漏 - 属性的CRUD | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5"><span class="nav-text">查</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E-%E7%9A%84%E5%B7%AE%E5%88%AB"><span class="nav-text">. 与 [] 的差别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A2%9E-%E6%94%B9"><span class="nav-text">增 &amp; 改</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0"><span class="nav-text">删</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E5%AF%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-text">继承对属性的影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE%E9%94%99%E8%AF%AF"><span class="nav-text">属性访问错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%87%E6%B3%A8"><span class="nav-text">备注</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/11/12/learn/js/6-3-property-crud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript查缺补漏 - 属性的CRUD | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript查缺补漏 - 属性的CRUD
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-11-12 13:57:05" itemprop="dateCreated datePublished" datetime="2016-11-12T13:57:05+08:00">2016-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>Give an object. I will upset you.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>该博文主要介绍JS中对象属性的增删改查（CRUD）。</p>
+<h1 id="查">查</h1>
+<p>在JS中可以通过点（<code>.</code>）或方括号（<code>[]</code>）运算符来获取属性的值，运算符的左侧应当是一个<strong>返回对象的表达式</strong>。对于点（<code>.</code>）来说，右侧必须是一个<strong>以属性名称命名的简单标识符</strong>；对于方括号（<code>[]</code>）来说，方括号内必须是一个<strong>计算结果为字符串的表达式</strong>，这个字符串就是属性的名字。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> author = book.<span class="property">author</span>;</span><br><span class="line"><span class="keyword">var</span> title = book[<span class="string">&#x27;main title&#x27;</span>];</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：在ES3中，点运算符后的标识符不能是保留字，如<code>o.for</code>或<code>o.class</code>将会报错，对于这种，我们必须使用方括号的形式来访问它，比如<code>o['for']</code>或者<code>o['class']</code>。在ES5中对此放宽了限制，可以在点运算符之后直接使用保留字。</p>
+<h2 id="与-的差别">. 与 [] 的差别</h2>
+<p>在某些场合下，通过方括号能实现一些功能，而通过点运算符不能实现。这主要在于字符串可以动态改变；而标识符是静态的，必须写死在程序中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> addr = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i) &#123;</span><br><span class="line">    addr += customer[<span class="string">&#x27;address&#x27;</span> + i] + <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="增-改">增 &amp; 改</h1>
+<p>和查询属性值的写法类似，对查找出来的属性进行赋值操作就可以修改相应的属性值，如果对一个不存在的属性进行赋值就相当于增加了这个属性值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">book.<span class="property">edition</span> = <span class="number">6</span>; <span class="comment">// 增 </span></span><br><span class="line">book[<span class="string">&#x27;main title&#x27;</span>] = <span class="string">&#x27;ECMAScript&#x27;</span>; <span class="comment">// 改</span></span><br></pre></td></tr></table></figure>
+<h1 id="删">删</h1>
+<p><code>delete</code>运算符可以删除对象的属性，它的操作数应到是一个<strong>属性访问表达式</strong>。实际上，<code>delete</code>只是让该属性不再引用相应的值，而不真的去删除。这可能导致<strong>内存泄露</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> book.<span class="property">author</span>; <span class="comment">// 删除属性author</span></span><br><span class="line"><span class="comment">// 内存泄漏</span></span><br><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">    <span class="attr">p</span>: &#123;</span><br><span class="line">        <span class="attr">x</span>: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> b = a.<span class="property">p</span>;</span><br><span class="line"><span class="keyword">delete</span> a.<span class="property">p</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// =&gt; x: 1</span></span><br></pre></td></tr></table></figure>
+<p><code>delete</code>表达式删除成功或没有任何副作用（如，删除不存在的属性）时，它返回<code>true</code>；如果<code>delete</code>后不是一个属性访问表达式，<code>delete</code>同样返回<code>true</code>。<br />
+<code>delete</code>不能删除那些可配置性（参阅<a
+target="_blank" rel="noopener" href="http://wrran.com/blog/2016/11/12/learn-js-6-5-object-attribute/">JavaScript查缺补漏
+-
+对象的三个属性</a>）为<code>false</code>的属性，但是可以删除不可扩展对象的可配置属性。<br />
+在严格模式（参阅<a
+target="_blank" rel="noopener" href="http://wrran.com/blog/2016/11/11/learn-js-2-use-strict/">JavaScript查缺补漏
+-
+严格模式</a>）下，删除一个不可配置属性会报一个类型错误；在非严格模式下，则会返回<code>false</code>。<br />
+在非严格模式下，删除全局对象的可配置属性时，可以省略对全局对象的引用，直接在<code>delete</code>操作符后跟随要删除的属性名即可；在严格模式下，<code>delete</code>后跟随一个非法的操作数，比如<code>x</code>，则会报一个语法错误，必须要显示指定对象及其属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 非严格模式下</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">x</span> = <span class="number">1</span>; <span class="comment">// =&gt; 没有使用var，创建一个可配置的全局属性</span></span><br><span class="line"><span class="keyword">delete</span> x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 严格模式下</span></span><br><span class="line"><span class="keyword">delete</span> x; <span class="comment">// =&gt; 语法错误</span></span><br><span class="line"><span class="keyword">delete</span> <span class="variable language_">this</span>.<span class="property">xl</span> <span class="comment">// =&gt; 正常工作</span></span><br></pre></td></tr></table></figure>
+<h1 id="继承对属性的影响">继承对属性的影响</h1>
+<p>跟继承扯上关系了，建议大家阅读<a href="">JavaScript查缺补漏の女娲补天
+- 原型链</a>。</p>
+<p>JavaScript对象具有<strong>自有属性</strong>，也有一些属性是从原型对象继承而来的。<br />
+假设要查询对象<code>o</code>的属性<code>x</code>，如果<code>o</code>中不存在<code>x</code>，那么将会继续在<code>o</code>的原型对象中查询属性<code>x</code>。如果原型对象中也没有<code>x</code>，但这个原型对象也有原型，那么将继续在这个原型对象的原型上执行查询，直到找到<code>x</code>或者查找到一个原型是<code>null</code>的对象为止。<br />
+假设给对象<code>o</code>的属性<code>x</code>赋值，如果<code>o</code>中已经有属性<code>x</code>（这个属性不是继承来的），那么这个赋值操作只改变这个已有属性<code>x</code>的值。如果<code>o</code>中不存在属性<code>x</code>，那么赋值操作给<code>o</code>添加一个新属性<code>x</code>。如果之前<code>o</code>继承自属性<code>x</code>，那么这个继承的属性就被新创建的同名属性覆盖了。</p>
+<p>属性赋值操作首先检查原型链，以此判断是否允许赋值操作。例如，如果<code>o</code>继承自一个只读属性<code>x</code>，那么赋值操作是不被允许的。如果允许赋值操作，它也总是<strong>在原始对象上创建属性</strong>或<strong>对已有的属性赋值</strong>，而不会去修改原型链。<strong>在JavaScript中，只有在查询属性时才能体会到继承的存在，而设置属性则和继承无关，这个特性让程序员可以有选择地覆盖继承的属性。</strong></p>
+<h1 id="属性访问错误">属性访问错误</h1>
+<p>在如下情景给对象<code>o</code>设置属性<code>p</code>会失败：</p>
+<ul>
+<li><code>o</code>中的属性<code>p</code>是只读的：不能给只读属性重新赋值（defineProperty()方法中有一个例外，可以对可配置的只读属性重新赋值）。</li>
+<li><code>o</code>中的属性<code>p</code>是继承属性，且它是只读的：不能通过通过自由属性覆盖只读的继承属性。</li>
+<li><code>o</code>中不存在自有属性<code>p</code>：<code>o</code>没有使用<code>setter</code>方法继承属性<code>p</code>，并且<code>o</code>的可扩展性是false。如果<code>o</code>中不存在<code>p</code>，而且没有<code>setter</code>方法可供调用，则<code>p</code>一定会添加至<code>o</code>中。但如果<code>o</code>不是可扩展的，那么在<code>o</code>中不能定义新属性。</li>
+</ul>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/10549733/">JavaScript权威指南(第六版)</a></p>
+<h1 id="备注">备注</h1>
+<p>JS: JavaScript<br />
+ES5: ECMAScript5</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/11/12/learn/js/6-3-property-crud/" title="JavaScript查缺补漏 - 属性的CRUD">https://wrran.github.io/blog/2016/11/12/learn/js/6-3-property-crud/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/object/" rel="tag"># object</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/12/learn/js/6-2-object-create/" rel="prev" title="JavaScript查缺补漏 - 创建对象">
+                  <i class="fa fa-angle-left"></i> JavaScript查缺补漏 - 创建对象
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/12/learn/js/6-4-property-miscell/" rel="next" title="JavaScript查缺补漏 - 属性杂项">
+                  JavaScript查缺补漏 - 属性杂项 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="I want to understand you …">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CAS &amp; AoA - 解决机器阅读理解问题的两个模型">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/09/11/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-09-11/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="I want to understand you …">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://ow3xn0dt6.bkt.clouddn.com//image/170911/cas-reader.PNG">
+<meta property="og:image" content="http://ow3xn0dt6.bkt.clouddn.com//image/170911/aoa-reader.PNG">
+<meta property="article:published_time" content="2017-09-11T07:35:11.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.727Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="reading comprehension">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:image" content="http://ow3xn0dt6.bkt.clouddn.com//image/170911/cas-reader.PNG">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/09/11/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-09-11/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/09/11/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-09-11/","path":"blog/2017/09/11/note/paper-reading/question and answering/reading comprehension/2017-09-11/","title":"CAS & AoA - 解决机器阅读理解问题的两个模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CAS & AoA - 解决机器阅读理解问题的两个模型 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-text">问题描述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cnndaily-mail"><span class="nav-text">CNN&#x2F;Daily Mail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#childrens-book-test"><span class="nav-text">Children’s Book Test</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cas"><span class="nav-text">CAS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#aoa"><span class="nav-text">AoA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/09/11/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-09-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CAS &amp; AoA - 解决机器阅读理解问题的两个模型 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CAS & AoA - 解决机器阅读理解问题的两个模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-09-11 15:35:11" itemprop="dateCreated datePublished" datetime="2017-09-11T15:35:11+08:00">2017-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/" itemprop="url" rel="index"><span itemprop="name">question and answering</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/reading-comprehension/" itemprop="url" rel="index"><span itemprop="name">reading comprehension</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>I want to understand you …</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>本周阅读的两篇文章都是致力于解决cloze风格（数据集为CNN/Daily Mail
+&amp; Children’s Book
+Test）的机器阅读问题的，模型分别被称为CAS和AoA。</p>
+<h1 id="问题描述">问题描述</h1>
+<p>Cloze风格的阅读理解题目是指通过给出一段上下文或者文档，之后基于该文档回答问题，并且问题的答案是文档中的<strong>某一个单词</strong>。据此可以将该问题形式化的描述为三元组：<span
+class="math display"> &lt; 𝒟, 𝒬, 𝒜&gt;</span>，其中<span
+class="math display">𝒟</span>就是上下文或者文档，<span
+class="math display">𝒬</span>为问题，<span
+class="math display">𝒜</span>为答案。</p>
+<p>CNN/Daily Mail数据集与CBT数据集的问题类似，但略有区别。</p>
+<h2 id="cnndaily-mail">CNN/Daily Mail</h2>
+<p>CNN/Daily Mail数据集是从CNN与Daily
+Mail爬取下来的数据，其中每条数据由一个新闻正文与摘要组成。通过将新闻正文作为上下文<span
+class="math display">𝒟</span>，将摘要中的<strong>某个实体</strong>去除作为问题<span
+class="math display">𝒬</span>，并将该实体作为答案<span
+class="math display">𝒜</span>。为了防止作弊（利用外部知识），可以进一步将<strong>实体匿名化</strong>，即为每一个实体随机分配一个ID。但是有人发现这种方式并不能达到预期的目的。</p>
+<h2 id="childrens-book-test">Children’s Book Test</h2>
+<p>Children’s Book
+Test数据集，简称CBT数据集，该数据集是从儿童故事书中产生出机器阅读的数据集。与上述的数据集不同，该数据集是从故事中抽取出20句话作为正文<span
+class="math display">𝒟</span>，将第21句话中的<strong>某个单词</strong>去除作为问题<span
+class="math display">𝒬</span>，对应的这个单词作为答案<span
+class="math display">𝒜</span>。值得注意的是，这里去除的单词<strong>词性</strong>可能是实体、一般名词、动词与介词。由于<em>动词</em>与<em>介词</em>并不十分依赖于上下文，所以目前的机器阅读任务主要聚焦在实体类型或者一般名词类型的问题上。</p>
+<h1 id="cas">CAS</h1>
+<p>崔一鸣等人在<a
+target="_blank" rel="noopener" href="http://www.aclweb.org/anthology/C/C16/C16-1167.pdf">文[1]</a>中提出一种新的网络架构来解决上述问题，其网络结构图如下：<br />
+<img src="http://ow3xn0dt6.bkt.clouddn.com//image/170911/cas-reader.PNG"
+title="CAS Reader" alt="CAS Reader" /><br />
+其处理问题方式比较简单：</p>
+<ol type="1">
+<li><code>Embedding Layer</code>: 先将文档<span
+class="math display">𝒟</span>与问题<span
+class="math display">𝒬</span>的one-hot表示转化为continuous表示（<strong>注意</strong>：<span
+class="math display">𝒟</span>与<span
+class="math display">𝒬</span>共享同一个词矩阵）</li>
+<li><code>bi-GRU Layer</code>:
+通过两个<strong>不同</strong>的双向GRU得到文档<span
+class="math display">𝒟</span>的表示<span
+class="math display"><em>h</em><sub><em>d</em><em>o</em><em>c</em></sub></span>和问题<span
+class="math display">𝒬</span>的表示<span
+class="math display"><em>h</em><sub><em>q</em><em>u</em><em>e</em><em>r</em><em>y</em></sub></span></li>
+<li><code>Individual Attention Layer</code>:
+针对问题中的每一个词，对文档进行<code>attention</code>操作，即对<span
+class="math display"><em>h</em><sub><em>d</em><em>o</em><em>c</em></sub></span>与<span
+class="math display"><em>h</em><sub><em>q</em><em>u</em><em>e</em><em>r</em><em>y</em></sub></span>进行点乘后再进行<span
+class="math display">softmax</span></li>
+<li><code>Merging Function</code>: 设问题的单词数量为<span
+class="math display"><em>m</em></span>，则经过步骤3之后，可以得到<span
+class="math display"><em>m</em></span>个分布。该步骤就是针对这多个分布提出的：我们可以通过<em>加和</em>、<em>平均</em>、<em>取最大</em>等操作来合并这些分布，得到一个一致的（Consensus）注意力分布。</li>
+<li><code>Sum Attention Layer</code>:
+注意到这个分布时针对<em>文档的词语</em>而言的，再将同一个词语的不同<code>attention</code>加和得到最终的权重。</li>
+</ol>
+<h1 id="aoa">AoA</h1>
+<p>崔一鸣等人在<a
+target="_blank" rel="noopener" href="http://www.aclweb.org/anthology/P/P17/P17-1055.pdf">文[2]</a>又进一步针对模型CAS提出了改进的方式。AoA的网络结构如下：<br />
+<img src="http://ow3xn0dt6.bkt.clouddn.com//image/170911/aoa-reader.PNG"
+title="AoA Reader" alt="AoA Reader" /><br />
+观察CAS与AoA的网络结构，可以发现两者差别仅在于AoA的<code>ATT-over-ATT Layer</code>。该层的目的在于<strong>让网络自行确定合并分布的操作</strong>，如上文所述的<em>加和</em>等。<br />
+具体来说，先来看<code>Individual ATT Layer</code>这层的矩阵，该矩阵的元素为<span
+class="math display"><em>M</em>(<em>i</em>, <em>j</em>) = <em>h</em><sub><em>d</em><em>o</em><em>c</em></sub>(<em>i</em>)<sup><em>T</em></sup> • <em>h</em><sub><em>q</em><em>u</em><em>e</em><em>r</em><em>y</em></sub>(<em>j</em>)</span>。因此，通过所谓的<em>Column-wise
+softmax</em>就可以得到与<strong>CAS</strong>中的<code>Individual Attention Layer</code>相对应的注意力分布（即所谓的<code>query-to-document attention</code>）。<strong>创新点</strong>在于作者进行了<code>Row-wise softmax</code>，这样就得到了另一个注意力分布，不过这个是就问题而言，即所谓的<code>document-to-query attention</code>。并通过<code>Column-wise Average</code>来确定问题中不同词语的注意力分布的权重。最后据此合并多个注意力分布。之后的操作就与之无差了。</p>
+<figure>
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com//image/170911/difference-aoa-and-cas.PNG"
+title="The Difference of AoA &amp; CAS"
+alt="The Difference of AoA &amp; CAS" />
+<figcaption aria-hidden="true">The Difference of AoA &amp;
+CAS</figcaption>
+</figure>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="http://www.aclweb.org/anthology/C/C16/C16-1167.pdf">Consensus
+Attention-based Neural Networks for Chinese Reading
+Comprehension</a><br />
+<a
+target="_blank" rel="noopener" href="http://www.aclweb.org/anthology/P/P17/P17-1055.pdf">Attention-over-Attention
+Neural Networks for Reading Comprehension</a><br />
+<a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAwMjM4NDU4MA==&amp;mid=2649191077&amp;idx=1&amp;sn=47ed5e2bdfca8aeb8092d47122036794&amp;chksm=82d8e50eb5af6c184d9d0f30cfe65bc820f4887d7b1420cc2dde5b492fef41a3fc75f817d01c&amp;mpshare=1&amp;scene=1&amp;srcid=1013bpGjKaWT9f6r4BPPu26x#rd">CIPS青工委学术专栏第6期
+| 机器阅读理解任务综述</a><br />
+<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/49s6oZY2H2qZ5gep5BwdtA">干货 |
+科大讯飞AI北京研究院副院长付瑞吉：智能人机交互技术的研究与应用</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/09/11/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-09-11/" title="CAS &amp; AoA - 解决机器阅读理解问题的两个模型">https://wrran.github.io/blog/2017/09/11/note/paper-reading/question and answering/reading comprehension/2017-09-11/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/reading-comprehension/" rel="tag"># reading comprehension</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/08/18/howto/git-control-flow/" rel="prev" title="Git工作流">
+                  <i class="fa fa-angle-left"></i> Git工作流
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/09/21/cheatsheet/reference/git/" rel="next" title="GIT常用指令">
+                  GIT常用指令 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

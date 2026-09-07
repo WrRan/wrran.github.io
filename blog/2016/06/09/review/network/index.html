@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="我是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络复习">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/06/09/review/network/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="我是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-06-09T13:56:53.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.791Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="WrRan, AI, NLP, software engineering">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/06/09/review/network/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/06/09/review/network/","path":"blog/2016/06/09/review/network/","title":"计算机网络复习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机网络复习 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-text">传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp"><span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E7%9A%84%E4%B8%BB%E8%A6%81%E7%89%B9%E6%80%A7"><span class="nav-text">TCP的主要特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E7%9A%84%E6%95%B0%E6%8D%AE%E6%AE%B5%E6%A0%BC%E5%BC%8F"><span class="nav-text">TCP的数据段格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E7%AB%AF%E5%8F%A3"><span class="nav-text">TCP端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E8%BF%9E%E6%8E%A5%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB"><span class="nav-text">TCP连接的状态转移</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E4%BC%A0%E8%BE%93%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="nav-text">TCP传输连接的建立</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E6%96%B9%E4%B8%BB%E5%8A%A8%E8%BF%9E%E6%8E%A5%E7%9A%84tcp%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E8%BF%87%E7%A8%8B"><span class="nav-text">单方主动连接的TCP连接建立过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8C%E6%96%B9%E5%90%8C%E6%97%B6%E4%B8%BB%E5%8A%A8%E8%BF%9E%E6%8E%A5%E7%9A%84tcp%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E8%BF%87%E7%A8%8B"><span class="nav-text">双方同时主动连接的TCP连接建立过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E4%BC%A0%E8%BE%93%E8%BF%9E%E6%8E%A5%E7%9A%84%E9%87%8A%E6%94%BE"><span class="nav-text">TCP传输连接的释放</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E6%96%B9%E4%B8%BB%E5%8A%A8%E5%85%B3%E9%97%AD%E7%9A%84tcp%E8%BF%9E%E6%8E%A5%E9%87%8A%E6%94%BE%E8%BF%87%E7%A8%8B"><span class="nav-text">单方主动关闭的TCP连接释放过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8C%E6%96%B9%E4%B8%BB%E5%8A%A8%E5%85%B3%E9%97%AD%E7%9A%84tcp%E8%BF%9E%E6%8E%A5%E9%87%8A%E6%94%BE%E8%BF%87%E7%A8%8B"><span class="nav-text">双方主动关闭的TCP连接释放过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp%E7%9A%84%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="nav-text">TCP的可靠传输</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E7%9A%84%E6%95%B0%E6%8D%AE%E6%AE%B5%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-text">TCP的数据段确认机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E7%9A%84%E8%B6%85%E6%97%B6%E9%87%8D%E4%BC%A0%E6%9C%BA%E5%88%B6"><span class="nav-text">TCP的超时重传机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E7%9A%84%E9%80%89%E6%8B%A9%E6%80%A7%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-text">TCP的选择性确认机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp%E7%9A%84%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="nav-text">TCP的流量控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E7%9A%84%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E7%AE%80%E4%BB%8B"><span class="nav-text">TCP的流量控制简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BC%A0%E8%BE%93%E6%95%88%E7%8E%87%E7%9A%84%E8%80%83%E8%99%91"><span class="nav-text">基于传输效率的考虑</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp%E7%9A%84%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-text">TCP的拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%AE%80%E4%BB%8B"><span class="nav-text">TCP拥塞控制简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%96%B9%E6%A1%88"><span class="nav-text">TCP拥塞控制方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#udp"><span class="nav-text">UDP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-text">应用层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E6%A6%82%E8%BF%B0"><span class="nav-text">应用层概述</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/06/09/review/network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="计算机网络复习 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网络复习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-09 21:56:53" itemprop="dateCreated datePublished" datetime="2016-06-09T21:56:53+08:00">2016-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>我是</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="传输层">传输层</h2>
+<h3 id="tcp">TCP</h3>
+<h4 id="tcp的主要特性">TCP的主要特性</h4>
+<ol type="1">
+<li>面向连接的传输协议</li>
+<li>仅支持单播传输</li>
+<li>提供可靠的交付服务</li>
+<li>传输单位为数据段</li>
+<li>仅一种 TPDU(传输层协议数据单元) 格式</li>
+<li>支持全双工传输</li>
+<li>TCP连接是基于字节流，而非报文流</li>
+<li>每次发送的TCP数据段大小和数据段数是可变的</li>
+</ol>
+<h4 id="tcp的数据段格式">TCP的数据段格式</h4>
+<p>决定TCP数据段大小的两个因素：</p>
+<ol type="1">
+<li>每个TCP数据段的大小必须符合IP数据包的65515字节的有效载荷大小限制要求</li>
+<li>每个网络都有一个MTU值，因此每个TCP数据段都必须符合MTU的限制要求</li>
+</ol>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/TCP%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE.png"
+title="TCP数据段格式" alt="TCP数据段格式" />
+<figcaption aria-hidden="true">TCP数据段格式</figcaption>
+</figure>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>字段名称</th>
+<th>字段含义</th>
+<th>字段位数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>源端口</td>
+<td>呼叫方的TCP端口号</td>
+<td>16</td>
+</tr>
+<tr>
+<td>目的端口</td>
+<td>被叫方的TCP端口号</td>
+<td>16</td>
+</tr>
+<tr>
+<td>序号</td>
+<td>TCP数据段中的“数据”部分的第一个字节的编号</td>
+<td>32</td>
+</tr>
+<tr>
+<td>确认号</td>
+<td>期望接收到对方下一个数据段中“数据”部分的第一个字节序号</td>
+<td>32</td>
+</tr>
+<tr>
+<td>数据偏移</td>
+<td>数据段中“数据”部分起始处距离TCP数据段起始处的偏移量，单位为4字节</td>
+<td>4</td>
+</tr>
+<tr>
+<td>保留</td>
+<td>为将来应用保留，现在全为0</td>
+<td>6</td>
+</tr>
+<tr>
+<td>URG</td>
+<td>Urgent Point，指出当前数据段中是否有紧急数据</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>Acknowledgement，指示TCP数据段中的“确认号”字段是否有效</td>
+<td>1</td>
+</tr>
+<tr>
+<td>PSH</td>
+<td>Push，指示是否需要立即把收到的该数据段提交给应用进程</td>
+<td>1</td>
+</tr>
+<tr>
+<td>RST</td>
+<td>Reset，用于重置、释放原有的传输连接，然后重建一个新的传输连接</td>
+<td>1</td>
+</tr>
+<tr>
+<td>SYN</td>
+<td>Synchronization，硬来在传输连接建立时同步传输连接序号</td>
+<td>1</td>
+</tr>
+<tr>
+<td>FIN</td>
+<td>Final，用于释放一个传输连接</td>
+<td>1</td>
+</tr>
+<tr>
+<td>窗口大小</td>
+<td>指示发送此TCP数据段的主机上用来存储传入数据段的窗口大小，即发送者当前还可以接收的最大字节数</td>
+<td>16</td>
+</tr>
+<tr>
+<td>校验和</td>
+<td>指对“数据段头”、“数据”和“伪头部”的校验和，“伪头部”包括源主机、目的主机的32位IP地址、TCP版本号、TCP数据段长度</td>
+<td>16</td>
+</tr>
+<tr>
+<td>紧急指针</td>
+<td>指明了紧急数据的末尾在数据段中的位置</td>
+<td>16</td>
+</tr>
+<tr>
+<td>可选项</td>
+<td>可选，长度可变，包括窗口缩放选项，MSS选项，SACK选项，时间戳等</td>
+<td>0个或多个32位</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>TCP数据段的有效载荷部分</td>
+<td>视网络情况而定</td>
+</tr>
+</tbody>
+</table>
+<p>TCP/IP网络中，区分不同应用程序进程间的网络通信和连接时主要有以下3个参数：通信的目的IP地址、使用的传输层协议(TCP或UDP)和使用的端口号。<br />
+Socket完全位于应用层，虽然带啊哦用了传输层的端口。<br />
+Socket的原语有：<code>SOCKET</code>，<code>BIND</code>，<code>LISTEN</code>，<code>ACCEPT</code>，<code>CONNECT</code>，<code>SEND</code>，<code>RECV</code>，<code>CLOSE</code></p>
+<h4 id="tcp端口">TCP端口</h4>
+<p>端口共有<span
+class="math inline">2<sup>16</sup></span>个(0<sub>65535)，分为保留端口(0</sub>1023)、动态分配端口、注册端口。</p>
+<h4 id="tcp连接的状态转移">TCP连接的状态转移</h4>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/TCP%E4%BC%A0%E8%BE%93%E8%BF%9E%E6%8E%A5%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E8%BD%AC%E7%A7%BB%E6%B5%81%E7%A8%8B.png"
+title="TCP传输连接有限状态机转移流程"
+alt="TCP传输连接有限状态机转移流程" />
+<figcaption
+aria-hidden="true">TCP传输连接有限状态机转移流程</figcaption>
+</figure>
+<h4 id="tcp传输连接的建立">TCP传输连接的建立</h4>
+<h5
+id="单方主动连接的tcp连接建立过程">单方主动连接的TCP连接建立过程</h5>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/TCP%E4%BC%A0%E8%BE%93%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B.png"
+title="TCP传输连接建立的三次握手过程"
+alt="TCP传输连接建立的三次握手过程" />
+<figcaption
+aria-hidden="true">TCP传输连接建立的三次握手过程</figcaption>
+</figure>
+<p>三次握手是连接两端正确同步的充分必要条件，因为TCP建立在不可靠的分组传输服务之上，报文可能丢失、延迟、重复和乱序，因此协议必须使用超时和重传机制。如果重传的连接请求和原先的连接请求在连接正在建立时到达，或者当一个连接已经建立、使用和结束之后，某个延迟的连接请求才能到达，就会出现问题。采用三次握手协议可以解决上述问题。如客户端发送的ACK数据段就是为了避免因网络延迟而导致的重复连接，因为这时客户端通过检查ACK数据段中的确认号就可得知该连接请求是否已失效。</p>
+<h5
+id="双方同时主动连接的tcp连接建立过程">双方同时主动连接的TCP连接建立过程</h5>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/%E5%90%8C%E6%97%B6%E5%8F%91%E8%B5%B7%E8%BF%9E%E6%8E%A5%E7%9A%84TCP%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E8%BF%87%E7%A8%8B.png"
+title="同时发起连接的TCP连接建立过程"
+alt="同时发起连接的TCP连接建立过程" />
+<figcaption
+aria-hidden="true">同时发起连接的TCP连接建立过程</figcaption>
+</figure>
+<h4 id="tcp传输连接的释放">TCP传输连接的释放</h4>
+<p>TCP传输连接释放过程需要四次握手过程，这是由TCP的<strong>半关闭特性</strong>造成的，因为一个TCP连接是全双工的，每个方向必须单独进行关闭。</p>
+<h5
+id="单方主动关闭的tcp连接释放过程">单方主动关闭的TCP连接释放过程</h5>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/TCP%E4%BC%A0%E8%BE%93%E8%BF%9E%E6%8E%A5%E9%87%8A%E6%94%BE%E7%9A%84%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B.png"
+title="TCP传输连接释放的四次握手过程"
+alt="TCP传输连接释放的四次握手过程" />
+<figcaption
+aria-hidden="true">TCP传输连接释放的四次握手过程</figcaption>
+</figure>
+<h5
+id="双方主动关闭的tcp连接释放过程">双方主动关闭的TCP连接释放过程</h5>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/%E5%90%8C%E6%97%B6%E4%B8%BB%E5%8A%A8%E5%85%B3%E9%97%ADTCP%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%B5%81%E7%A8%8B.png"
+title="同时主动关闭TCP连接的流程" alt="同时主动关闭TCP连接的流程" />
+<figcaption aria-hidden="true">同时主动关闭TCP连接的流程</figcaption>
+</figure>
+<h3 id="tcp的可靠传输">TCP的可靠传输</h3>
+<p>在TCP可靠传输方面，主要采用以下4个机制：</p>
+<ol type="1">
+<li>字节编号机制</li>
+<li>数据段确认机制</li>
+<li>超时重传机制</li>
+<li>选择性确认机制</li>
+</ol>
+<h4 id="tcp的数据段确认机制">TCP的数据段确认机制</h4>
+<p>涉及的概念有：</p>
+<ol type="1">
+<li>数据段</li>
+<li>序号</li>
+<li>窗口大小</li>
+<li>确认号</li>
+<li>ACK</li>
+</ol>
+<p>涉及的特性有：</p>
+<ol type="1">
+<li>TCP可一次连续发送多个数据段</li>
+<li>仅对连续接收的数据段进行确认</li>
+<li>不连续序号的数据将先缓存</li>
+</ol>
+<h4 id="tcp的超时重传机制">TCP的超时重传机制</h4>
+<p>主要问题集中在超时重传计时器(RTT)及超时重发的时间间隔(RTO)的计算上<br />
+RTT的值多为一个数据段往返发送端和接收端的时间总和；</p>
+<ol type="1">
+<li>SRTT的计算<br />
+<span
+class="math inline"><em>S</em><em>R</em><em>T</em><em>T</em> = <em>α</em><em>S</em><em>R</em><em>T</em><em>T</em> + (1 − <em>α</em>)<em>R</em><em>T</em><em>T</em>, 0 ≤ <em>α</em> &lt; 1</span></li>
+<li>RTO的计算<br />
+<span
+class="math inline"><em>R</em><em>T</em><em>T</em><em>D</em> = <em>α</em><em>R</em><em>T</em><em>T</em><em>D</em> + (1 − <em>α</em>) × (<em>S</em><em>R</em><em>T</em><em>T</em> − <em>R</em><em>T</em><em>T</em>)</span><br />
+<span
+class="math inline"><em>R</em><em>T</em><em>O</em> = <em>S</em><em>R</em><em>T</em><em>T</em> + 4 × <em>R</em><em>T</em><em>T</em><em>D</em></span><br />
+对于重传的数据段，就不采用其往返时间作为计算<span
+class="math inline"><em>S</em><em>R</em><em>T</em><em>T</em></span>和<span
+class="math inline"><em>R</em><em>T</em><em>O</em></span>的样本，这样得出的加权<span
+class="math inline"><em>S</em><em>R</em><em>T</em><em>T</em></span>和<span
+class="math inline"><em>R</em><em>T</em><em>O</em></span>会比较准确。</li>
+</ol>
+<h4 id="tcp的选择性确认机制">TCP的选择性确认机制</h4>
+<p>目的：避免重传接收方已经接收的不连续的数据段<br />
+实现是在TCP数据段中的可选项添加对应的SACK字段(SYN数据段与其他数据段)</p>
+<h3 id="tcp的流量控制">TCP的流量控制</h3>
+<p><code>流量控制</code>是基于通信双方的数据发送和接收速率匹配方面考虑的，其最终目的就是不要让数据发送得太快，以便接收端能够来得及接收，是一个链路两端的点对点行为；<code>拥塞控制</code>则是基于网络中各段链路的带宽和中间设备数据处理能力方面而考虑的，不要使网络中出现数据传输阻塞，也就是不要让发送端发送的数据大于接收端数据处理能力，是一个端到端的行为。</p>
+<h4 id="tcp的流量控制简介">TCP的流量控制简介</h4>
+<p>TCP的流量控制是采用滑动窗口协议进行的。</p>
+<ol type="1">
+<li><p>正常情况下的滑动窗口流量控制机制</p></li>
+<li><p>存在数据丢失情况下的流量控制<br />
+如果在数据传输过程中有一个或多个数据段丢失，则发送端接收不到对这些数据段的确认数据段，此时可以通过<code>超时重传</code>来解决。<br />
+如果某个时间，对端发送的数据段显示“窗口大小”为0，而之后对端发送的数据又丢失了，此时需要通过TCP的<code>持续计数器</code>来解决。</p></li>
+</ol>
+<h4 id="基于传输效率的考虑">基于传输效率的考虑</h4>
+<p>目的：解决TCP有效载荷很小时效率过低的情况<br />
+解决方案：<a
+target="_blank" rel="noopener" href="http://baike.baidu.com/link?url=BcXwmFFqms5zSUsCt7MaHWnGHD2V5el-7Gi7pxt2zBHzel4XeoqCz53d4sW8xLIGDJLkP999XgH4GS3XvwI-Cq"
+title="Nagle算法 - 百度百科"><code>Nagle</code>算法</a>和<a
+target="_blank" rel="noopener" href="http://www.cnblogs.com/zhaoyl/archive/2012/09/20/2695799.html"
+title="Clark算法"><code>Clark</code>算法</a></p>
+<h3 id="tcp的拥塞控制">TCP的拥塞控制</h3>
+<p>TCP的拥塞控制主要是依靠TCP连接双方商定的协议来减少数据的发送而实现的。</p>
+<h4 id="tcp拥塞控制简介">TCP拥塞控制简介</h4>
+<p>当网络中各个部分输入的流量大于输出的流量时就会出现网络阻塞。具体而言，网络上发生拥塞的原因是多方面的，而且网络结构越复杂，发生拥塞的原因就越复杂。如TCP连接的整个链路中有结点设备的缓存空间太小、数据转发能力太低、某段链路带宽太小、对端数据接收能力低等。</p>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/%E5%AE%9E%E9%99%85%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E5%90%9E%E5%90%90%E9%87%8F%E4%B8%8E%E8%BE%93%E5%85%A5%E8%B4%9F%E8%8D%B7%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png"
+title="实际情况下的吞吐量与输入负荷之间的关系"
+alt="实际情况下的吞吐量与输入负荷之间的关系" />
+<figcaption
+aria-hidden="true">实际情况下的吞吐量与输入负荷之间的关系</figcaption>
+</figure>
+<h4 id="tcp拥塞控制方案">TCP拥塞控制方案</h4>
+<p>发生网络拥塞的一个最明显的特征就是出现了数据的丢失。<br />
+现假设数据是单方面发送的，另一方只传送确认数据段，而且假设接收端的窗口足够大，发送端的窗口大小由网络拥塞程度决定。</p>
+<p><strong>慢启动</strong>的基本思想：在TCP连接正式传输数据时，每次可发送的数据大小是逐渐增大的，也就是先发送一些小字节数的试探性数据，在收到这些数据段的确认后，再慢慢增加发送的数据量，直到达到了某个原先设定的极限值为止。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/%E2%80%9C%E6%85%A2%E5%90%AF%E5%8A%A8%E2%80%9D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88TCP%E6%95%B0%E6%8D%AE%E5%8F%91%E9%80%81%E7%A4%BA%E4%BE%8B.png"
+title="“慢启动”解决方案TCP数据发送示例"
+alt="“慢启动”解决方案TCP数据发送示例" /></p>
+<p><strong>拥塞避免</strong>的基本思想：在拥塞窗口(Congestion Window,
+CWND)值第二次达到慢启动阈值(Slow Start Threshold,
+SSTHRESH)时，让拥塞窗口大小没经过一个RTT(一个数据段往返接收端和发送端所需的时间)时间值仅加一，使其以线性方式慢慢增大。</p>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/%E2%80%9C%E6%85%A2%E5%90%AF%E5%8A%A8%E2%80%9D%E4%B8%8E%E2%80%9C%E6%8B%A5%E5%A1%9E%E9%81%BF%E5%85%8D%E2%80%9D%E6%96%B9%E6%A1%88%E6%95%B0%E6%8D%AE%E5%8F%91%E9%80%81%E5%AE%9E%E4%BE%8B.png"
+title="“慢启动”与“拥塞避免”方案数据发送实例"
+alt="“慢启动”与“拥塞避免”方案数据发送实例" />
+<figcaption
+aria-hidden="true">“慢启动”与“拥塞避免”方案数据发送实例</figcaption>
+</figure>
+<p><strong>快速重传</strong>的基本思想：当接收端收到一个不是按序到达的数据段时，TCP实体迅速发送一个重复ACK数据段，而不用等到有数据需要发送时顺带发出确认；在重复收到三个重复ACK数据段后，即认为对应“确认号”字段的数据段已经丢失，TCP不等重传定时器超时就重传看来已经丢失的数据段。<br />
+<strong>快速恢复</strong>的基本思想：在收到第三个重复ACK数据段时，把当前拥塞窗口(CWND)值设为当前慢启动阈值(SSTHRESH)的一半，以减轻网络负荷，然后执行拥塞避免算法，慢慢增大CWND。</p>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/%E2%80%9C%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0%E2%80%9D%E6%96%B9%E6%A1%88%E6%95%B0%E6%8D%AE%E9%87%8D%E4%BC%A0%E7%A4%BA%E4%BE%8B.png"
+title="“快速重传”方案数据重传示例" alt="“快速重传”方案数据重传示例" />
+<figcaption aria-hidden="true">“快速重传”方案数据重传示例</figcaption>
+</figure>
+<p>除此之外，还有随机早期检测(Random Early Detection,
+RED)这种避免拥塞的方式。<br />
+可以参考如下资料：</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/5303536">随机早期检测RED–两个门限防抖动</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=2&amp;CurRec=4&amp;recid=&amp;filename=DZJC200808020&amp;dbname=CJFD2008&amp;dbcode=CJFQ&amp;pr=&amp;urlid=&amp;yx=&amp;v=MjIxOTBab0Z5L2tVYi9BSVRmQmJiRzRIdG5NcDQ5SFpJUjhlWDFMdXhZUzdEaDFUM3FUcldNMUZyQ1VSTCtmWmU=">随机早期检测RED及其改进算法的研究</a></li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-network/RED%E4%B8%A4%E4%B8%AA%E9%97%A8%E9%99%90%E4%B8%8E%E4%B8%A2%E5%8C%85%E6%A6%82%E5%BF%B5%E5%85%B3%E7%B3%BB%E5%9B%BE.PNG"
+alt="RED两个门限与丢包概念关系图" />
+<figcaption aria-hidden="true">RED两个门限与丢包概念关系图</figcaption>
+</figure>
+<h3 id="udp">UDP</h3>
+<p>TCP采用的是面向连接的分组报文传输方式，而UDP采用的是无连接的数据报传输方式。<br />
+UDP具有以下几个方面的明显特性：</p>
+<ol type="1">
+<li>无连接性</li>
+<li>不可靠性</li>
+<li>以报文为边界</li>
+<li>无流量控制和拥塞控制功能</li>
+<li>支持各种交互通信方式</li>
+</ol>
+<p>UDP数据报包括：</p>
+<ol type="1">
+<li>源端口：标识源主机上使用的UDP端口。仅当需要目的主机返回应答时才有意义，故为可选项。</li>
+<li>目的端口：标识目的主机上使用的UDP端口。</li>
+<li>长度：指示UDP数据报长度，理论上UDP数据报数据部分的长度可以达到65535-20（最小IP报头）-8（UDP）=65507字节。</li>
+<li>校验和：校验部分包括整个UDP头部、数据部分及伪头部（即不是数据中的真实数据，也不用来传输，仅用来做校验和）。其中伪头部包括源IP地址、目的IP地址、保留字、协议码、UDP长度。</li>
+</ol>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/UDP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F.png"
+title="UDP数据报格式" alt="UDP数据报格式" />
+<figcaption aria-hidden="true">UDP数据报格式</figcaption>
+</figure>
+<h2 id="应用层">应用层</h2>
+<h3 id="应用层概述">应用层概述</h3>
+<p>TCP/IP体系结构中的应用层解决了TCP/IP网络应用存在的共性问题，包括与网络应用相关的支撑协议和应用服务两大部分。<br />
+网络应用软件之间最常用、最重要的交互模型时C/S(Client/Server)模型。一般来说，服务器需要时刻守候各种应用服务，客户端向服务端发出对应的应用会话请求；服务器程序通常较为复杂，对主机的硬件资源及软件资源都有一定要求，而客户端程序功能则较为简单，通常不需要特殊的硬件和高级的网络操作系统。<br />
+C/S模型不但很好地解决了互联网应用程序之间的同步问题(何时开始通信、何时发送数据、何时接收数据等)，而且C/S模型的这种非对等相互作用的特点很好的适应了互联网资源分配不均的客观事实。<br />
+在互联网络中，客户发起请求是完全随机的，可能出现多个请求同时到达服务器的情况，因此服务器必须具备处理多个并发请求的能力：</p>
+<ol type="1">
+<li>迭代服务器(iterative server)<br />
+服务器程序中包含一个请求队列，客户请求达到后首先进入队列中等待，服务器按照先进先出的原则对这些客户端请求一个一个地做出响应，即服务器只有处理完一个请求后才会处理下一个请求。</li>
+<li>并发服务器(concurrent server)<br />
+并发处理器是一个守护进程，在没有请求达到时处于等待状态，一旦客户端请求到达，服务器立即为之创建一个子进程，然后返回等待状态，由子进程响应请求。当下一个请求到达时，服务器再为之创建一个子进程。其中，并发服务器称作主服务器，子进程称作从服务器。</li>
+</ol>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-network/image/%E5%B9%B6%E5%8F%91%28Concurrent%29%E4%B8%8E%E5%B9%B6%E8%A1%8C%28Parallel%29%E7%9A%84%E5%8C%BA%E5%88%AB.PNG"
+title="并发(Concurrent)与并行(Parallel)的区别"
+alt="并发(Concurrent)与并行(Parallel)的区别" />
+<figcaption
+aria-hidden="true">并发(Concurrent)与并行(Parallel)的区别</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/06/09/review/network/" title="计算机网络复习">https://wrran.github.io/blog/2016/06/09/review/network/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/06/07/review/bigdata/" rel="prev" title="大数据复习">
+                  <i class="fa fa-angle-left"></i> 大数据复习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/06/14/howto/python/unittest/" rel="next" title="Python UnitTest使用教程">
+                  Python UnitTest使用教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

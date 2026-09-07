@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统 - 容错性">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/28/review/distributed-system/8-fault-tolerance/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-28T03:19:27.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.788Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="distributed system">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/8-fault-tolerance/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/28/review/distributed-system/8-fault-tolerance/","path":"blog/2017/12/28/review/distributed-system/8-fault-tolerance/","title":"分布式系统 - 容错性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式系统 - 容错性 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%A8%A1%E5%BC%8F"><span class="nav-text">故障模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%86%97%E4%BD%99%E6%8E%A9%E7%9B%96%E6%95%85%E9%9A%9C"><span class="nav-text">使用冗余掩盖故障</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E6%81%A2%E5%A4%8D"><span class="nav-text">进程恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="nav-text">设计问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E7%AD%89%E7%BB%84%E4%B8%8E%E7%AD%89%E7%BA%A7%E7%BB%84"><span class="nav-text">平等组与等级组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E6%88%90%E5%91%98"><span class="nav-text">组成员</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%A9%E7%9B%96%E5%92%8C%E5%A4%8D%E5%88%B6"><span class="nav-text">故障掩盖和复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8D%8F%E5%AE%9A"><span class="nav-text">故障系统的协定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%A3%80%E6%B5%8B"><span class="nav-text">故障检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E7%9A%84%E5%AE%A2%E6%88%B7-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E4%BF%A1"><span class="nav-text">可靠的客户-服务器通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E9%80%9A%E4%BF%A1"><span class="nav-text">点对点通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%B1%E8%B4%A5%E6%97%B6%E7%9A%84rpc%E8%AF%AD%E4%B9%89"><span class="nav-text">失败时的RPC语义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E4%B8%8D%E8%83%BD%E5%AE%9A%E4%BD%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">客户不能定位服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1"><span class="nav-text">请求消息丢失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B4%A9%E6%BA%83"><span class="nav-text">服务器崩溃</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%AD%94%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1"><span class="nav-text">应答消息丢失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B4%A9%E6%BA%83"><span class="nav-text">客户端崩溃</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E7%9A%84%E7%BB%84%E9%80%9A%E4%BF%A1"><span class="nav-text">可靠的组通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%8F%AF%E9%9D%A0%E5%A4%9A%E6%92%AD%E6%96%B9%E6%B3%95"><span class="nav-text">基本的可靠多播方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E5%A4%9A%E6%92%AD%E4%B8%AD%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7"><span class="nav-text">可靠多播中的可扩展性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%AD%89%E7%BA%A7%E7%9A%84%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6"><span class="nav-text">无等级的反馈控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%AD%89%E7%BA%A7%E7%9A%84%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6"><span class="nav-text">分等级的反馈控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E5%A4%9A%E6%92%AD"><span class="nav-text">原子多播</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%90%8C%E6%AD%A5"><span class="nav-text">虚拟同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%8E%92%E5%BA%8F"><span class="nav-text">消息排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E8%99%9A%E6%8B%9F%E5%90%8C%E6%AD%A5"><span class="nav-text">实现虚拟同步</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%8F%90%E4%BA%A4"><span class="nav-text">分布式提交</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="nav-text">两阶段提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="nav-text">三阶段提交</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D"><span class="nav-text">恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="nav-text">检查点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8B%AC%E7%AB%8B%E7%9A%84%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="nav-text">独立的检查点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E8%B0%83%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="nav-text">协调检查点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E6%97%A5%E5%BF%97"><span class="nav-text">消息日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E6%81%A2%E5%A4%8D%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-text">面向恢复的计算</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/8-fault-tolerance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式系统 - 容错性 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式系统 - 容错性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-28 11:19:27" itemprop="dateCreated datePublished" datetime="2017-12-28T11:19:27+08:00">2017-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/distributed-system/" itemprop="url" rel="index"><span itemprop="name">distributed-system</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>三个臭皮匠赛过诸葛亮</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概览">概览</h1>
+<p>分布式系统区别于单机系统的一个特性是它可以容许部分失效。当分布式系统中的一个组件发生故障时就可能产生部分失效。这个故障也许会影响到其他组件的正确操作,但同时也有可能完全不影响其他组件。而非分布式系统中的故障通常会影响到所有的组件,可能很容易就使整个应用程序崩溃。<br />
+分布式系统设计中的一个重要目标是以这样的方式来构造系统:它可以从部分失效中自动恢复,而且不会严重地影响整体性能。特别是,当故障发生时,分布式系统应该在进行恢复的同时继续以可接受的方式进行操作,也就是说,它应该能容许错误,在发生错误时某种程度上仍可以继续操作。<br />
+在本章中,我们将更详细地学习使分布式系统具有容错性的技术。在提供了一些有关容错的背景知识后,我们将介绍进程恢复与可靠多播。进程恢复涉及到的技术可以使一个或多个进程发生故障而不会严重影响到系统的其余部分。可靠多播与这个问题相关,它确保可以成功地把信息传输到一个进程集合。要保持进程同步,可靠多播通常是必需的。<br />
+<strong>原子性(atomicity)</strong>在很多应用程序中都是一个重要的特性。例如,在分布式事务中,就必须要保证一个事务中的所有操作全部发生或一个都不发生。在分布式系统中原子性的基础是分布式提交协议,我们将在本章中用单独一节来讨论它。<br />
+最后,我们将介绍如何从故障中恢复。特别是,我们将考虑何时以及如何对一个分布式系统的状态进行保存以确保在以后恢复到该状态。</p>
+<h1 id="概述">概述</h1>
+<p>容错涉及到计算机科学中的很多研究。在本节中,我们将从介绍与容错相关的基本概念开始,然后讨论故障的模式。我们也要讨论处理故障的关键技术—冗余(redunancy)要获得关于分布式系统中有关容错的更多信息,请参阅文献(Jalote1994)或(Shooman
+2002)。</p>
+<h2 id="基本概念">基本概念</h2>
+<p>要理解容错在分布式系统中的作用,我们首先需要深入地了解分布式系统中的容错到底意味着什么。容错与被称为可靠的系统(dependable
+system)紧密相关。可靠性是一个术语,它包含了分布式系统中很多有用的需求,列举以下:</p>
+<ol type="1">
+<li>可用性;</li>
+<li>可靠性;</li>
+<li>安全性;</li>
+<li>可维护性</li>
+</ol>
+<p>可用性(availability)被定义为系统的一个属性,它说明系统已准备好,马上就可以使用。通常,它指在任何给定的时刻,系统都可以正确地操作,可根据用户的行为来执行它的功能。换句话说,高度可用的系统在任何给定的时刻都能及时地工作<br />
+可靠性(reliability)是指系统可以无故障地持续运行。与可用性相反,可靠性是根据时间间隔而不是任何时刻来进行定义的。高度可靠的系统可以在一个相对较长的时间内持续工作而不被中断。这很微妙,但是与可用性相比,这是一个重要的不同。如果系统在每小时中崩溃1ms,那么它的可用性就超过99.9999%,但是它还是高度不可靠的。与之类似,如果一个系统从来不崩溃,但是要在每年8月中停机两个星期,那么它就是高度可靠的,但是它的可用性只有96%。这两种属性并不相同。<br />
+安全性(safety)是指在系统偶然出故障的情况下能正确操作而不会造成任何灾难。例如,很多进程控制系统,比如那些用来控制核电站或把人送入太空的控制系统,就必须提供高度的安全性。这样的控制系统即使只是非常短时间瞬时故障,结果也将是灾难性的。过去的很多例子(以后还会有更多的例子)都说明了要建立安全的系统是多么困难。<br />
+最后,可维护性(maintainability)是指发生故障的系统被恢复的难易程度。高度可维护的系统可能具有高度的可用性,特别是在可以探测到故障并自动恢复时。但是,像我们在本章后面将看到的那样,从故障中自动恢复说起来简单,做起来就难了。通常也要求可靠的系统提供高度的安全性,特别是在要处理诸如完整性这样的问题时我们将在下一章中讨论安全问题。</p>
+<p>一个系统不能兑现它的承诺时就被认为是失败(fail)了。尤其是,如果一个分布式系统被设计为为它的用户提供大量的服务,当这些服务中的一个或多个不能被(完整地)提供时,系统就失败了。而错误(eror)是系统状态的一部分,它可能会导致失败。例如,当从网络上传输数据包时,可能有一些数据包在到达接收方时已经被破坏了。在这种环境下,被破坏了意味着接收方可能错误地得到某位的值(例如把0读成1),甚至无法探测到有什么东西到达了。</p>
+<p>造成错误的原因被称为故障(fault)。无疑,找到是什么引起了错误是很重要的。例如,不好的传输介质可能很容易使得数据包被破坏。在这种情况下要解决故障是相对容易的但是无线网络中的传输错误可能是由恶劣的天气条件引起的。要改变天气来减少或防止错误是不可能的。<br />
+建立一个可靠的系统与控制故障紧密相关。防止、解决和预报故障三者之间是有差别的(Avizienis等2004)。对我们来说最重要的问题是容错(fault
+tolerance),它意味着系统即使在发生故障时还能提供服务。故障通常被分为暂时的、间歇的和持久的。暂时故障(
+trans1 ent
+fault)只发生一次,然后就消失了,即使重复操作也不会发生。一只鸟从微波传输的电波中飞过可能会使一些网络上的数据丢失。如果传输超时重发,第二次就会正常工作。<br />
+间歇故障(internittent
+fault)是发生,消失不见,然后再次发生,如此反复进行。连接器接触不良通常会造成间歇故障。间歇故障会造成情况的恶化,因为它们很难诊断,通常,当解决故障的人到来时系统工作良好。<br />
+持久故障( permanent
+fault)是那些直到故障组件被修复之前持续存在的故障。芯片燃烧、软件错误和磁盘头损坏都是持久故障的例子.</p>
+<h2 id="故障模式">故障模式</h2>
+<p>发生故障的系统不能充分地提供所设计的服务。如果我们把分布式系统视为一个彼此之间且与它们的客户进行通信的服务集,那么不能充分提供服务就意味着服务器、通信通道或两者都不能正常地进行工作。但是,出现故障的服务器本身并不总是我们应该查找错误的地方。如果这样的服务器要依赖其他服务器才能充分提供它的服务,那么错误的原因就可能需要到别的地方去寻找。</p>
+<p>这样的依赖关系大量出现在分布式系统中。如果一个文件服务器的设计目的是提供高度可用的文件系统,那么失效的磁盘会使该服务器运行困难。如果这样的文件服务器是分布式数据库的一部分,那么整个数据库的正常工作都将被打乱,因为只有一部分数据真正可以访问.</p>
+<p>为了更好地理解故障到底有多严重,人们开发了一些分类方法。其中一种方法如图8.1所示,它基于(Cristian1991)和(
+Hadzilacos和 Toueg1993)中描述的方法。</p>
+<p>如果服务器过早停机但在停止之前工作正常,就发生了<strong>崩溃性故障(crash
+failure)</strong>。崩溃性故障的一个重要方面是,一旦服务器停机,就不再提供任何服务。崩溃性故障的一个典型例子是操作系统崩溃,这时只有一种解决方法:重新启动。虽然人们期望个人计算机系统能正常运行,但它经常遭遇崩溃性故障。在这个意义上说,把复位按钮从机箱背后移到前面是很有道理的。可能有一天还会把它移到背后,甚至完全去掉。<br />
+当服务器不能对请求进行响应时就发生<strong>遗漏性故障(omission
+failure)</strong>。导致这种问题可能有多种原因。在发生接收遗漏性故障的情况下,首先服务器可能永远不会接收到请求。注意,这可能是由于尽管在客户和服务器之间正确地建立起连接,但是没有线程监听到来的请求。接收遗漏性故障通常不会影响到服务器的当前状态,因为服务器不知道有信息发送给了它与之类似,如果服务器能正常工作,但是在发送响应时失败,则产生发送遗漏性故障。例如,当发送缓冲区溢出而服务器又没有为这样的情况做好准备时就发生此类故障。注意,与接收遗漏性故障,服务器现在的状态可能说明它已经完成了对客户的服务。因此,如果响应发送失败,那么服务器可能需要为客户重新发送先前的请求而做好准备。<br />
+另外一种遗漏性故障与通信无关,它可能由诸如无限循环或不正确的内存管理的软件错误引起,这时服务器的状态被称为“挂起”。<br />
+另外一种故障类型与时间有关。如果响应是在指定的实时间隔之外,就发生了<strong>定时故障(timing
+failure)</strong>。像我们在第2章中介绍的同步数据流那样,如果提供数据的速度过快而在接收方又没有足够的缓冲空间来保存所有到来的数据,那么就很容易在接收方引起问题。但是,更通常的情况是服务器的响应太慢,这种情况被称为发生了“性能故障”。<br />
+一种严重的故障类型是<strong>响应故障(response
+failure)</strong>,就是说服务器的响应不正确。可能发生两种响应故障。在发生数值故障的情况下,服务器为请求提供错误的响应,例如搜索引擎系统返回了与使用的搜索项无关的Web页面,就是这种情况。<br />
+另外一种响应故障被称为<strong>状态转换故障(state transition
+failure)</strong>。当服务器对到来的请求做出意想不到的响应时就发生这种故障。例如,如果服务器接收到一个它不能识别的信息,也没有釆取措施来处理这样的信息,那么就会发生状态转换故障。特别是,发生故障的服务器可能会错误地采取一种从来没有初始化的默认行为来进行处理,此时就发生这种故障。<br />
+最严重的故障是<strong>随意性故障(arbitrary
+failure)</strong>,也被称为<strong>拜占庭故障( Byzantine
+failure)</strong>。实际上,当发生随意性故障时,客户应该做好最坏的准备。特别是,服务器可能产生它从来没有产生过的输出,但是又不能检测出错误。更坏的情况是发生故障的服务器恶意地与其他服务器共同工作来产生恶意的错误结果。这种情况说明了为什么谈到可靠系统时安全被认为是一个重要的需求。术语“拜占庭”是指拜占庭帝国,它存在的时间是330到1453年,地点在巴尔干半岛和现在的土耳其,当时在统治阶级中充斥着无休止的阴谋诡计和谎言。拜占庭故障的问题由Pease等(1980)和
+Lamport等(1982)首先进行了分析。我们将在下面对此类故障进行分析。</p>
+<p>随意性故障与崩溃性故障紧密相关。崩溃性故障的定义在上面已经给出,它是服务器停机的最“好”方式。它也被称为失败停机故障(fail-stop
+failure)。实际上,因故障停机的服务器只是简单地停止产生输出,而且它的停机能够被其他的进程探测到。例如,服务器可以“友好地”宣布它将要崩溃。<br />
+当然,在现实中,服务器通过呈现遗漏性故障或崩溃性故障而停机,它们并不“友好地”宣布将要停机,而要等其他的进程来判定服务器是否已经过早停机。但是,在这样的失败沉默系统(fail-silent
+failure)中,其他的进程可能错误地认为服务器已经停机,而服务器只不过是意外地慢,也就是说发生了性能故障<br />
+最后,服务器也有可能产生随机的输出,但是这个输出能简单地被其他进程识别为垃圾。这时服务器以一种“仁慈”的方式来出现随意性故障,这些故障也被称为安全失败(fail
+safe)。</p>
+<h2 id="使用冗余掩盖故障">使用冗余掩盖故障</h2>
+<p>如果系统是容错的,那么它能做的最好的事情就是对其他进程隐藏故障的发生。关键技术是使用冗余来掩盖故障。有三种可能:信息冗余、时间冗余和物理冗余,。在<strong>信息冗余</strong>中,添加额外的位可以使错乱的位恢复正常。例如可以在传输的数据中添加一段Hamming码来从传输线路上的噪声中恢复数据。在<strong>时间冗余</strong>中,执行一个动作,如果需要就再次执行。使用事务处理是这种方法的一个例子。如果一个事务处理中止,那么它就可以无害地重新执行。当错误是临时性或间歇性时,时间冗余特别有用。在<strong>物理冗余</strong>中,通过添加额外的装备或进程使系统作为一个整体来容忍部分组件的失效或故障成为可能。物理冗余可以在硬件上也可以在软件上进行。例如,可以在系统中添加额外的进程,这样如果少数进程崩溃,系统还是可以正常工作。换句话说,通过冗余的进程可以获得高度容错性。<br />
+物理冗余是提供容错性的著名技术。它用在生物学(哺乳动物具有两只眼睛、两个耳朵、两个肺等)、飞行器(747具有四个引擎,而只使用三个)和体育(有多个裁判)中。物理冗余用在电子电路的容错中已经有多年了,了解如何在电子电路中使用它是有意义的。例如,考虑图8.2(a)中的电路。这里的信号依次通过设备A、B和C。如果它们中的一个发生故障,最后结果就可能是错误的。</p>
+<p>在图8.2(b)中,每个设备都被复制了三个。这样电路中的每一级都有三个表决电路,每个表决电路都是具有三个输入和一个输出的电路。如果输入中的两个或三个是相同的,那么输出就等于输入,如果所有的输入都是不同的,那么输出就是未定义的。这种设计被称为三倍模块冗余(
+Triple Modular Redundancy,TMR)。<br />
+假定元件A2发生故障,则每个表决电路V1、V2和V3获得两个好的(一致的)输入和个无用的输入,它们中的每个都将正确值输出到第二级。这样A2故障的影响就完全被掩盖了,到BⅣ、B2和B3的输入就与没有发生故障时完全相同。现在考虑一下如果除了A2之外B3和C1也都发生了故障时的情形。即使发生这种情况,其影响也会被掩盖,三个最后的输出还是正确的。<br />
+为什么在每一级都需要三个表决电路呢?毕竟一个表决电路就可以发现并传递主要的观点。但是,一个表决电路只是一个组件,它可能发生故障。例如,假定V1发生故障,到B2的输入就是错误的,但是只要别的部分正常工作,B2和B3就会产生相同的输出,V4,V5和V6都会产生到第三级的正确结果。V1发生故障的影响与B1故障没什么区别,在两种情况下B1都产生错误的输出,但是两种情况下都在后面才进行表决尽管不是所有的容错分布式系统都使用TMR,但是这种技术还是很普遍的,它对容错系统是什么给出了一个清楚的解释。它与使用高度可靠的单个组件的系统不同,后者的组织不是容错的。当然,TMR也可以递归使用,例如在芯片内部使用TMR来使它高度可靠,而对于使用芯片的电路设计者来说,他们并不知道芯片的冗余性</p>
+<h1 id="进程恢复">进程恢复</h1>
+<p>已经讨论了容错的基本问题,现在我们集中讨论在分布式系统中如何获得容错性的问题。我们首先要讨论的主题是防止进程失败这是通过把进程复制到组中来获得的。在下面的内容中,我们考虑进程组中的一般设计问题,并讨论容错组到底是什么。我们也将讨论当一个或多个程序不能给出正确的回答时,如何在进程组中达到一致。</p>
+<h2 id="设计问题">设计问题</h2>
+<p>容忍失败进程的关键方法是把多个同样的进程组织到一个组中。所有组都具有的关键特性是当信息发送到组本身时,组中的所有成员都接收它。通过这种方式,如果组中的一个进程失败,其他的一些进程可以接管它(Guerraou和
+Schiper1997)。</p>
+<p>进程组可以是动态的。可以创建新的组也可以删除旧的组。在系统操作过程中,一个进程可以加入一个组也可以离开一个组。一个进程可以同时是多个组的成员。因此需要一些机制来管理组和组的成员.<br />
+组类似于社会组织。
+Alice可能是一个读书俱乐部、一个网球俱乐部和一个环境组织的成员。在一个特别的日子里,她可能从读书俱乐部收到一本生日蛋糕食谱的邮件(消息),从网球俱乐部收到每年一度的母亲节网球锦标赛的消息,还从环境组织收到保护南方土拨鼠运动开始的消息。在任何时刻,她都可以自由地离开任何一个或所有这些组,也可能加入其他的组。</p>
+<p>引入组的目的在于允许把进程的集合作为单一的抽象概念来处理。这样,一个进程就可以把消息发送给一个服务器组而不用知道有多少个进程以及它们在哪里,而这些可以在两次调用之间进行改变.</p>
+<h3 id="平等组与等级组">平等组与等级组</h3>
+<p>不同的组之间一个重要的区别在于它们的内部结构。在一些组中,所有的进程都是平等的。没有指挥,所有的决定都是共同做出的。在其他的组中存在一些等级关系。例如个进程是协作者而其他进程都是工作者。在这种模式中,当外部客户或一个工作者产生一个工作请求时,请求被发送给协作者。协作者决定哪个工作者最适合,然后把请求转发给它。当然也可能有更复杂的等级关系。在图8.3中说明了这些通信模式。</p>
+<p>每种组织结构都具有它的优点与缺点。平等组是对称的,没有单独的失败点。如果一个进程崩溃,组只是简单地变得更小,但是还可以继续。它的缺点在于做出决定比较复杂例如,要决定某事常常需要进行表决,这导致了一些延迟和开销等级组则相反。协作者的故障会使整个组崩溃,但是只要它保持运行,就可以独自做出决定,不需要其他进程参加。</p>
+<h3 id="组成员">组成员</h3>
+<p>当组通信发生时,需要一些方法来创建和删除组,以及允许进程加入和离开组。一种可能的方法是使用组服务器(group
+server),所有这些请求都发送给它。这个组服务器保持着所有组及其成员的完整的数据库。这种方法直接、有效、容易实现。不幸的是它具有所有集中式技术的缺点:单一的失败点。如果组服务器崩溃,组管理就不再存在。可能大多数或所有组都不得不从头开始重建,所有正在进行的工作都可能终止</p>
+<p>与之相反的方法是以分布式的方法来管理组成员。例如,如果可靠的多播可用,一个外部进程就可以发送消息给所有的组成员表示它希望加入该组要离开一个组,理想的情况是,成员只需要给所有成员发送一个再见消息。在容错环境中,故障停机的语义一般并不确切。问题在于当一个进程崩溃时不能像一个进程自动离开那样进行通知。其他成员不得不通过注意到崩溃的成员不再进行响应来发现这一点。一旦确定崩溃的成员是真正的崩溃(而不是速度慢),就从组中删除它。</p>
+<p>另外一个棘手的问题是进程的离开与加入必须跟数据消息的发送同步。换句话说,从进程加入一个组开始,它就必须接收发送给该组的所有消息。与之类似,一旦进程离开一个组,它就不能接收来自该组的任何消息,其他的成员也不能接收来自它的任何消息。一种确保把进程的加入或离开集成到消息流中的正确位置的方法,是把这个操作转换为一个发送到整个组的消息序列。<br />
+与组成员相关的最后一个问题是,如果很多机器停机使得组完全不能工作时该怎么办。这时需要通过一些协议来重建组。一些进程不得不进行初始化来重新启动,但是如果有两个或三个进程同时进行尝试会发生什么?协议必须能够处理这些问题。</p>
+<h2 id="故障掩盖和复制">故障掩盖和复制</h2>
+<p>进程组是建立容错系统方法的一部分,特别是在有一组相同的进程允许我们掩盖组中的一个或多个发生故障的进程的情况下。换句话说,我们可以复制进程并把它们组织在个组中来用一个容错的组取代一个脆弱的进程。像前面讨论过的那样,有两种方法来进行复制:通过基于主进程的协议或通过复制写协议。</p>
+<p>在容错的情况下,基于主进程的复制通常以主进程后备协议的形式出现。在这种情况下,以等级方式来组织一个进程组,其中一个主进程协调所有的写操作。在实践中,这个主进程是固定的,尽管如果需要可以用一个后备进程来接管它。实际上,如果主进程崩溃,后备进程执行一些选举算法来选择一个新的主进程。<br />
+像我们在上一章中解释的那样,与基于团体的协议相同,复制写协议以主动复制的形式使用。这些解决方法把相同进程的集合组织到一个平等组中。这样做的主要优点在于这样的组没有单一的失败点,代价是分布式的协调。</p>
+<p>使用进程组进行容错中一个重要的问题是需要多少复制。为了简化我们的讨论,我们只考虑复制——写系统的情况。如果系统能够经受k个组件的故障并且还能满足规范的要求,那么就被称为k容错(k
+fault
+tolerant)。如果这些组件(进程)是失败沉默的,那么具有k+1个组件就足够提供k容错。如果k个组件停止工作,还可以用剩下的一个组件来得到响应。<br />
+另一方面,如果进程发生拜占庭失败,继续错误运行行并发送出错误或随机的应答,那么最少需要2k+1个进程才能获得k容错。在最坏的情况下,k个失败的进程可以意外地(甚至是故意地)产生同样的应答,但是剩余的k+1个进程也会产生同样的回答,这样,客户或表决电路还可以相信多数进程的回答。</p>
+<p>当然,说一个系统是k容错的,让k+1个相同的进程以票数胜过k个相同的应答在理论上是好的,但是在实践中很难想象这样的情况,即k个进程失败了,但是k+1个进程没有失败。这样,即使在容错系统中也需要某种统计分析。<br />
+与这种模式有关的一个不明显的前提是所有请求按相同的顺序到达所有的服务器,这个问题被称为原子多播问题(atomic
+multicast
+problen)。实际上,这个条件可以稍微放松,因为读操作不会有问题而一些写操作也可以替换,但是还留有一般的问题。原子多播将在后面详细讨论。</p>
+<h2 id="故障系统的协定">故障系统的协定</h2>
+<p>把复制的进程组织在一个组中有助于提高容错性。正如我们提到的那样,如果客户可以根据它的表决机制做出决定,我们甚至可以容忍2k+1个进程中的k个进程得出错误的结果。但是,我们做出的假定是这些进程没有组合成团队来共同产生错误的结果。<br />
+通常,如果我们要求进程组达成一致,事情会变得更复杂。在很多情况下需要达到一致,例如,选择一个协作者,决定是否提交一个事务,在工作者之间划分任务以及同步。当通信和进程都很完美时,达成这样的一致通常是简单而又直接的,但是如果不是这样,就会出现问题。</p>
+<p>分布式协议算法的一般目标是使所有的非故障进程就一些问题达成一致,而且在有限的步骤内就达成一致。这个问题有点复杂了,因为底层系统的不同假设需要不同的解决方案(假设解决方案存在)。Turek和
+Shasha(1992)区分了以下一些情况:<br />
+(1)同步与非同步系统。在某个加锁步骤模式下,有且只有一个进程运行,该系统就称为同步的(synchronous)。正式地说,这表示,有一常量c≥1,如果有某个处理器执行了c+1步,其他进程最少执行1步。不是同步的系统就称为是异步的(
+asynchronous<br />
+(2)通信延时受限与否。当且仅当每个消息使用全局和预定的最大时间传送时,延时是受限的。<br />
+(3)消息传送是否已排序。<br />
+(4)消息传输是通过单播或多播来完成的</p>
+<p>事实证明,只有在如图8.4所示的情况下才可能达成协定。在其他所有情况下,都不存在解决办法。注意,大多数实际的分布式系统都是假定进程是异步的,消息传输是单播的,通信延时是不受限的。因此,我们需要使用已排序(可靠)的消息传送,如TCP/IP。图8.4显示了当进程发生故障时的分布式协定非凡本性。</p>
+<p>这个问题最初是由Lamport等(1982)开始研究的,又称为拜占庭协定问题(Byzantine
+agreement
+problem),意思是在众多战争中,多个军队需要达成的协定,例如,面临反叛将军、谋反中尉等情况下的军队战斗力。请看下面由Lamport等(1982)描述的解决办法。在这种情况下,我们假定进程是同步的,消息是单播的,且是按顺序进行的,通信延时是有限制的。我们假定有N个进程,每个进程为其他进程提供一个值v;。目标是让每个进程构建一个长度为N的向量,这样,如果进程i是无故障的,那么V[i]=v1。否则,V[i就是未定义的。</p>
+<p>在图8.5中显示了N=4和k=1情况下的算法。对这些参数,该算法分四步操作。第一步,每个无故障进程i使用可靠单播给其他每个进程发送v。故障进程则可能发送些其他内容。而且,由于我们使得的是多播,它们可能会给不同的进程发送不同的值。假设v=1。在图8.5(a)中,我们可以看到,进程1给其他进程发送的是1,进程2发送的是2,进程3发送的分别是x、y和z,进程4发送的是4。在第二步中,把第一步中的结果集合成图8.5(b)所示的向量形式。<br />
+第三步,每个进程把图8.5(b)的向量发送给其他进程。此时,每个进程得到3个向量,每个向量来自其他3个进程。这里,由于进程3是有故障进程,产生了从a到1共12个新值。第三步的结果如图8.5(c)所示。最后,在第四步中,每个进程检查每个新接收向量中的第i个元素。如果值占大多数,那么该值就放置到结果向量中。如果值不占多数,那么结果向量的响应元素就标记为未知(
+UNKNOWN)。从图8.5(c)可以看出,1、2和4都与v1、v2和v4的值一致,是正确的结果。从这些进程得出的结论无法确定v3,但也是不相关的。拜占庭协定的目标是<strong>一致性意见只与无故障进程的值有关</strong>.</p>
+<p>下面让我们来看看N=3和k=1的情况,也就是说,只有2个无故障进程和1个有故障进程,如图8.6所示。这里我们可以看到,在图8.6(c)中,无故障进程的向量中无法看到元素1、2和3占大多数的情况,因此都标记为未知。该算法不能产生协定。</p>
+<p>在Lamport等(1982)的文章中证明了,在一个含有k个有故障进程的系统中,只有有2k+1个无故障进程时才可以达到协定,即总进程为3k+1个。用一般术语表示就是,只有无故障进程数多于三分之二时于才可以达成协定。<br />
+解决这个问题的另一种方法如下。基本上,我们需要获得的是无故障进程组的大多数投票,不管它们之中是否有有故障进程。如果有k个有故障进程,我们需要确保它们的投票和其他所有无故障进程的投票,仍然符合无故障进程占大多数。如果有2k+1个无故障进程,只要有多于三分之二的无故障进程,就可以到达协定。换句话说,如果多于三分之二的进程达成同一决定,这个决定就符号无故障进程组的大多数投票</p>
+<p>但是,达到协定可能会很糟糕。Fischer等(1985)证明,在分布式系统中,如果不能保证消息在一致且有限的时间内传送出去,即使某个进程是有故障的(纵使某个进程是悄然失败的),也不可能达成协定。这种系统的问题在于,任意缓慢的进程与崩溃的进程是无法区分的(即,你无法区分进程是死亡还是生存的)。有很多其他的理论结果可以知道协定何时是可能的,何时是不可能的。有关这些内容的介绍请参见(
+Barborak等1993),以及( Turek和Shasha1992)。</p>
+<p>应该注意的是,到目前为止所讨论的方法都是假定结点是拜占庭或协作的。当进程是来自不同管理域时,就不能简单地假定后者了。在这种情况下,它们很可能展示的是理性行为,例如,报告超时比运行一个更新操作更合算。如何处理这种情况并不简单。这种解决方法的第一步是以BAR容错(bar
+fault tolerance)的方式进行,其中,BAR表示的是Byzantine、 Altruist和
+Rationality。有关BAR容错的内容请参见(Aiyer等2005)。</p>
+<h2 id="故障检测">故障检测</h2>
+<p>从我们到目前为止的讨论中可以清楚地看出,要很好地屏蔽故障,通常需要检测出故障。在分布式系统中,故障检测是容错的基石。所有这些都归结为,对于一组进程,无故障的成员应该可以知道谁仍是组成员,谁不是。换句话说,当某个成员出现故障时,我们需能够检测出来。</p>
+<p>要检测进程故障,只有两种方法。进程主动地往其他进程发送“are you
+alive?消息(它们显然期望有回答),或者被动地等待来自其他进程的消息。只有在能保证进程间有足够的通信时,后一种方法才有意义。实际上,通常使用的是主动pinging。</p>
+<p>关于故障检测的理论工作已经开展了很多。所有这些可以归结为,使用超时机制来检测某个进程是否发生故障。在实际的设置中,这种方法有两个主要问题。首先,由于网络的不可靠,如果仅仅因为没有对ping消息返回应答,就认为进程发生了故障,有时候可能是不准确的。如果因为一个错误的判断而把一个正常的进程删除了,显然我们就犯错误了。<br />
+另一个严重的问题是,通过超时来判断进程故障很粗糙。正如(Birman2005)所介绍的那样,在构建恰当的故障检测子系统时,都只是考虑对单个消息没有响应,而没有做更多的工作。看看企业部署的分布式系统就知道,上面说法就更明显了。</p>
+<p>在设计故障检测子系统时,需要考虑很多问题(Zhuang等2005)。例如,每个结点会定期地告知其邻结点,它仍是活动的,但此信息传播中也会发生故障。因此,正如我们前面介绍过的那样,一种办法是让每个结点主动地探测其他结点。<br />
+故障检测也可以作为相邻结点间常规信息交换的边界效应来完成。这种方法也被Obduro(Vogels2003)所采用:进程定期地告知它们的服务可用性。这些信息通过网络逐级扩散。最后,每个进程都知道其他进程,更为重要的是,这样就有了足够的信息来确定某个进程是否发生了故障。如果某个成员的可用性信息很旧,就可假定它发生了故障。<br />
+另一个重要的问题是,故障检测子系统应该能很好地区分网络故障和结点故障。处理这个问题的一个办法是,不让某个结点去确定它的某个邻结点是否崩溃了,而是当知道某个plng消息超时时,结点请求其他邻结点去查看是否可以到达已假定发生故障的结点。当然,正确的信息也可以共享:如果某个结点还是活动的,那么这种信息就可以转发给其他对该信息感兴趣的结点。</p>
+<p>这就给我们带来了另一个关键问题:当检测发现某个成员发生了故障时,如何告知其他无故障的进程?在FUSE中提出了一个简单但基本的方法(Dunagan等2004)。在FUSE中,进程可以加入到某个组中,而这些进程可以是分布在广域网中的。组成员可以创建一个生成树,用于监视成员故障。成员可以往其邻居发送ping消息。如果某个邻成员没有响应,该结点立即转换为不再响应其他结点的ping消息的状态。通过迭代,单个结点的故障就可以迅速地提升为组故障通知。FUSE不受链路故障的影响,其简单的原因是,它依赖的是组成员之间的点对点TCP连接。</p>
+<h1 id="可靠的客户-服务器通信">可靠的客户-服务器通信</h1>
+<p>在很多情况下,分布式系统中的容错关注的是故障进程。但是我们也需要考虑通信故障。前面讨论过的大多数故障模型都很好地应用到通信通道上。特别是,通信通道也可能出现崩溃性故障、遗漏性故障、定时故障和随意性故障。在实践中建立可靠的通信通道时,<br />
+焦点应该放在掩盖崩溃性故障与遗漏性故障上。随意性故障可能以重复消息的形式发生造成它的原因是在计算机网络中可能把消息缓冲一个相对较长的时间,然后在原始发送方发出重新传送命令时把消息重新发到网络中(Tanenbaum2003)。</p>
+<h2 id="点对点通信">点对点通信</h2>
+<p>在很多分布式系统中都使用像TCP这样可靠的传输协议来建立可靠的点到点通信TCP可以通过确认和重传来掩盖遗漏性故障。这样的故障对TCP客户是完全隐藏的。<br />
+但是通常不能掩盖连接的崩溃性故障。崩溃性故障发生在不论什么原因TCP连接突然中断时,这时就不能再通过该通道传输更多的消息了。在大多数情况下,可通过抛出一个异常信号来通知客户通道已经崩溃。要掩盖这样的故障,唯一的方法就是让分布式系统尝试自动建立一个新的连接。</p>
+<h2 id="失败时的rpc语义">失败时的RPC语义</h2>
+<p>现在我们来看一下在使用像远程过程调用(RPC)或远程方法调用(RMI)这样的高级通信工具时的客户服务器通信。在下面内容中,我们主要讨论RPC,但是这些讨论也同样适用于与远程对象的通信。</p>
+<p>RPC的目标是通过使远程过程调用与本地过程调用看上去相同来隐藏通信。除了一些例外情况之外,现在我们已经对它相当熟悉了。确实,只要客户和服务器都正常工作,那么RPC就可以很好运转。当发生错误时会出现一些问题。然后就不容易掩盖本地调用与远程调用之间的区别了。</p>
+<p>为了使我们的讨论结构化,首先区分一下在RPC系统中发生的5种失败形式,如下所示:</p>
+<ol type="1">
+<li>客户不能定位服务器</li>
+<li>客户到服务器的请求消息丢失;</li>
+<li>服务器在收到请求之后崩溃;</li>
+<li>从服务器到客户的响应消息丢失;</li>
+<li>客户在发送请求之后崩溃<br />
+每种类型的失败都会引起不同的问题,需要用不同的方法来解决。</li>
+</ol>
+<h3 id="客户不能定位服务器">客户不能定位服务器</h3>
+<p>首先是客户可能不能定位适当的服务器。例如,服务器可能因发生故障而停止运行。作为一种选择,我们假设客户程序是使用特定的客户存根版本进行编译的,而且在相当长的时间里不使用二进制。同时服务器程序有了改进,安装了一个接口的新版本,产生了新的存根并投入使用。当客户最终运行时,绑定器可能不能使它与服务器相匹配并报告失败。这种机制用来保护客户不会意外地试图与那些与它所要求的参数以及所假定的动作并不相符合的服务器进行通信,关于如何处理这种失败的问题仍然存在。<br />
+一种可能的方法是让错误抛出一个异常(exception),在一些语言中(例如Java),程序员可以编写只有在发生特定错误(例如被零除)时才调用的过程。在C中可以使用信号处理器。换句话说,我们可以定义一种新的信号类型SIGNOSERVER,允许它以与其他信号相同的方式进行处理。<br />
+但这种方法也有缺点。首先,不是每种语言都具有异常或信号。还有一点是不得不编写异常或信号处理器程序,这破坏了我们努力想要获得的透明性。假定你是一位程序员,你的老板要你编写一个求和的过程。你微笑着告诉她会在5分钟内完成编写、测试并进行文档化。然后她说你还应该编写一个异常处理程序以防万一。这时就很难再继续幻想远程过程与本地过程没有区别了,因为在单处理器系统中,为“不能定位服务器”编写异常处理器是很少见的请求。关于透明性,我们就介绍这么多。</p>
+<h3 id="请求消息丢失">请求消息丢失</h3>
+<p>第2类失败类型是请求消息丢失。这是最容易处理的一种失败:只需要使操作系统或客户存根在发送请求时开启一个定时器即可。如果在返回应答或确认之前定时器超时,那么就重新发送消息。如果消息真的丢失了,则服务器不能辨别原始的与重传的消息,但每件事情都顺利进行。当然,如果请求消息很频繁地丢失,使得客户放弃重传而错误地认为是服务器停机,那么这种情况就回到了“不能定位服务器”的问题。如果请求没有丢失,我们需要做的唯一的事就是让服务器知道它正在处理重传的消息。不幸的是,这件事并不简单,我们将在讨论应答丢失时讨论它。</p>
+<h3 id="服务器崩溃">服务器崩溃</h3>
+<p>第3个失败是服务器崩溃。服务器中事件的通常顺序如图8.7(a)所示。请求到达、执行请求、发送应答。现在考虑图8.7(b)。请求到达并且被执行,但是在发送应答之前服务器崩溃了。最后,看一下图8.7(c),请求再次到达,但是这次服务器在执行请求之前就崩溃了。</p>
+<p>图8.7中比较麻烦的部分在于正确对待图(b)和(c)之间的不同。在图(b)中,系统不得不向客户报告失败也就是抛出一个异常),而在图(c)中只是重新传输请求。问题在于客户的操作系统不能区分它们。它所知道的所有事情就是定时器超时</p>
+<p>关于如何处理这种情况存在三种方法(Spector1982)。一种方法是在服务器重启之前(或重新绑定到一个新的服务器之前)等待并再次尝试操作。这种方法是在得到应答之前不断尝试,然后将应答传递给客户。这种技术被称为至少一次语义(
+at least once semantics),它保证PRC至少执行一次,但是有可能执行多次<br />
+第二种方法是立刻放弃并报告失败。这种方法被称为最多一次语义(at most once
+semantics),它保证RPC最多执行一次,但是有可能一次也不执行。<br />
+第三种方法是什么都不保证。当服务器崩溃时,客户得不到有关发生了什么的任何帮助和承诺。RPC有可能执行任意多次。这种方法的主要优点在于它很容易实现。</p>
+<p>这些方法没有一个是很吸引人的。吸引人的方法应该具有怡好一次的语义(exactly
+once
+semantics),但是一般来说没有办法可以做到这一点。想象由打印一些文本组成的远程操作,当文本被打印之后服务器向客户发送一条完成消息。假定当客户提交请求时收到一个确认消息表明请求已经被提交给服务器。服务器可以采取两种策略:或者在通知打印机进行工作之前发送完成消息,或者在文本已经被打印之后发送。<br />
+假定服务器崩溃之后又恢复了。它向所有的客户宜布它刚才崩溃了但是现在又再次运行。问题在于客户并不知道它的打印请求是否被执行了。<br />
+客户可以采取4种策略。首先,客户可以决定决不重发请求,这可能要冒着文本不被打印的危险。第二,它可以决定总是重发请求,但是这种方法可能导致文本被打印两次。第三,它可能只有在没有接收到打印请求已经传送到服务器的确认时才重发请求。在这种情况下,客户认为服务器在打印请求被传送到之前崩溃。第四种也是最后一种策略是只有接收到打印请求的确认时才重发请求</p>
+<p>由于服务器具有两种策略而客户具有4种,所以共有8种结合方法。不幸的是,没有一种是令人满意的。注意,在服务器上可能发生3种事件:发送完成消息(M)、打印文本(P)和崩溃(C)。这些事件可能以6种不同的次序发生:<br />
+(1)M→P→C:在发送完成消息和打印文本之后发生崩溃;<br />
+(2)M→C(→P):在发送完成消息之后,打印文本之前发生崩溃;<br />
+(3)P→M→C:在发送完成消息和打印文本之后发生崩溃;<br />
+(4)P→C(→M):首先打印文本,然后在发送完成消息之前发生崩溃;<br />
+(5)C(→P→M):在服务器做任何事之前发生崩溃;<br />
+(6)C(→P-M):在服务器做任何事之前发生崩溃。</p>
+<p>括号表示由于服务器已经崩溃所以不会发生该事件。图8.8说明了所有可能的组合。很容易验证,没有一种客户策略和服务器策略的结合可以在所有可能的事件顺序下正确工作。根本在于客户从来都不能知道服务器是在打印文本之前还是之后发生崩溃</p>
+<p>简而言之,服务器崩溃的可能性从根本上改变了RPC的本性,很明显地把单处理器系统与分布式系统区别开来。在前者中,服务器崩溃也暗示着客户的崩溃,所以恢复不但是不可能的也是不需要的。而在后者中有可能也有必要采取行动。</p>
+<h3 id="应答消息丢失">应答消息丢失</h3>
+<p>应答丢失处理起来也比较困难。直接的解决方法就是再次依赖客户的操作系统设置的定时器。如果客户在合理的时间内没有得到响应,那么就再次发送请求。这种方法的问题在于客户不能真正确认为什么没有得到响应。是请求或响应丢失还是服务器慢?这造成了些不同。<br />
+特别是,一些操作可以安全地重复多次而不会造成任何损害。例如请求一个文件的前1024个字节就没有副作用,可以执行多次而没有危害。这种请求被称为是<strong>幂等的(idempotent)</strong>。<br />
+现在考虑请求银行服务器从一个账户向另一个账户转账100万美元的请求的情况。如果请求到达并执行了,但是响应丢失了,而客户不知道这一点,它就会重发消息。银行服务器将把这个请求解释为一个新的请求,并再次执行它。这样就转账了200万美元。想象一下这种响应丢失10次吧!传输货币不是幂等的。<br />
+解决这个问题的一种方法是按幂等的方式组织所有的请求。但是在实际中,很多请求(例如货币兑换)在本质上是非幂等的,所以就需要一些别的东西。另外一种方法是在客户为每个请求分配一个序列号。通过在服务器上跟踪从每个客户收到的最近序列号,服务器可以分辨原始的请求与重发的请求并拒绝执行第二次发出的请求。但是服务器还是要向客户发送响应。注意这种方法需要服务器维护对每个客户的管理。一个附加的防卫措施是在消息头中添加1位以区分是最初的请求还是重发的请求(这种思想在于执行原始请求是安全的,而执行重发请求就需要更多的小心)</p>
+<h3 id="客户端崩溃">客户端崩溃</h3>
+<p>最后一种失败是客户崩溃失败。如果客户向服务器发送请求,请求做一些事情,但在服务器回复之前崩溃了,那么会发生什么呢?这时,虽然计算是活动的,但没有双亲等待结果,这种不需要的计算被称为孤儿(
+orphan)。<br />
+孤儿会引起多种问题。它们至少是在浪费CPU周期。它们也可以锁定文件或占用有价值的资源。最后,如果客户重新启动并再次进行RPC,而孤儿的结果又立即返回了,那么就会造成结果的混淆</p>
+<p>如何处理孤儿呢?
+Nelson(1981)提出了4种方法。第一种方法是在客户存根(stub)发送RPC消息前进行日志记录来说明要做什么。日志被保留在崩溃之后仍然存在的磁盘或其他介质上。在重新启动之后,对日志进行检查然后明确地杀死孤儿。这种方法被称为孤儿消灭(
+extermination).这种方法的缺点在于为每个RPC都进行写磁盘操作要付出的昂贵代价。另外它也可能不能工作,因为孤儿本身也可以进行RPC,这样就创建了更多的后代,因而对它们进行定位很难,甚至是不可能的。最后,网络可能由于网关故障而被分隔,这使得即使定位了它们,要杀死它们也是不可能的。总之,这不是一种有前途的方法。<br />
+在称为再生(
+reincarnation)的第二种方法中,不需要书写磁盘记录就可以解决所有这些问题。它的工作方式是把时间分为顺序编号的时期。当客户重启时,就向所有的机器广播一个消息说明一个新时期的开始。当这样的广播到达时,所有与那个客户有关的远程计算都被杀死。当然,如果网络被分隔,那么一些孤儿还能活下来。但是,当它们向回报告计算结果时,其中包含一个过期的时期号,这就使得检测到它们很容易。<br />
+第三种方法是第二种方法的变种,但是没那么严厉,它被称为优雅再生( gentle re1
+carnation)。当时期广播到达时,每台机器都进行检查来查看是否存在远程计算,如果有,那么就尝试定位它的拥有者。只有当不能找到拥有者时才杀死该计算。<br />
+最后一种方法称为到期(
+expirat1on),其中每个RPC都被给定一个标准的时间量T来进行工作。如果到时不能结束,那么就必须显式地请求另外的时间量。这是很麻烦的。另一方面,如果在崩溃之后,客户在重启之前等待了时间T,那么就可以确认抛弃所有的孤儿。这里要解决的问题是选择一个合理的T值以满足不同RPC的需要。</p>
+<p>在实践中,这些方法都不令人满意。更糟的是,杀死一个孤儿可能带来无法预料的结果。例如,假定一个孤儿获得了一个或多个文件或数据库记录上的锁。如果突然杀死孤儿,那么这些锁就会被永远保持。而且孤儿可能已经在不同的远程队列中设置了实体以便将来某个时候启动其他进程,这样即使杀死孤儿也不能删除它的所有痕迹。在(
+Panzieri和Shrivastava1988)中更详细地讨论了孤儿消灭问题。</p>
+<h1 id="可靠的组通信">可靠的组通信</h1>
+<p>如果考虑一下由复制获得的进程恢复有多重要,那么就会知道可靠的多播服务也是重要的了。多播服务保证了消息被传送给进程组中的所有成员。不幸的是,可靠多播的实现被证明是令人惊讶的困难。在本节中,我们更深入地来探讨与把消息可靠地传送到一个进程组相关的问题。</p>
+<h2 id="基本的可靠多播方法">基本的可靠多播方法</h2>
+<p>尽管大多数的传输层都提供了可靠的点到点通道,它们很少能提供到一组进程的可靠通信。最好的也只是让每个进程都建立到想要与之通信的每个其他进程的点到点连接。显然,这样的组织不是有效的,因为它浪费了网络带宽。不过,如果进程数目较少,通过多个可靠的点到点通道来获得可靠性是一种简单而直接的方法。</p>
+<p>要做到这一点,我们需要准确地定义什么是可靠多播。直观地说,它意味着发送到一个进程组的消息被传递给该组中的每个成员。但是,如果在通信期间有一个进程加入该组会发生什么呢?这个进程也应该接收消息吗?同样,我们也应该确定如果一个(发送)进程在通信期间崩溃会发生什么?</p>
+<p>要解决这样的问题,就必须区分存在故障进程时的可靠通信与假定所有进程都正确操作时的可靠通信。在前一种情况下,如果能保证所有正常的组成员都接收到消息,那么就认为多播是可靠的。其中的窍门在于除了不同的次序约束之外,还应该就在传递消息之前组看上去是什么样子达成协议。我们在下面讨论原子多播,然后再回到这个问题上来。</p>
+<p>如果假定存在一个协议说明谁是组的成员,那么问题就会简单一些。特别是,如果我们假定进程不会失败,而且在通信进行期间不会有进程加入或离开组,那么可靠多播就简单地意味着每个消息都应该被传递到组的每个当前成员处。在最简单的情况下,不要求所有的组成员都按同样的顺序接收消息,但是有时需要这个特性。<br />
+只要接收方的数目有限,那么这种较弱形式的可靠多播实现起来就相对容易。考虑下单个发送方想要把一个消息多播发送给多个接收方的情况。假定底层的通信系统只需要不可靠的多播,那么这意味着多播消息会以某种方式丢失,它只能传送给其中一些接收方而不是全部。</p>
+<p>一种简单的方法如图8.9所示。发送进程为它发送的每个多播消息分配一个序列号。假定消息按它们被发送的次序进行接收。在这种方式中,接收方很容易探测到消息丢失。每个多播消息都在发送方本地的一个历史缓存器中进行存储。假定发送方知道接收方,那么发送方就简单地在每个接收方都返回一个确认之前在历史缓存器中保留消息。如果接收方探测到它丢失了一个消息,那么就返回一个否定确认,请求发送方重发。作为选择,发送方可以在某个时间内没有接收到所有确认的情况下自动重发消息<br />
+可以在多种设计中进行平衡。例如,要减少返回给发送方的消息数目,确认可能被附加在其他的消息中。重发消息也可以使用到每个请求进程的点到点通信来进行,或使用发送到所有进程的单一多播消息。要了解更多的细节,请参见(
+Defago等2004)。</p>
+<h2 id="可靠多播中的可扩展性">可靠多播中的可扩展性</h2>
+<p>刚才介绍的可靠多播方法的主要问题是它不支持有很多接收方的情况。如果有N个接收方,那么发送方必须准备接收至少N个确认。如果有很多的接收方,那么发送方可能被大量的反馈消息淹没,这称为<strong>反馈拥塞</strong>。另外,我们也需要考虑接收方可能发布在广域网上的情况</p>
+<p>解决这个问题的一种方法是:接收方不对消息接收进行反馈,而是只在通知发送方消息丢失时才返回一个反馈消息。只返回否定确认通常可以减少反馈的规模(例如,请参阅Towsley等1997),但是并不能保证永远不会发生反馈拥塞</p>
+<p>只返回否定确认在理论上还存在另外一个问题,发送方不得不永远在历史缓存器中保留消息。因为发送方永远不会知道消息是否已被传送到所有的接收方,它应该总是准备处理来自接收方的要求重发旧消息的请求。在实践中,发送方经过一段时间之后就从历史缓存器中删除消息以避免缓存器溢出。但是,删除一条消息是在冒险,因为重发的请求有可能不能得到响应。</p>
+<p>对于可扩展的可靠多播有若干种建议,可以在( Levine和 Garcia-Luna-
+Aceves1998)中找到对不同方法的比较。我们现在只简单地讨论两种非常不同的方法,它们在现存的很多方法中是具有代表性的</p>
+<h3 id="无等级的反馈控制">无等级的反馈控制</h3>
+<p>要获得可扩展的可靠多播方案,关键问题在于减少返回给发送方的反馈消息的数目。在一些广域网应用中流行的一种模式是<strong>反馈抑制(feedback
+suppression)</strong>。这种方法是(Floyd等1997)所开发的<strong>可扩展可靠多播(Scalable
+reliable
+multicasting,SRM)</strong>协议的基础,它以以下方式进行工作。<br />
+首先,在SRM中,接收方从来都不会对多播消息的成功传送进行确认,而是只在丢失消息时进行报告。探测消息如何丢失的问题留给应用程序处理。只有否定确认作为反馈返回。当接收方发现它丢失了一条消息时,它就向组中的其他成员多播它的反馈。<br />
+多播反馈可以使组中的其他成员抑制自己的反馈。假定多个接收方都丢失了消息m,它们中的每一个都需要向发送方S返回一个否定确认以使m被重发。但是,如果我们假定重发总是向整个组进行多播,那么只要有一个重发请求到达S就足够了。<br />
+由于这个原因,一个没有接收到消息m的接收方R延迟一个随机的时间然后发送反馈消息。也就是说,在过了一段随机时间之后再请求重发。如果同时有其他对m的重发请求到达R,那么R就抑制自己的反馈,因为它知道m会短期内进行重发。在理想的情况下,这种方法中只有一个反馈消息到达S,然后S重发m。这种方法如图8.10所示</p>
+<p>反馈抑制被证明具有相当好的可扩展性,它被大量的
+Internet应用程序,例如共享白板用作底层机制。但是这种方法也有一些严重的问题。首先,要确保只有一个重发请求返回给发送方需要每个接收方都对反馈消息进行相当准确的调度。否则还是会有很多接收方同时返回它们的反馈。在散布于广域网上的多个进程组中设置定时器不是容易的事<br />
+另外一个问题是多播反馈也会中断其他成功接收消息的进程。换句话说,其他接收方不得不接收并处理对它们无用的消息。要解决这个问题,唯一的方法就是使没有接收到消息m的进程加入到一个独立的多播组来接收m,在(
+Kasera等1997)中对此进行了说明。不幸的是,这样的方法要求以一种效率很高的方式来管理组,这在广域系统中很难做到。一种更好的方法是把丢失相同消息的接收方编组,共享同一个反馈消息和重发的通道。可以在(Liu等1998)中找到这种方法的细节。</p>
+<p>使接收方进行本地恢复有助于提高SRM的可扩展性。特别是,如果一个成功地接收到消息m的接收方收到一个重发请求,它就可以决定甚至在重发请求到达原始的发送方之前就多播m。可以在(Floyd等1997;Liu等1998)中找到更多的有关细节。</p>
+<h3 id="分等级的反馈控制">分等级的反馈控制</h3>
+<p>刚才介绍的反馈抑制基本上是一种无等级的方法。但是,要在非常大的接收方组中获得可扩展性,就需要采用分等级的方法。从根本上说,可靠多播的分等级方法以图8.11所示的方式进行工作</p>
+<p>为了简化,我们假定只有一个发送方需要向一个非常大的接收组进行多播。接收组分为很多子组,组织成树的形式。包含发送方的子组构成了树的根。在每个子组中,任何一种可以为小的组工作的可靠多播方案都可以使用。<br />
+每个子组都指定一个本地协作者,它负责处理子组中包含的接收方的重发请求(Hofmann1996)。本地协作者具有自己的历史缓存器。如果协作者本身丢失了消息m,它就请求父子组的协作者重发m。在基于确认的方法中,如果接收到消息,本地协作者就向它的父亲发送一个确认。如果协作者从它的子组的所有成员以及它的孩子那里接收到对消息m的确认,那么就可以从历史缓冲中删除m。</p>
+<p>分等级的方法中的主要问题在于树的建立。在很多情况下需要动态建立树。一种方法是使用底层网络的多播树(如果存在的话)。在原理上,这种方法强化网络层中的每个多播路由器的作用,可以按照刚才所讲的方式把它们作为本地协作者来使用。不幸的是,对现存的计算机网络进行改选并不容易。<br />
+总之,建立可以扩展到跨越广域网络的大量接收方的可靠多播是一个困难的问题。不存在一个最好的方法,每种方法都会导致新的问题出现,所以在我们被这些问题难住之前还需要在这个领域中进行大量的研究。</p>
+<h2 id="原子多播">原子多播</h2>
+<p>现在我们返回到需要在存在进程失败的情况下获得可靠多播的情况。特别是,在分布式系统中经常需要保证消息要么就被发送给所有的进程,要么就不向任何进程一个也不发送。另外,如果传送的话,通常还需要所有的消息都按相同的顺序发送给所有的进程。这种方式称为<strong>原子多播问题(atomic
+multicast problem)</strong></p>
+<p>为了理解为什么原子性的重要性,我们来考虑一个作为在分布式系统上建立的应用程序基础的复制数据库。分布式系统提供了可靠的多播功能。特别是,它允许建立可以可靠接收消息的进程组。因此,复制的数据库作为一组进程被建立,每个进程用于一个副本。更新操作总是向所有副本进行多播,然后在本地执行。换句话说,我们假定使用的是活动的复制协议</p>
+<p>假定现在要执行一系列的更新,但是在一个更新执行期间,一个副本崩溃了,于是该副本上的更新就丢失了。但是另一方面,在其他的副本上的更新被正确执行了。<br />
+当崩溃的副本恢复时,它可以恢复到它崩溃之前的状态,但是它可能会错过一些更新在这一点上,让它与其他副本保持状态一致是基本的要求。使一个副本与其他副本保持相同的状态需要我们确切地知道错过了哪些操作以及它们是按什么次序执行的</p>
+<p>现在假定底层的分布式系统支持原子多播。在这种情况下,在一个副本崩溃之前发送给所有副本的更新操作或者是在所有的正常副本上都执行,或者是一个都不执行。特别是,在使用原子多播的情况下,只有在所有正确操作的副本就组成员关系达成一致时,操作才能执行。换句话说,如果其余的副本达成一致,认为崩溃的副本不再属于该组,那么更新就可以执行。<br />
+当崩溃的副本恢复时,它就被强迫再次加入该组。在它重新注册为组成员之前没有更新操作转发给它。加入一个组需要使它的状态与其他的组成员保持一致。因此,原子多播可确保没有故障的进程对数据库保持一致的视图。当一个副本从故障中恢复并重新加入组时,原子多播强制它与组的其他成员一致。</p>
+<h3 id="虚拟同步">虚拟同步</h3>
+<p>存在进程失败时的可靠多播可以根据进程组和组成员关系的变化进行准确的定义。下面我们来区分一下接收消息和发送消息。特别指出的是,我们采用如图8.12中的模式,其中的分布式系统由通信层组成。消息在这个通信层中进行发送和接收。接收到的消息在发送到高层的应用程序之前放在通信层的本地缓存器中。</p>
+<p>原子多播的总体思想是多播消息m应该唯一地跟它应该传送到的一个进程表相关联。这个表对应于一个组视图,也就是关于包含在组中的进程集的视图。很重要的一点是列表中的每个进程都具有相同的视图。换句话说,它们都同意m应该被传送给它们中的每一个而且不被传送到别的进程。</p>
+<p>现在假定m在发送方具有组视图G时进行多播。此外,假定在发生多播时另一个进程加入或离开了组。组成员关系的这个改变被宣告给G中的所有进程。换句话说,通过多播个vc消息宣布一个进程加入或离开,视图的改变就发生了。现在有两个多播消息在同时进行传输:m和vc。我们需要保证要么在vc传送到G中的每个进程之前把m传送到每个进程,或者根本不传送m。要注意到这个要求有些类似于第6章中讨论过的全序多播。<br />
+这里出现了一个问题,如果m没有被传送到任何一个进程,怎么能说这种协议是可靠的多播协议呢?原则上,只有一种情况下m的传送允许失败:当组成员关系的改变是由于m的发送方崩溃造成的结果时。在这种情况下,或者是G里的所有成员都知道这个新成员的异常结束,或者没有一个成员知道。作为选择,m可以被每个成员忽略,这对应于在发送m之前发送方崩溃的情况。<br />
+这种更强的可靠多播保证多播到组视图G的消息被传送给G中的每个正常进程。如果消息的发送方在多播期间崩溃,那么消息或者被投递给所有剩余的进程,或者被每个进程忽略。具有这种属性的可靠多播被称为<strong>虚拟同步(virtually
+synchronous)</strong>(Birman和Joseph1987)。</p>
+<p>考虑一下图8.13所示的4个进程。在某个时刻,进程P1加入了一个进程组,然后这个进程组就由P1、P2、P3和P4组成。在多播了一些消息之后,进程P3崩溃了。但是在崩溃之前它成功地将消息多播到了进程P2和P4,但是没有多播到P1。但是,虚拟同步保证这个消息根本不会被传送,这就有效地建立起一种情况,使得在P3崩溃之前消息从来没有被发送。<br />
+在从组中删除P3之后,通信在剩余的组成员之间进行。后来P3恢复了,它可以在它的状态进行更新之后再次加入该组。</p>
+<p><strong>虚拟同步的原理</strong>是所有的多播都在视图改变之间进行。换句话说,视图改变作为一个屏障,不能跨越它进行多播。它类似于在上一章中讨论过的分布式数据存储中的同步变量。在视图改变时进行的所有多播都在视图改变生效之前完成。虚拟同步的实现并不烦琐,下面我们进行详细的讨论。</p>
+<h3 id="消息排序">消息排序</h3>
+<p>虚拟同步允许应用程序开发者认为多播是在不同的时期中发生的,不同的时期可以按照组成员关系的改变来划分。然而还没有谁发表关于多播的排序的论文。通常有4种不同的排序方法:</p>
+<ol type="1">
+<li>不排序的多播;</li>
+<li>FIFO顺序的多播;</li>
+<li>按因果关系排序多播;</li>
+<li>全序多播。</li>
+</ol>
+<p><strong>可靠的、不排序多播(reliable, unordered
+multicast)</strong>是一种虚拟同步多播,它对接收进程发送的消息的次序不做任何保证。要解释这一点,我们假定可靠多播由一个提供发送和接收原语的库支持。接收操作在消息发送到它之前阻塞调用进程。</p>
+<p>现在假定发送方P1把两条消息多播给一个组,同时该组中的两个其他进程正在等待消息到达,如图8.14所示。假定在多播期间进程不会崩溃也不会离开该组,有可能P2的通信层先接收到消息m1,然后是m2。因为没有消息顺序约東,所以消息可能是按它们被接收的顺序被传送给P2。相反,P3的通信层有可能首先接收到m2,然后才是m1,然后把它们按相同的顺序传送给P3。</p>
+<p>在<strong>可靠的FIFO多播(reliable FIFO-ordered
+multicast)</strong>情况下,通信层被强制按照消息发送的顺序传送来自同一进程的消息。考虑如图8.15所示的在一个四个进程的组中的通信。使用FIFO的顺序,只会介意一件事情,消息m1总是在m2之前传送,同样,消息m3总是在m4之前传送。组中的所有进程都必须遵守该规则。换句话说,当P3的通信层先接收到m_out2时,在把它传送给P3,之前必须等待m_out1的接收与传送。但是,关于由不同进程发送的消息的传送顺序没有约束。换句话说,如果进程P2在m3之前接收到了m1,它可能以那种顺序传送这两个消息。同时,进程P3可能在接收到m1之前接收到了m3。FIFO顺序说明P3可能在传送ml之前传送m3,尽管这种传送顺序与P2不同。</p>
+<p>最后,采用<strong>可靠的按因果关系排序多播(reliable causally-ordered
+multicast)</strong>来传送消息可以保留不同的消息之间的潜在因果关系。换句话说,如果在因果关系的消息m1在另一个消息m2之前,那么无论它们是否由同一个发送方多播的,每个接收方的通信层都应该在接收并传送m1之后传送m2。注意按因果关系排序的多播可以使用第5章中讨论的向量时间戳来实现</p>
+<p>除了这三种排序,还有一种对消息传送的附加约束的排序被称为完全排序。<strong>完全排序的传送(total-ordered
+delivery)</strong>意味着不论消息传送是无序、FIFO顺序还是按因果关系排序,都需要在传送消息时,对所有的组成员按照相同的次序来传送。<br />
+例如,使用FIFO与完全排序多播的结合,图8.14中的进程P2和P3都可以首先传送消息m3,然后传送消息m1。但是,如果P2在m3之前传送了m1,而P3在m1之前传送了m3,那么就可能违背全序的约束。注意也应该考虑采用FIFO排序。换句话说,m2应该在m1之后传送,而m4应该在m3之后传送。</p>
+<p>提供了全序的消息传送的虚拟同步可靠多播称为<strong>原子多播(atomic
+multicasting)</strong>。使用上面讨论的三种不同的消息排序约束,可以有6种形式的可靠多播,如图8.16所示(Hadzilacos,
+Toueg 1993)</p>
+<h3 id="实现虚拟同步">实现虚拟同步</h3>
+<p>现在我们来考虑虚拟同步可靠多播的实现。实现这种多播的一个例子是Isis,一个已经实际使用了几年的容错分布式系统。我们首先来讨论一下在(Birman等1991)中说明的有关它的实现的一些问题。</p>
+<p>Isis中的可靠多播使用了底层网络中可用的可靠的点到点通信工具,特别是TCP。把消息m发送给一个进程组是通过把m可靠地发送给每个组成员来实现的。作为结果,尽管可以保证每个传输都成功,但还是不能保证所有的组成员都接收到m。特别是,发送方可能在把m传输给每个成员之前崩溃了。</p>
+<p>除了使用可靠的点到点通信以外,Isis还假定来自同一个源的消息在通信层按照发送它们的顺序接收。在实践中,可以使用点到点通信的TCP连接来解决这个问题。<br />
+需要解决的主要问题是要保证发送到视图G的所有消息在组成员关系发生改变之前被传送到G中的所有正常进程。需要注意的第一个问题是确保G中的每个进程都接收到发送给G的所有消息。注意,因为将消息m发送到G的发送方可能在完成多播之前崩溃,有可能G中的进程永远不会接收到m。因为发送方已经崩溃,这些进程应该从其他的地方得到m。下面解释进程如何探测到它丢失了消息。</p>
+<p>要解决这个问题,可以让G中的每个进程在确认G中的所有进程接收到m之前保留m。如果G中的所有进程都接收到m,那么m就被称为是<strong>稳定的(stable)</strong>。稳定的消息只允许传送一次。要确保稳定性,在G中选择一个任意的(可操作的)进程并要求它向其他所<br />
+有进程发送m就足够了。<br />
+更明确地说,假定当前视图为<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>,但是有必要建立下一个视图<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>。为了不失一般性,我们可以假定<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>和<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>最多相差一个进程。进程P在接收到视图改变的消息时意识到视图发生改变。这样的消息可能来自想要加入或离开组的进程,或者来自<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>中被探测到失败并要被删除的进程,如图8.17(a)所示。</p>
+<p>当进程P接收到<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>的视图改变消息时,它首先把它拥有的<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>中任何不稳定消息的副本转发给<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>中的每个进程,然后把它标记为稳定的。回忆一下,Isis假定点到点的通信是可靠的,这样转发的消息就不会丢失。这样的转发保证,<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>中已经至少被一个进程接收到的所有消息可以被<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>中的所有正常进程接收。注意,选择单一的协作者转发不稳定消息就足够了。<br />
+为了表示进程P不再具有任何不稳定的消息,以及当其他进程可以建立<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>时它也就可以建立<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>,它就多播一个<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>的<strong>淹没消息(flush
+message)</strong>,如图8.17(b)所示。在进程从其他每个进程那里都接收到<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>的淹没消息后,就可以安全地建立新的视图,如图8.17(c)所示。<br />
+当进程Q接收到在<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>中发送的消息m而且Q还认为当前视图为<span
+class="math display"><em>G</em><sub><em>i</em></sub></span>时,它就传送m而不考虑任何附加的消息排序约束。如果它已经接收到了m,它就认为消息是复制的,然后丢弃它。<br />
+因为进程Q最后会接收到<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>的视图改变消息,它首先转发它的不稳定消息,然后通过发送一个<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>的flush消息来屏蔽别的消息。注意,由于底层通信层进行消息排序,一个进程的flush消息总是在接收到同一进程的不稳定消息之后进行接收。</p>
+<p>迄今为止介绍过的协议的一个主要缺点在于它不能处理当宣布新的视图改变时的进程失败。特别是,它假定在<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>中的每个成员都建立起新的视图<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>之前,<span
+class="math display"><em>G</em><sub><em>i</em> + 1</sub></span>中的进程不会失败(这将导致下一个视图<span
+class="math display"><em>G</em><sub><em>i</em> + 2</sub></span>)。这个问题可以通过在所有的进程还没有建立上一个改变时就宣布任意视图<span
+class="math display"><em>G</em><sub><em>i</em> + <em>k</em></sub></span>的视图改变来解决。其中的细节留作练习。</p>
+<h1 id="分布式提交">分布式提交</h1>
+<p>前面讨论的原子多播问题是一个称为分布式提交的更一般化问题中的一个例子。分布式提交的问题涉及到要使一个操作被进程组中的每个成员都执行或一个成员都不执行。在可靠多播的情况下,操作就是消息的传送。在分布式事务中,操作可能是单个站点上事务的提交,它是整个事务的一部分。分布式提交中的其他例子及其解决办法在(Hanisch2000)中进行了讨论。</p>
+<p>分布式提交通常以设立协作者的方式建立。在简单的方案中,协作者通知所有涉及到的称为参与者的其他进程是否(本地)按要求执行操作。这种方法称为<strong>单阶段提交协议(one-phase
+commit
+protocol)</strong>。如果有一个参与者不能真正执行该操作,那么就说明它存在着明显的缺陷,因为它没有办法来通知协作者。例如,在分布式事务的情况下,不可能进行本地提交,因为这会破坏并发控制约束。<br />
+在实践中需要更复杂的方法,最常用的是两阶段提交协议,下面将对此进行详细讨论.这种协议的主要缺点是不能有效地处理协作者失败的情况。后来又研究出了三阶段提交,我们也要讨论它。</p>
+<h2 id="两阶段提交">两阶段提交</h2>
+<p><strong>两阶段提交协议(two-phase commit
+protocol,2PC)</strong>是由Gray(1978)提出的。为了不失一般性,我们考虑一个分布式事务,其中有很多进程作为参与者,每个进程都运行在不同的机器上。假定没有故障发生,协议就由以下两个阶段组成,每个阶段又由两步组成(请参阅Bernstein等1987)</p>
+<ol type="1">
+<li>协作者向所有的参与者发送一个<code>VOTE_REQUEST</code>消息</li>
+<li>当参与者接收到<code>VOTE_REQUEST</code>消息时,就向协作者返回一个<code>VOTE_COMMIT</code>消息通知协作者它已经准备好本地提交事务中属于它的部分,否则就返回一个<code>VOTE_ABORT</code>消息。</li>
+<li>协作者收集来自参与者的所有选票。如果所有的参与者都表决要提交事务,那么协作者就进行提交。在这种情况下它向所有的参与者发送一个<code>GLOBAL_COMMIT</code>消息。但是,如果有一个参与者表决要取消事务,那么协作者就决定取消事务并多播一个<code>LOBAL_ABORT</code>消息</li>
+<li>每个提交表决的参与者都等待协作者的最后反应。如果参与者接收到一个<code>GLOBAL_COMMIT</code>消息,那么它就在本地提交事务,否则当接收到一个<code>GLOBAL_ABORT</code>消息时,就在本地取消事务</li>
+</ol>
+<p>表决阶段的第一阶段由第(1)、(2)步组成。第二阶段是决定阶段,由第(3)、(4)步组成这4个步骤由图8.18中有限状态图来说明。</p>
+<p>当在发生故障的系统中使用这个基本的2PC协议时就会出现一些问题。首先,注意到协作者和参与者都具有阻塞等待消息的状态。因为当一个进程崩溃,而其他进程又正在无限等待来自该进程的消息时,这个协议很容易崩溃。因此使用了定时机制。在以下内容中将对这个机制进行解释<br />
+看一下图8.18中的有限状态机,可以看出在其中三个状态中,协作者和参与者都被阻塞,等待某个消息到来。首先,参与者可能在<code>INIT</code>状态等待来自协作者的<code>VOTE_REQUEST</code>消息,如果在一段时间之后还没有接收到这个消息,那么参与者就简单地在本地中止事务,然后向协作者发送一个<code>VOTE_ABORT</code>消息<br />
+同样,协作者可能在<code>WAIT</code>状态阻塞,等待来自每个参与者的表决。如果在某段时间之后没有接收到所有的表决,那么协作者就决定中止表决,然后向所有的参与者发送<code>GLOBAL_ABORT</code>消息。<br />
+最后,参与者可能在<code>READY</code>状态阻塞,等待协作者发送的全局表决消息。如果在给定的时间内没有接收到消息,参与者不能简单地决定中止事务。它必须查明协作者发送的是什么消息,要解决这个问题,最简单的方法就是让每个参与者在协作者再次恢复之前阻塞。<br />
+一种更好的方法是让一个参与者P与另一个参与者Q联系,以便根据Q的当前状态来决定做什么。例如,假定Q到达了状态<code>COMMIT</code>,那么就有可能协作者在崩溃之前只向Q发送了<code>GLOBAL_COMMIT</code>消息。显然这个消息没有发送给P。因此,P应该决定进行提交。同样,如果Q的状态为<code>ABORT</code>,那么P也可以安全地进行中止。<br />
+现在假定Q还在状态<code>INIT</code>,当协作者已经向所有的参与者发送了<code>VOTE_REQUEST</code>消息,但是这个消息只到达P(然后它用<code>VOTE_COMMIT</code>消息作为应答),而没有到达Q时就是这种情况。换句话说,协作者在多播<code>VOTE_REQUEST</code>时崩溃了。在这种情况下,中止事务是安全的,P和Q都可以把状态转换为<code>ABORT</code>.<br />
+最困难的情况发生在当Q也在<code>READY</code>状态等待协作者的响应的时候。特别是,如果所有的参与者都处在<code>READY</code>状态,那么它们就无法做出决定。问题在于尽管所有的参与者都想要提交,但是还需要协作者的表决才能做出最后的决定。因此,协议在协作者恢复之前阻塞。</p>
+<p>在图8.19中对不同的操作进行了总结。</p>
+<p>要确保进程可以真正恢复,必须在持久性存储器中保存它的状态。(如何以容错的方式保存数据在本章后面进行讨论)。例如,如果一个参与者处于<code>INIT</code>状态,它就可以在恢复时安全地决定在本地中止事务并通知协作者。同样,如果它已经做出了诸如处于<code>COMMIT</code>或<code>ABORT</code>状态时何时崩溃的决定时,它将按顺序恢复到该状态,并向协作者重发它的决定。<br />
+当参与者在<code>READY</code>状态下崩溃时就会出现问题。在这种情况下,当它恢复时不能确定自己下一步做什么,即不能确定是提交还是中止事务。因此,就要强制它与其他参与者进行联系来看下一步要做什么,这与上面介绍的在<code>READY</code>状态下超时的情况类似。</p>
+<p>协作者只有两个需要跟踪的关键状态。当开始2PC协议时,应该记录它进入了<code>WAIT</code>状态,这样就可以在恢复之后向所有的参与者重发<code>VOTE_REQUEST</code>消息。同样,如果它在第二阶段中做出决定,那么只要记录该决定就足够了,这样就可以在恢复时进行重发这个决定。</p>
+<p>在图8.20中给出了对协作者执行的操作的总结。协作者首先向所有的参与者多播一个消息以收集它们的表决。随后记录它进入了<code>WAIT</code>状态,然后等待来自参与者的表决。<br />
+协作者的操作:</p>
+<p>如果不仅没有收集到所有的表决,而且在给定的时间内没有再接收到更多的表决,那么协作者就假定有一个或多个参与者崩溃了。因此,它就中止事务,然后向(剩余的)参与者多播一个<code>GLOBAL_ABORT</code>消息。<br />
+如果没有崩溃发生,那么协作者就会收集到所有的表决。如果所有的参与者和协作者都表决要提交,那么协作者就首先把一个<code>GLOBAL_COMMIT</code>记入日志,然后发送给所有的进程。否则协作者就多播一个<code>GLOBAL_ABORT</code>(在把它记入本地日志之后)。</p>
+<p>图8.21(a)说明了参与者执行的步骤。首先,进程等待来自协作者的表决请求。注意这个等待可以由在该进程的地址空间中运行的一个独立线程来进行。如果没有消息到来,那么事务就简单地被中止。显然协作者已经崩溃了。</p>
+<p>参与者的操作:</p>
+<p>在接收到表决请求之后,参与者决定为提交一个事务进行表决,首先在本地日志中记录它的决定,然后通过发送一个<code>VOTE_COMMIT</code>消息来通知协作者。然后参与者必须等待全局决定,假定这个决定(来自协作者)按时到达,那么就简单地把它记录到本地日志中,然后执行。<br />
+但是,如果参与者在等待协作者的决定到来时超时,它就执行一个终止协议,首先向其他进程多播一个<code>DECISION_REQUEST</code>消息,然后阻塞,等待响应。当响应到达时(可能来自协作者,假定它最后恢复了),这个参与者就把决定写入它的本地日志,然后处理它.<br />
+每个参与者都应该准备好接收来自其他参与者为做全局决定而发出的请求。假定每个参与者都开启了一个线程与参与者的主线程并发执行,如图8.20(b)所示。这个线程在接收到决定请求之前处于阻塞状态。只有在与之相关的参与者已经做出最后决定时该线程才对其他进程有帮助。换句话说,如果协作者已经把<code>GLOBAL_COMMIT</code>或<code>GLOBAL_ABORT</code>写到了本地日志中,那么它就至少向这个进程发送了它的决定。另外,线程也要在与之相关的参与者还处在<code>INIT</code>状态时发送<code>GLOBAL_ABORT</code>,就像前面讨论的那样。在所有其他的情况下,接收线程都没有帮助作用,请求的参与者也不能得到响应。</p>
+<p>我们已经看到参与者有可能需要在协作者恢复之前阻塞。当所有的参与者都从协作者那里接收到<code>VOTE_REQUEST</code>消息并进行处理,而在同时协作者崩溃时,就会发生这样的情况。在这种情况下,参与者在要采取的最后行动的问题上不能协调一致地做出决定。因此,2PC被称为<strong>阻塞提交协议(blocking
+commit protocol)</strong>。</p>
+<p>有一些方法可以避免阻塞。(Babaoglu和
+Toueg1993)描述了一种方法,它使用一个多播原语,该原语中接收方立刻把它接收到的消息向其他所有进程进行多播。这种方法允许参与者即使在协作者没有恢复时也能到达最后决定。另一种方法是三阶段提交协议,它是本章的最后一个主题,我们下面就要讨论它。</p>
+<h2 id="三阶段提交">三阶段提交</h2>
+<p>两阶段提交的一个问题在于当协作者崩溃时,参与者不能做出最后的决定。因此参与者可能在协作者恢复之前保持阻塞。(Skeen1981)开发了一种2PC的变种,称为<strong>三阶段提交协议(three-phase
+commit
+protocol,3PC)</strong>,它避免了在出现故障停机时的阻塞过程。尽管3PC在文章中广泛出现,但它在实际中用得并不多,因为在2PC中阻塞的情况很少发生。<br />
+我们讨论这个协议,是因为它提供了解决分布式系统中的容错问题的更多看法。</p>
+<p>像2PC一样,3PC也可以用一个协作者和一些参与者来进行说明。它们各自的有限状态机如图8.22所示。该协议的本质在于协作者和每个参与者都满足以下两个条件</p>
+<ol type="1">
+<li>没有一个可以直接转换到<code>COMMIT</code>或<code>ABORT</code>状态的单独状态;</li>
+<li>没有一个这样的状态:它不能做出最后决定,而且可以从它直接转换到<code>COMMIT</code>状态。</li>
+</ol>
+<p>在(Skeen,
+Stonebraker1983)中说明了这两个条件是使提交协议不阻塞的充分必要条件。</p>
+<p>3PC中的协作者首先向所有的参与者发送一个<code>VOTE_REQUEST</code>消息,然后等待到来的应答。如果任意一个参与者投票中止事务,那么最后决定就是中止该事务,协作者发送一个<code>GLOBAL_ABORT</code>消息。但是如果事务可以提交,就发送一个<code>PREPARE_COMMIT</code>.消息。只有在每个参与者都确认它已经准备提交时,协作者才发送最后的<code>GLOBAL_COMMIT</code>消息,这时事务才真正提交。</p>
+<p>同样会有一些进程在等待消息到来时阻塞的情况。首先,如果参与者在<code>INIT</code>状态时等待来自协作者的投票要求,假定协作者已经崩溃,那么它最终会转换到<code>ABORT</code>状态。这种情况下与2PC中相同。与此类似,协作者可能在<code>WAIT</code>状态等待来自参与者的投票。当超时发生时,协作者就认为参与者已经崩溃,通过多播一个<code>GLOBAL_ABORT</code>消息来中止事务.<br />
+现在假定协作者在<code>PRECOMMIT</code>状态阻塞,当超时时它就认为一个参与者已经崩溃,但是可以知道那个参与者已经投票要提交事务。因此,协作者可以通过多播一个<code>GLOBAL_COMMIT</code>消息来指示可操作的参与者提交。另外,当崩溃的参与者再次启动时,它要依赖恢复协议来最终提交事务中属于它的部分。<br />
+参与者P可能在<code>READY</code>状态或<code>PRECOMMIT</code>状态阻塞。当超时时,P只能认为是协作者崩溃,所以它需要决定下一步做什么。与2PC中相同,如果P与其他处于<code>COMMIT</code>(或<code>ABORT</code>)状态的参与者联系,那么P也应该转换到该状态。另外,如果所有的参与者都处于<code>PRECOMMIT</code>状态,那么事务就可以安全提交。<br />
+与2PC相同,如果另一个参与者Q还处于<code>INIT</code>状态,那么就可以安全地中止事务。只有别的参与者都不处于<code>PRECOMMIT</code>时Q才能处于<code>INIT</code>状态,记住这一点很重要只有协作者在崩溃前已经到达<code>PRECOMMIT</code>状态并接收到每个参与者的提交表决时,参与者才可能到达<code>PRECOMMIT</code>状态。换句话说,没有参与者处于<code>INIT</code>状态而其他的参与者处于<code>PRECOMMIT</code>状态。<br />
+如果P可以联系的每个参与者都处于<code>READY</code>状态,那么事务应该被中止。要记住的一点是另外的参与者可能崩溃然后又恢复。但是,P(而不是任何其他可操作的参与者)知道崩溃的参与者在恢复之后的状态。如果进程恢复到INIT状态,那么决定中止事务是唯一正确的决定。在最坏的情况下,进程可以恢复到<code>PRECOMMIT</code>状态,但是在这种情况下,中止事务不会造成任何损害。</p>
+<p>与2PC相比,3PC的主要不同点在于以下的这种情况:崩溃的参与者可能恢复到了<code>COMMIT</code>状态而所有其他参与者还处于<code>READY</code>状态。在这种情况下,其余的可操作进程不能做出最后的决定,不得不在崩溃的进程恢复之前阻塞。在3PC中,只要有可操作的进程处于<code>READY</code>状态,就没有崩溃的进程可以恢复到<code>INIT</code>、
+<code>ABORT</code>或<code>PRECOMMIT</code>之外的状态。因此存活进程总是可以做出最后决定。<br />
+最后,如果进程P可以到达状态<code>PRECOMMIT</code>(并形成多数),那么提交事务就是安全的。这里说明在所有其他的进程至少处于<code>READY</code>状态的情况下,崩溃的进程可以恢复到<code>READY</code>、
+<code>PRECOMMIT</code>或<code>COMMIT</code>状态</p>
+<p>有关3PC的更多细节可以在文献(Bernstein等1987)和(Chow,
+Johnson1997)中找到。</p>
+<h1 id="恢复">恢复</h1>
+<p>迄今为止我们主要集中于讨论允许容错的算法。但是,一且发生了故障,使发生故障的进程恢复到正确的状态就是基本的问题了。下面我们首先说明恢复到正确状态到底意味着什么,然后说明如何通过检查点和消息日志的方式记录并恢复分布式系统的状态</p>
+<h2 id="概述-1">概述</h2>
+<p>容错的基本要求是从错误中恢复。回忆一下,错误是系统中可能导致失败的部分。错误恢复的总体想法是用正确的状态取代错误的状态。从本质上说,有两种形式的错误恢复。</p>
+<p>在<strong>回退恢复(backward
+recovery)</strong>中,主要问题是要将系统从当前的错误状态回到先前的正确状态。要做到这一点,必须定时记录系统的状态,以便当发生错误时恢复到记录的状态。每次记录系统的当前状态时,就称为设置一个<strong>检查点(checkpoint)</strong>。<br />
+错误恢复的另一种形式是<strong>前向恢复(forward
+recovery)</strong>。在这种情况下,当系统进入错误状态时,不是回退到以前的检查点处的状态,而是尝试从可以继续执行的某点开始把系统带入一个正确的新状态。前向错误恢复机制的关键在于它必须预先知道会发生什么错误。只有在这样的情况下才有可能纠正错误并转到新的状态。</p>
+<p>考虑一下可靠通信的实现,就很容易解释前向错误恢复与回退错误恢复之间的区别。要从分组丢失中恢复,通常的方法是让发送方重发该分组。实际上,分组重发就是尝试着回退到以前的正确状态,也就是发送丢失的分组时的状态。因此,通过分组重发获得的可靠通信就是应用回退错误恢复技术的一个例子。<br />
+还有一种可供选择的方式是使用一种称为<strong>擦除修正(erasure
+correction)</strong>的方法。这种方法是从其他成功传送的分组中建立丢失的分组。例如,在一个(n,k)块的擦除码中,一组k个源分组被编码为一组n个已编码的分组,这样任意k个已编码的分组都可以重建出原来的k个源分组。典型的值为k=16或k=32,而且<span
+class="math display"><em>k</em> &lt; <em>n</em> ≤ 2<em>k</em></span>,请参阅(Rizo1997)。如果没有足够的分组被传送,发送方就不得不继续发送分组直到先前丢失的分组可以被重建为止。擦除修正是一种前向错误恢复方法的典型例子。</p>
+<p>一般说来,回退错误恢复技术作为一种从分布式系统故障中恢复的机制被广泛应用。回退错误恢复的一个重要优点在于它是一种通用的方法,不依赖于任何特定的系统或进程。换句话说,它可以作为一项通用的服务集成到分布式系统的中间层中。<br />
+但是,回退错误恢复也有一些问题(Singhal,
+Shivaratri1994)。首先,把一个系统或进程恢复到原先的状态通常是一个相对开销较大的操作。例如,如接下来的部分讲述的那样,要从进程崩溃或站点失败中恢复通常需要做很多工作。<br />
+第二,因为回退错误恢复机制不依赖于实际使用的分布式应用程序,不能保证一旦进行了恢复就不再发生相同或类似的失败。如果需要这样的保证,那么通常需要应用程序在恢复中参与错误处理。换句话说,回退错误恢复机制通常不能提供完全的故障透明性。<br />
+最后,尽管回退错误恢复需要设置检查点,但也决不会回退到某些状态。例如,如果一个(可能是恶意的)人从自动柜员机上取走了1000美元时,那么即使自动柜员机立即回退这些钱也很难追回。与此类似,在大多数UNIX系统中输入:<code>bin/rm -fr</code>.之后,要从错误的工作目录中恢复到先前的状态绝大多数人可能是无能为力的。有些事情是不可逆的。</p>
+<p>通过检查点可使系统恢复到先前的正确状态。但是,设置检查点通常是一个开销很大的操作,可能引起严重的性能问题。因此,很多容错的分布式系统把检查点与<strong>消息日志(message
+logging)</strong>相结合。在这种情况下,在设置检查点后,一个进程在发送消息之前对它进行记录(称为<strong>基于发送方的日志(sender-based
+logging)</strong>)。一种可供选择的方法是让接收进程在把到来的消息传送到它所执行的应用程序之前先记录消息。这种方法也称为<strong>基于接收方的日志(recelver-based
+logging)</strong>。当接收进程崩溃时,需要恢复到最近的检查点的状态,并从这个状态重放被发送的消息。把检查点与消息日志相结合使得有可能恢复到最近检查点的状态而无需付出设置检查点的代价.</p>
+<p>在仅使用检查点方法与另外还使用日志的方法之间还有另一个重要的不同。在只使用检查点的系统中,进程将被恢复到设置检査点时的状态,它们的行为将与在发生故障之前不同。例如,因为通信时间是不确定的,消息可能以不同的次序发送,而导致接收方的不同响应。但是,如果使用了消息日志,那么就会发生从上次检查点之后事件的真实重放。这样的重放使得与外部世界相互作用更加容易。</p>
+<p>我们来考虑一下由于用户提供了错误的输人而导致故障的情况。如果只使用检查点那么系统为了恢复到真正相同的状态,就不得不在接受用户输入之前设置检查点。而如果还使用消息日志,就可以使用一个较老的检查点,然后在用户应该提供输入的那一点之前进行事件的重放。在实践中,使用较少的检查点与消息日志相结合的方式比使用很多检查点的方式更有效。</p>
+<p><strong>稳定存储</strong><br />
+要恢复到先前的状态,就有必要安全地存储恢复所需的信息。在这种情况下,安全性意味着恢复信息不仅要经得住进程崩溃与站点故障的考验,而且还要能经得住各种存储介质故障的考验。当在分布式系统中进行恢复时,稳定存储起着重要的作用。我们在这里对它进行简单的讨论。</p>
+<p>存储可以分为三类。首先是普通的RAM存储,当掉电或机器崩溃时其中的信息会丢失。然后是磁盘存储,它不受CPU故障的影响,但是在磁盘头损坏的情况下会丢失信息。<br />
+最后介绍一种<strong>稳定存储(stable
+storage)</strong>,它被设计可以经得住除了诸如洪水或地震之类的灾难以外的任何情况的考验。稳定存储可以使用一对普通的磁盘来实现,如图8.23(a)所示。驱动器2中的每个块都是驱动器1中对应块的准确副本。当更新一个块时,首先对驱动器1中的块进行更新及验证,然后对驱动器2上的相同块进行相同的工作。</p>
+<p>假定驱动器1已经更新,但是系统在更新驱动器2之前崩溃,如图8.23(b)所示。在恢复时磁盘可以逐块进行比较。只要两个对应的块不同,就可以假定驱动器1是正确的(因为驱动器1总是在驱动器2之前进行更新),所以就把新的块从驱动器1复制到驱动器2。完成恢复过程之后,两个驱动器就又是相同的了。<br />
+另外一个潜在的问题是块的自然损坏。微小的尘埃或日常的磨损都可以使以前有效的块突然在没有原因或警告的情况下发生校验和错误,如图8.23(c)所示。当探测到这样的错误时,损坏的块可以从另一个驱动器上对应的块中重新生成。<br />
+由于它的特点,稳定存储很适合于诸如原子事务这样需要高度容错的应用程序。数据被写入稳定存储然后再读出以验证它们是否被正确写入,这样以后数据丢失的机会就变得很小在下面两节中,我们将讨论与检查点和消息日志有关的更多细节。(Elnozahy等1996)提供了分布式系统中检查点与日志的一个调查。可以在(Chow,Johnson1997)中找到不同的算法细节。</p>
+<h2 id="检查点">检查点</h2>
+<p>在容错的分布式系统中,回退错误恢复需要系统把它的状态有规律地保存到稳定存储中。分布式系统的状态已经在第5章进行了讨论。特别是,我们着重强调了记录一致全局状态的必要性,它也被称为<strong>分布式快照(distributed
+snapshot)</strong>。在分布式快照中,如果进程P记录了一条消息的接收,那么就应该有一个进程Q记录了该消息的发送。毕竟消息必须是来自某个地方的。<br />
+在回退错误恢复方法中,每个进程都按时把它的状态保存到本地可用的稳定存储中.要在进程或系统失败之后进行恢复,就需要我们从这些局部状态中建立一致的全局状态。特别是,最好恢复到最近的分布式快照,这种快照也被称为<strong>恢复线路(recovery
+line)</strong>。换句话说,恢复线路就对应于最近的一致性切面,如图8.24所示.</p>
+<h3 id="独立的检查点">独立的检查点</h3>
+<p>不幸的是,每个进程的检查点是以一种不协调的方式来按时记录它的本地状态的,这种分布式本性使得要找到一个恢复线很困难。要找到恢复线需要每个进程都回退到它最近保存的状态。如果这些本地状态不能组成一个分布式快照,那么就需要进行进一步的回退下面我们说明一种寻找恢复线的方法。这种折叠回退的过程可能会导致<strong>多米诺效应(domino
+effect)</strong>,如图8.25所示。</p>
+<p>当进程P2崩溃时,我们需要把它的状态恢复到最近保存的检查点。与之类似,进程P1也需要进行回退。不幸的是,这两个最近保存的本地状态不能组成一个一致的全局状态,P2保存的状态表明了消息m的接收,但是没有其他进程说明其为发送方。因此,P2需要回退到更早的状态。<br />
+但是,P2要回退到的下一个状态不能用作分布式快照的一部分。在这种情况下,P1将记录消息m的接收,但是没有这一消息被发送的记录事件,因此有必要把P1回退到以前的状态。在这个例子中,恢复线就是系统的最初状态</p>
+<p>由于进程独立地设置本地检查点,所以这种方法也被称为<strong>独立的检查点(independent
+check
+pointing)</strong>方法。另一种可以选择的方法是像我们下面要讨论的那样设置全局协调的检査点,但是协调需要全局同步,这可能会引起一些性能问题。独立检查点的另一个缺点是每个本地存储都需要按时清理,例如通过运行一个特定的分布式垃圾收集器来进行清理。但是它主要的缺点还是恢复线的计算。<br />
+实现独立的检查点需要记录依赖关系,应按照进程可以共同回退到一个一致的全局状态的方法来进行记录。用CPi(m)来表示进程Pi采用的第m个检查点,用INTi(m)来表示检查点CPi(m-1)与CPi(m)之间的间隔。<br />
+当进程Pi按INTi(m)的间隔发送消息时,它就在接收进程中加入(i,m)对。当进程Pj按INTj(n)的间隔接收消息时,就使用(i,m)的索引对,它记录了INTi(m)→INTj(n)的依赖关系。然后,当Pj采用检查点CPj(n)时,它就把这个依赖关系与恢复信息的其他部分起写入它的本地稳定存储中。<br />
+现在假定进程Pi在某个时刻需要回退到检查点CPi(m-1)。要确保全局一致性,我们需要确保所有从Pi那里接收到了按间隔INTi(m)发送的消息的进程都回退到在接收这个消息之前的检查点状态。特别是,在我们的例子中,进程至少需要回退到检查点CPj(n-1)。如果CPj(n-1)导致了不一致的全局状态,那么还需要进行更多的回退。</p>
+<p>计算恢复线需要对每个进程在设置检查点时记录的时间间隔依赖关系进行分析。我们不讨论更多的细节,可以证明:这样的计算是相当复杂的,与协调检查点相比,独立检查点对这些计算的需求也是不尽合理的。另外,它不是支配性能因素的进程之间的协调,相反,需要把状态保存到本地稳定存储中,它还造成一些额外开销(Einozahy等1992)。因此,协调检查点使用得更为普遍,它也比独立检查点更为简单</p>
+<h3 id="协调检查点">协调检查点</h3>
+<p>顾名思义,在<strong>协调检查点(coordinated
+checkpointing)</strong>中,所有的进程都同步地把它们的状态写到本地稳定存储中。协调检查点的<strong>主要优点</strong>是所保存的状态自动保持全局一致,</p>
+<p>这样就可以避免导致多米诺效应的折叠回退。可以使用第5章中讨论的分布式快照算法来协调检査点。这种算法是非阻塞的检查点协调的一个例子。</p>
+<p>一种比较简单的方法是使用两阶段的阻塞协议。首先协作者向所有进程多播一个<code>CHECKPOINT_REQUEST</code>消息。当进程接收到这样的消息时就设置一个本地检查点,通过它正在执行的应用程序将随后传递给它的消息进行排队,然后向协作者确认它已经设置了检查点。当协作者接收到所有进程的确认时,它就多播一个<code>CHECKPOINT_DONE</code>消息让(阻塞的)进程继续执行.</p>
+<p>很容易看出这种方法可以使全局状态一致,因为没有即将进来的消息注册为检查点的部分。其原因在于任何跟随在设置检查点的请求之后的消息都不被认为是本地检查点的部分。同时,在接收到<code>CHECKPOINT_DONE</code>消息之前对即将发出的消息(当通过运行的应用程序传递给检查点进程的时候)在本地进行排队。</p>
+<p>对这种算法的一种改进是只对那些依赖协作者的恢复的进程多播检查点请求而忽略其他进程。如果一个进程在设置了上个检查点之后接收到了与协作者发送的消息直接或间接相关的消息,那么这个进程就是依赖于协作者的。这称为<strong>增量快照(incremental
+snapshot)</strong>.<br />
+要设置一个增量快照,协作者只对那些在上次设置检查点之后对之发送了消息的进程多播检查点请求。当进程P接收到这样的请求时,它就把请求转发给那些在上次检查点之后P本身向之发送了消息的所有进程,等等。一个进程只转发一次请求。当确认所有的进程之后,使用第二次多播来引发实际的检查点,然后所有的进程继续执行。</p>
+<h2 id="消息日志">消息日志</h2>
+<p>考虑到设置检查点是一个开销很大的操作,特别是该操作涉及到向稳定存储中写入状态,需要寻找一种可以减少检查点的数目但是还允许恢复的技术。在分布式系统中有一种重要的技术消息日志。</p>
+<p>消息日志的<strong>基本思想</strong>是:如果消息的传输可以重放,那么我们就能够到达一个全局一致的状态而不需要从稳定存储中恢复该状态。它使用一个检査点状态作为开始点,然后简单地把从该点以后发送的所有消息都重发并进行处理.</p>
+<p>假定采用<strong>分段确定模式(piecewise deterministic
+model)</strong>,这种方法可以很好地工作.在这种模式中,假定每个进程的执行都有一连串的间隔,事件是在这些间隔中发生的。这些事件与我们在第6章中讨论过的Lamport的先发生关系中的事件相同。例如,一个事件可能是一条指令的执行、一条消息的发送等。假定分段确定模式中的每个间隔都以一个非确定性的事件开始,例如一条消息的接收。但是,这个时刻之后进程的执行就是完全确定的。一个时间间隔以发生非确定性的事件之前的最后一个事件结束。<br />
+实际上,如果以相同的非确定性事件作为开始进行重放,那么一个间隔的重放可以具有已知的结果,也就是说,以一种完全确定的方式进行重放。因此,如果我们在这样的模式中记录下所有的非确定性事件,就有可能以一种确定的方式完全重放整个进程的执行。</p>
+<p>考虑到要从进程崩溃中恢复到一个全局一致的状态时消息日志是必需的,准确地知道什么时候对消息进行记录是很重要的。
+Alvisi和
+Marzullo(1998)介绍的方法说明,如果我们关注现存的消息日志方案如何处理孤儿进程,那么可以容易地描述消息日志方案的特征。<br />
+<strong>孤儿进程(orphan
+process)</strong>就是在其他进程崩溃之后还存在的进程,但是它的状态与恢复之后的崩溃进程不一致。图8.26中的情况就是一个例子。进程Q从进程P与R那里分别接收到消息m1和m2,然后把消息m2发送给R。但是,与其他消息不同,消息m2没有进行日志记录。如果进程Q崩溃然后恢复,那么要恢复Q只需要重放记录了的消息,在我们的例子中就是m1,因为m2没有进行记录,它的传输也就不会被重放,这意味着m2的传输不会发生。</p>
+<p>但是Q恢复之后的情况是与它恢复之前不一致的。特别是,R保留了在崩溃之前发送的消息,但是在重放崩溃之前发生的事情时该消息的接收与传送还没有发生。很明显,这样的不一致应该避免。</p>
+<p><strong>描述消息日志方案的特征</strong><br />
+为了描述不同的消息日志方案的特征,我们使用在文献(Alvisi,
+Marzullo1998)中说明的方法。认为每个消息m都具有头部,头部中包含了重发m并正确处理它所需的所有信息。例如,每个头部都包含了发送方和接收方的标识符以及一个用来识别它的序列号。另外还有一个传送号码用来确定它应该在何时被传送给接收应用程序。<br />
+如果消息不再被丢失就被称为是<strong>稳定的(stable)</strong>,例如因为它被写入了稳定存储。因此可以使用重放稳定消息的传输来进行恢复。</p>
+<p>每个消息m都导致产生一个进程组DEP(m),它依赖于m的传送。特别是,DEP(m)由那些接收m的进程组成。另外,如果另一个消息m’由于因果关系也要依赖m的传送,而且m被传送给进程Q,那么Q也包含在DEP(m)中。注意,m是按因果关系依赖于m的传送的,如果它由先前传送m的同一个进程发送,或者它传送了另一个按因果关系依赖于m的传送的消息。<br />
+COPY(m)进程集由这样一些进程组成:它们具有m的副本,但是该副本不在它的本地稳定存储中。当一个进程传送消息m时,它就也成为COPY(m)的成员。注意,COPY(m)由那些可以移交m的副本的进程组成,这些副本可以用来重放m的传输。如果所有这些进程都崩溃了,那么重放m的传输显然就是不可能的。<br />
+使用这些表示,现在很容易就可以准确定义孤儿进程是什么了。假定一些进程在分布式系统中崩溃了,Q是幸存的进程之一。如果Q包含在DEP(m)中,在COPY(m)中的每个进程都崩溃了的同时存在消息m,那么Q就是一个孤儿进程。换句话说,如果一个进程依赖于m,但是没有办法来重放m的传输时它就是一个孤儿进程。</p>
+<p>要避免产生孤儿进程,需要确认:如果COPY(m)中的每个进程都崩溃了,在DEP(m)中没有幸存的进程。换句话说,DEP(m)中的所有进程都应该已经崩溃了。如果我们能保证不论何时一个进程成为了DEP(m)的成员,它也要成为COPY(m)的成员,那么就可以满足这个条件。换句话说,不论何时一个进程要依赖于m的传送,那么它就总要保持m的一份副本。</p>
+<p>可以使用两种方法来做到这一点。第一种方法称为<strong>悲观日志协议(pessimistic
+logging
+protocol)</strong>。这个协议认为对于每个非稳定的消息m,都最多有一个进程依赖它。换句话说,悲观日志协议确保每个非稳定的消息m都最多被传送给一个进程。注意只要m被传送给进程P,P就成为COPY(m)的成员<br />
+最坏的情况就是P在m还没有被记录的时候就崩溃了。使用悲观日志,在传送m之后,如果还没有确保m被写到稳定存储就不允许P发送任何消息。因此,没有其他进程会依赖m的传送,这就没有了重放m的传输的可能性。这种方法可以避免孤儿进程.<br />
+相反,在<strong>乐观日志协议(optimistic logging
+protocol)</strong>中,在发生崩溃之后才进行实际的工作。特别是,假定对某个消息m,COPY(m)中的每个进程都崩溃了。在乐观的方法中,DEP(m)中的任何孤儿进程都被回退到一个不再属于DEP(m)的状态。很明显,乐观日志协议需要跟踪依赖关系,这使它们的实现变得更复杂。</p>
+<p>像在(Einozahy等2002)中指出的那样,悲观日志要比乐观的方法简单得多,所以在实际的分布式系统设计中它是消息日志的首选方法.</p>
+<h2 id="面向恢复的计算">面向恢复的计算</h2>
+<p>处理恢复的一个有关方法是从头开始。这种掩盖故障的方法的<strong>基本原理</strong>是,为了恢复而优化可能会更划算,从而使得系统避免处于长时间的故障之中。这种方法由称为<strong>面向恢复的计算(recovery-
+oriented computing)</strong>( Canda等2004a).</p>
+<p>面向恢复的计算有几个优点。其中一个是,只需要重新启动部分系统和因特网服务器(Canda等2004b,2006)。为了使得可以只启动部分系统,其关键是故障被正确地局部化了。此时,重新启动只是意味着删除掉确定组件的实例以及在这些组件上进行的线程,并(经常)重新开始有关的请求。注意,故障局部化本身可能就不是一件简单的事情(Steiner和Sethi,2004).<br />
+为了使重新启动成为一个确实可行的恢复技术,要求组件尽量分离,使得不同组件之间尽量少或没有关联。如果组件之间存在很强的关联,那么故障本地化和分析仍然要求在故障发生时,需要应用传统的恢复技术使这个服务器重新启动,而且这不比我们上面刚讨论的技术更有效。</p>
+<p>面向恢复的计算另一个优点是,在已变化的环境下,可以应用检查点和恢复技术而不影响系统的继续运行。这里基本思想是,如果给予程序更多的缓冲空间、内存在分配之前进行清零、改编消息传送的顺序(只要这不影响消息的语义就可以)等等,很多故障是可以避免的Qin等2005)。关键思想是处理软件故障(到目前为止所讨论的很多技术针对都是基于硬件故障的)。因为软件运行是高度可确定的,改变运行环境就可以扭转局面,而且无需修理任何东西。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/8-fault-tolerance/" title="分布式系统 - 容错性">https://wrran.github.io/blog/2017/12/28/review/distributed-system/8-fault-tolerance/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/distributed-system/" rel="tag"># distributed system</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/" rel="prev" title="分布式系统 - 一致性和复制">
+                  <i class="fa fa-angle-left"></i> 分布式系统 - 一致性和复制
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/28/acm/leetcode/0160-intersection-of-two-linked-lists/" rel="next" title="LC[0160] - Intersection of Two Linked Lists">
+                  LC[0160] - Intersection of Two Linked Lists <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

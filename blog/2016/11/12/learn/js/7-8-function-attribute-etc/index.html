@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="When value can do something, you would …">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript查缺补漏 - 函数属性">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/11/12/learn/js/7-8-function-attribute-etc/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="When value can do something, you would …">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-12T14:55:36.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.702Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="function">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/11/12/learn/js/7-8-function-attribute-etc/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/11/12/learn/js/7-8-function-attribute-etc/","path":"blog/2016/11/12/learn/js/7-8-function-attribute-etc/","title":"JavaScript查缺补漏 - 函数属性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript查缺补漏 - 函数属性 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#length%E5%B1%9E%E6%80%A7"><span class="nav-text">length属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prototype%E5%B1%9E%E6%80%A7"><span class="nav-text">prototype属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#call%E6%96%B9%E6%B3%95%E5%92%8Capply%E6%96%B9%E6%B3%95"><span class="nav-text">call()方法和apply()方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bind%E6%96%B9%E6%B3%95"><span class="nav-text">bind()方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tostring%E6%96%B9%E6%B3%95"><span class="nav-text">toString()方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#function%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">Function()构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E8%B0%83%E7%94%A8%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-text">可调用的对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%87%E6%B3%A8"><span class="nav-text">备注</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/11/12/learn/js/7-8-function-attribute-etc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript查缺补漏 - 函数属性 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript查缺补漏 - 函数属性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-11-12 22:55:36" itemprop="dateCreated datePublished" datetime="2016-11-12T22:55:36+08:00">2016-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>When value can do something, you would …</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>函数是JS中特殊的对象，它们也有自己的属性和方法。</p>
+<h1 id="length属性">length属性</h1>
+<p>在函数体中，<code>arguments.length</code>表示传入函数的实参个数；而函数本身的<code>length</code>属性则不同。它是一个只读属性，它代表了<strong>函数形参</strong>的数量，即在函数定义时给出的形参个数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该函数使用了callee，故不能在严格模式下工作</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">check</span>(<span class="params">args</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> actual = <span class="variable language_">arguments</span>.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">var</span> expected = <span class="variable language_">arguments</span>.<span class="property">callee</span>.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">if</span> (actual !== expected)</span><br><span class="line">        <span class="keyword">throw</span> <span class="title class_">Error</span>(<span class="string">&#x27;Expected &#x27;</span> + expected + <span class="string">&#x27;args; got &#x27;</span> + actual);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">check</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="title function_">check</span>(<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;&#x27;</span>); <span class="comment">// =&gt; Error</span></span><br></pre></td></tr></table></figure>
+<h1 id="prototype属性">prototype属性</h1>
+<p>每个函数都包含一个<code>prototype</code>属性，这个属性是指向一个对象的引用，被称为原型对象。每一个函数都包含不同的原型对象。当将函数用作构造函数时，新创建的对象会从原型上继承属性。</p>
+<h1 id="call方法和apply方法">call()方法和apply()方法</h1>
+<p>我们可以通过<code>call</code>和<code>apply</code>来间接调用函数。<br />
+<code>call</code>和<code>apply</code>的第一个参数是要调用函数的母对象，它是调用上下文，在函数体内通过<code>this</code>来获得对它的引用。要想将方法<code>f</code>应用到对象<code>o</code>上，可以如此操作：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f.<span class="title function_">call</span>(o);</span><br><span class="line">f.<span class="title function_">apply</span>(o);</span><br></pre></td></tr></table></figure>
+<p>上述代码与下代码的功能类似：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">o.<span class="property">m</span> = f;</span><br><span class="line">o.<span class="title function_">m</span>();</span><br><span class="line"><span class="keyword">delete</span> o.<span class="property">m</span>;</span><br></pre></td></tr></table></figure>
+<p>在ES5的严格模式下，<code>call()</code>和<code>apply()</code>的第一个参数都会变成<code>this</code>的值，不论传入的实参是原始值还是<code>null</code>或者<code>undefined</code>。在ES3和非严格模式下，传入的<code>null</code>和<code>undefined</code>会被全局对象代替，而其他原始值会被相应的包装对象所替代。</p>
+<p>对于<code>call()</code>来说，第一个调用上下文实参之后的所有实参就是要传入给待调用函数的实参，如<code>f.call(o, 1, 2);</code>。<br />
+对于<code>apply()</code>来说，与之类似，但传入实参应当放入到一个数组中，如<code>f.apply(o, [1, 2])</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将对象`o`中名为m()的方法替换为另一种方法</span></span><br><span class="line"><span class="comment">// 可以在调用原始的方法之前和之后记录日志消息</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">trace</span>(<span class="params">o, m</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> original = o[m];</span><br><span class="line">    o[m] = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Date</span>(), <span class="string">&#x27;Entering: &#x27;</span>, m);</span><br><span class="line">        <span class="keyword">var</span> result = original.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span> <span class="title class_">Date</span>(), <span class="string">&#x27;Exiting: &#x27;</span>, m);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="bind方法">bind()方法</h1>
+<p><code>bind()</code>是ES5中新增的方法，该方法的作用是将函数绑定至某个对象。当在函数<code>f()</code>上调用<code>bind()</code>方法并传入一个对象<code>o</code>作为对象，这个方法将返回一个新的函数。以函数方式调用新的函数将会把原始函数<code>f()</code>当作<code>o</code>的方法来调用。传入新函数的实参也将会传入到原始函数中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">f</span>(<span class="params">y</span>) &#123; <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">x</span> + y; &#125;</span><br><span class="line"><span class="keyword">var</span> o = &#123; <span class="attr">x</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> g = f.<span class="title function_">bind</span>(o);</span><br><span class="line"><span class="title function_">g</span>(<span class="number">2</span>); <span class="comment">// =&gt; 3</span></span><br></pre></td></tr></table></figure>
+<p>在ES3中可以如下模拟<code>bind()</code>方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bind</span>(<span class="params">f, o</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (f.<span class="property">bind</span>) <span class="keyword">return</span> f.<span class="title function_">bind</span>(o);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> f.<span class="title function_">apply</span>(o, <span class="variable language_">arguments</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ES5中的<code>bind()</code>方法不仅仅是将函数绑定至一个对象，他/她还附带了一些其他应用：除了第一个实参外，传入<code>bind()</code>的实参也会绑定至<code>this</code>，这种技巧被称为<strong>“柯里化”</strong>（currying）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum = <span class="keyword">function</span>(<span class="params">x, y</span>) &#123; <span class="keyword">return</span> x + y; &#125;</span><br><span class="line"><span class="comment">// 创建一个类似sum的新函数，但this的值绑定至null</span></span><br><span class="line"><span class="comment">// 并且第一个参数绑定至1，这个新的函数形参数量相当于为一</span></span><br><span class="line"><span class="keyword">var</span> succ = sum.<span class="title function_">bind</span>(<span class="literal">null</span>, <span class="number">1</span>);</span><br><span class="line"><span class="title function_">succ</span>(<span class="number">2</span>); <span class="comment">// 1 + 2 =&gt; 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f</span>(<span class="params">y, z</span>) &#123; <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">x</span> + y + z; &#125;;</span><br><span class="line"><span class="keyword">var</span> g = f.<span class="title function_">bind</span>(&#123;<span class="attr">x</span>:<span class="number">1</span>&#125;, <span class="number">2</span>); <span class="comment">// 绑定 this 和 y</span></span><br><span class="line"><span class="title function_">g</span>(<span class="number">3</span>) <span class="comment">// 1 + 2 + 3=&gt; 6</span></span><br></pre></td></tr></table></figure>
+<p>我们在ES3中也可以模拟上述方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">bind</span>) &#123;</span><br><span class="line">    <span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">bind</span> = <span class="keyword">function</span>(<span class="params">o <span class="comment">/*, args */</span></span>) &#123;</span><br><span class="line">        <span class="comment">// 将this和arguments的值保存至变量中</span></span><br><span class="line">        <span class="comment">// 以便在后面嵌套的函数</span></span><br><span class="line">        <span class="keyword">var</span> <span class="variable language_">self</span> = <span class="variable language_">this</span>;</span><br><span class="line">        <span class="keyword">var</span> boundArgs = <span class="variable language_">arguments</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// bind()方法的返回值是一个函数</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 创建一个实参列表，将传入bind()的第二个及后续的实参都传入到这个函数中</span></span><br><span class="line">            <span class="keyword">var</span> args = [];</span><br><span class="line">            <span class="keyword">var</span> i;</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; boundArgs.<span class="property">length</span>; i++) args.<span class="title function_">push</span>(boundArgs[i]);</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="variable language_">arguments</span>.<span class="property">length</span>; i++) args.<span class="title function_">push</span>(<span class="variable language_">arguments</span>[i]); <span class="comment">// ???</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 现在将self作为o的方法来调用，传入这些实参</span></span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.<span class="title function_">apply</span>(o, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但ES5中定义的<code>bind()</code>方法也有一些特性是上述ES3无法模拟的。首先，真正的<code>bind()</code>方法返回一个函数对象，这个函数对象的<code>length</code>属性是绑定函数的形参个数减去绑定绑定实参的个数；再者ES5的<code>bind()</code>方法可以顺带用作构造函数。如果<code>bind()</code>返回的函数用作构造函数，将忽略传入<code>bind()</code>的<code>this</code>，原始函数就会以构造函数的形式调用。由<code>bind()</code>方法所返回的函数并不包含<code>prototype</code>属性（普通函数固有的<code>prototype</code>属性是不能删除的），并且将这些绑定的函数用作构造函数时所创建的对象从原始的未绑定的构造函数中继承<code>prototype</code>。同样，在使用<code>instanceof</code>运算符时，绑定构造函数和未绑定构造函数并无两样。</p>
+<h2 id="实例">实例</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;s&#x27;</span>;</span><br><span class="line">&#125;;</span><br><span class="line">s.<span class="property">log</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> v = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;v&#x27;</span>;</span><br><span class="line">&#125;;</span><br><span class="line">v.<span class="property">log</span> = s.<span class="property">log</span>.<span class="title function_">bind</span>(v);</span><br><span class="line"></span><br><span class="line">s.<span class="title function_">log</span>() <span class="comment">// =&gt; s</span></span><br><span class="line">v.<span class="title function_">log</span>() <span class="comment">// =&gt; v</span></span><br></pre></td></tr></table></figure>
+<h1 id="tostring方法">toString()方法</h1>
+<p>ES规范规定函数的<code>toString()</code>返回一个字符串，这个字符串和函数声明语句的语法相关。但实际上，大多数JS实现都会返回函数的完整源码；内置函数往往会返回一个<code>[native code]</code>的字符串作为函数体。</p>
+<h1 id="function构造函数">Function()构造函数</h1>
+<p>我们可以通过<code>Function()</code>构造函数来定义函数，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> <span class="title class_">Function</span>(<span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;y&#x27;</span>, <span class="string">&#x27;return x*y;&#x27;</span>);</span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line"><span class="comment">// var f = function(x, y) &#123; return x*y; &#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>Function()</code>构造函数可以传入任意数量的字符串实参，最后一个实参表示函数体；它可以包含任意的JS语句，每两条语句之间用分号分隔。传入构造函数的其他所有的实参字符串是指定函数的形参名字的字符串。如果定义的函数不含任何参数，只须给构造函数简单地传入一个字符串，即函数体就可以了。</p>
+<p>注意，<code>Function()</code>构造函数创建的是一个匿名函数，并没有实际的参数被传入来代表函数名。</p>
+<p>关于<code>Function()</code>构造函数有几点需要特别注意：</p>
+<ul>
+<li><code>Function()</code>构造函数允许在JS在运行时动态地创建并编译函数</li>
+<li>每次调用<code>Function()</code>构造函数都会解析函数体，并创建新的函数对象。如果在一个循环或者多次调用的函数中执行这个构造函数，执行效率会收到影响；相比而言，循环中的嵌套函数和函数定义表达式则不会每次执行时都重新编译。</li>
+<li><code>Function()</code>构造函数所创建的函数并不是使用词法作用域，相反，函数体代码的编译总是会在全局作用域下执行，如下所示：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&#x27;global&#x27;</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">constructFunction</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&#x27;local&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Function</span>(<span class="string">&#x27;return scope;&#x27;</span>); <span class="comment">// 无法捕捉局部作用域</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">constructFunction</span>()(); <span class="comment">// =&gt; global</span></span><br></pre></td></tr></table></figure>
+<h1 id="可调用的对象">可调用的对象</h1>
+<p><strong>可调用的对象</strong>是一个对象，可以在函数调用表达式中调用这个对象。所有的函数都是可以调用的，但并非所有的可调用对象都是函数。<br />
+比较常见的可调用对象是<code>RegExp</code>对象，可以直接调用<code>RegExp</code>对象，这比调用它的<code>exec()</code>方法更快捷一些。但代买中最好不要对可调用的<code>RegExp</code>对象有太多依赖，这恶搞特性可能在不久就会被废弃。<br />
+如果想检测一个对象是否是真正的函数对象（并具有函数方法），可以使用如下代码来检测：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isFunction</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(x) === <span class="string">&#x27;[object Function]&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/10549733/">JavaScript权威指南(第六版)</a></p>
+<h1 id="备注">备注</h1>
+<p>JS: JavaScript<br />
+ES5: ECMAScript5</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/11/12/learn/js/7-8-function-attribute-etc/" title="JavaScript查缺补漏 - 函数属性">https://wrran.github.io/blog/2016/11/12/learn/js/7-8-function-attribute-etc/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/function/" rel="tag"># function</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/12/learn/js/7-7-function-closure/" rel="prev" title="JavaScript查缺补漏 - 函数与闭包">
+                  <i class="fa fa-angle-left"></i> JavaScript查缺补漏 - 函数与闭包
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/12/learn/js/7-9-function-application/" rel="next" title="JavaScript查缺补漏 - 函数式编程">
+                  JavaScript查缺补漏 - 函数式编程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

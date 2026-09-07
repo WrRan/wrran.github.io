@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="学习，让我更快乐 ;)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据复习">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/06/07/review/bigdata/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="学习，让我更快乐 ;)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-06-07T07:34:56.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.773Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="bigdata">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/06/07/review/bigdata/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/06/07/review/bigdata/","path":"blog/2016/06/07/review/bigdata/","title":"大数据复习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>大数据复习 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE"><span class="nav-text">大数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-text">大数据的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF"><span class="nav-text">大数据相关技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%B8%8E%E4%BA%91%E8%AE%A1%E7%AE%97"><span class="nav-text">大数据与云计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-text">云计算的定义：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="nav-text">云计算的服务模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-text">云计算的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E4%BB%B7%E5%80%BC%E4%B8%8E%E6%8C%91%E6%88%98"><span class="nav-text">云计算的价值与挑战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F"><span class="nav-text">分布式系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#google"><span class="nav-text">Google</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hadoop"><span class="nav-text">Hadoop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#map-reduce%E6%9E%B6%E6%9E%84"><span class="nav-text">Map Reduce架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#oceanbase%E5%88%86%E5%B8%83%E5%BC%8F%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">OceanBase分布式关系数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF"><span class="nav-text">虚拟化技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4%E6%8A%80%E6%9C%AF"><span class="nav-text">重复数据删除技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%9E%8B%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF"><span class="nav-text">新型存储技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu%E4%B8%8Egpu%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">CPU与GPU的区别：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nosql-vs-sql"><span class="nav-text">NoSQL vs SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#comment"><span class="nav-text">COMMENT</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/06/07/review/bigdata/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="大数据复习 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          大数据复习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-07 15:34:56" itemprop="dateCreated datePublished" datetime="2016-06-07T15:34:56+08:00">2016-06-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>学习，让我更快乐 ;)</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="大数据">大数据</h2>
+<h3 id="大数据的定义">大数据的定义</h3>
+<p>[IMPORTANT]</p>
+<blockquote>
+<p><code>大数据</code>是需要新处理模式才能具有更强的决策力、洞察发现力和流程优化能力的海量、高增长率和多样化的信息资产。<br />
+BY <strong>Gartner</strong></p>
+</blockquote>
+<blockquote>
+<p><code>Big data</code> is a term for data sets that are so large or
+complex that traditional data processing applications are inadequate.
+Challenges include analysis, capture, data curation, search, sharing,
+storage, transfer, visualization, querying, updating and information
+privacy. The term often refers simply to the use of predictive analytics
+or certain other advanced methods to extract value from data, and seldom
+to a particular size of data set. Accuracy in big data may lead to more
+confident decision making, and better decisions can result in greater
+operational efficiency, cost reduction and reduced risk.<br />
+BY <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Big_data"><strong>Wiki</strong></a></p>
+</blockquote>
+<p><code>bit</code> =&gt; <code>byte</code> =&gt; <code>KB</code> =&gt;
+<code>MB</code> =&gt; <code>GB</code> =&gt; <code>TB</code> =&gt;
+<code>PB</code> =&gt; <code>EB</code> =&gt; <code>ZB</code> =&gt;
+<code>YB</code></p>
+<p>大数据不仅仅是数据的“大量化”，而是包含“快速化”、“多样化”和“价值化”等多重属性。<br />
+[IMPORTANT]<br />
+大数据的特点，<code>4"V"s</code>：</p>
+<ul>
+<li>Volume</li>
+<li>Velocity</li>
+<li>Variety</li>
+<li>Value</li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%9A%844V.png"
+title="大数据处理的4V" alt="大数据处理的4V" />
+<figcaption aria-hidden="true">大数据处理的4V</figcaption>
+</figure>
+<p><em>注意</em>：上图中的<code>Velocity</code>并不准确，流数据、实时数据、非实时数据应当归为<code>Variety</code>中。<code>Velocity</code>偏重指数据的产生速度快、对数据处理速度的要求高。</p>
+<h3 id="大数据相关技术">大数据相关技术</h3>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9A%84%E7%94%9F%E6%80%81%E7%B3%BB%E7%BB%9F.png"
+title="大数据的生态系统" alt="大数据的生态系统" />
+<figcaption aria-hidden="true">大数据的生态系统</figcaption>
+</figure>
+<p>分析技术</p>
+<ul>
+<li>数据处理：自然语言处理技术</li>
+<li>统计和分析：A/B test；top N排行榜；地域占比；文本情感分析</li>
+<li>数据挖掘：关联规则分析；分类；聚类</li>
+<li>模型预测：预测模型；机器学习；建模仿真</li>
+</ul>
+<p>大数据技术</p>
+<ul>
+<li>数据采集：ETL工具</li>
+<li>数据存取：关系数据库；NoSQL；SQL等</li>
+<li>基础架构支持：云存储；分布式文本系统等</li>
+<li>计算结果展现：云计算；标签云；关系图等</li>
+</ul>
+<p>存储</p>
+<ul>
+<li>问题<br />
+结构化数据：海量数据的查询、统计、更新等操作效率低<br />
+非结构化数据：图片、视频、word、pdf、ppt等文件存储；不利于检索、查询和存储<br />
+半结构化数据：转换为结构化存储或者按照非结构化存储</li>
+<li>解决方案<br />
+在<strong>CAP理论</strong>指导下数据库技术适当退化：NoSQL技术，如HDFS，HBase，
+MongoDB等</li>
+</ul>
+<p>计算</p>
+<ul>
+<li>问题<br />
+因结构变化为导致计算模式变更；需求模式变化带来的计算碰到瓶颈(???)</li>
+<li>解决方案<br />
+<em>MapReduce技术</em>或<em>流计算</em>，如Hadoop，twitter的storm和yohoo!的S4</li>
+</ul>
+<p>[IMPORTANT]<br />
+补充：</p>
+<blockquote>
+<p>In theoretical computer science, the CAP theorem, also named Brewer’s
+theorem after computer scientist Eric Brewer, states that it is
+impossible for a distributed computer system to simultaneously provide
+all three of the following guarantees:</p>
+<ul>
+<li>Consistency (all nodes see the same data at the same time)</li>
+<li>Availability (every request receives a response about whether it
+succeeded or failed)</li>
+<li>Partition tolerance (the system continues to operate despite
+arbitrary partitioning due to network failures)<br />
+BY <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CAP_theorem"><strong>Wiki</strong></a></li>
+</ul>
+</blockquote>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/CAP%E7%90%86%E8%AE%BA.png"
+title="CAP理论" alt="CAP理论" />
+<figcaption aria-hidden="true">CAP理论</figcaption>
+</figure>
+<h2 id="大数据与云计算">大数据与云计算</h2>
+<p>云计算与大数据的关系：<br />
+云计算为大数据资源、大数据挖掘提供技术设施（软硬科学技术）；大数据处理技术为云计算建设和运作提供决策</p>
+<h3 id="云计算的定义">云计算的定义：</h3>
+<blockquote>
+<p><code>Cloud computing</code>, also known as on-the-line computing, is
+a kind of Internet-based computing that provides shared processing
+resources and data to computers and other devices on demand.<br />
+BY <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cloud_computing"><strong>Wiki</strong></a></p>
+</blockquote>
+<p>老师说</p>
+<blockquote>
+<p>[概念性定义]
+云计算本身不是计算，也不是单纯的技术，而是基于资源隐藏理念的虚拟化方法</p>
+</blockquote>
+<blockquote>
+<p>[广义的定义] IT基础设施、资源、需求性服务的交付使用模式</p>
+</blockquote>
+<blockquote>
+<p>[狭义的定义]
+云计算是一种通过Internet以服务的方式提供动态可伸缩的虚拟化的资源的计算模式</p>
+</blockquote>
+<p><code>云计算</code>是分布式计算、并行计算、效用计算、网络存储、虚拟化、负载均衡等传统计算机和网络计算发展融合的产物。</p>
+<p>综上，大概也许可以这样回答<strong>云计算是什么</strong>了：</p>
+<blockquote>
+<p>云计算是一种通过Internet以服务的方式提供动态可伸缩的虚拟化的资源的计算模式，它是分布式计算、并行计算、效用计算、网络存储、虚拟化、负载均衡等传统计算机和网络计算发展融合的产物。进一步来说，云计算不是计算，也不但只是技术，而是基于资源隐藏理念的虚拟化方法。</p>
+</blockquote>
+<h3 id="云计算的服务模型">云计算的服务模型</h3>
+<p>[IMPORTANT]<br />
+从底层到顶层分别为如下服务：</p>
+<ul>
+<li>IaaS, Infrastructure as a
+Service：将硬件设备等基础资源封装成服务供用户使用。最通用。应用有Amazon
+EC2/S3</li>
+<li>PaaS, Platform as a
+Service：对资源的抽象层次更进一步，提供用户应用程序运行环境。</li>
+<li>SaaS, Software as a
+Service：针对性更强，它将某些特定应用软件功能封装成服务。最专用。应用有Salesforce
+online CRM</li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B.png"
+title="云计算的服务模型" alt="云计算的服务模型" />
+<figcaption aria-hidden="true">云计算的服务模型</figcaption>
+</figure>
+<p><code>IaaS</code>，通过互联网获取计算机基础设施方面的服务，如计算机、存储空间、网络连接等，用户在此基础上部署和运行各种软件，包括操作系统和应用程序。<br />
+<code>PaaS</code>，将软件研发的平台作为一种服务放在网上。平台包括操作系统、编程语言环境、数据库和Web服务器，用户在此平台上部署和运行自己的应用，用户不能管理和控制底层的基础设施，只能控制自己部署的应用。<br />
+<code>SaaS</code>，通过网络提供软件的模式，用户无须购买软件，而是向提供商租用基于Web的软件，来管理企业经营活动。云提供商在云端安装和运行应用软件，云用户通过云客户端使用软件，但不能管理应用软件运行的基础设施和平台，只能做有限的应用程序设置。</p>
+<h3 id="云计算的特征">云计算的特征</h3>
+<p>云计算的特征可以从如下五个方面概括：</p>
+<ul>
+<li>设施资源 虚拟化、共享化</li>
+<li>资源配置 动态化、扩展化</li>
+<li>需求服务 智能化、自助化</li>
+<li>用户使用 便捷化、高效化</li>
+<li>项目使用 可计化、优质化</li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B.png"
+title="云计算的特征" alt="云计算的特征" />
+<figcaption aria-hidden="true">云计算的特征</figcaption>
+</figure>
+<h3 id="云计算的价值与挑战">云计算的价值与挑战</h3>
+<p>价值有：</p>
+<ol type="1">
+<li>提高生产效率，降低成本、节省能源、可持续化发展的有效手段</li>
+<li>改变IT现状的应用模式</li>
+<li>带动传统产业的升级改造转型，调整产业经济结构</li>
+<li>促进商业、产业、事业模式发展变化</li>
+</ol>
+<p>挑战有：</p>
+<ul>
+<li>技术方面：虚拟技术、安全技术、资源管理、开放式技术</li>
+<li>社会文化：对虚拟设施的理解、对安全信息的重视、对共享资源的保护、规范标准化理念</li>
+</ul>
+<h3 id="分布式系统">分布式系统</h3>
+<h4 id="google">Google</h4>
+<p>[IMPORTANT]<br />
+Google云计算平台技术架构：</p>
+<ul>
+<li>文件存储，Google Distributed File System, GFS</li>
+<li>并行数据处理，MapReduce</li>
+<li>分布式锁，Chubby</li>
+<li>非结构化数据库，BigTable</li>
+</ul>
+<p>[IMPORTANT]<br />
+GFS系统构架</p>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/Google%20GFS%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84.png"
+title="Google GFS体系架构" alt="Google GFS体系架构" />
+<figcaption aria-hidden="true">Google GFS体系架构</figcaption>
+</figure>
+<p>涉及如下三个角色：</p>
+<ul>
+<li>Client(客户端)：应用程序的访问接口</li>
+<li>Master(主服务器)：管理节点，在逻辑上只有一个，保存数据的元数据，负责整个文件系统的管理</li>
+<li>Chunk
+Server(数据块服务器)：负责具体的存储工作，数据以文件的形式存储在Chunk
+Server上</li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.open-open.com/lib/view/open1328763454608.html"
+title="The Google File System中文版">The Google File
+System中文版</a></li>
+</ul>
+<h4 id="hadoop">Hadoop</h4>
+<p>[IMPORTANT]<br />
+Hadoop体系结构：</p>
+<ul>
+<li>数据库：HBase</li>
+<li>并行数据处理：MapReduce</li>
+<li>分布式文件存储：HDFS</li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data%2Fimage%2FHDFS%E6%9E%B6%E6%9E%84.png"
+title="HDFS架构" alt="HDFS架构" />
+<figcaption aria-hidden="true">HDFS架构</figcaption>
+</figure>
+<p><code>Hadoop Distributed File System, HDFS</code>：它是一个高度容错性的系统，适合部署在廉价的机器上。HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集(large
+data set)的应用程序。<br />
+HDFS的特点：</p>
+<ol type="1">
+<li>适用大数据文件</li>
+<li>文件分块存储</li>
+<li>流式数据访问</li>
+<li>廉价硬件</li>
+<li>硬件故障</li>
+</ol>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://blessht.iteye.com/blog/2095675"
+title="Hadoop基础教程">《Hadoop基础教程》之初始Hadoop</a></li>
+<li><a target="_blank" rel="noopener" href="http://os.51cto.com/art/201206/345249.htm"
+title="了解关于Hadoop的12个事实">了解关于Hadoop的12个事实</a></li>
+<li><a target="_blank" rel="noopener" href="http://os.51cto.com/art/201207/346023.htm"
+title="告诉你Hadoop是什么">告诉你Hadoop是什么</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://baike.baidu.com/link?url=2QuNg3SZz8ejG7yZspw-jegIiUf-OabPNNM4262ft9GpTAcJqVCU3eQqzmLafSU67DCb47ziBaLECTZOU0cED_"
+title="hdfs-百度百科">HDFS - 百度百科</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.weixuehao.com/archives/596"
+title="Hadoop1.x中HDFS工作原理">Hadoop1.x中HDFS工作原理</a></li>
+</ul>
+<h4 id="map-reduce架构">Map Reduce架构</h4>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/Map%20Reduce%E6%9E%B6%E6%9E%84.png"
+title="Map Reduce架构" alt="Map Reduce架构" />
+<figcaption aria-hidden="true">Map Reduce架构</figcaption>
+</figure>
+<p>参考资料：</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="http://baike.baidu.com/link?url=DMAvH_wLyLN79jZBpTnFCI6auZSJArtxN0LhZ2PoYa5Y_mMObwO1r3IFkKcGdZlC4-JoQQXL-xLhNodwtuI8Da#9"
+title="百度百科">MapReduce - 百度百科</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/opennaive/article/details/7514146"
+title="谷歌技术“三宝”之MapReduce">谷歌技术“三宝”之MapReduce</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://blog.jobbole.com/1321/">我是如何向老婆解释MapReduce的？</a></li>
+</ul>
+<p>[IMPORTANT]<br />
+数据结构化管理组件不同：HBase =&gt; BigTable<br />
+并行计算模型：MapReduce =&gt; MapReduce<br />
+分布式文件系统：HDFS =&gt; GFS</p>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/Hadoop%E4%B8%8EGFS%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E6%AF%94%E8%BE%83.png"
+title="Hadoop与GFS的技术架构比较" alt="Hadoop与Google的技术架构比较" />
+<figcaption aria-hidden="true">Hadoop与Google的技术架构比较</figcaption>
+</figure>
+<p>两者不同在于：</p>
+<ul>
+<li>子服务器管理模式：
+<ul>
+<li>GFS：Chunk
+Server在Chubby中获取独占锁表示其生存状态，Master通过轮询这些独占锁获知Chunk
+Server的生存状态；当Master宕机时，替补服务器可以快速获知Chunk
+Server的状态</li>
+<li>HDFS：DataNode通过心跳的方式告知NameNode其生存状态；当NameNode宕机时，NameNode恢复后需要花费一段时间才能获悉DataNode的状态</li>
+</ul></li>
+<li>HDFS具备空间回收机制：
+<ul>
+<li>文件删除时，仅删除目录结构，实际数据的删除在等待一段时间后实施</li>
+<li>优点：便于恢复文件</li>
+</ul></li>
+</ul>
+<h4 id="oceanbase分布式关系数据库">OceanBase分布式关系数据库</h4>
+<p>涉及四部分：</p>
+<ul>
+<li>RootServer：管理集群中的所有服务器，Tablet数据分布以及副本管理</li>
+<li>UpdateServer：存储OceanBase系统的增量更新数据</li>
+<li>ChunkServer：存储OceanBase系统的基准数据。基准数据一般存储两份或三份，可配置。</li>
+<li>MergeServer：接收并解析用户的SQL请求，经过词法分析、语法分析、查询优化等一系列操作后转发给相应的ChunkServer或者UpdateServer。如果请求的数据分布在多台ChunkServer上，MergeServer
+还需要对多台ChunkServer返回的结果进行合并。</li>
+<li>Listener：一个特殊的MergeServer进程，即Listener，一般与RootServer合设。负责从集群的内部表中查询主备集群的流量分布信息和所有的其他MergeServer的地址列表。</li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/OceanBase%E5%88%86%E5%B8%83%E5%BC%8F%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93.png"
+title="OceanBean技术架构" alt="OceanBean技术架构" />
+<figcaption aria-hidden="true">OceanBean技术架构</figcaption>
+</figure>
+<p>各个部分的功能概括如下，更详细的说明参见本节的参考资料：</p>
+<ul>
+<li>RootServer：集群管理、数据分布以及副本管理。</li>
+<li>MergeServer：协议解析、 SQL
+解析、请求转发、结果合并、多表操作等。</li>
+<li>ChunkServer：存储多个 Tablet、提供读取服务和执行定期合并等。</li>
+<li>UpdateServer：集群中唯一能够接受写入的模块。</li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="http://code.taobao.org/p/OceanBase/wiki/index/">OceanBase文档</a>
+or <a
+target="_blank" rel="noopener" href="http://7xuthx.com1.z0.glb.clouddn.com/review-bigdata/pdf/OceanBase%200.5%20%E6%8F%8F%E8%BF%B0.pdf">Download
+OceanBase 0.5 描述 PDF</a></li>
+</ul>
+<h2 id="虚拟化技术">虚拟化技术</h2>
+<p>虚拟化技术的出现</p>
+<ul>
+<li><code>1960</code> IBM退出虚拟化技术，提高了昂贵的大型机的利用率</li>
+<li><code>1999</code>
+VMware公司解决了X86虚拟化问题，推出了X86平台的虚拟机软件，使虚拟发技术开始走向普通用户</li>
+<li><code>2003</code>
+开源虚拟化技术Xen推出，使得虚拟化技术的研究和应用更加普及</li>
+<li><code>2005</code>
+Intel和AMD推出支持虚拟化技术的处理器和芯片组，实现了硬件辅助虚拟化技术</li>
+<li><code>2006</code>
+Amazon采用虚拟化技术提供云计算平台，取得了商业上的成功，虚拟化技术成为云计算的基石</li>
+</ul>
+<p>虚拟化技术将物理资源转化为便于切分的资源池，符合云计算的基本条件；虚拟化给资源以动态调整的能力，符合云计算按需分配的要求</p>
+<p>虚拟化将硬件、操作系统和应用软件一同封装在一个可迁移的虚拟机档案文件中</p>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E7%9A%84%E4%BD%9C%E7%94%A8.png"
+title="虚拟化技术的作用" alt="虚拟化技术的作用" />
+<figcaption aria-hidden="true">虚拟化技术的作用</figcaption>
+</figure>
+<p>服务器虚拟化的三种类型：</p>
+<ul>
+<li>OS-Hosted</li>
+<li>Standalone Hypervisor</li>
+<li>Hybird</li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-bigdata/image/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E7%9A%84%E4%B8%89%E7%A7%8D%E7%B1%BB%E5%9E%8B.png"
+title="服务器虚拟化的三种类型" alt="服务器虚拟化的三种类型" />
+<figcaption aria-hidden="true">服务器虚拟化的三种类型</figcaption>
+</figure>
+<p>[IMPORTANT]<br />
+虚拟化技术的四大特性：</p>
+<ul>
+<li>分区：在一个物理服务器上同时运行多个虚拟机</li>
+<li>隔离：在同一服务器上的虚拟机之间相互隔离</li>
+<li>封装：整个虚拟机保存在文件中，而且可以通过移动和复制文件的方式来移动和复制该虚拟机</li>
+<li>相对于硬件独立：无需修改即可在任何服务器上运行虚拟机</li>
+</ul>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E8%99%9A%E6%8B%9F%E6%8A%80%E6%9C%AF%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7.png"
+title="虚拟化技术的四大特性" alt="虚拟化技术的四大特性" />
+<figcaption aria-hidden="true">虚拟化技术的四大特性</figcaption>
+</figure>
+<p>虚拟化技术的益处：</p>
+<ul>
+<li>实现资源最优利用</li>
+<li>动态负载均衡</li>
+<li>安全隔离</li>
+<li>系统自愈功能提升，应用可靠性提高</li>
+<li>提升系统节能减排能力</li>
+</ul>
+<p>虚拟机技术的关键组件，VMM，又称Hypervisor，负责为虚拟机统一分配CPU、内存和外设，调度虚拟资源：</p>
+<ul>
+<li>VMware</li>
+<li>Xen</li>
+<li>KVM</li>
+</ul>
+<h2 id="重复数据删除技术">重复数据删除技术</h2>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4%E6%8A%80%E6%9C%AF.png"
+title="重复数据删除技术" alt="重复数据删除技术" />
+<figcaption aria-hidden="true">重复数据删除技术</figcaption>
+</figure>
+<table>
+<thead>
+<tr>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>控制数据增长， 提高存储利用率</td>
+<td>需要额外内存和处理资源</td>
+</tr>
+<tr>
+<td>提高网络带宽利用率，减少备份时间</td>
+<td>降低数据的可靠性</td>
+</tr>
+<tr>
+<td>降低成本和能耗</td>
+<td>增加了数据恢复的开销</td>
+</tr>
+</tbody>
+</table>
+<h2 id="新型存储技术">新型存储技术</h2>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.png"
+title="存储器的层次结构" alt="存储器的层次结构" />
+<figcaption aria-hidden="true">存储器的层次结构</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.png"
+title="存储技术发展历程" alt="存储技术发展历程" />
+<figcaption aria-hidden="true">存储技术发展历程</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/review-big-data/image/RAID%E6%8A%80%E6%9C%AF%E6%AF%94%E8%BE%83.png"
+title="RAID技术比较" alt="RAID技术比较" />
+<figcaption aria-hidden="true">RAID技术比较</figcaption>
+</figure>
+<h2 id="cpu与gpu的区别">CPU与GPU的区别：</h2>
+<ul>
+<li>CPU：更多资源用于<strong>缓存</strong>和<strong>逻辑控制</strong></li>
+<li>GPU：更多资源用于<strong>计算</strong>，适用于<em>高并行性</em>、<em>大规模数据密集型</em>、<em>可预测的计算模式</em></li>
+</ul>
+<h2 id="nosql-vs-sql">NoSQL vs SQL</h2>
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>NoSQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>结构化存储，固定Schema</td>
+<td>Schema不固定，可以动态改变</td>
+</tr>
+<tr>
+<td>标准化查询语言</td>
+<td>没有固定查询语言</td>
+</tr>
+<tr>
+<td>ACID</td>
+<td>BASE(Basically Available, Soft State, Eventually Consistency)</td>
+</tr>
+<tr>
+<td>扩展性弱</td>
+<td>可以扩展到很大规模</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考资料">参考资料</h2>
+<p>Books:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://book.douban.com/subject/10462720/"
+title="Understanding Big Data">Understanding Big Data</a>[TODO]</li>
+</ul>
+<p>Reference:</p>
+<ul>
+<li>ACM Symposium on Clound Computing:<br />
+<a
+target="_blank" rel="noopener" href="https://sites.google.com/site/acm2015socc/">https://sites.google.com/site/acm2015socc/</a><br />
+<a
+target="_blank" rel="noopener" href="https://sites.google.com/site/2014socc/">https://sites.google.com/site/2014socc/</a></li>
+<li>IEEE International Conference on Big Data:<br />
+<a
+target="_blank" rel="noopener" href="https://cci.drexel.edu/bigdata/bigdata2015/">https://cci.drexel.edu/bigdata/bigdata2015/</a><br />
+<a
+target="_blank" rel="noopener" href="https://www.ieeebigdata.org/2014/">https://www.ieeebigdata.org/2014/</a></li>
+</ul>
+<h2 id="comment">COMMENT</h2>
+<p>内容丰富，令人感动。老师，我一定好好学习。</p>
+<blockquote>
+<p>Orz</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/06/07/review/bigdata/" title="大数据复习">https://wrran.github.io/blog/2016/06/07/review/bigdata/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/bigdata/" rel="tag"># bigdata</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/06/06/review/middleware/" rel="prev" title="中间件复习">
+                  <i class="fa fa-angle-left"></i> 中间件复习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/06/09/review/network/" rel="next" title="计算机网络复习">
+                  计算机网络复习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

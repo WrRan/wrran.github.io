@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统 - 通信">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/21/review/distributed-system/4-communication/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-21T11:54:34.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.782Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="distributed system">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/21/review/distributed-system/4-communication/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/21/review/distributed-system/4-communication/","path":"blog/2017/12/21/review/distributed-system/4-communication/","title":"分布式系统 - 通信"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式系统 - 通信 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="nav-text">分层协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8E%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="nav-text">低层协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="nav-text">传输协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="nav-text">高层协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%8D%8F%E8%AE%AE"><span class="nav-text">中间件协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E7%B1%BB%E5%9E%8B"><span class="nav-text">通信类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="nav-text">远程过程调用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84rpc%E6%93%8D%E4%BD%9C"><span class="nav-text">基本的RPC操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="nav-text">常规过程调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AD%98%E6%A0%B9%E7%A8%8B%E5%BA%8F"><span class="nav-text">客户与服务器存根程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-text">参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92%E5%80%BC%E5%8F%82%E6%95%B0"><span class="nav-text">传递值参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92%E5%BC%95%E7%94%A8%E5%8F%82%E6%95%B0"><span class="nav-text">传递引用参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%E5%92%8C%E5%AD%98%E6%A0%B9%E7%94%9F%E6%88%90"><span class="nav-text">参数说明和存根生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5rpc"><span class="nav-text">异步RPC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E6%B6%88%E6%81%AF%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="nav-text">面向消息的通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E6%B6%88%E6%81%AF%E7%9A%84%E7%9E%AC%E6%97%B6%E9%80%9A%E4%BF%A1"><span class="nav-text">面向消息的瞬时通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#berkeley%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-text">Berkeley套接字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E6%8E%A5%E5%8F%A3mpi"><span class="nav-text">消息传递接口（MPI）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E6%B6%88%E6%81%AF%E7%9A%84%E6%8C%81%E4%B9%85%E9%80%9A%E4%BF%A1"><span class="nav-text">面向消息的持久通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E6%A8%A1%E5%9E%8B"><span class="nav-text">消息队列模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E8%88%AC%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">消息队列系统的一般体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-text">消息转换器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%B3%BB%E7%BB%9F%E8%AF%B4%E6%98%8E"><span class="nav-text">消息队列系统说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E6%B5%81%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="nav-text">面向流的通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E8%BF%9E%E7%BB%AD%E5%AA%92%E4%BD%93%E6%8F%90%E4%BE%9B%E6%94%AF%E6%8C%81"><span class="nav-text">为连续媒体提供支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E4%B8%8E%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F"><span class="nav-text">流与服务质量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E5%90%8C%E6%AD%A5"><span class="nav-text">流同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%92%AD%E9%80%9A%E4%BF%A1"><span class="nav-text">多播通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E5%A4%9A%E6%92%AD"><span class="nav-text">应用层多播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Egossip%E7%9A%84%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1"><span class="nav-text">基于gossip的数据通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E4%BC%A0%E6%92%AD%E6%A8%A1%E5%9E%8B"><span class="nav-text">信息传播模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-text">删除数据</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/21/review/distributed-system/4-communication/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式系统 - 通信 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式系统 - 通信
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-21 19:54:34" itemprop="dateCreated datePublished" datetime="2017-12-21T19:54:34+08:00">2017-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/distributed-system/" itemprop="url" rel="index"><span itemprop="name">distributed-system</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>三个臭皮匠赛过诸葛亮</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>进程间通信是所有分布式系统的核心。分布式系统中的通信都是基于底层网络提供的低层消息传递机制的。如前所述，通过消息传递来描述通信过程比使用基于共享存储器的原语来描述要更困难。现在分布式系统中常常还有数千甚至数百万进程，这些进程分散在诸如因特网的不可靠网络中。除非用其他技术来代替计算机网络的原始通信功能，否则要开发大规模分布式应用程序是十分困难的。</p>
+<p>在本章，将讨论进行通信的进程必须遵守的协议，且把讨论重点放在协议的分层结构上。然后讨论四个广泛使用的通信模型：远程过程调用（remote
+procedure call, RPC）、远程方法调用（remote method invocation,
+RMI）、面向消息的中间件（message-oriented middleware，
+MOM）以及流（stream）。之外还讨论了发送数据到多个接收器（称为多播）的常见问题。</p>
+<p>分布式系统中的远程过程调用（RPC）通信模型的目的在于将消息传递的大部分复杂性隐藏起来，它比较适用于客户-服务器应用程序。在许多分布式应用程序中，通信并不遵循严格的客户-服务器交互模式。在这种情况下，事实证明，从消息的角度来考虑会更恰当。然而，计算机网络的低层通信功能由于缺乏分布式透明性，从许多方面来说并不适用。另一种方法是使用高层消息队列模型，在这种模型中，进行通信的方式与电子邮件系统的通信方式非常类似。因此面向消息的中间件（MOM）也值得好好学习。随着多媒体分布式系统的出现，很多系统都缺乏对诸如音频和视频这样的连续媒体通信的支持，因此有必要引入流（stream）的概念。面向流的通信可以在有时间限制的条件下支持消息的连续流。</p>
+<h1 id="基础知识">基础知识</h1>
+<p>该节将简要讨论网络通信协议，因为这些是构成所有分布式系统的基础。</p>
+<h2 id="分层协议">分层协议</h2>
+<p>由于没有共享存储器，分布式系统中的所有通信都是基于（低层）消息交换的。而这就需要制定多种这样的协定（agreement），如用多高的电压来表示低电平信号等。简言之，必须在不同层次上指定多种协定，其中包括从位传输的低层细节到消息表示的高层细节在内的各层。为了更加方便地对通信中涉及的多个不同层次进行处理，并解决其中存在的问题，<strong>国际标准化组织（ISO）</strong>颁布了一个参考模型，该模型清楚地标明了通信涉及的各个层次，为这些层次给出了标准名称，并且指出各层执行的特定任务。该模型被称为<strong>开放式系统互连参考模型（open
+systems interconnection reference model）</strong>，常简称为ISO
+OSI模型或OSI模型。<br />
+OSI模型是设计用来支持开放式系统间的通信的。所谓开放式系统是准备通过一系列标准规则来与其他开放式系统通信的系统，这些规则规定了发送和接收的消息的格式、内容以及相应的含义。对这些规则进行归纳总结，加以形式化，就形成了<strong>协议（protocol）</strong>。为了使得一组计算机能够通过网络互相通信，它们必须使用相同的协议。可以将协议划分为两大类。一类是<strong>面向连接（connection
+oriented）</strong>的协议，使用这种协议，消息发送方和接收方必须首先显式地确立连接，可能还需要就采用的协议进行协商，然后两者才能进行数据交换。在通信完毕之后，它们必须释放（终止）连接。电话系统就是一个面向连接的通信系统。一类是<strong>无连接（connectionless）</strong>协议，使用这种协议，交换数据之前不需要有建立连接的过程，消息发送方只需要在准备好的时候开始传送第一个消息即可。将信件投入邮箱就是无连接通信的一个例子。<br />
+在OSI模型中，通信过程划分为七层，如下图所示。每一层负责处理通信中某一个特定方面的问题。这样就可以把要解决的问题划分成多个易于处理的部分，每个部分都可以相对独立地进行处理。每一层都规定了与上面一层之间的接口，接口中包含一组操作，这些操作共同定义了该层向其用户提供的服务。每一层都有自己的协议（通话的主题和要采用的技术），可以单独改变某一层的协议，而不会对另一层造成影响。分层协议的可贵之处正是在于它带来的这种独立性。随着技术的发展，可以对任何层单独进行改进，而不会对其他层造成影响。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/ISO%20OSI%20model.PNG"
+alt="OSI模型中的层、接口及协议" /><br />
+特定系统中使用的协议集称为<strong>协议簇（protocol
+suite）</strong>或者<strong>协议栈（protocol
+stack）</strong>，将参考模型与其实际的协议区分开来是很重要的。</p>
+<h3 id="低层协议">低层协议</h3>
+<p>OSI协议组中的三个最低层协议，这三层共同实现了计算机网络的基本功能。<br />
+物理层协议制定了电气、机械和信号方面的标准。物理层中的关键问题是0和1信号分别使用多高的电压、每秒传输多少位及是否同时进行双向传播等。另外，该层还关心网络链路器（插头）的尺寸和形状，以及插头上针脚的个数和各引脚的作用。<br />
+物理层只负责传输位，只要没有错误发生，就没有任何问题。但实际上，通信网络是容易发生错误的，因此需要采用某种机制来检测并且纠正这些错误。而这些都是<strong>数据链路层</strong>的主要任务。该层将若干位组成一个称为<strong>帧（frame）</strong>的单元，并通过计算校验和的方式检查每一帧是否被正确接收。<br />
+在局域网环境下，发送方一般不需要了解接收方所在的位置，它只需要将消息放在网络上，然后接收方取走消息即可。而在广域网中，消息从发送方传送到接收方的过程中，可能需要经过很多<strong>跳（hop）</strong>，在每一条中，都要选择一条传出线路。如何选择最佳路径的问题被称为<strong>路由（routing）</strong>，这就是<strong>网络层</strong>的首要任务。<br />
+目前应用最广泛的网络协议可能就是无连接的<strong>网际协议（Internet
+Protocol,
+IP）</strong>，它是因特网协议簇中的一部分。不需要先建立连接就可以发送<strong>IP包</strong>，每个IP包彼此独立地发送到目的地，而且在包内部不指定或记录路径。</p>
+<h3 id="传输协议">传输协议</h3>
+<p>有一些服务对于构建网络应用程序是必需的，但在网络层接口中却没有提供，这些服务由传输层实现。从这个意义上说，传输层构成了基本网络协议栈的最后一部分，也就是说，传输层底层网络转换成可供应用程序开发人员使用的形式。<br />
+发送方发给接收方的包可能在传输途中丢失。虽然某些应用程序可能拥有自定义的错误恢复手段来进行处理，但多数程序还是希望连接是可靠的。<strong>传输层</strong>的任务就是提供这种可靠的连接服务。这样，应用层在把消息交付给传输层的时候，消息就会按预期的那样被无损地送达给接收方。<br />
+可靠的传输连接（根据定义，是面向连接的）既可以建立在面向连接的网络服务之上，也可以建立在无连接的网络服务之上。如果是前者，所有的包都将依照发送时的次序到达接收方；如果是后者的话，由于各包经过的路线可能不同，后发送的包有可能先到达。由传输层中的软件负责将所有的包依照原来的顺序排列好，以维持传输连接就像一根大管子的假象。提供这种点对点的通信方式是传输层的重要特征之一。<br />
+因特网传输协议称为<strong>传输控制协议（transmission control protocol,
+TCP）</strong>。TCP与IP结合成的TCP/IP协议是目前网络通信中的事实标准。因特网协议簇也支持无连接的传输协议，该协议称为<strong>通用数据报协议（universal
+datagram protocol,
+UDP）</strong>，从本质上说它只不过是附加了某些次要内容的IP协议。不需要面向连接协议的用户程序通常使用UDP。另外还有些传输协议是为了某种专用用途而定制的，如<strong>实时传输协议（real-time
+transport protocol, RTP）</strong>就是为了支持实时数据传输的协议。</p>
+<h3 id="高层协议">高层协议</h3>
+<p>在传输层之上，OSI又划分为另外三层。在实践中，只用到了其中的应用层。事实上，在因特网协议簇中，传输层之上的所有内容都合到了一起。<br />
+会话层本质上是传输层的增强版本，它提供了对话控制，用于跟踪正在谈话的是哪一方，它还提供了同步功能。ISO模型中低层主要考虑的问题是如何将要传输的所有位从发送方可靠而高效地传送给接收方，而在表示层中主要考虑的则是这些位所表示的意义。OSI应用层起初是准备用来容纳一组标准网络应用程序的，如电子邮件、文件传输等。<br />
+还有为数不少的对多数应用程序十分有用的通用协议，但这些协议并不能算是传输协议。在多数情况下，这些协议只能归入中间件协议的范畴。</p>
+<h3 id="中间件协议">中间件协议</h3>
+<p>中间件是一种应用程序，它在逻辑上位于应用层中，但在其中包含有多种通用协议，这些协议代表各自所在的层，独立于其他更加特别的应用。可以在高层通信协议和用于建立各种中间件服务的协议间做出区分。如认证协议可以为声称的身份提供证明，认证协议与任何特定的应用程序都没有紧密的联系，但是可以作为一种通用服务集成到中间件系统中；同样，允许通过验证的用户和进程对其拥有授权的资源进行访问的授权协议本质上也是通用的、与应用程序无关的；而规定在一组进程中，某种操作要么由全部进程共同完成、要么不执行的提交协议，也是广泛使用的；最后一个例子是关于分布式锁定协议的，该协议可以保护资源免受分布于多台机器上的一组进程的并发访问，同样该协议也可以用于实现通用中间件服务，但同时又是高度独立于任何特定应用程序的。<br />
+中间件通信协议支持高层通信服务，如进程以高度透明的方式调用远程机器上的过程的协议；同样也有用于对实时数据传输进行设定并使其保持同步的协议，这种实时数据传输是多媒体之类的应用程序所需要的；最后，某些中间件系统还提供了可靠的多播服务，该服务的规模可以达到遍及广域网上数以千计的接收方。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/Adjusted%20OSI%20model.PNG"
+alt="调整后的网络通信参考模型" /><br />
+采用这种方案进行分层可以形成一种改进的通信参考模型，如上图所示。与OSI模型相比，会话层和表示层由一个单一的中间件层代替，该层中包含有与应用程序无关的协议。这些协议不属于我们刚才讨论的低层。原来的传输服务可以作为一个中间件服务来提供，无需改动。这种方案与在传输层提供的UDP有异曲同工之处。同样，中间件通信服务中可以包含消息传递服务，这与由传输层提供的相似。</p>
+<h2 id="通信类型">通信类型</h2>
+<p>为理解中间件为应用程序提供的各种通信方式，可以把中间件视为客户-服务器计算的一种服务，如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/middleware%20as%20service%20by%20application.PNG"
+alt="在应用层通信中把中间件视为一种分布式服务" /><br />
+通信可以分为持久通信和瞬时通信。对于<strong>持久通信（persistent
+communication）</strong>，提交传输的消息一直由通信中间件存储，直到该消息被传送给接收方为止。在这种情况下，中间件将会在一个或多个存储设备中存储该消息。因此，对发送应用程序来说，在消息提交后，就没有必要持续运行了；同样，在消息提交之后，接收应用程序也没有必要持续运行。而对于<strong>瞬时通信（transient
+communication）</strong>，通信系统只有在发送和接收应用程序正在运行时才能存储消息。如果由于传输中断或者因为接收方当前不在活动状态，中间件就不能传递消息了，而是把它丢弃掉。<br />
+通信除了可以是持久或者瞬时之外，也还有同步或者异步的区别。<strong>异步通信（asynchronous
+communication）</strong>的特征是，发送方在提交要传输的消息后立即往下进行，这意味着消息在提交后立即由中间件（临时）存储起来；对于<strong>同步通信（synchronous
+communication）</strong>，发送方将被阻塞，直到知道其请求被接收以后。但同步通信发生时刻还有着细微区别，由以下三种：一种是，发送方可能被阻塞，直到中间件通知它请求传输已经完成；一种是，发送方为同步化，直到其请求被传送给目标接收方；最后一种是，通过让发送方一直等到其请求被完全处理，换句话说就是，直到接收方返回一个响应，就可以实现同步化。在实际应用中，最常见的是持久和提交请求时同步化的组合，对很多消息队列系统来说，这是一种常用方案；同样，瞬时通信与在请求完全处理后的同步化的组合使用也很广泛，这种方案与远程过程调用相符。<br />
+除了持久性和同步性外，还需要区分的是不连续和流通信。不连续通信是指各方以消息进行通信，每个消息组成一个完整的信息单元；流通信则可以一个接一个地发送多个消息，这些消息按照它们发送的顺序是相互有关联的，或者是一种临时关系。</p>
+<h1 id="远程过程调用">远程过程调用</h1>
+<p>许多分布式系统是基于进程间的显式消息交换的，然而消息的发送和接收过程无法隐藏通信的存在，而通信的隐藏对于在分布式系统中实现访问透明性是极为重要的。<br />
+远程方法过程调用（Remote Procedure Call,
+RPC）作为处理上述问题的一种通信处理方法，想法简单也十分精妙，成为了许多分布式系统的基础。RPC认为应该允许程序调用位于其他机器上的进程。当机器A上的进程调用机器B上的进程时，A上的调用进程被挂起，而B上的被调用进程开始执行。调用方可以通过使用参数将消息传送给被调用方，然后可以通过传回的结果得到消息。编程人员看不到任何消息传递过程。</p>
+<h2 id="基本的rpc操作">基本的RPC操作</h2>
+<p>本节先讨论常规的过程调用，然后解释如何把调用本身划分为分别在不同机器上执行的客户部分和服务器部分。</p>
+<h3 id="常规过程调用">常规过程调用</h3>
+<p>在常规过程调用中，有些问题需要注意。其中一个问题就是，参数传递可以采用<strong>传值调用（call-by-value）</strong>和<strong>引用调用（call-by-reference）</strong>。对于被调用过程而言，传值调用的参数（也称为数值参数）仅仅相当于已被初始化的局部变量，被调用过程可以按照对这种参数进行修改，但是所做的改动并不会影响到调用端该参数的值。而对于采用引用调用传递的参数（也被称为引用参数），传入的是指向变量的指针，如果被调用过程使用该参数并修改了其指向的内容，这就会导致其也修改了位于调用者过程中的变量内容。另外还有一种不太常见的机制，称为<strong>复制-还原调用（call-by-copy/restore）</strong>。该调用过程是：首先由调用方将变量复制到堆栈中，这一步与传值调用相同；随后在调用完毕之后，将堆栈中的变量复制回去，覆盖掉调用方中该变量原先的值。多数情况下，该调用的结果与引用调用相同，但某些情况下会导致不同的语义，如将同一个参数在参数列表中出现多次。</p>
+<h3 id="客户与服务器存根程序">客户与服务器存根程序</h3>
+<p>RPC背后隐含的思想就是尽量使得远程过程调用具有与本地调用相同的形式。也就是说，希望RPC是透明的，即调用过程不应该发现被调用的过程实际是在另一台机器上执行，反过来也一样。<br />
+假定程序需要从某个文件中读取数据，程序员在代码中执行<code>read</code>调用来取得数据。在传统系统中，<code>read</code>例程由链接器从库中提取出来，然后链接器再将它插入到目标程序中。<code>read</code>过程是一个短过程，一般通过执行一个等效的系统调用来实现。也就是说，<code>read</code>过程是一种位于用户代码与本地操作系统之间的接口。虽然<code>read</code>执行了代码调用，但它本身依然是通过将参数压入堆栈的常规方式调用的，这样程序员就不会知道<code>read</code>究竟干了什么。<br />
+而RPC通过类似的途径来获得了这种透明性。当<code>read</code>实际上是一个远程过程时（如在文件服务器所在机器上运行的过程），库中就放入<code>read</code>的另一个版本，被称为<strong>客户存根（client
+stub）</strong>。该版本过程与之前的“本地”<code>read</code>过程的调用次序相同；另一个相同点是都执行了本地操作系统调用。唯一的不同点是它不要求本地操作系统提供数据，而是将参数打包成一个消息，然后请求将此消息发送给服务器，如下图所示。在对<code>send</code>调用之后，客户存根调用<code>receive</code>过程，随即阻塞自己，直到收到响应消息。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/rpc%20in%20server%20-%20client.PNG"
+alt="客户与服务器之间的RPC原理" /><br />
+当消息送达服务器后，服务器上的操作系统将它传递给<strong>服务器存根（server
+stub）</strong>。服务器存根是客户存根在服务器端的等价物，它用来将网络输入的请求转换为本地过程调用。服务器存根一般先调用<code>receive</code>，然后被阻塞，等到消息输入。收到消息之后，服务器存根将参数由消息中提取出来，然后以常规方式调用服务器上的相应过程。从服务器的角度来看，过程就好像是由客户直接调用了一样：参数和返回地址都位于堆栈中。服务器执行所要求的操作，随后将得到的结果以常规的方式返回给调用方。调用完毕之后，服务器存根要将控制权交还给客户发出调用的过程，它将结果（缓冲区）打包成消息，随即调用<code>send</code>将结果返回给客户。此后，服务器存根一般会再次调用<code>receive</code>，等待下一个输入的请求。<br />
+客户机器接收到消息之后，客户操作系统会发现该消息属于某个客户进程（实际上该进程是客户存根，但操作系统无法对两者做出区分）。操作系统将消息复制到相应的缓冲区中，随后解除对该客户进程的阻塞。客户存根检查该消息，并将结果提取出来并复制给调用者，然后以通常的方式返回。当调用者在<code>read</code>调用进行完毕后重新获得控制权时，它所知道的唯一的事情就是已经得到了所要的数据，而并不知道实际操作是发生在本地还是远程。<br />
+整个方法的精妙之处在于客户可以简单的忽略不关心的内容。客户所涉及的操作只是通过执行普通的（本地）过程调用来访问远程服务，它并不需要直接调用<code>send</code>和<code>receive</code>。消息传递的所有细节都隐藏在双方的库过程中，就像传统库中隐藏了执行实际系统调用的细节一样。</p>
+<p>总的说来，远程过程调用包含下列步骤：</p>
+<ol type="1">
+<li>客户过程以正常的方式调用客户存根</li>
+<li>客户存根生成一个消息，然后调用本地操作系统</li>
+<li>客户端操作系统将消息发送给远程操作系统</li>
+<li>远程操作系统将消息发送给服务器存根</li>
+<li>服务器存根将参数提取出来，然后调用服务器</li>
+<li>服务器执行要求的操作，操作完成后将结果返回给服务器存根</li>
+<li>服务器存根将结果打包成一个消息，然后调用本地操作系统</li>
+<li>服务器操作系统将含有结果的消息发送回客户端操作系统</li>
+<li>客户端操作系统将消息交给客户存根</li>
+<li>客户存根将结果从消息中提取出来，返回给调用它的客户过程</li>
+</ol>
+<p>所有这些步骤的总效果就是，将客户过程对客户存根发出的本地调用转换成对服务器过程的本地调用，而客户和服务器都不会意识到有中间步骤的存在。</p>
+<h2 id="参数传递">参数传递</h2>
+<p>客户存根的功能是将得到的参数打包成消息，然后将消息发送给服务器存根。在本节，将讨论RPC系统中涉及的一些参数传递方面的问题。</p>
+<h3 id="传递值参数">传递值参数</h3>
+<p>把参数打包进入消息中的过程称为<strong>参数列集（parameter
+marshaling）</strong>。在进行RPC时，客户存根将调用者传入的参数放入到消息中，同时还在消息中添加要调用的过程的名称或者编号，这是为了在服务器支持多个不同调用的情况下指明要求执行的是哪一个调用。消息送达服务器后，服务器存根对该消息进行分析，以判明需要调用哪个过程，然后执行相应的调用。服务器运行完毕后，服务器存根重新取回控制权，并将服务器得到的结果打包成为消息送回给客户存根，客户存根随即将结果从消息中提取出来，把结果值返回给客户过程。<br />
+但在上述过程中，还需要注意不同系统下字符编码系统是否一致（如EBCDID字符码或ASCII字符码）、整型数表示方式（如以1的补码还是以2的补码）是否一致、字节排列次序（大端格式还是小端格式）是否相同等问题。</p>
+<h3 id="传递引用参数">传递引用参数</h3>
+<p>而较值参数更困难的问题是：指针（更广义的还包括引用）如何传递？<br />
+解决方案的一种是完全禁止使用指针和引用，但由于指针和引用是非常重要的，因此该解决方案极不可取。还有种方式是用复制-还原调用机制来代替引用调用，虽然不完全相同，但一般来说是行之有效的。如在上述<code>read</code>调用的例子中，假定客户存根知道第二个参数指向一个字符型数组，且知晓该数组的大小，就可以将该数组复制到消息中，发送给服务器。服务器存根随后使用指向数组的指针来调用服务器程序，服务器使用指针所作的改动直接影响了属于服务器存根的缓冲区。当服务器完成操作之后，服务器存根将原先的消息送回给客户存根，客户存根再将它复制回客户进程。<br />
+当然针对第二种方式，还有些优化策略：如果存根知道缓冲区对服务器来说是输入参数还是输出参数，就可以省略其中的一个复制步骤。如果数组对服务器而言是输入参数，就不需要将数组复制回客户存根；如果数组是输出参数，则客户存根最初发送的消息就不用加入该数组了。<br />
+但我们也要认识到，虽然目前提出了处理指向简单数组和结构的指针的办法，但是依旧没法处理一般意义上的指针，即指向任意数据结构。某些系统试图将指针直接传递给服务器存根，然后在该服务器过程中生成特殊代码以使用这种指针，如服务器可以向客户发回一个请求，要求提供引用的数据。</p>
+<h3 id="参数说明和存根生成">参数说明和存根生成</h3>
+<p>要隐藏对远程过程调用，必须使调用者和被调用者就互相交换的消息格式达成一致，并且在进行诸如传递复杂数据结构之类的操作时遵循相同步骤。换句话说，RPC的双方必须遵循相同的协议。<br />
+RPC协议需要对消息格式做出规定，还需要让客户和服务器就诸如整型、字符、布尔量等简单数据结构的表示方法达成一致。有了这些信息，就可以对消息进行明确的解释，而不会产生歧义。<br />
+在编码规则已经详尽到每一位之后，剩下的事情就是让调用者和被调用者就消息的实际交换达成一致。例如，可以决定采用诸如TCP/IP之类的面向连接的传输服务，也可以采用不可靠的数据报服务。如果是后者，还必须由客户和服务器自己实现一套错误控制方案，并将该方案作为RPC协议的一部分。<br />
+在完整地定义了RPC协议之后，需要实现客户存根和服务器存根。幸运的是，相同协议所使用的存根在用于不同的过程时，不同点仅仅在于面向应用程序的接口。接口由一组由服务器实现的可供客户调用的过程组成，可以用编写客户或者服务器的同一种编程语言来编写（虽然严格来说并不必要）。为了进一步简化，接口通常使用<strong>接口定义语言（Interface
+Definition Language,
+IDL）</strong>来说明。用IDL说明的接口可以与适当的编译时接口或者运行时接口一起编译到客户存根过程和服务器存根中。<br />
+在实践中发现使用接口定义语言可以显著简化基于RPC的客户-服务器应用程序。由于生成客户存根和服务器存根很容易，所有基于RPC的中间件系统都提供了IDL，以对应用程序开发提供支持。</p>
+<h2 id="异步rpc">异步RPC</h2>
+<p>与在常规过程调用中的情形一样，当客户调用远程过程时，客户会被阻塞，直到有应答返回为止。在没有结果要返回的情况下这种严格的请求-应答方式是不必要的，它只会导致客户过程向远程过程发出调用请求之后处于阻塞状态，从而无法进行本来能够进行的其他有用的工作。<br />
+为了支持以上的状况，RPC系统可以提供称为<strong>异步RPC（asynchronous
+RPC）</strong>的功能。在异步RPC中，服务器在接收到RPC请求后立即向客户送回应答，之后再调用客户请求的过程。应答的作用是向客户确认服务器已经准备开始处理该RPC请求。客户接收到服务器的确认消息之后，将不会阻塞，而是继续向下执行。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/server%20-%20client%20in%20rpc.PNG"
+alt="RPC中客户-服务器间的交互过程" /><br />
+如果在应答返回时客户还没有做好接收的准备，从而没有做出任何动作，在这种情况下异步RPC也有用处。如客户可能想取得一组主机的网络地址以便后续使用，当命名服务正在搜集这些地址的时候，客户可能想做其他事情。在这种情况下，通过两步异步RPC来进行客户与服务器间的通信就很有意义：客户首先对服务器进行调用，把要查询的主机名单交给服务器，并且客户在接收到服务器关于已收到主机名单的确认之前继续执行其他的程序；第二步调用是由服务器发出的，它对客户进行调用，将查询到的地址清单交给客户。两步异步RPC结合起来也被称为<strong>延迟的同步RPC（deferred
+synchronous RPC）</strong>。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/server%20-%20client%20in%20deferred%20synchronous%20rpc.PNG"
+alt="客户和服务器通过两个异步RPC进行交互" /><br />
+还存在其他一些异步RPC的形式。如在一种被称为<strong>单向RPC（one-way
+RPC）</strong>中，客户向服务器发送请求之后立即继续执行其他的程序，也就是说，客户不等待服务器返回接受请求的确认。它的问题在于，如果无法确保可靠性，客户就无法确定它发出的请求是否将得到处理。</p>
+<h1 id="面向消息的通信">面向消息的通信</h1>
+<p>远程过程调用和远程对象调用都有助于隐藏分布式系统中的通信，也就是说增强了访问透明性。但这两种机制并不总适用。特别是当无法保证发出请求时接收端一定正在执行的情况下，就必须有其他的通信服务。同时，RPC和RMI的同步特性造成客户在发出的请求得到处理之前被阻塞，因而有时也需要采用其他办法。<br />
+“其他办法”就是消息传递机制。在本节，将重点讨论分布式系统中面向消息的通信。首先详细讨论同步方式的本质及其含义；随后讨论在通信过程中参与通信的各方都处于执行状态的消息传递系统；最后分析消息队列系统，即使通信的另一方在通信开始时并为执行，该系统也能允许进程相互交换信息。</p>
+<h2 id="面向消息的瞬时通信">面向消息的瞬时通信</h2>
+<p>很多分布式系统和应用程序直接构建在由传输层提供的简单的面向消息模型之上。面向消息的系统是中间件解决方案的一部分，为更深入地理解和评价它，首先讨论通过传输层套接字进行的消息传递。</p>
+<h3 id="berkeley套接字">Berkeley套接字</h3>
+<p>传输层接口的标准化十分重要，它为程序员提供了一个简单的但可以使用传输层提供的全部（消息传递）协议的原语集合。同时，标准化的接口还使得不同机器之间的应用程序移植变得容易。<br />
+从概念上说，<strong>套接字（socket）</strong>是一种通信端点。如果应用程序要通过底层网络发送某些数据，可以把这些数据写入套接字，然后再从套接字读出数据。对应于每一种特定的传输协议，本地操作系统都要使用一个实际的通用端点，而套接字形成了位于实际通信端点之上的一个抽象层。在下文中，将重点讨论用于TCP协议的套接字原语，如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/atom%20of%20socket%20tcp_ip.PNG"
+alt="TCP/IP套接字原语" /><br />
+服务器一般执行前四个原语，而且按照图中所列顺序执行。调用套接字原语时，调用者创建一个新的通信端点，该端点是用于某种特定的传输协议的。从内部来说，创建一个通信端点意味着本地操作系统储备一定的资源，以供特定协议在发送及接收消息时存放消息使用。<code>bind</code>原语将本地地址与新创建的套接字相关联。如服务器应该将其所在机器的IP地址及一个可能是公开的端口号绑定到套接字上。所执行的绑定操作将告知操作系统，服务器希望只在指定的地址和端口上接收消息。<code>listen</code>原语只能在面向连接的通信中调用。这是一种非阻塞的调用，它允许本地的操作系统保留足够大小的缓冲区来存放用户希望接受的最大数目的连接。<code>accept</code>原语则会阻塞调用者，直到有连接请求达到为止。当请求到达时，本地操作系统将创建一个与原先的套接字属性相同的套接字，随后将新套接字返回给调用者。这种方法可以让服务器派生出新进程，由它来处理新连接的实际通信过程；在此期间服务器则返回到原来的状态，并等待原先套接字上新的连接请求。<br />
+再来看下客户端的情况。同样，首先必须使用<code>socket</code>原语创建一个套接字，但不必将套接字显式绑定到本地地址上，这是因为操作系统可以在连接建立的时候为其动态分配端口。<code>connect</code>原语要求其调用者指定一个传输层地址，以便将连接请求发送到该地址。调用<code>connect</code>后客户被阻塞，直至连接成功为止。随后双方使用<code>write</code>和<code>read</code>原语开始进行消息交换，其中<code>write</code>原语用来发送数据，而<code>read</code>原语用来接收数据。最后要关闭连接。使用套接字来关闭连接是一个对称的过程，只有客户和服务器都调用了<code>close</code>原语，连接才真正关闭。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/connection-oriented%20communcation%20by%20socket.PNG"
+alt="使用套接字的面向连接通信模式" /><br />
+上图总结了客户和服务器通过套接字进行面向连接通信的一般模式。</p>
+<h3 id="消息传递接口mpi">消息传递接口（MPI）</h3>
+<p>随着高性能多计算机系统的出现，开发人员开始寻求有助于更加方便地编写高效率应用程序的面向消息原语。这就要求原语应该提供一个位于适当层次上的抽象以简化应用程序开发，且实现这些原语所花费的开销要尽可能小。但由于两方面原因，套接字被认为不太满足要求：一是套接字所在的抽象层不对，它只提供了简单的<code>send</code>和<code>receive</code>原语；二是套接字被设计为利用通用的协议栈如TCP/IP进行网络通信，而并不适用于为高速互联网开发的专用协议，这些协议要求接口能够提供一些更为高级的特性，如不同的缓冲和同步方式。<br />
+<strong>消息传递接口（Message-Passing Interface,
+MPI）</strong>是为了并行应用程序设计的，因而是为瞬时通信量身定做的。它直接使用的是底层网络。同时它还假定诸如进程崩溃或网络分区之类的严重故障是致命的，因此不要求这些故障能够自动恢复。<br />
+MPI假定通信在一个已知进程组内发生。每个组都分配一个标识符，而组内的每一个进程也分配一个局部标识符。因此，一个（组标识符，进程标识符）对就可以唯一地确定消息的来源或者目的地，可以用来代替传输层地址。<br />
+MPI的核心是一些消息传递原语，最直观的如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/atom%20of%20mpi.PNG"
+alt="MPI中一些最直观的消息传递原语" /><br />
+MPI中的不同原语可以相互替换使用，而不影响程序的正确性。对于MPI为何支持如此之多的通信方式的官方解释是，这可以赋予程序员充分的机会来进行性能优化。</p>
+<h2 id="面向消息的持久通信">面向消息的持久通信</h2>
+<p>本小节将讨论一类重要的面向消息的中间件服务，一般被称为<strong>消息队列系统（message-queuing
+system）</strong>，或者<strong>面向消息的中间件（message-oriented
+middleware,
+MOM）</strong>。消息队列系统为持久异步通信提供多种支持。这类系统的本质是，提供消息的中介存储能力，这样就不需要消息发送方和接收方在消息传输过程中都保持激活状态。与上述的一个重要区别在于，消息队列系统的设计目标一般是支持那些时间要求较为宽松的消息传输，如那些要求几分钟完成的传输，而不适用于那些必须在几秒钟内甚至几微妙内完成的传输。</p>
+<h3 id="消息队列模型">消息队列模型</h3>
+<p>消息队列系统背后的基本思想是，应用程序可以通过在特定队列中插入消息来进行通信。消息由一系列通信服务器依次进行转发，最终送达目的地。即使在消息发送过程中接收方的机器未处于运行状态，消息也能送到。在实践中，多数通信服务器彼此直接相连，也就是说消息一般直接传递给目的服务器。原则上，每一个应用程序都拥有归其私有的消息队列，其他应用程序可以发送消息到该队列中。队列只能由相应的（也就是拥有该队列的应用程序）读取，但也可能有多个应用程序共享单个队列。<br />
+消息队列系统的重要特征之一是，通常只能确保发送方发出的消息最终能够插入到接收方的队列中，并不保证消息到达的时间，甚至不保证消息一定会得到读取，这完全由接收方来决定。<br />
+这些语义允许使用松散耦合的通信方式。因此在消息进入接收方的消息队列时，接收方不必处于运行状态。同样，当发送方所发送的消息被接收方从消息队列中取出的时候，发送方也不必处于运行状态。发送方和接收方可以彼此完全独立地运行。事实上，某个消息一旦进入到队列，就将一直保留到从队列中移除为止，而与其发送方或者接收方是否正在运行无关。根据发送方和接收方运行状态的不同，一共有四种组合，如下图所示。</p>
+<p><img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/four%20ways%20of%20client-server%20message-queue.PNG"
+alt="使用队列的松散耦合通信的四种组合方式" /><br />
+在上图(a)中，发送方和接收方在消息的整个传输过程中都是运行的。在图(b)中，只有发送方在运行，而接收方并不运行，也就是说，处于一种无法进行消息交付的状态，但是发送方仍然可以发送消息。在(c)中显示的是一种发送方没有运行而接收方在运行的状态。在这种情况下，接收方可以读出发送给它的消息。而在图(d)中，虽然发送方和接收方都不在运行，但是消息可以由系统存储（可能还进行了传输）。</p>
+<p>原则上，消息中可以包含任何数据。唯一重要的是，应该对消息进行正确的<strong>编址</strong>。在实践中，寻址是通过给出目的消息队列的名字来实现的，该名字在系统范围内是唯一的。在某些情况下，可能对消息的大小做出了限制，不过底层系统也可能会以一种对应用程序完全透明的方式来对较大消息的分段及重组进行管理。采用这种方法将会使得向应用程序提供的基本接口变得特别简单，如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/basic%20interfaces%20of%20message%20queue%20system.PNG"
+alt="消息队列系统队列的基本接口" /></p>
+<p>发送方调用<code>put</code>原语把要添加到某个指定队列中的消息传递给底层系统。这个调用是非阻塞的。而<code>get</code>原语是一个阻塞性调用，调用<code>get</code>原语，获得授权的进程将取出指定队列中等待最久的消息。只有在队列为空时，进程才会被阻塞。这个调用还有几种变体形式，使用这些变体形式可以在队列中搜索给定的消息，如可以根据给定的优先级或者某种匹配模式来搜索。<code>poll</code>原语是<code>get</code>原语的非阻塞性的变体形式，调用<code>poll</code>时，如果队列为空或者找不到指定的消息时，调用进程将会简单地直接继续运行。最后，多数消息队列系统也允许进程注册一个处理程序，称为<strong>回调函数（callback
+function）</strong>，在有消息进入队列时系统将自动调用该处理程序。回调还可以用于在没有进程运行的时候，自动启动一个进程以从队列中获取消息。这常常是在通过在接收方一端驻留一个<strong>守护程序（daemon）</strong>来实现，该程序对队列进行持续的监视，如果有消息进入就进行相应的处理。</p>
+<h3 id="消息队列系统的一般体系结构">消息队列系统的一般体系结构</h3>
+<p>本小节将详细讨论一般消息队列系统的外部特征。其隐含的第一项限制就是：消息只能够放入发送方的本地队列，也就是与发送方位于同一台机器上的队列，至少也应该是附近的机器（如同一个局域网下的机器）上的队列。这种队列被称为<strong>源队列（source
+queue）</strong>。同样，只能从本地队列中读出消息。然而，放入队列的消息中将会包含对其将要传输到的<strong>目标队列（destination
+queue）</strong>的说明。由消息队列系统负责向发送方和接收方提供队列，并对消息由源队列向目的队列传输过程进行管理。<br />
+在分布式系统中，很重要的一点是：全部队列的集合是分布在多台机器上的。因此，对于要传输消息的消息队列系统来说，它应该维护一个从队列到其所在网络位置之间的映射关系，这在实践中就意味着需要维护一个（也许是分布式的）数据库，其中存储到网络位置所对应的<strong>队列名（queue
+name）</strong>，如下图所示。也应该注意到，这种映射关系与在因特网上用来传输电子邮件的<strong>域名解析系统（domain
+name system,
+DNS）</strong>是完全类似的。如向逻辑邮件地址[<code>steen@cs.vu.nl](mailto:</code>steen@cs.vu.nl)`发送邮件，邮件系统将会请求DNS找到接收方的邮件服务器所在的网络地址（也就是IP地址），服务器用该地址来进行实际的消息传输。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/relation%20of%20addr-queue%20and%20addr-network.PNG"
+alt="队列级编址与网络级编址之间的关系" /></p>
+<p>队列由<strong>队列管理器（queue
+managers）</strong>来管理。一般来说，队列管理器与发送或者接收消息的应用程序直接交互。然而，也有一些特殊的队列管理器发挥了路由器或者中继器的作用：它们将输入的消息转发到其他的队列管理器。通过这种方式，消息队列系统可以主键演变成为完整的应用级<strong>覆盖网络（overlay
+network）</strong>，该覆盖网络位于原来的计算机网络之上。<br />
+由于多种原因，使用中继器可以带来便利性。比如说，在很多消息队列系统中，没有能对队列-位置映射进行动态维护的通用命名服务。而如果队列网络的拓扑是静态的，每个队列管理器就都需要维护一份队列-位置映射的副本。在大规模队列系统中这种方案很容易就会导致网络管理方面的问题。一种解决方案就是，使用若干了解网络拓扑的路由器。如果发送方A将目的地为B的消息放入其本地队列中，该消息将会首先传输到最近邻的路由器，在下图中就是R1。在这里，路由器R1知道如何将该消息往B的位置转发。比如说，R1可以从B的名字推断出应该将消息转发给路由器R2.采用这种方式，只有在路由器需要添加队列或者删除队列时进行更行操作，而其他队列管理器都需要知道最邻近的路由器所在位置即可。中继器一般有助于构建可扩展的消息队列系统。然而，显而易见的是，随着队列网络规模的迅速增长，如果还用人工来配置网络，网络很快就会变得难以管理。唯一的解决方法是采用动态路由。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/organzation%20of%20message-queue-system%20with%20routers.PNG"
+alt="含有路由器的消息队列系统的一般组织结构" /></p>
+<p>使用中继器的另一个原因是，中继器允许对消息进行二次处理。比如说，基于安全方面或者容错的考虑，可能要在日志中记录消息。甚至某些特殊形式的中继器发挥着网关的作用，将消息转换成接收方能够理解的格式。<br />
+最后，中继器也可以用于多播的目的。在这种情况下，输入的消息被简单地放入每一个发送队列中。</p>
+<h3 id="消息转换器">消息转换器</h3>
+<p>消息队列系统的重要应用领域之一就是将现有的应用程序与新应用程序一同集成进个单一的、结构紧密的分布式信息系统中去。要进行集成,就要求应用程序必须能够理解所接收到的消息,这实际上也就是要求发送方送出的消息所用的格式必须与接收方的消息格式相同。<br />
+这种方法存在的问题是,每一次在系统中添加需要不同消息格式的应用程序时,每个可能的接收方都必须进行改动,以便能够识别新的格式。<br />
+另一种方法是,各方达成一致,都采用一种公用的消息格式,就像传统网络协议那样。不幸的是,这种方法在消息队列系统中一般并不适用。问题在系统运行所在的抽象层次上。公用消息格式只在使用该格式的所有进程确实有足够的共同之处的情况下才有意义。如果组成分布式信息系统的应用程序间的差异非常大(这是常有的情况),那么即使最好的公用格式也只不过意味着一串字节序列。<br />
+虽然规定了少数供特定的应用程序域使用的公用消息格式,但是一般的方法还是倾向于提供几种共存的不同格式,并提供在各种格式之间尽可能简单地转换手段。在消息队列系统中,转换是由队列网络中特定结点完成的,这些结点称为<strong>消息转换器(
+message
+broker)</strong>。消息转换器在消息队列系统中扮演了应用层网关的角色,其<strong>主要目的</strong>在于将输入消息的格式转换为目的应用程序能够理解的格式。要注意,<em>对于消息队列系统来说,消息转换器也只不过是一个应用程序而已</em>,如下图所示。换句话说,一般不认为消息转换器是队列系统的一个主要部分。</p>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/organzation%20of%20message-broker%20in%20message-queue-system.PNG"
+alt="消息队列系统中消息转换器的一般结构" />
+<figcaption
+aria-hidden="true">消息队列系统中消息转换器的一般结构</figcaption>
+</figure>
+<p>消息转换器可以像一个消息格式重新编排工具一样简单。拥有更高级设置的消息转换器可以扮演应用层网关的角色,比如处理Ⅹ.400消息格式与因特网电子邮件格式之间的转换。在这种情况下,常常不能够保证输入消息中包含的所有信息都能够实际转换为输出消息中相对应的内容。<br />
+但更为常见的是为高级的全业应用集成( enterprise application
+integration,EAI)使用消息转换器,如之前所介绍的一样。在这种情况下,除了进行消息转换之外转换器还要根据正在交互的消息匹配应用程序。这种模型称为<strong>发布/订阅(publish/subscribe)</strong>,应用程序以发布的形式来发送消息。它们可能发布一个关于主题X的消息,然后发送给转换器。那些已经说明了它们对主题X的消息感兴趣的应用程序(也就是说,它们订购了这些消息)将接收来自转换器的这些消息。<br />
+消息转换器的核心是一个数据库,数据库中的规则规定了如何将格式为T1的消息转换为格式为T2的消息。问题在于如何定义这些规则。</p>
+<h3 id="消息队列系统说明">消息队列系统说明</h3>
+<p>在之前讨论中，可以看到消息队列系统与电子邮件服务十分类似。<br />
+电子邮件系统与消息队列系统相比较,特别之处在于<strong>前者的目的</strong>主要在于为最终用户提供直接支持。这就说明了为什么有多种群件应用程序是直接基于电子邮件系统的。另外,电子邮件系统可能有一些特殊的需求,例如,自动消息过滤、高级消息数据库支持(比如,为了更方便地取得先前存储的数据的需要)等。<br />
+<strong>普通消息队列系统的目标</strong>并不仅仅在于为最终用户提供支持。建立这样的系统要解决的重要问题是:要为进程间的持久通信提供支持,无论该进程是在运行用户程序,在处理对数据库的访问,还是在进行计算等,都必须能够支持其通信。这就导致消息队列系统的需求与纯粹的电子邮件系统不同。比如说,电子邮件系统一般不需要提供可靠的(有保证的)消息传递、消息的优先级、日志功能、高效的多播、负载平衡、容错性等。<br />
+因此,通用的消息队列系统的应用范围很广,包括电子邮件、工作流、组件以及批处理。然而,它最重要的应用领域是将一组数据库(也许分散在广阔区域)或者数据库应用程序集成进多个数据库(信息)系统中去。比如说,一个涉及若干个数据库的査询可能需要切分成为几个子查询,然后将这些子查询转发给相应的数据库。在这个过程中可以利用消息队列系统所提供的基本方法来将每个子查询打包进消息中去,然后将消息发送给相应的数据库。</p>
+<h1 id="面向流的通信">面向流的通信</h1>
+<p>到目前为止，所讨论的通信都是对某种程度上独立且完整的信息单元进行交换。如调用某个过程或者方法的请求、对这种请求的响应以及消息队列系统中应用程序间的消息交换都属于这种类型的通信。这种类型通信的典型特征是，它并不在乎通信究竟在哪个确切时间发生。虽然系统可能会运行得过快或过慢，但是同步对于通信的正确性没有影响。<br />
+而在某些形式的通信过程中，同步扮演了关键的角色。如采用16位样本序列表示的音频流，每一个样本通过PCM来表示声波的振幅。假设该音频流需要达到CD音质，则需要对原始声波进行频率为44100Hz的采样。为了复现原声，也要求音频流中的样本必须按照次序来播放，且播放的两个样本间的时间间隔必须严格为1/44100s。如果以别的速率来播放，就会造成播放的声音与原声不同。<br />
+本节即讨论分布式系统应该提供怎样的功能，来为时间敏感的消息交换（如音频流和视频流）提供支持。</p>
+<h2 id="为连续媒体提供支持">为连续媒体提供支持</h2>
+<p>为时间敏感的信息交换提供支持一般表示为<em>连续媒体</em>提供支持。在这里,<strong>媒体</strong>是指传送信息的手段,其中包括存储以及传输介质、如监视器之类的显示媒介等。媒体的重要类型是信息的表示方式,也就是信息在计算机系统中的编码方式。对于不同类型的信息要使用不同的表示形式。比如说,文本一般用
+ASCII或者
+Unicode来进行编码。图像可以采用GIF或者JPEG等格式来表示。而计算机系统中的音频流可以采用诸如PCM的16位样本来编码。<br />
+在<strong>连续(表示)媒体(continuous (representation)
+media)</strong>中,了解不同数据项之间<em>在时间上的联系</em>是正确解释数据含义的基础。我们已经给出过这样的例子:通过播放某个音频流以复现原来的声音。作为另一个例子,我们来考虑一下运动。运动可以通过一系列图像来表现,这些图像必须以相同的间隔时间T来连续显示,T一般为30~40ms。如果要正确地表现运动过程,不但要以正确的顺序显示图像,还要以恒定的显示速率—每秒1/T幅图像来显示。<br />
+与连续媒体相反,<strong>离散(表示)媒体(discrete (representation)
+media)</strong>的特征是:数据项之间的时间联系对于正确解释数据含义并不重要。离散媒体的典型例子包括文本、静态图像的表示,还有对象代码及可执行文件等。</p>
+<p>为了对时间敏感的信息进行交换,分布式系统一般都提供对数据流的支持。<strong>数据流(data
+stream)</strong>是数据单元的序列,可以应用于离散的媒体,也可以应用于连续媒体。比如说,UNIX中的管道或者TCP/IP连接就是面向字节的离散数据流的例子。而播放音频文件时般要求在文件与音频设备之间建立连续数据流<br />
+对于连续数据流来说,同步是极为关键的。为了捕捉同步状况,要对不同的传输模式做出区分。在<strong>异步传输模式(asynchronous
+transmission
+mode)</strong>下,流中的数据项是逐个传输的,但是对某一项在何时进行传输并没有进一步的限制。这是采用离散数据流时常见的情况。比如说,文件可以作为数据流来传输,但是每一数据项传输完成的确切时间通常是无关紧要的。在<strong>同步传输模式(
+synchronous transmission
+mode)</strong>下,数据流中每一个单元都定义了一个<em>端到端最大延迟时间</em>。数据单元的传输时间是否远远小于最大允许延迟并不重要。比如说,传感器以某个特定的采样率对温度值进行采样,然后将采样结果通过网络传给操作员。在这种情况下,很重要的一点是必须确保端到端的网络传输时间小于采样间隔时间,但是如果采样结果的传输速度大大超过所需的最低值是没有关系的。最后,还有一种<strong>等时传输模式(isochronous
+transmission
+mode)</strong>,在这种模式中数据单元必须按时传输,也就是数据传输的端到端延迟时间必须同时受到上限和下限的约束,端到端延迟时间上限和下限也称为<strong>边界延迟抖动</strong>。等时传输模式在表现视频和音频方面扮演了关键角色,因此它对分布式多媒体系统极为有用。在本节中,我们只考虑使用等时传输的连续数据流,简称为流。</p>
+<p>流可以很简单,也可以很复杂。一个简单流(simple
+stream)只包含有单个数据序列,而一个复杂流(complex
+stream)由若干相关的简单流—子流(substream)构成。复杂流中各子流之间的关系常常是时间敏感的。比如说,立体声音频可以使用包含两个子流的复杂流来传输,其中每个子流代表一个声道。然而,这两个子流必须是始终保持同步的,这一点很重要。换句话说,来自两个流的数据单元都必须成对传输,以确保产生立体声的效果。另一个复杂流的例子是关于影片传输的。这种流由单个视频流,以及两个用于以立体声方式传输电影中声音的音频流。第4个流用来传输字幕或者翻译成其他语言的文字。这里,各子流间的同步依然是重要的。如果无法做到同步,就无法完整地复现影片。</p>
+<p>从分布式系统的角度,可以区分支持流所需的各种元素。为简单起见,这里只关注<em>已存储数据与原始数据的流传输</em>。在后一种情况下,数据被实时捕捉并在网络上发送给接收方。这两种情况的主要差别是,原始数据的流传输留给调整流的机会少。我们可以为连续多媒体数据流描述一个一般的客户服务器体系结构,如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/client-server%20of%20multimedia-data%20stream%20transport.PNG"
+alt="用于已存储的多媒体数据的流传输的客户-服务器体系结构" /><br />
+这个体系结构揭示了很多需要处理的重要问题。首先,多媒体数据,尤其是视频和音频,需要充分压缩以便减少所需的存储空间,特别是网络容量。从通信的角度来看,更为重要的是控制传输的质量和同步化问题。我们将在后面讨论这个问题。</p>
+<h2 id="流与服务质量">流与服务质量</h2>
+<p>时间敏感的(以及其他非功能性的)需求一般统称为<strong>服务质量(quality
+of
+service,QoS)</strong>需求。这种需求描述了底层分布式系统及网络在确保传输质量方面的需要。连续数据的QoS主要关注时间、容量以及可靠性。在本节中我们将详细讨论QoS以及它与创建流之间<br />
+的关系。</p>
+<p>从应用程序的角度来看QoS需求，在很多情况下,可以简化为指定如下一些特性:</p>
+<ol type="1">
+<li>数据传输所要求的比特率。</li>
+<li>创建会话的最大延时(例如,应用程序何时可以开始发送数据)</li>
+<li>端到端的最大延时(例如,数据单元到达接收端花费多少时间)</li>
+<li>最大延时抖动。</li>
+<li>最大往返延时。</li>
+</ol>
+<p>注意,可以对这些特性进行很多的改进。但是,当处理基于因特网协议栈的面向流的通信时,我们必须接受这样一个事实:通信的基础是由一种非常简单且卓有成效的数据报服务IP形成的。现在,很多(尽管不是全部)支持面对流通信的分布式系统都是构建在因特网协议栈的上面。关于QoS说明就这么些(实际上,IP是提供了一些QoS支持,但很少被实现)。</p>
+<p>如果底层系统只提供传送服务,分布式系统就可以尽可能地隐藏掉服务质量的缺乏这里有多种机制可以部署。</p>
+<p>首先,情况并不像到目前为止所描述的那样糟糕。例如,因特网通过它的<strong>区分服务(differentiated
+services)</strong>,为不同类型的数据提供服务。发送主机可以把输出数据包标记为属于哪一类型,包括快速转发(expedited
+forwarding)类型。快速转发类型指定当前路由器应以绝对优先级来转发数据包。另外还有一种确保型服务(assured
+forwarding),其中的数据流量分为四种子类,如果网络发生拥塞,有三种方式来丢弃数据包。因此,确保型服务定义了各种优先级,这些优先级可以赋给数据包,从而允许应用程序把时间敏感的数据包与无关紧要的数据包区分开来。</p>
+<p>除了这些网络层面的解决办法,分布式系统还可以帮助接收方获得数据。尽管可用的工具并不多,但有一种特别有用,它<strong>使用缓冲区来减少抖动</strong>。其原理很简单,如下图所示。假设当数据包在网络上传输时有不同的延时,接收方先把它们存储在缓冲区中。这样,直到总是有足够的数据包进入缓冲区,接收方就可以以固定的速率把数据包传递给应用程序。但这种方案也有糟糕的情况，如图所示的第八个数据包。接收方缓冲区的大小对应于数据包传递给应用程序的9秒钟。但是,第八个数据包到达接收方花费了11秒钟,此时,缓冲区已完全空了。这就导致出现应用程序的<em>回放间隔</em>。唯一的解决办法是增加缓冲区的大小。但这个解决方案的又一明显缺陷就是,接收应用程序可以开始回放缓冲区中的数据包的延时同样增加了。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/ways%20to%20avoid%20vibration.PNG"
+alt="使用缓冲区来减少抖动" /><br />
+还可以使用其他技术。我们知道,底层的有效服务也可能丢失数据包。为了从服务质量上补偿这种丢失,需要应用纠错技术。通常,要求发送方重传丢失的数据包是不可能的,因此需要应用转发纠错(forward
+error
+correction)技术。一种著名的技术是以这样一种方式给输出数据包编码:n个中接收了k个数据包,就足以重构这k个数据包。</p>
+<p>这里可能出现的一个问题是,单个的数据包可能含有多个音频和视频帧。因此,当某个数据包丢失,接收方在播放帧时会发现一个较大的间隔。这种情况可以通过<strong>交错传输</strong>来避免,如下图所示。以这种方式,当某个数据包丢失时,在连续多个帧中导致的间隔分布较。但要注意的是,与非交错传输相比,这种方法要求有更大的接收缓冲区,因此使得接收应用程序的开始延时更高。例如,考虑图中情形,要播放前4帧,接收方需要等到4个数据包都已传送,而不是像非交错传输那样只需一个数据包。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/result%20of%20packet-losing.PNG"
+alt="数据包丢失的结果" /></p>
+<h2 id="流同步">流同步</h2>
+<p>多媒体系统中一个重要的问题是,不同的流(可能都是复杂流),可能要互相保持同步。流同步涉及的问题是要在流之间保持时间上的关联,流同步有两种类型。<br />
+最简单的一种同步是<strong>在离散数据流与连续数据流之间保持同步</strong>。我们来考虑一下Web上的带有音频的幻灯片放映。幻灯片以离散数据流的形式由服务器传输给客户,而同时客户要播放特定的(一部分)音频以配合当前放映的幻灯片,而音频也是从服务器取得的。在这种情况下,音频流必须与幻灯片的演示保持同步。<br />
+要求更加苛刻的一类同步是<strong>连续数据流之间的同步</strong>。日常生活中就有这方面的例子:放映影片时视频流必须与音频流保持同步,这常常称为<strong>口型同步</strong>。另一个例子是放送立体声。立体声音频流由两个子流组成,每个子流代表一个声道。要正确地表现立体声,就要求两个子流保持紧密的同步:只要子流间相差20S就足以导致立体声失真。</p>
+<p>同步是在建立<strong>流的数据单元</strong>这个层次上的。也就是说,只要让两个流的数据单元保持同步,就可以让两个流同步。对数据单元的选择高度依赖于看待数据流的抽象层次。让我们来更具体地考虑一下前面提过的CD音质的(单声道)音频流。在最适当的粒度上,这种流呈现为16位样本序列。如果采样频率为44100Hz,在理论上每约23ps就必须进行一次同步。实践证明,如果要达到高质量的立体声效果,这种级别的同步确实是必需的。</p>
+<p>现在的问题是,到底是如何做到同步的。需要先搞清楚两个问题:(1)流同步的两个基本机制;(2)在网络环境下这些机制的分布式版本。</p>
+<p>可以在不同的抽象层次上来观察同步机制。从最低的层次上看,同步是通过显式地对单个流的数据单元进行操纵来实现的,其原理如下图所示。在本质上,存在一个专门在少数几个简单流上执行读写操作的进程,该进程确保这些操作遵守指定的时间及同步约束条件。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/the%20principle%20of%20explicit%20synchronization%20on%20the%20level%20of%20the%20data%20unit.PNG"
+alt="在数据单元层次上进行显式同步的原理" /><br />
+例如,我们来考虑部用两个输入流来表示的影片。视频流中包含有未经压缩的低质量图像,分辨率为320×240像素,每个像素由一个字节表示,这样的图像中每个视频数据单元的大小为76800字节。假定图像要以30Hz的频率显示,那么每幅图像就要持续3ms。假定音频流包含的音频样本组成了大小为11760字节的单元,那么每个单元就相当于33ms的音频。如果输入进程的输入速率为2.5MB/s，只要每33ms读取一次图像并读取一次音频数据块就可以做到口型同步了。<br />
+这种方法的缺陷在于,完全由应用程序来负责实现同步,但它只有低层功能可用。更好的做法是,向应用程序提供接口,允许它更加方便地对流和设备进行控制。回到上一个例子,假定视频显示有一个控制接口,允许指定图像显示的速率。该接口还提供注册用户处理程序的功能,每当有k个新图像到达的时候该用户处理程序就被调用。音频设备也可以提供相似的接口。通过这些控制接口,应用程序开发人员可以编写出简单的监控程序,它由两个处理程序组成,每个处理程序负责处理一个流,并由两个处理程序相配合,共同检查视频流和音频流是否完全同步,并且在必要的时候调整视频或音频单元的显示或播放速率。如下图所示的例子对于许多多媒体中间件系统来说是很典型的。多媒体中间件提供了一组接口用于控制视频流和音频流,其中包括控制诸如显示器、照相机和麦克风等设备的接口。每个设备和每个流都有自己的高级接口,其中包括在发生某些事件时通知应用程序的接口,后者用来编写用于流同步的处理程序。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/the%20principle%20of%20synchronization%20on%20the%20level%20of%20the%20interfaces.PNG"
+alt="通过高级接口支持同步的原理" /></p>
+<p>需要注意的另一个问题是,同步机制的分布性。<br />
+首先,由请求同步的子流组成的复杂流的接收方需要了解同步究竟要达到哪些要求。也就是说,<strong>它必须使完整的同步说明(synchronization
+specification)在本地可用</strong>。在实践中一般是隐式地将不同流多路复用到包含所有数据单元(其中含用于同步的数据)的单个流中。但是MPEG流采用了另一种同步方案。活动图像专家组(motion
+picture experts group,
+MPEG)标准定义了一组用于视频及音频压缩的算法。现在已经有了若干种MPEG标准。比如MPEG-2,该标准原来是用来将广播级质量的视频压缩到4~6Mb/s。在MPEG2中,可以将数目不限的连续流和离散流合并到单个流中。每个输入流先转换成包的流,包中带有由基于90kHz的系统时钟给出的时间戳,这些包的流又被多路复用为一个节目流(program
+stream),节目流中的包长度是可变的,而这些包的共同点在于其带有相同的时基。在接收端需要对节目流进行多路分离,此时再一次利用包中的时间戳作为流间同步的基本机制。<br />
+另一个重要的问题是,<strong>应该选择在发送方还是接收方进行同步</strong>。如果由发送方来处理同步,就可以将许多流合并成单个流,并且使用另一种类型的数据单元。让我们来再次考虑一下前面例子。例子中,由两个各代表一个声道的子流构成了立体声音频流。一种可能采取的做法是将两个子流彼此独立地传输给接收方,由接收方进行两个流之间的同步。很明显,由于每个子流的延迟可能不同,要做到同步是非常困难的。更好的做法是在发送方将两个子流合并起来,得到的流中的数据单元是由成对的样本构成的,分别来自左右声道的两个样本组成一对,这样接收方只要读取数据单元并将它分离成左声道样本和右声道样本就行了,在这种情况下,两个声道的延迟相同。</p>
+<h1 id="多播通信">多播通信</h1>
+<p>在分布式系统通信中的一个重要主题是对多个接收方发送数据的支持,也称为<strong>多播通信</strong>。在很长一段时间里,这个主题属于网络协议的研究领域,其中已实现和发展了网络层和传输层解决办法的很多提议。在所有解决方法中,一个主要的问题是<em>为信息传播创建通信通路</em>。在实践中,这里包含了大量管理工作,在很大情况下需要人工干预。而且,只要无集中的提议,ISP是不愿意支持多播的。<br />
+随着点对点技术,尤其是结构化覆盖网络管理的出现,通信通路的创建更简单了。由于点对点解决方法通常是部署在应用层,因此已引入了多种应用层多播技术。在本节中将简要地介绍这些技术。<br />
+除了创建显式的通信通路,多播通信还可以以其他方法来完成。本节还将介绍基于gossip的信息传播,它提供了一种简单(但往往效率更低)的多播方法。</p>
+<h2 id="应用层多播">应用层多播</h2>
+<p>应用层多播的基本思想是<strong>结点组织成一个覆盖网络,然后用它来传播信息给其成员</strong>。其中一个重要的因素是,网络路器不在组成员中。因此,覆盖网络的结点之间的连接可以跨越多个物理链接,于是,与网络层路由的消息相比,覆盖网络之中的路由消息并不是最佳的。<br />
+一个关键的问题是覆盖网络的构建。这里主要有两种方法。第一种是,<strong>结点本身直接组织成树</strong>,这意味着每对结点之间只有唯一一条路径。另一种方法是,<strong>结点组织成一个网状网络</strong>,其中的每个结点都有多个邻点,而且一般情况下,每对结点中间有多条路径。这两种方法之间的主要区别是,<em>后者往往能提供更高的健壮性</em>:如果某个连接断开(例如某个结点失效),无需立即重组整个覆盖网络,仍然可以传播信息。</p>
+<p>为了使事情更加具体,我们来看看一个相对简单的方案,即在Chord中构建多播树。这种方案最初是为Scribe提出的,它是一种应用层多播方法,构建在Pastry之上。
+Pastry也是一种基于DHT的点对点系统。<br />
+假设某个结点要开始一个多播会话。它只需生成一个多播标识符(假设为mid),这只是一个随机选择的160位密钥。然后查找SUCC(mid),它负责该密钥的结点,把它提升为多播树的根结点,用来把数据发送给感兴趣的结点。为了加入该树,结点P只需运行LOOKUP(mid)操作,其结果是,含请求加入到多播组mid的查找消息将从P路由到SUCC(mid)。在成为根结点时,加入请求要通过多个结点。假设它首先到达结点Q。如果Q从没有见过加入到mid的请求,那么它将成为该多播组的一个<strong>转发器(forwarder)</strong>。此时,P成为了Q的一个孩子,且Q继续把加入请求转发到根结点。如果下一个结点(假设为R)仍不是转发器,它将成为一个转发器,记录Q为其孩子,并继续发送加入请求。另一方面,如果Q(或R)已经是mid的一个转发器,它仍会把前一个发送方(即分别为P或Q)记录为其孩子,但不再需要把加入请求发送给根结点,因为Q(或R)已经是多播树的成员了<br />
+按照定义,显式地请求加入到多播树的结点(如P)同时也是转发器。这种方案的结果是,我们在覆盖网络上构建了含两种类型的结点的多播树:一种是纯粹的转发器,起帮助作用;另一种是兼作转发器的结点,它含有加入树的显式请求。<br />
+至此,多播很简单:结点只是通过反复运行LOOKUP(mid)操作,把多播消息发送给树的根结点,这样,消息就可以沿着树被发送。注意,这里只是简要地描述了Scribe中的多播,并没有完全反映其原始设计思想。</p>
+<p><strong>覆盖网络的构建</strong><br />
+从上面简要的描述可以清楚地看出,一旦把结点组织成了一个覆盖网络,构建一棵树并不困难,但要构建一棵高效的树却并不简单。注意,在目前的介绍中,对参与树的结点的选择并没有考虑任何性能问题:它纯粹是基于通过覆盖网络的消息的(逻辑)路由。</p>
+<p>为了理解这个问题,来看看下图。该图显示了只有4个结点的小集合,它们组织成了一个简单的覆盖网络,其中结点A形成了多播树的根结点。穿越物理链接的代价如图所示。只要A多播一个消息给其他结点,可以看到,该消息将穿越每个链接〈B,Rb〉、〈Ra,Rb〉、〈Rc,Rd)和〈D,Rd〉两次。如果我们构建的不是从B到D而是从A到C的覆盖链接,那么该覆盖网络就更高效。如果要穿越〈Ra,Rb)和〈Rc,Rd〉链接,这种配置就可以节省一半。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/relation%20of%20overlay%20network%20links%20and%20network%20routers%20links.PNG"
+alt="覆盖网络的链接和实际网络层中路由器的链接之间的关系" /></p>
+<p>应用层多播树的质量通常以三种不同的尺度来度量:链接树、相对延时补偿和树成本。<br />
+<strong>链接树(link
+stree)</strong>定义每个链接,并计算数据包通过同一链接的次数。链接树比1大,是因为尽管从逻辑上来说,一个数据包可以沿两个不同的连接转发,但这些连接中的一部分实际上对应的是相同的物理链接,如上图所示。<strong>伸缩(stretch)</strong>或<strong>相对延时补偿(relative
+delay
+penalty,RDP)</strong>计算覆盖网络中两个结点之间的延时比,以及两个结点在底层网络中的延时。例如,在覆盖网络中,从B到C的消息经过路由器B→Rb→Ra→Rc→C,总成本为59个单位。但是,在底层网络中,消息可能按路径B→Rb→Rd→Rc→C路由,其总成本为47个单位,伸缩比为1.255。显然,在构建覆盖网络时,其目标是最小化这种总的伸缩比,或所有结点对的平均RDP。最后,<strong>树成本(tree
+cost)</strong>是一个全局尺度,往往与最小化总的链接代价有关。例如,如果某个链接的代价就是两个端结点之间延时,那么,优化树代价就相当于找到一棵最小生成树,其中,传播信息到所有结点的总时间最小。</p>
+<p>为了简化问题,假设一个多播组具有一个相关的已知结点,它负责跟踪加入到树的结点。当一个新结点发出一个加入请求时,它会与这个会合结点(rendezvous
+node)联系,以获得成员列表(可能是一部分)。其目的是选择可以作为该新结点的父亲的最好成员,它该选<br />
+择谁?这里有多种可选的不同建议,其解决方法也很不相同。</p>
+<p>例如,考虑只有一个源结点的多播组。在这种情况下,最好结点的选择是显而易见的:它应该就是源结点(因为在这种情况下可以保证伸缩比等于1)。但是,在这样做时,要引入一个星形拓扑,其中源结点位于中间。不难想象,源结点很容易过载。换句话说,结点的选择往往限制在这样一种方法:只能选择那些其邻点数不多于k个的结点,其中k为设计参数。这种限制使得树创建算法大大地复杂化了,一个好的解决方法可能要求已有树的一部分进行重构对这个问题的各种解决方法提供了一个扩展概述和评价。作为说明,让我们来仔细看看一个特殊的类型,称为<strong>交换树(switch-tree)</strong>。其基本思想很简单。假设我们已有一个多播树,其中唯一的一个源结点作为根。在该树中,结点P通过删除到当前父结点的链接,创建到另一个结点的链接,就可以交换其父结点。交换链接的唯一限制是,新的父结点永远也不可能是以P为根结点的子树的一个成员(因为如果是的话,就会分解这棵树,并生成一个循环),新的父结点也不能有太多的后继子结点。需要后者是为了减少任一结点转发消息的负载。<br />
+有不同的标准可用于决定交换父结点。简单的一种是优化到源的路由,当消息要多播时可以有效地最小化延时。每个结点有规律地接收其他结点的信息(后面将解释这样做的一种特定方法)。此时,结点根据从路由器到源的延时,可以评估另一个结点是否更适合作为其父结点,如果是,则开始交换父结点。另一种标准是,判断到其他潜在的父结点的延时是否比到当前父结点的更短。如果每个结点都以此为标准,那么理论上结果树的总延时为最小的。换句话说,这也就是前面已解释过的优化树成本的一个示例。但是,要构建这样的树需要更多的信息,但事实证明,这种简单的方案对构建近似的最小生成树很有启发性。</p>
+<p>这里还没有解决的一个重要问题是结点的失效。在交换树情况下,一个简单的解决方法是,只要某个结点知道其父结点失效了,那么它就以根结点作为其父结点。此时,就可以像正常情况一样进行优化处理,最终把该结点放置在多播树的恰当位置。</p>
+<h2 id="基于gossip的数据通信">基于gossip的数据通信</h2>
+<p>对传播信息来说,一种日益重要的技术是依靠感染行为(epidemic
+behavior)。研究人员观察了疾病是如何在人群中扩散的,于是进行了很长时间的调查,看看是否可以开发些简单的技术来在超大型分布式系统中进行信息扩散。这些感染协议(epidemic
+protocol)的<strong>主要目的</strong>是使用本地信息在大型结点集中快速地传播信息。<br />
+要解释这些算法的一般原理,我们假定特定数据项的更新都是从单个结点发起的。这些就可以避免写冲突。</p>
+<h3 id="信息传播模型">信息传播模型</h3>
+<p>正如其名所表示的那样,感染算法是基于流行病理论的。流行病研究的是传染病的传播的。在大型分布式系统中,要传播的不是疾病,而是信息。对分布式系统中有关传染病的研究的目标也是完全不同的:身体组织是尽最大努力防止传染病在大量人群中传播,而分布式系统的感染算法设计人员则试图<strong>尽可能快地用新信息“感染”所有结点</strong>。<br />
+借用来自传染病的术语,分布式系统的某个结点如果具有要传播到其他结点的数据,则称之为<strong>已感染的(infected)</strong>。还没有接收到数据的结点称为<strong>易受感染的(susceptible)</strong>。最后,不会传播其数据的已更新结点称为<strong>已隔离的(removed)</strong>。这里我们假定可以区分新旧数据,因为其数据可能已加时间戳或版本号了。<br />
+一种流行的传播模型是<code>anti-entropy</code>。在这种模型中,结点P随机选取另一结点Q,然后与Q交换更新信息。这里,交换更新信息的方法有如下三种:</p>
+<ol type="1">
+<li>P只是把它自己的更新信息发出给Q,即为基于”push”的方法;</li>
+<li>P只是从Q那里获得更新信息,即为基于”pull”的方法;</li>
+<li>P和Q相互发送更新信息给对方,即为基于”push-pull”的方法</li>
+</ol>
+<p>如果要快速传播更新信息,那么只是使用基于”push”的方法并不是一个好的选择。显然,这可以如下来理解。首先,注意到,在基于push的方法中,更新信息只能由已感染的结点来传播。但是,如果已感染的结点很多,那么每个结点选择一个易感染的结点的概率就相对小。同样,某个结点要长时间保持为易感染的机会也简单,因为它不会被已感染的结点选中。<br />
+相反,在基于push的方法中,如果易感染的结点很多,那么其工作得就更好。在这种情况下,传播更新信息基本上是由易感染的结点来触发的。此时,这种结点接触已感染的结点的机会也就大,从而可以从那里获得更新信息,并同样变成为已感染的结点。<br />
+这表明,如果只有一个结点是已感染的,使用<code>anti-entropy</code>模型的任意一种方法,更新信息都会通过所有结点迅速传播,但”push-pull”方法最好。在一段时间里,如果每个结点作为发起者与随机选择的另一个结点进行了至少一次更新信息交换,则定义为一轮(round)。可以证明,传播单个更新信息到所有结点需要<span
+class="math display">O(log(<em>N</em>))</span>轮,其中<span
+class="math display"><em>N</em></span>为系统的结点数。这的确表明,传播更新信息很快,而且是可扩展的。</p>
+<p>这种方法的一个特殊变体称为<strong>流言传播(rumor
+spreading)</strong>,或简称为<strong>gossiping</strong>。它的工作原理如下。如果结点P正好刚更新数据项x,那么它将与任意结点Q通信,并把更新信息发送给Q。但是,有可能Q被另外一个结点已更新了。在这种情况下,P可能不再传播<br />
+该更新信息的概率为1/k。换句话说,它变为了已隔离的。<br />
+gossiping完全类似于现实生活。当Bob有热点新闻要传播时,他可能打电话给他的朋友Alice。像Bob一样,Alce也可能告诉她的朋友。但是,当她给她的某个朋友(比如是Chuck)打电话时,
+Chuck可能会告诉她,他已经知道这个新闻了。Alice可能就不再打电话告诉其他朋友了,如果他们已经知道了,该如何是好呢？<br />
+事实证明,
+gossiping是快速传播新闻的很好方法。但是,<strong>它不能保证所有结点都真的已更新了</strong>。然而，仍旧需要特殊的方法来保证所有结点都被更新。将<code>anti-entropy</code>与<code>gossiping</code>组合起来是个成功的办法。</p>
+<p>感染算法的一大优点是其<strong>可扩展性</strong>,因为,与其他传播方法相比,在这种方法中,其进程间的同步数目相对要小。对广域系统来说,把实际的网络拓扑结构因素考虑进去可以获得更好的结果。在某些方法中,只与少量其他结点相连接的结点,其进行通信的概率相对高些。这里的一个基本假设是,这些结点构成了一个到网络的其他远程部分的桥,因此,它们可以很快地进行通信。这种方法又称为<strong>有向gossiping(directional
+gossiping)</strong>,可以衍生出不同的变体。<br />
+这个问题涉及到大多数感染解决方法所做的一个<strong>重要假设</strong>,即某个结点可以随机选取要通信的其他结点。这意味着,原则上,所有结点之间都是相连的。在大型系统中,这种假设是永远做不到的。幸运的是,实际上并不需要这样。正如之前所述,维护一个可持续更新的部分视图,就可以把结点集组织成一个随机图。通过定期地更新每个结点的部分视图,随机选择就不再是问题了。</p>
+<h3 id="删除数据">删除数据</h3>
+<p>感染算法特别擅长传播更新信息。但是,它们有一个很奇怪的副作用:传播数据项的删除很困难。这个问题的实质在于,数据项的删除破坏了该项的所有信息。因此,当某个数据项从结点删除时,该结点最终将接收该数据项的旧副本,并把这些看作是它以前从没有过的更新信息。<br />
+解决这个问题的技巧是把数据项的删除记录为另一次更新,并保持这个删除记录。这样,副本就不会被认为是新内容了,而只是看作为由删除操作已更新的版本。删除记录是通过传播<strong>死亡证书(death
+certificate)</strong>来完成的。<br />
+当然,死亡证书带来的问题是,最后必须清除掉它们,否则,每个结点都将逐渐构建一个巨大的本地数据库,其中存储的是已删除的数据项的历史信息。有学者建议使用休眠死亡证书。每个死亡证书在创建是加上时间戳。如果可以假定在已知的有限时间<br />
+里,更新信息可以传播给所有结点,那么在最大传播时间后,就可以删除死亡证书。但是,为了确保删除信息真的传播给了所有结点,只需很少的一些结点维护休眠死亡证书,永远别删除掉。假设结点P为数据项x维护了这样一个证书。如果x的一个废旧更新信息到达了结点P,那么P所要做的只是再次传播x的死亡证书即可。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/21/review/distributed-system/4-communication/" title="分布式系统 - 通信">https://wrran.github.io/blog/2017/12/21/review/distributed-system/4-communication/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/distributed-system/" rel="tag"># distributed system</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/21/people-say/muxin/" rel="prev" title="木心">
+                  <i class="fa fa-angle-left"></i> 木心
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/28/review/distributed-system/6-synchronization/" rel="next" title="分布式系统 - 同步化">
+                  分布式系统 - 同步化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

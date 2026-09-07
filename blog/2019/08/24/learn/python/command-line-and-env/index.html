@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="用着学，学着用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Command Line@python">
+<meta property="og:url" content="https://wrran.github.io/blog/2019/08/24/learn/python/command-line-and-env/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="用着学，学着用">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-08-24T10:54:54.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.707Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="WrRan, AI, NLP, software engineering">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2019/08/24/learn/python/command-line-and-env/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2019/08/24/learn/python/command-line-and-env/","path":"blog/2019/08/24/learn/python/command-line-and-env/","title":"Command Line@python"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Command Line@python | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#command-line"><span class="nav-text">Command Line</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#interface-options"><span class="nav-text">Interface options</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#generic-options"><span class="nav-text">Generic options</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#miscellaneous-options"><span class="nav-text">Miscellaneous options</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#options-you-shouldnt-use"><span class="nav-text">Options you shouldn’t use</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2019/08/24/learn/python/command-line-and-env/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Command Line@python | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Command Line@python
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-24 18:54:54" itemprop="dateCreated datePublished" datetime="2019-08-24T18:54:54+08:00">2019-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>用着学，学着用</p>
+</blockquote>
+<span id="more"></span>
+<p>The CPython interpreter scans the command line and the environment
+for various settings.</p>
+<p><strong>CPython implementation details</strong>: Other
+implementations’ command line schemes may differ.</p>
+<h1 id="command-line">Command Line</h1>
+<p>When invoking Python, you may specify any of these options:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python [-bBdEhiIOqsSuvVWx?] [-c <span class="built_in">command</span> | -m module-name | script | -] [args]</span><br></pre></td></tr></table></figure>
+<p>The most common use case is, of course, a simple invocation of a
+script:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python myscript.py</span><br></pre></td></tr></table></figure>
+<h1 id="interface-options">Interface options</h1>
+<p>The interpreter interface resembles that of the UNIX shell, but
+provides some additional methods of invocation:</p>
+<ul>
+<li>When called with standard input connected to a tty device, it
+prompts for commands and executes them until an EOF (an end-of file
+character, you can produce that with <code>Ctrl-D</code> on UNIX or
+<code>Ctrl-z, Enter</code> on Windows) is read.</li>
+<li>When called with a file name argument or with a file as standard
+input, it reads and executes a script form that file.</li>
+<li>When called with a firectory name argument, it reads and executes an
+appropriately named script from that directory.</li>
+<li>When called with <code>-c command</code>, it executes the Python
+statement(s) given as <code>command</code>. Here <code>command</code>
+may contain multiple statements separated by newlines. Leading
+whitespace is significant in Python statements!</li>
+<li>When called with <code>-m module-name</code>, the given module is
+located on the Python module path and executed as a script.</li>
+</ul>
+<p>In non-interactive mode, the entire input is parsed before it is
+executed.</p>
+<p>An intervace option terminates the list of options consumed by the
+interpreter, all consecutive arguments will end up in
+<code>sys.argv</code> - note that the first element, subscript zero, is
+a string reflecting the program’s source.</p>
+<p><code>-c &lt;command&gt;</code>: Execute the Python code in command.
+command can be one or more statements separated by newlines, with
+significant leading whitespace as in normal module code. NOTE If this
+option is given, the first element of <code>sys.argv</code> will be “-c”
+and the current directory will be added to the start of
+<code>sys.path</code> (allowing modules in that directory to be imported
+as top level modules).</p>
+<p><code>-m &lt;module-name&gt;</code>: Search sys.path for the named
+module and execute its contents as the <code>__main__</code> module. See
+also: <a
+target="_blank" rel="noopener" href="https://docs.python.org/3/using/cmdline.html#cmdoption-m">https://docs.python.org/3/using/cmdline.html#cmdoption-m</a></p>
+<p><code>-</code>: Read commands from standard input
+(<strong>sys.stdin</strong>). If standard input is a terminal,
+<code>-i</code> is implied. NOTE if this option is given, the first
+element of <code>sys.argv</code> will be “-“ and the current directory
+will be added to the start of <code>sys.path</code>.</p>
+<p><code>&lt;script&gt;</code>: Execute the Python code contained in
+script, which must be a filesystem path (absolute or relative) referring
+to either a Python file, a directory containing a
+<code>__main__.py</code> file, or a zipfile containing a
+<code>__main__.py</code> file.</p>
+<p>If no interface option is given, <code>-i</code> is implied,
+<code>sys.argv[0]</code> is an empty string (“”) and the current
+directory will be added to the start of <code>sys.path</code>. Also,
+tab-completion and history editing is automatically enabled, if
+available on your platform.</p>
+<h1 id="generic-options">Generic options</h1>
+<p><code>-?</code>/<code>-h</code>/<code>--help</code>: Print a short
+desciption of all command line options.<br />
+<code>-V</code>/<code>--version</code>: Print the Python version number
+and exit.</p>
+<h1 id="miscellaneous-options">Miscellaneous options</h1>
+<p><code>-b</code>: Issue a warning when comparing <code>bytes</code> or
+<code>bytearray</code> with <code>str</code> or <code>bytes</code> with
+<code>int</code>. Issue an error when the options is given twice
+(<code>-bb</code>).</p>
+<p><code>-B</code>: If given, Python won’t try to write
+<code>.pyc</code> files on the import of source modules.</p>
+<p><code>--check-hash-based-pycs</code>
+(<em>default</em>|<em>always</em>|<em>never</em>): Control the
+validation behavior of hash-based <strong>.pyc</strong> files. When set
+to <strong>default</strong>, checked and unchecked hash-based bytecode
+cache files are validated according to their default semantics. When set
+to <strong>always</strong>, all hased-based <em>.pyc</em> files, whether
+checked or unchecked, are validated against their corresponding source
+file. When set to <strong>never</strong>, hash-based <em>.pyc</em> files
+are not validated against their corresponding source files. Note the
+semantics of timestampe-based <em>.pyc</em> files are unaffected by this
+option.</p>
+<p><code>-d</code>: Turn on parser debugging output (for expert only,
+depending on compilation options).</p>
+<p><code>-E</code>: Ignore all <strong>PYTHON</strong>* enironment
+variables.</p>
+<p><code>-i</code>: When a script is passed as first argument or the
+<code>-c</code> option is used, enter interactive mode after executing
+the script or the command, even when <strong>sys.stdin</strong> does not
+appear to be a terminal. The <strong>PYTHONSTARTUP</strong> file is not
+read. NOTE this can be useful to inspect global variables or a stack
+trace when a script raises an exception.</p>
+<p><code>-I</code>: Run Python in isolated mode. This also implies
+<code>-E</code> and <code>-s</code>. In isolated mode
+<strong>sys.path</strong> contains neither the script’s directory nor
+the user’s site-packages directory. All <strong>PYTHON</strong>*
+environment variables are ignored, too. Further restrictions may be
+imposed to prevent the user from injecting mallicious code.</p>
+<p><code>-O</code>: Remove assert statements and any code conditional on
+the value of ****debug****. Augment the filename for compiled files by
+adding <em>.opt-1</em> before the <em>.pyc</em> extension.</p>
+<p><code>-OO</code>: Do <code>-O</code> and also discard docstrings.
+Augment the filename for compiled files by adding <em>.opt-2</em> before
+the <em>.pyc</em> extension.</p>
+<p><code>-q</code>: Don’t display the copyright and version messages
+even in interactive mode.</p>
+<p><code>-R</code>: Turn on hash randomization. This option only has an
+effect it the <strong>PYTHONHASHSEED</strong> environment variable is
+set to <em>0</em>, since hash randomization is enabled by default.</p>
+<p><code>-s</code>: Don’t add the <em>user site-packages directory</em>
+to <em>sys.path</em>.</p>
+<p><code>-S</code>: Disable the import of the module
+<strong>site</strong> and the site-dependent manipulations of
+<em>sys.path</em> that it entails. Also disable these manipulations if
+<strong>site</strong> is explicitly imported later (call site.main() if
+you want them to be triggered).</p>
+<p><code>-u</code>: Force the stdout and stderr streams to be
+unbuffered. This option has no effect on the stdin stream.</p>
+<p><code>-v</code>: Print a message each time a module is initialized,
+showing the place (filename or built-in module) from which it is loaded.
+WHen given twice (<code>-vv</code>), print a message for each file that
+is checked for when searching for a module. Also provides information on
+module clenup at exit.</p>
+<p><code>-W</code> (<em>arg</em>): Warning control. Details see also: <a
+target="_blank" rel="noopener" href="https://docs.python.org/3/using/cmdline.html#cmdoption-w">https://docs.python.org/3/using/cmdline.html#cmdoption-w</a></p>
+<p><code>-x</code>: Skip the first line of the source, allowing use of
+non-Unix forms of <code>#!cmd</code>. This is intended for a DOS
+specific hack only.</p>
+<p><code>-X</code>: Reserved for various implementation-specific
+options. See also: <a
+target="_blank" rel="noopener" href="https://docs.python.org/3/using/cmdline.html#id5">https://docs.python.org/3/using/cmdline.html#id5</a></p>
+<h1 id="options-you-shouldnt-use">Options you shouldn’t use</h1>
+<p><code>-J</code>: Reserved for use by Jython.</p>
+<h1 id="reference">Reference</h1>
+<p>官方文档：<a
+target="_blank" rel="noopener" href="https://docs.python.org/3/using/cmdline.html">https://docs.python.org/3/using/cmdline.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2019/08/24/learn/python/command-line-and-env/" title="Command Line@python">https://wrran.github.io/blog/2019/08/24/learn/python/command-line-and-env/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/23/learn/python/stdlib/argparse/add_argument/" rel="prev" title="The add_argument() method@argparse">
+                  <i class="fa fa-angle-left"></i> The add_argument() method@argparse
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/25/learn/pycharm/index/" rel="next" title="Step 0 - Before you start &lt; Quick Start Guide @ PyCharm">
+                  Step 0 - Before you start < Quick Start Guide @ PyCharm <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

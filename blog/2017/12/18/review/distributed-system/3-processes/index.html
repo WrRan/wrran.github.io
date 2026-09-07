@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统 - 进程">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/18/review/distributed-system/3-processes/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-18T09:05:16.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.780Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="distributed system">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/18/review/distributed-system/3-processes/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/18/review/distributed-system/3-processes/","path":"blog/2017/12/18/review/distributed-system/3-processes/","title":"分布式系统 - 进程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式系统 - 进程 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%AE%80%E4%BB%8B"><span class="nav-text">线程简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%BA%BF%E7%A8%8B%E7%94%A8%E6%B3%95"><span class="nav-text">非分布式系统中线程用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">线程的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B"><span class="nav-text">分布式系统中的线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A2%E6%88%B7"><span class="nav-text">多线程客户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">多线程服务器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="nav-text">虚拟化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%8C%96%E5%9C%A8%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">虚拟化在分布式系统中的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">虚拟机体系结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7"><span class="nav-text">客户</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E7%9A%84%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3"><span class="nav-text">网络连接的用户接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6%E4%B8%8E%E5%88%86%E5%B8%83%E9%80%8F%E6%98%8E%E6%80%A7"><span class="nav-text">客户端软件与分布透明性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="nav-text">常见的设计问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"><span class="nav-text">组织结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%9F%E7%9F%A5%E7%AB%AF%E5%8F%A3"><span class="nav-text">感知端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%B7%A5%E4%BD%9C"><span class="nav-text">中断工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E6%97%A0%E7%8A%B6%E6%80%81"><span class="nav-text">有无状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E7%BE%A4"><span class="nav-text">服务器集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%84%E7%BB%87"><span class="nav-text">常见的组织</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">分布式服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9B%86%E7%BE%A4"><span class="nav-text">管理服务器集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">通用方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%BF%81%E7%A7%BB"><span class="nav-text">代码迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%BF%81%E7%A7%BB%E6%96%B9%E6%A1%88"><span class="nav-text">代码迁移方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81%E8%BF%81%E7%A7%BB%E7%9A%84%E7%90%86%E7%94%B1"><span class="nav-text">进行代码迁移的理由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%BF%81%E7%A7%BB%E6%A8%A1%E5%9E%8B"><span class="nav-text">代码迁移模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E4%B8%8E%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90"><span class="nav-text">迁移与本地资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%9E%84%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E8%BF%81%E7%A7%BB"><span class="nav-text">异构系统中的代码迁移</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/18/review/distributed-system/3-processes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式系统 - 进程 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式系统 - 进程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-18 17:05:16" itemprop="dateCreated datePublished" datetime="2017-12-18T17:05:16+08:00">2017-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/distributed-system/" itemprop="url" rel="index"><span itemprop="name">distributed-system</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>三个臭皮匠赛过诸葛亮</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>进程的概念源自于操作系统，它被定义为执行中的程序。从操作系统的角度来说，进程管理和调度也许是它要处理的最重要的问题。但对于分布式系统来说，还存在许多同等甚至更加重要的问题。<br />
+如为了有效地组织客户-服务器系统，常常使用多线程技术更加方便。在分布式系统中，<strong>线程的主要作用</strong>是以适当的方式来构建客户和服务器，使得通信和本地处理过程可以并行进行，从而获得性能上的提高。<br />
+<strong>虚拟化</strong>也日益成为一个重要概念，它允许一个应用程序(可能连同操作系统在内的所有运行环境)并行地与其他程序一同运行，但高度独立于底层硬件和平台，从而达到高度的可移植性。另外，虚拟化也有利于隔离由错误和安全问题引起的系统失效。<br />
+进程在不同机器之间的迁移也是一个重要问题，对于广域分布式系统来说，这个问题就更为突出。进程的迁移(更明确地说是代码的迁移)有助于获得可扩展性，也可以帮助动态地配置客户和服务器。</p>
+<h1 id="线程">线程</h1>
+<p>虽然<strong>进程(process)</strong>构成了分布式系统中的基本组成单元，但实践表明操作系统提供的用于构建分布式系统的进程在粒度上还是太大了。而就粒度而言，将每个进程细分为若干控制<strong>线程(thread)</strong>的形式更为合适，可以使构建分布式应用程序变得更加方便，且获得更好的性能。</p>
+<h2 id="线程简介">线程简介</h2>
+<p>为了理解线程在分布式系统中的作用，之前需要了解进程是什么、以及进程与线程之间的关系。为了程序执行的需要，操作系统创建多个虚拟处理器，每个虚拟处理器运行一个程序。<strong>进程</strong>一般定义为执行中的程序，也即当前在操作系统的某个虚拟处理器上运行的一个程序。操作系统特别注意确保独立的进程不会有意或者无意地破坏其他独立进程运行的正确性。也就是说，多个进程并发地共享同一个CPU以及其他硬件资源，而这一事实是透明的。一般来说，操作系统需要硬件支持来实现这种隔离。<br />
+而为了得到这种并发透明性需要付出较高的代价。类似于进程的概念，一个线程独立地执行自己的程序代码。然而，线程与进程不同的是，它不再试图去取得高度的并发透明性，进而提升性能。因此，线程系统一般至维护用来让多个线程共享CPU所必须的最少量信息。具体而言，<strong>线程上下文(thread
+context)</strong>中一般只包含CPU上下文及其他的线程管理信息。如线程系统可能会记录线程正在某个互斥变量被阻塞的信息，以避免执行该线程。而其他与多线程管理不是完全必要的信息都将被忽略。由此也导致了应用程序开发人员需要自己负责在单个进程中防止数据遭到某个线程不合法的访问。<br />
+线程的这个理念有两层含义：首先，多线程应用程序的性能至少不会比其单线程版本差，事实上常常能提高性能；其次，由于应用程序人员需要自己负责防止非法访问，设计合理并实现简单的原则会大有益处。</p>
+<h3 id="非分布式系统中线程用法">非分布式系统中线程用法</h3>
+<p>多线程的最显著好处来自于这样一个事实：只拥有单线程的进程，一旦执行了造成阻塞的系统调用，整个进程都会被阻塞。<br />
+多线程的另一个优点是，在多处理器系统上执行多线程程序时，可以使用并行操作技术。在此情景下，每个线程占用一个CPU，而共享的数据则存储在共享主存中。如果设计得当，这种并行操作也可以是透明的：进程可以运行在单处理系统上，只是慢一些罢了。<br />
+多线程技术在大型应用程序上下文中也是很有用的。传统的大型应用程序多是作为一组相互协作的程序开发出来，其中每个程序都通过独立的进程来执行。如UNIX系统上的程序间协作就是通过进程间通信(IPC)实现的。但所有IPC机制都有一个主要缺陷，就是其中的通信需要开销庞大的上下文切换。而使用独立的线程也可以来执行不同的组成部分，进而构建出应用程序。各个组成部分之间的通信完全通过数据共享来处理。线程切换可以完全在用户空间中完成，也可以由内核来掌管线程并对它们进行调度。这样就可以极大的提升性能。<br />
+最后，使用线程还出于纯粹的软件工程上的考虑。有许多应用程序如果用一组相互协作的线程来构建，常常是比较简便的。</p>
+<h3 id="线程的实现">线程的实现</h3>
+<p>线程一般是以线程包的形式提供的。这种包中含有创建与销毁线程的操作，以及对诸如互斥变量及条件变量之类的同步化变量的操作。有两种实现线程包的基本方法：第一个方法是可以构造一个完全在用户模型下执行的线程库；另一种方法是由内核来掌管线程并进行调度。<br />
+采用用户级线程库有很多好处。首先，创建和销毁线程的开销很小。由于所有线程管理工作都保持在用户地址空间中进行，线程创建的开销主要取决于为线程堆栈的建立和分配内存的开销。同样，销毁线程的工作主要是释放线程堆栈所占用的内存，因为线程销毁后它将不会再使用这些内存。另外，用户级线程还可以通过为数不多的几条指令来实现线程上下文的切换。基本上，只需要存储CPU寄存器值就可。<br />
+然而，用户级线程的主要缺陷在于：对引起阻塞的系统调用的调用将会立即阻塞该线程所属的整个进程，也就阻塞了所属进程中的所有其他线程。如上例所述，如果要将大型应用程序分为若干部分来构建，所有部分在逻辑上可以同时执行，那么线程是非常有用的；但如果在执行I/O过程中发生的阻塞妨碍了其他部分的执行；此时的用户级线程对于应用程序来说就成了鸡肋。<br />
+上述问题都可以通过在操作系统的内核实现线程的方法来解决。但这种解决方案要求每个线程操作(创建、删除、同步化等)都必须由内核来执行，都需要系统的参与。而这也很可能意味着线程上下文切换的开销与进程上下文切换的开销一样大。结果用线程替代进程的优点也不复存在了。<br />
+一种可行的解决方案是采用用户级线程和内核级线程的混合形式，也被称为<strong>轻量级进程(Lightweight
+Process,
+LWP)</strong>。LWP运行在单个重量级进程的上下文中，每个进程可以包含多个LWP。除了LWP外，系统还提供用户级线程包，向应用程序提供了创建和销毁线程等普通操作。另外，包中还提供了用户线程同步的工具，如互斥变量和条件变量。值得注意的是，线程包是完全在用户空间中实现的，即执行这些线程操作并不需要内核的干预。<br />
+线程包可以由多个LWP共用，如下图所示。这也意味着每个LWP可以运行自己的用户级线程。建立多线程应用程序时首先要创建用户级线程，随后分配每个用户级线程到一个LWP。将线程分配到LWP的行为一般是隐式的，且向程序员隐藏。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/lightweight%20process.PNG"
+alt="将内核模式的轻量级进程与用户级线程结合使用" /><br />
+用户级线程和LWP多通过以下方式结合起来：<br />
+线程包中有一个用户调度线程的例程。在创建LWP(一般通过系统调用来创建)的时候，LWP得到自己的堆栈，并且执行调度例程，该调度例程会寻找下一个线程来执行。如果有多个LWP存在，每个LWP都会执行该调度里程。用来跟踪当前线程集的线程表是由各个LWP共享的。通过完全在用户空间中实现的互斥标识来对该表进行保护，以确保只能对它执行互斥访问。也就是说，各个LWP间的同步并不需要任何内核支持。如果LWP找到了一个可以运行的线程，它就将上下文切换到该线程。同时其他LWP也会寻找其他可运行的线程。如果线程由于互斥变量或者条件变量需要阻塞，它就会在完成必要的管理工作之后调用调度例程。如果找到另一个可以运行的线程，就会将上下文切换成该线程拥有的上下文。这种方法的优点在于：对于执行用户级线程的LWP来说，用户级线程上下文切换只是普通的程序代码，因为上下文切换完全在用户空间中实现。<br />
+现在考虑更为复杂的情形：线程进行系统阻塞的调用。在这种情况下，执行过程不再处于用户模式，而是转变到内核模式中，但仍然会在当前的LWP上下文中继续执行。在当前的LWP无法继续执行时，操作系统会将上下文切换到另一个LWP，这就意味着上下文重新切换回用户模式。被选中的LWP将会简单地从上一次停止的地方继续执行。<br />
+上述这种方式有许多优点。首先，线程创建、销毁及同步化工作的开销相对较小，并且根本不需要内核干预。其次，如果某个进程有足够数量的LWP，则阻塞的系统调用将不会导致整个进程被挂起。最后，通过在不同的CPU上执行不同的LWP，LWP可以在多处理器中方便地应用。拥有多个处理器这一事实也可以对应用程序完全隐藏。轻量级进程与用户级线程组合的唯一缺点是：必须进行LWP的创建和销毁工作，且这些工作的开销不比内核级线程的小。但是，值得庆幸的是，这种创建和销毁LWP的工作只是偶尔进行，且完全受操作系统的控制。<br />
+另一种可行的解决方案与LWP相似，就是<strong>调度例程激活(scheduler
+activation)</strong>。调度例程激活和LWP之间的本质区别在于：在调度例程激活中，当线程在系统调用中被阻塞时，内核对线程包进行<strong>上行调用(upcall)</strong>，调用调度例程来选择下一个可执行的线程来执行。当线程释放时，也进行相同的操作。但使用上行调用破坏了分层系统的结构，因而并不为人所待见。</p>
+<h2 id="分布式系统中的线程">分布式系统中的线程</h2>
+<p>线程提供了一种方便的方式允许使用会导致阻塞的系统调用而不阻塞该线程所属的整个进程。这种特性使得在分布式系统中使用线程变得特别有吸引力，因为利用它可以极为方便地将通信表述为同时维护多个逻辑连接的形式。</p>
+<h3 id="多线程客户">多线程客户</h3>
+<p>为了确立高度的分布透明性，在广域网上构建的分布式系统需要隐藏较长的进程间消息传播的时间。隐藏通信时间延迟的常规方法是启动通信后立即进行其他工作。<br />
+如Web浏览器一般在开始获取HTML页面后随机就显示它。为了尽量隐藏通信延时，某些浏览器在接收数据的过程中开始显示这些数据。从效果上看，就好像Web浏览器在同时进行多项任务一样。实践也表明，以多线程客户的模式来开发浏览器可以显著地使问题得到简化。只要取得了主HTML文件，就可以激活多个独立的线程，它们分别负责取得页面的各个部分。每个线程都与服务器建立一个独立连接以获取数据。只要假定进行导致阻塞的调用不会将整个进程吊起，与服务器建立连接和读取数据的过程就可以使用标准的(可能导致阻塞的)系统调用来编制。在可以同时打开多个连接的情况下，使用多线程的Web浏览器还有另一个明显的好处。在前述的例子中，建立了到同一个服务器的多个连接。然而在许多情况下，Web服务器会复制到多台机器上，每个服务器负责提供一组完全相同的Web文档。复制的服务器位于同一个站点，且名字是相同的。当对Web页的访问请求到来时，该请求被转发到其中的一个服务器，转发到哪一个服务器的决策通常是通过循环策略或者某些负载平衡技术做出的。同时，使用多线程客户与不同的服务器副本建立连接，也就可以并行地进行数据传输了，且确保整个Web文档完全显示出来所需的时间与使用无复制的服务器的情况相对要短得多。这种方案在客户真正能够处理输入数据的并行流时才能发挥作用，而使用线程也正是达到这个目的的理想方式。</p>
+<h3 id="多线程服务器">多线程服务器</h3>
+<p>在分布式系统中，多线程技术应用在服务器端的作用实质上更大。实践表明，多线程技术不仅能够显著简化服务器代码，还能够使得应用并行技术来开发高性能的服务器变得更加容易，即使在单处理器系统上也是如此。而且目前多处理器计算机广泛地用作通用工作站，所以多线程就更加有用了。<br />
+为了理解使用线程给编写服务器代码带来的好处，考虑一下文件服务器的组织结构，该文件服务器可能会偶尔由于等待磁盘操作而阻塞。文件服务器一般等到输入的文件请求，随后执行该请求，最后送回应答。其中一种特别流行的组织结构如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/multi-thread%20server.PNG"
+alt="以分发器/工作者模型组织起来的多线程服务器" /><br />
+图中有一个被称为<strong>分发器(dispatcher)</strong>的线程，由它来读取文件操作请求。客户发送请求到服务器的某个已知端点。在对请求进行检查后，服务器选择一个空闲的(也就是阻塞的)<strong>工作者线程(worker
+thread)</strong>，由它来处理该请求。工作者线程在本地文件系统上执行<em>阻塞</em>的<code>read</code>调用，执行该调用将会导致该线程被挂起直至数据从磁盘上读出为止。如果该线程被挂起了，就选择另一个线程接着执行。如可以选择执行分发起以完成更多工作，也可能选做另外一个准备就绪的工作者线程来运行。<br />
+现在考虑不使用多线程的情况下文件服务器的编写方式。一种可能是让文件服务器作为单个线程来工作。由文件服务器主循环程序来获得请求，检验该请求，随后执行该请求直至完成后，然后再接受另一个请求。在等待磁盘操作的时候，服务器是空闲的，但也不对其他请求进行处理，即来自其他客户的请求得不到处理。这样做的结果就是，服务器每秒能够处理的请求数目大大减少。而使用线程能够显著提升性能，且每个线程都是以通常的方式编写的。<br />
+除此之外，在无法使用多线程的情况下，第三种可行方法就是将服务器作为一个大的有限状态机来运行。当请求输入的时候，由唯一的线程对请求进行检查，如果可以利用缓存中的内容来满足请求当然好，如果缓存的内容无法满足就必须向磁盘发出消息，请求执行磁盘操作。然而，向磁盘发出消息之后线程并<em>不阻塞</em>，而是在状态表中记录下该请求的当前状态，随后接收下一个消息。下一个消息可能是一个开始新工作的请求，也可能会是磁盘对之前的操作请求所做的应答。如果是新工作请求，就进行该工作。如果是来自磁盘的应答，就从表中取出之前记录下的那个请求的有关信息，对应答进行处理并把结果发送给客户。如果采用这种方式，服务器必须使用<em>非阻塞性</em>的<code>send</code>和<code>receive</code>调用。在这种设计中，前两种方式的“顺序处理”模型不见了。对每一个发送和接收消息来说，计算状态都必须显式地保存下来，存储在表中。从效果上看，实质上是在以一种复杂的方式模拟线程及其堆栈。进程是作为有限状态机来运行的，它在接收到一个事件之后根据其内容来决定采取的操作。</p>
+<p>综上，多线程的作用已经很清楚了。多线程能够保留顺序处理的思路，使用阻塞性的系统调用，且仍然能够达到并行处理的目的。使用阻塞性系统调用能使编程更加容易，且并行处理能够提升性能。单线程服务器保留了使用阻塞性系统调用所带来的方便之处的话，就得放弃性能。而有限状态机的方法通过并行获得高性能，但由于使用非阻塞性系统调用，编程上较为困难。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多线程</td>
+<td>并行，使用会导致阻塞的系统调用</td>
+</tr>
+<tr>
+<td>单线程进程</td>
+<td>非并行，使用会导致阻塞的系统调用</td>
+</tr>
+<tr>
+<td>有限状态机</td>
+<td>并行，使用非阻塞系统调用</td>
+</tr>
+</tbody>
+</table>
+<h1 id="虚拟化">虚拟化</h1>
+<p>线程和进程提供了一种同时做多件事件的方式。从效果上看，它们可以用来构建看起来像同时执行的程序。在单处理器的计算机上，这种同时执行当然只是一种感觉。由于只有一个处理器，任一时间只能是某个线程或进程的一条指令在执行。通过在线程或进程之间的快速切换，给人的感觉是多个线程和进程在同时执行。<br />
+这种只有单个处理器但感觉由多个处理器机制可以扩展到其他资源，导致所谓的<strong>资源虚拟化(resource
+virtualization)</strong>。</p>
+<h2 id="虚拟化在分布式系统中的作用">虚拟化在分布式系统中的作用</h2>
+<p>如下图所示，基本上每个分布式计算系统都提供了一个给上层软件的接口层。这个接口层涵盖的范围多种多样，从处理器提供的基本指令集到很多中间件系统提供的巨大的应用程序接口集。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/organzation%20among%20program%20interface%20and%20system.PNG"
+alt="程序、接口与系统之间的组织结构" /><br />
+虚拟化<em>本质</em>上是扩展或替换一个现存接口来模拟另一个系统的行为。我们先来讨论下为什么虚拟化对分布式系统很重要。<br />
+虚拟化在上世纪七十年代提出的最重要原因就是让老的软件可以在新的昂贵的大型机上运行。随着硬件变得便宜，计算机功能更加强大，且操作系统种类变少，虚拟化也变得不那么重要。<br />
+然而从九十年代开始，下面几个原因促使事情又发生了变化：<br />
+第一，尽管硬件和底层系统软件变化得比较快，高层软件(比如中间件和应用软件)却稳定得多。也就是说，旧有软件的维护跟不上下层平台更新的步伐。通过移植旧有软件的底层接口到新平台，虚拟化可以帮助解决这个问题；另外，这也使得一大类的现有软件可以立刻在新平台上用。<br />
+第二，网络变得无处不在。在实践中，这种无所不在的网络互联使得系统管理员要维护很多不同的服务器。每台服务器运行不同的应用程序，可以被客户访问。同时多种资源应该很容易地被应用程序访问。虚拟化可以提供很大的帮助：通过让每个应用程序运行在自己的虚拟机上(可能包括运行在一个通用平台上的相关库和操作系统)，平台和机器的种类可以减少。</p>
+<p>后一种虚拟化提供了高度的移植性和灵活性，而正是这些移植性的好处使得虚拟化成为分布式系统的重要机制。</p>
+<h2 id="虚拟机体系结构">虚拟机体系结构</h2>
+<p>在实践中有很多种实现虚拟化的方法。为理解不同的虚拟化技术，首先要认识到计算机系统通常在四个不同层次上提供了四个不同的接口：</p>
+<ol type="1">
+<li>由<strong>机器指令</strong>组成，可由任何程序激起的硬件软件接口</li>
+<li>由机器指令组成，只能由特权程序(如操作系统)才可以激活的硬件软件接口</li>
+<li>由操作系统提供的<strong>系统调用(system
+call)</strong>组成的接口</li>
+<li>由库调用组成的接口，通常形成了所谓的<strong>应用程序编程接口(Application
+Programming Interface,
+API)</strong>。很多情况下前述的系统调用由API隐藏。</li>
+</ol>
+<p>下图显示了这些不同的接口层。虚拟化实质上就是模拟这些接口层的行为。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/some%20interface%20layers%20in%20compute%20system.PNG"
+alt="计算机系统多种接口" /></p>
+<p>虚拟化可采用两种方式。第一，可以构建一个运行时系统(runtime
+system)，实质上提供一套抽象指令集来执行程序。指令可以被翻译执行(如Java运行环境)，也可以仿真执行，如在Unix平台上运行Windows应用程序。在后一种情况下，仿真器必须模拟系统调用的行为，这种虚拟化被称为<strong>进程虚拟机(process
+virtual machine)</strong>，用以强调虚拟化实质上作用在单个进程上。<br />
+另一种虚拟化方式是提供一种系统。把它做成一层完全屏蔽硬件但提供一个同样指令集(或其他硬件)的接口。关键是这个接口可以同时提供给不同的程序。如此就可以由多个不同的操作系统独立并发地运行在同一个平台。这个层通常叫做<strong>虚拟机监视器(Virtual
+Machine Monitor,
+VMM)</strong>。这种方法的典型例子就是VMware和Xen。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/process%20virtual%20machine%20and%20virtual%20machine%20moniter.PNG"
+alt="进程虚拟机 及 虚拟机监视器" /></p>
+<p>值得注意的是，虚拟机监视器对分布式系统的可靠性和安全性起着越来越重要的作用。由于它们能分离一个应用程序和它的环境，由错误或安全攻击引起的失败不再会影响整个机器。而且如前所述，由于虚拟机监视器进一步分离了硬件和软件，允许一个完整环境从一台机器移植到另一台机器，移植性得到了很大改善。</p>
+<h1 id="客户">客户</h1>
+<p>这一节将更加细致地讨论客户。</p>
+<h2 id="网络连接的用户接口">网络连接的用户接口</h2>
+<p>客户机器的主要任务是让个人用户和远程服务器相交互。有两种方式支持这种交互。一是，对每种远程服务，客户机都有一个独立的部分来通过网络联系这种服务。在这种情况下，一个应用级别的协议就可以处理同步，如下图中左半部分所示。第二种方式是通过提供一个方便的用户接口来对远程服务器直接访问。从效果上看，客户机只是作为终端，不需要本地存储，就有了下图右半部分所示的不依赖应用程序的方案。如果是网络连接的用户接口，一切都在服务器处理的和存储。由于互联网的扩展和手持设备变得更加成熟，并且该种方案也简化了系统管理，这种<strong>瘦客户(thin
+client)</strong>的方法吸引更多的注意。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/organization%20of%20servers-clients.PNG"
+alt="网络连接的用户接口的不同解决方案" /></p>
+<h2 id="客户端软件与分布透明性">客户端软件与分布透明性</h2>
+<p>客户端软件不仅仅包含用户接口。在许多情况下，客户-服务器应用程序中的部分处理和数据级工作是在客户端执行的。<br />
+除了用户接口和其他应用相关软件之外，客户端软件中还包含用于获得分布式透明性的组件。理论上说，客户端不应该察觉到它与远程进程的通信。相反，对于服务器来说，出于性能和正确性方面的考虑，分布常常不那么透明。<br />
+<strong>访问透明性</strong>往往是由客户端存根处理的，该存根由服务器提供的接口定义生成。存根提供的接口与服务器所提供的相同，但前者隐藏了不同机器的体系结构上及实际通信上可能存在的差异。<br />
+<strong>定位透明性</strong>、<strong>迁移透明性</strong>及<strong>重定位透明性</strong>的处理则方式更多。关键是要使用一个便利的命名系统，这将在后续博客中予以说明。很多时候与客户端软件的协作也很重要，如假若客户已经绑定到服务器，改变服务器的位置时就可以直接通知它。这时可以由客户的中间件负责对用户隐藏服务器的当前位置，并且在必要的时候透明地重新绑定到服务器上。即使在最坏的情况下，也只不过是客户应用程序会察觉到暂时的性能下降而已。<br />
+<strong>复制透明性</strong>的解决方案与上述类似。假设我们现在面临的场景是一个带有副本服务器的分布式系统，可以通过将调用请求转发给每一个服务器的副本来达到复制透明性，如下图所示。客户代理将会透明地搜集所有对象的响应，并只向客户应用程序送回一个返回值。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch3/client%27s%20solution%20of%20replication.PNG"
+alt="使用客户端解决方案来透明地访问副本服务器" /><br />
+<strong>故障透明性</strong>往往是客户端软件需要考虑的最后一个透明性。对服务器通信故障的屏蔽一般是通过客户中间件完成的，比如说可以对客户中间件进行配置，使它不断尝试连接到某服务器，或者在进行几次尝试(并失败)后尝试连接到其他服务器。有时甚至可以让客户中间件返回它在前一次与该服务器的会话中缓存的内容。<br />
+<strong>并发透明性</strong>可以通过专门的中介服务器来实现，特别是可以由事务监视器来实现，而且需要客户软件的支持很少。同样，<strong>持久透明性</strong>一般完全由服务器来处理。</p>
+<h1 id="服务器">服务器</h1>
+<p>现在来详细讨论下服务器的组织结构。</p>
+<h2 id="常见的设计问题">常见的设计问题</h2>
+<p>服务器是实现特定服务的进程，这些服务是为一组客户提供的。本质上，每个服务器的组织方式都是一样的：等待来自客户的请求，随后负责处理该请求，最后等待下一个输入的请求。但具体到设计层面，可以分为<em>组织结构</em>、<em>感知端口</em>、<em>中断工作</em>及<em>有无状态</em>。</p>
+<h3 id="组织结构">组织结构</h3>
+<p>服务器有几种不同组织结构：<strong>迭代服务器(iterative
+server)</strong>自己处理请求，并且在必要的情况下将响应返回给发出请求的客户；<strong>并发服务器(concurrent
+server)</strong>并不自己处理请求，而是将请求传递给某个独立线程或者其他进程来处理，自身立即返回并等待下一个输入的请求。多线程服务器是并发服务器的一个特例。并发服务器的另一种实现形式，就是每收入一个输入请求都派生出一个新进程来对其进行处理。在许多UNIX系统中都采用了这种方法。在这种方法中，由处理请求的线程或者进程负责向发出该请求的客户返回响应。</p>
+<h3 id="感知端口">感知端口</h3>
+<p>另一个问题是客户联系服务器的地方。客户总是向服务器所在机器上的端点(end
+point)发送请求，端点也称为<strong>端口(port)</strong>。每个服务器都监听一个特定的端口。但客户如何感知到某个服务所对应的端口呢？<br />
+一种方法是为已知的服务分配一个统一的端口。这些端口由因特网号码分配管理局(IANA)来组织分配。由于已分配的端口是已知的，客户只需要找出运行服务器的机器的网络地址即可。<br />
+而针对那些并不需要预先分配好端口的服务而言，客户首先必须查询到该端口号。一种解决方式是在运行服务器的每台机器上都运行一个特殊的守护进程，该进程负责跟踪位于同一台机器上的服务器实现的每一项服务所使用的当前端点。另外守护进程还监听一个已知的端口。客户通过该端口与该进程进行联系，请求得到指定服务器的端口后，再与该服务器进行联系。<br />
+但如果每一项服务都由单独的服务器来实现，无疑是对资源的一种浪费，因为这些服务器大多都被动等待客户端的请求输入。与其对这么多被动进程进行跟踪，不如由一个<strong>超级服务器(superserver)</strong>来负责监听所有与这些服务关联的端口更有效率。当超级服务器收到请求时，它会派生出一个进程以对该请求进行进一步处理，这个派生出的进程会在处理完毕后自动退出运行。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch3/howto-bing%20client-server.PNG"
+alt="绑定客户-服务器的不同方式" /></p>
+<h3 id="中断工作">中断工作</h3>
+<p>在设计服务器时还需要考虑，是否可以以及怎样中断服务器的工作。比如，在FTP服务中，如果用户上传了一个庞大的文件，但突然意识到选错了文件，想要终端服务器程序，取消数据传输。针对这个问题，有以下几种方法可以做到这一点。<br />
+第一种在当前的因特网环境下工作得非常好(有时这是唯一的可选方法)，那就是让用户立即强行退出客户应用程序，这就自动中断与服务器之间的连接。服务器也将断开客户应用程序原来的连接，并且认为客户端发生了崩溃。第二种处理这类通信中断的方法就是在开发客户程序和服务器程序的时候考虑到对<strong>带外(out-of-band)</strong>数据发送的支持。带外数据是服务器在处理客户发送的其他所有数据之前必须处理的数据。这又可以分为两个具体的解决方案，一种是让客户将带外数据发送到一个另外的控制端口，服务器监听该端口，同时以较低的优先级监听常规数据传输的端口。另一种方式是通过发送原始请求所使用的连接来发送带外数据.如在TCP中,传输紧急数据是可能的.当服务器接收到紧急数据时，服务器就被中断，随后服务器可以检查紧急数据并且根据数据类型来决定采取何种处理方式。</p>
+<h3 id="有无状态">有无状态</h3>
+<p>最后一个设计上的问题就是服务器是否是<strong>状态无关的(stateless)</strong>。状态无关服务器不保存其客户的状态信息，而且也不将自身的状态变化告知任何客户。如Web服务器就是状态无关的。值得注意的是在很多状态无关的设计中，服务器实际是维护客户信息的，但重要的是即使这些信息丢失，也不会打断所提供的服务。如Web服务器常会记录下所有的客户请求，这对于决定是否应该复制某些文档，和应该复制到哪儿是很有用处的。显然，若日志丢失，顶多服务器的性能会受到影响，而不会有别的什么。另外一种特别的状态无关设计就是服务器维护一种叫<strong>软状态(soft
+state)</strong>的信息。这种信息，服务器会维持客户状态，但仅维持一小段时间；时间到期后就删除相关客户信息，恢复到无状态行为。<br />
+相反，<strong>状态相关服务器(stateful
+server)</strong>一直保存客户端的信息直到显式地删除。而这种服务器的典型例子就是文件服务器，它让客户保留文件的本地副本，甚至进行更新操作。文件服务器维护一张表，表中条目是客户-文件对，服务器可以利用该表格来跟踪目前哪些客户拥有对哪些文件的更新许可，并且跟踪哪里的文件的版本是最新的。<br />
+状态相关设计的一个<em>重要好处</em>就是相对于状态无关服务器的性能提升。然而，维护服务器状态也会带来相关的主要缺陷：一般来说，状态相关服务器必须将自身的整个状态都恢复到崩溃之前，而建立恢复机制将引入相当大的复杂性；如果采用状态无关设计，就不需要采取任何特殊措施来使崩溃的服务器恢复，只要简单地重新启动运行服务器，然后继续等待客户请求达到就行了。<br />
+也有学者认为应当区分临时的<strong>会话(session)状态</strong>和永久状态。上面的文件服务器就是典型的会话状态：此状态和一单个用户的一系列操作相联系，因此应该仅仅维持一小段时间，而不是长久。在涉及三方的客户-服务器结构中，会话状态通常被维持。在对请求客户做出响应前，应用程序服务器需要通过一系列查询来存取数据库服务器。在这个结构中，如果客户能重新发出原来的请求，则即使会话状态丢失，也不会有实际损害。因此可以用更加简单和更加不可靠的状态记录。而永久状态记录的通常是数据库中维护的信息，如客户信息等。然而，对大多数维护会话状态意味着状态相关设计，当系统失败时要求特殊措施，需要显式地假设服务器会长时间保持状态。</p>
+<p>在设计服务器时，无论选择采取状态无关还是状态相关的设计都不应该对服务器所提供的服务造成影响。如：如果在读取文件或者写入文件之前必须打开该文件，那么状态无关服务器就必须用这样或那样的方法模拟这一打开文件的行为。通常的解决方法是，服务器响应对文件的读写请求时首先打开指定的文件，然后再执行实际的读写操作，最后立即关闭该文件。在某些情况下，服务器需要保留客户的活动记录，以便更加有效地响应客户的请求。如在Web服务器中有时可以立即将客户引导到该客户最常浏览的页面。只有在服务器拥有关于该客户的历史信息的情况下，这种方法才能实施。如果服务器不能维持状态，一种常用的方法是让客户在发送请求的同时发送关于前一次访问的额外信息。如在Web中，这种信息常常由客户端浏览器透明地存储在cookie中。</p>
+<h2 id="服务器集群">服务器集群</h2>
+<p><strong>集群计算(cluster
+computing)</strong>也是一种分布式系统，我们现在来仔细考察一下服务器集群的组织及由它带来的设计问题。</p>
+<h3 id="常见的组织">常见的组织</h3>
+<p>简单说，服务器集群只是一组经网络连接的机器，每台机器运行一个或多个服务器。我们此处讨论的服务器集群是特指经局域网连接的机器，能够提供高带宽和低延迟。<br />
+多数情况下，服务器集群逻辑上由三层(tier)组成，如下图所示。第一层是一个逻辑上的交换机，由它分配客户请求给服务器。交换机在功能上可变化很多。如传输层交换机接收TCP连接请求，再转发给集群中的某个服务器。而Web服务器与之完全不同，它接收HTTP请求，但只转发一部分给应用服务器作继续处理，然后收集结果并返回HTTP响应。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch3/three-tiers%20cluster%20computing.PNG"
+alt="三层服务器集群通常的结构" /><br />
+就如所有的<strong>多层(multtiered)</strong>客户-服务器体系结构一样，很多服务器集群也包含了专用于应用处理的服务器。在集群计算中，这通常是运行在高性能硬件上专用于提供计算能力的服务器。然而，在企业服务器集群中，应用程序可能只需要运行在相对低端的机器上，因为此时的瓶颈不是计算能力而是数据存取。这就出现了第三层，它由数据处理服务器组成，即文件和数据库服务器。按照服务器集群的使用目的，这些服务器可能运行在配置作为高速磁盘存取和拥有很大数据缓存的专用机器上。当然，并不是所有服务器集群都遵循这种严格的区分。常常是每台机器都有自己的本地存储，把应用和数据处理集成在单个服务器中，导致一种两层体系结构。如：当通过服务器集群处理流媒体时，通常采用两层体系结构，每台机器作为专用的媒体服务器。<br />
+在服务器集群提供很多服务情况下，不同机器可能运行不同的应用服务器。因此，交换机必须能够区分请求的服务，否则它不能正确地转发请求给适当的机器。很多第二层机器仅运行单个应用程序。这种限制可能来自于对适用的软件和硬件的依赖，也可能是由于不同的应用程序由不同的管理员来管理。因此，这就有可能出现某些服务器暂时空闲，但其他机器却收到了<strong>过载(overload)</strong>的请求。这种情况下暂时迁移服务到空闲机器会管用。<br />
+现在再来仔细讨论下由交换机组成的第一层。一个重要的服务器集群设计目标是隐藏有多个服务器的事实。也就是说，运行在远程机器上的客户应用程序不应该需要知道集群的内部组织结构。这种存取透明性通过单个访问点来实现，由某种硬件交换机实现，如一台专用机。交换机形成了集群入口，提供唯一的网络地址。为了可扩展性和可用性，服务器集群可能有多个访问点，每个访问点由一个独立的专用机器实现。但我们此处仅考虑单访问点的情况。<br />
+一种标准的存取服务器集群的方式是建立一个TCP连接，在这之上应用级别的请求可作为一个会话的一部分来发送。通过撤销连接可以结束会话。在传输层交换机的情况下，交换机接收到来的TCP连接请求，转发这些请求给一台服务器。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch3/tcp%20transfer.PNG"
+alt="TCP转发的原理" /><br />
+当交换机收到一个TCP连接请求时，它随机找到处理该请求的最佳服务器，并转发该请求包给这个服务器。服务器反过来发送一个应答给请求的客户，但把交换机的IP地址插入到承载TCP数据段的IP包头的源地址域。注意，为了让客户继续执行TCP协议，这种欺骗是必需的，因为客户在期望交换机的应答，而不是以前从未听说过的某个服务器。显然，实现TCP转发需要<em>操作系统级别</em>的修改。</p>
+<p>我们也可以看到，交换机对在多个服务器之间分配负荷能起到重要作用。通过决定往哪儿转发请求，交换机也决定了哪个服务器来对请求作进一步处理。交换机可以用的最简单的负载平衡策略就是<strong>轮转法(round
+robin)</strong>：每次都从列表中选出下一个服务器然后转发请求给它。也可以用更高级的服务器选择策略。假设集群提供多个服务，如果当请求到来时交换机能区分它们要求的服务，则交换机有更多的信息来决定往哪儿转发请求；如果服务可以通过端口来区分，则这种服务器选择就是发生在传输层。再进一步的是让交换机实际检查到来请求的负载，只有在知道负载的结构时才可用这种方法。如在Web服务器的情况下，交换机期待HTTP请求，基于这个请求的信息来决定谁来处理它。除此之外，基于Web的系统还有<strong>内容感知的请求分布(content-aware
+request distribution)</strong>。</p>
+<h3 id="分布式服务器">分布式服务器</h3>
+<p>到现在为止，讨论的服务器集群通常都是相当静态地配置的。在这些集群中，通常有一个独立的管理机器用来跟踪可用的服务器，并适当地传递这些信息给别的机器，如交换机。如上所述，我们提到的绝大多数服务器集群提供单个访问点。当这个访问点失效时，无法使用集群。为了消除掉这个隐患，可以提供几个访问点，公开它们的地址。如域名解析系统能返回几个地址，所有的都对应于同一个主机名。如果其中一个地址失效，这种方法还会要求客户重试几次。但它也没有解决要求静态访问点的问题。<br />
+无论从用户还是服务器的观点来说，稳定性，如长期有效的访问点，都是一个所希望的特性。从另一方面来说，我们也希望在配置服务器集群(包括交换机)时有高度的灵活性。这导致了一种分布式服务器的设计。分布式服务器只是指可动态变化的一个机器群，它的访问点也可以变化，但对外却表现为一台强有力的单台机器。<br />
+分布式服务器的<strong>基本思想</strong>是客户从一个可靠的、高性能的、稳定的服务器受益。通过透明地组合简单的机器成为一个集群并且不依赖单台机器的可用性，有可能达到比单个高性能服务器更好的稳定性。如这样一个集群可以从用户机器上动态地配置，就像在合作的分布式系统中那样。<br />
+现在集中考虑如何在这样一个系统中实现一个稳定访问点。其主要的思想是利用可用的网络服务，如IP版本6的移动支持(MIPv6)。在MIPv6中，一个移动结点假设有一个<strong>宿主网络(home
+network)</strong>，通常呆在这个网络中并有稳定的地址，称为<strong>宿主地址(home
+address)</strong>。宿主网络有一特别的路由器，称为<strong>宿主代理(home
+agent)</strong>。当移动结点不在时，它将会处理送给移动结点的<strong>网络包(traffic)</strong>。当移动结点附着到一个外部网络时，它会收到一个临时<strong>需要的地址(care
+of address,
+CoA)</strong>，其他结点可以发送网络包给这个地址。这个临时地址通告给宿主代理，它随后就会转发送给移动结点的网络包到这个临时地址。注意，与移动结点通信的应用程序只会看到移动结点在宿主网络中的地址，而看不到那个临时地址。<br />
+这个原理可用来为分布式服务器提供稳定的地址。在这种情况下，给集群分配一个唯一的联系地址。联系地址是服务器生命周期内和外界通信的地址。任何时候分布式服务器都有一个结点作为联系地址的访问点，这个角色可以容易地被另一个结点取代。访问点在分布式服务器所在网络的宿主代理注册自己的地址为临时地址。这时所有的网络包都会导向访问点，它然后分配请求给当前参与分布式服务器的结点。若访问点失效，一个简单容错机制启动，另一个访问点会被选出并注册为一个新的临时地址。<br />
+这种简单的配置会使宿主代理和访问点成为潜在的瓶颈，因为所有的网络流量都要流经这两台机器。这种情形可以用MIPv6的一个称为<strong>路径优化(route
+optimization)</strong>的特性来避免。其如下工作：每当一个移动结点(宿主地址HA)注册为它的当前临时地址，记作CA，宿主代理能转发CA给客户。后者将会把(HA，CA)对存储在本地。从那时起，通信将直接送给CA。尽管客户端的应用程序还要使用宿主地址，MIPv6的底层支持软件会把这个地址翻译为CA，然后实际通信都用CA。<br />
+路径优化可以用来使不同的客户认为它们在和同一个服务器通信，而实际上这些客户是在和分布式服务器的不同的成员结点通信的，示意图如下。为了做到这点，当分布式服务器的访问点转发客户C1来的一个请求给结点S1(地址为CA1)时，它传递足够的信息给S1，让S1启动路径优化过程从而让客户相信S1临时地址是CA1.这将允许C1记下(HA，CA1)对。这个过程中，C1和S1的通信由访问点(还有宿主代理)来转发。这将使得宿主代理相信临时地址没有变化，从而继续和访问点通信。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch3/route%20optimization%20in%20distributed%20server.PNG"
+alt="分布式服务器的路径优化" /><br />
+当然，路径优化的过程中，可能有别的客户的请求进来。这些请求会在访问点处于等待状态，直到它们可以被转发。比如说，从客户C2来的一个请求被转发给成员结点S2(地址CA2)，允许S2让客户记下(HA，CA2)对。因此，不同的客户将会直接和分布式服务器的不同的成员通信，而每个客户应用程序却觉得服务器地址只是HA。宿主代理继续和联系地址上的访问点通信。</p>
+<h2 id="管理服务器集群">管理服务器集群</h2>
+<p>对外部而言，服务器集群应当表现得像单台计算机。然而当涉及到管理时，情况就很不一样了。</p>
+<h3 id="通用方法">通用方法</h3>
+<p>目前为止最通用的管理服务器集群的方法是把传统的单台计算机的管理功能扩展到服务器集群上。最原始的做法是使管理员能从远程客户登录到集群的一个结点并执行本地管理命令来监控、安装和改变<strong>组件(component)</strong>。<br />
+稍微高级点的做法是不需要显式登录到每一个结点，而是在一个管理机器上提供接口，允许从一个或多个服务器收集信息。升级组件、增减结点等。这种方法的好处是更容易提供集体操作(即面向一组服务器的操作)。它在实践上广泛应用。<br />
+但是，当集群增长到超过几十个结点时，这种管理方法就很难奏效了。很多数据中心需要管理几千台服务器，它们被组织成很多互相合作的集群。对这种应用使用集中式的管理服务器是不可能的。另外，容易看到大规模集群需要持续的维修管理(包括升级)，这是因为在大规模集群的情况下失效成为常态。<br />
+事实证明，对大型服务器集群的支持还无规则可循。有很多应该考虑的经验方法，但没有系统性的方法来针对大规模的系统管理。尽管我们可以预期在取得更多的经验后，自我管理方案最终会应用于这一领域，但集群管理现在还基本上处于起步阶段。</p>
+<h1 id="代码迁移">代码迁移</h1>
+<p>到现在为止，我们所讨论的分布式系统所进行的通信仅限于传递数据。而在某些情况下需要传递程序(甚至可能需要传递正在执行中的程序)，以简化分布式系统设计。</p>
+<h2 id="代码迁移方案">代码迁移方案</h2>
+<p>我们先来探讨下代码迁移是否有好处；如果有，又具体是怎样的。</p>
+<h3 id="进行代码迁移的理由">进行代码迁移的理由</h3>
+<p>传统上，分布式系统的代码迁移是以<strong>进程迁移(process
+migration)</strong>的形式进行的，这种做法十分复杂且开销庞大。而背后的理由也很简单：<strong>出于性能上的考虑</strong>。其基本的思想是：如果把进程由负载较重的机器上转移到负载较轻的机器上，就可以提升系统的整体性能。而负载常常是用CPU队列长度或者CPU利用率来衡量的，也可以使用其他性能指标衡量。<br />
+负载分布算法决定了任务在一组处理器上的分配和重新分布。这种算法对于计算任务繁重的系统尤其有效。然而，在许多现代分布式系统中，<em>对计算能力的优化不如通信量的减少重要</em>。这往往也是进行代码迁移的基本假定：处理数据的地点离数据所在地点越近越好。此外，由于底层平台和计算机网络的异构性，代码迁移所能够带来的性能提升常常是基于定性推导得出的，而不是通过数学模型计算出来的。<br />
+对于代码迁移的支持，还可以通过<em>并行</em>的使用来提升性能，而不会带来通常的并行编程所具有的复杂性。典型示例就是Web信息的搜索：以一种便于在站点之前移动的小程序的形式来实现这种搜索查询会相对简单；可以制作这种程序的多份副本，并且将每一份副本发送给不同的站点；与只使用单个程序相比，这样做可以使得速度得到线性提升。<br />
+除了性能提升之外，代码迁移还有一个重要的原因就是<strong>灵活性</strong>。构建分布式应用程序的传统方法是将应用程序分为不同部分，预先确定每一个部分应该在何处执行。依照这种方案执行就会产生之前讨论过的各种多层客户-服务器应用程序。<br />
+然而，如果代码可以在不同机器之间移动，就可以动态地配置分布式系统。比如，假定某个服务器实现了访问某个文件服务器的标准化接口。为了让远程客户访问文件服务器，服务器必须使用专门的协议。一般来说，基于这种专门协议的文件系统接口的客户端实现需要与客户端应用程序连接起来。这种方案要求在<em>开发</em>客户应用程序时就必须有可用的协议软件。另一种方法是旨在确实必要的时候让服务器提供客户的实现，也就是当客户绑定到服务器的时候。此时客户动态地下载该实现，经过某些必需的初始化步骤后激活该服务器。这种将代码由远程站点动态移来的模型要求下载和初始化代码的协议是标准化的；同时还要求下载的代码能够在客户所在机器上执行。这种动态下载客户端软件的<em>优点</em>在于，客户不需要预先安装与服务器通话所需的所有软件，可以在必要的时候将软件移来，同样也可以在不再需要该软件的时候将其丢弃。另一个<em>优点</em>是，只要接口是标准化的，就可以不受限制地改变客户-服务器协议及其实现，所做的改动并不会影响到现有的依赖于服务器的客户应用程序。但它的缺点也是存在的，最严重的缺点就是安全性方面的问题。</p>
+<h3 id="代码迁移模型">代码迁移模型</h3>
+<p>虽说代码迁移只是在机器间移动代码，但该名词的内涵十分丰富。传统上，分布式系统中的通信是关于进程间数据交换的。最广义的代码迁移可以涉及在机器间移动程序，目的是在目标机器上运行该程序。在某些情况下，与进程迁移相同，必须同时移动程序执行状态，未处理信号及其他部分环境内容。</p>
+<p>为更好地理解代码迁移的不同模型，我们遵从前人提出的框架结构，将进程划分为三段。<strong>代码段(code
+segment)</strong>部分包含构成正在运行的程序的所有指令；<strong>资源段(resource
+segment)</strong>包含指向进程所需要的外部资源的指针，这些外部资源包括文件、打印机、设备及其他进程等；最后是<strong>执行段(execution
+segment)</strong>，它用来存储进程的当前执行状态辆，这些状态量包括私有数据、栈和程序计数器等。<br />
+代码迁移的最弱形式是仅仅提供<strong>弱可移动性(weak
+mobility)</strong>。在这种模型中，可以只传输代码段及其某些初始化数据。弱可移动性的典型特征是，传输过来的程序总是从预先定义的几个位置之一开始执行。如Java小程序(applet)。<br />
+与弱可移动性相反，在支持<strong>强可移动性(strong
+moility)</strong>的系统中，还可以传输执行段。强可移动性的典型特征是，可以先停止运行中的进程，然后将它移到另一台机器上去，再从刚才中断的位置继续执行。很明显，强可移动性要比弱可移动性强大很多，但是也更加难以实现。</p>
+<p>另外也可以通过是由发送者启动迁移还是接受者启动迁移来对迁移做进一步区分。在<strong>发送者启动(sender-initiated)</strong>的迁移中，代码当前驻留在哪台服务器或者正在哪台机器上执行，就由该机器来启动迁移。一般来说，往往计算服务器上载程序时后者正在哪台机器上执行，就由该机器来启动迁移。一般来说，往往计算服务器上载程序时进行的就是发送者启动的迁移。另一个例子就是通过因特网想Web数据库发送搜索程序以在该服务器上进行查询。在<strong>接受者启动(receiver-initiated)</strong>的迁移中，代码迁移的主动权掌握在目标机器手中。实例即如Java小程序。<br />
+接受者启动的迁移一般会比发送者启动的迁移更容易实现些。在发送者启动的迁移情形下，常常要求客户端预先在服务器上注册并通过验证。也就是说，要求服务器了解它的所有客户。相反，如果是接受者启动的迁移，代码下载工作一般可以用匿名进行。此外，服务器一般并不对客户资源感兴趣，而向客户端进行代码迁移只是为了提升客户端的性能。</p>
+<p>在弱可移动性的情况下，迁移过去的代码是否由目标进程执行，还是重新启动一个单独的进程来执行，也存在区别。如Java小程序可以简单地由Web浏览器下载之后在浏览器的地址空间中执行。这种方法的好处就是不需要启动单独的进程，也就避免了与目标机器进行通信，而主要缺陷就是目标进程必须得到保护，以免在迁移来的代码的执行过程中受到有意或无意的侵害。单单针对这点的解决方案就是，由操作系统来进行管理，创建一个单独的进程来执行迁移来的代码。要注意，这种解决方法并没有解决刚才提出的资源访问方面的问题。<br />
+在强可移动性的情况下，除了直接移动正在运行的进程，也可以通过<strong>远程克隆(remote
+cloning)</strong>的方式来支持。与进程迁移不同，克隆将制造一份与原始进程完全相同的副本，但运行在不同的机器上。克隆的<em>优点</em>是克隆得到的进程与原来已经在多个应用程序中使用的进程极为相似，唯一的不同点在于：克隆得到的进程是在另一台机器上运行的。从这个意义上来说，通过克隆来迁移是一种分布透明性的简单方法。</p>
+<p>代码迁移的各种不同方法如下所示：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch3/methods%20of%20code%20migration.PNG"
+alt="代码迁移的各种不同方法" /></p>
+<h2 id="迁移与本地资源">迁移与本地资源</h2>
+<p>上面讨论了代码段和执行段的迁移，该节关注<strong>资源段</strong>的迁移。代码迁移之所以如此困难，就是因为有时资源段在不做改动的情况下难以与其他段一同迁移。<br />
+为了理解代码迁移与资源段的关系，学者将进程对资源的绑定方式分为三类。<em>最强</em>的绑定方式是进程使用资源的标识符来引用资源。这种情况下，进程明确指定的只是要引用哪些资源。这种绑定被称为<strong>按标识符绑定(binding
+by
+identifier)</strong>，如进程使用URL来引用特定Web站点。进程对资源的绑定的一种<em>较弱</em>方式是，只使用资源的值。这种绑定方式被称为<strong>按值绑定(bingding
+by
+value)</strong>。此情形下，只要另一个资源能够提供一样的值，进程的执行就不会受到影响。如依赖标准库的C语言程序，本地只需要
+保证这些库可用即可。进程对资源的绑定的<em>最弱</em>方式是，进程只需要指明它需要哪一种类型的资源。这种被称为<strong>按类型绑定(binding
+by
+type)</strong>，对诸如监视器、打印机等本地设备的引用都是按类型绑定的例子。</p>
+<p>在进行迁移代码的过程中，我们常常需要在不影响进程对资源的绑定的条件下改变指向资源的引用。具体而言，需要就资源对机器的绑定方式进行考察，并区分为以下几种情况进行考虑。<strong>未连接资源(unattached
+resources)</strong>可以方便地在机器之间移动，这种资源一般都是与要迁移的程序相关的数据文件。<strong>附着连接资源(fastened
+resource)</strong>也可以进行复制或移动，但代价较大。具体实例如本地数据库等。虽然在理论上并不依赖于当前的机器，但是将它们移动到另外的环境往往是并不可行的。最后一种是<strong>紧固连接资源(fixed
+resource)</strong>，这种资源紧密地绑定到特定的机器或者环境中，无法进行移动。本地设备一般是紧固连接资源。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch3/different%20ways%20to%20different%20resources.PNG"
+alt="根据引用资源方式的不同所应该采取的不同做法" /></p>
+<h2 id="异构系统中的代码迁移">异构系统中的代码迁移</h2>
+<p>之前的讨论都有一个隐含的前提：迁移后的代码能够在目标机器上很好地执行。如果是同构网络，这个前提是成立的。然而对于异构平台基础上的分布式系统，可能各个结点各自的操作系统和机器体系结构都不同。在这种系统内的迁移就显得十分困难。<br />
+而异构性的解决方法非常相似，就是生成用于抽象虚拟机的与机器无关的中间码。这类解决方法的共同点是它们都依赖于虚拟机，该虚拟机要么直接解释源代码(如脚本语言)，要么就解释由编译器生成的中间代码(如Java)。<br />
+近些年来的工作已经开始弱化对编程语言的依赖，特别地，有些提出的方法不仅迁移进程，而且迁移整个计算环境。基本思想是拆分综合环境并给予进程对自己计算环境的同样的观感。如果适当地拆分，有可能把底层系统的一部分分离出来并把它迁移到别的机器。用这种方法，进程迁移将实际上提供某种形式的强可移动性。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/18/review/distributed-system/3-processes/" title="分布式系统 - 进程">https://wrran.github.io/blog/2017/12/18/review/distributed-system/3-processes/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/distributed-system/" rel="tag"># distributed system</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/17/review/distributed-system/2-architecture/" rel="prev" title="分布式系统 - 体系结构">
+                  <i class="fa fa-angle-left"></i> 分布式系统 - 体系结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/21/people-say/muxin/" rel="next" title="木心">
+                  木心 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="what you want for me :)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="boost &#x2F; program options">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/02/21/howto/boost/program-options/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="what you want for me :)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-02-21T11:35:33.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.669Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="boost">
+<meta property="article:tag" content="program options">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/02/21/howto/boost/program-options/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/02/21/howto/boost/program-options/","path":"blog/2017/02/21/howto/boost/program-options/","title":"boost / program options"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>boost / program options | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#boost-program-options"><span class="nav-text">boost &#x2F; program options</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tutorial"><span class="nav-text">Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#getting-started"><span class="nav-text">Getting Started</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#option-details"><span class="nav-text">Option Details</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multiple-sources"><span class="nav-text">Multiple Sources</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#library-overview"><span class="nav-text">Library Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#options-description-component"><span class="nav-text">Options Description
+Component</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#syntactic-information"><span class="nav-text">Syntactic Information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#description-formatting"><span class="nav-text">Description formatting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#semantic-information"><span class="nav-text">Semantic Information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#positional-options"><span class="nav-text">Positional Options</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parsers-component"><span class="nav-text">Parsers Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#storage-component"><span class="nav-text">Storage Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#specific-parsers"><span class="nav-text">Specific Parsers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#configuration-file-parser"><span class="nav-text">Configuration file parser</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#environment-variables-parser"><span class="nav-text">Environment variables parser</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-to"><span class="nav-text">How to</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#non-conventional-syntax"><span class="nav-text">Non-conventional Syntax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#response-files"><span class="nav-text">Response Files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#winmain-command-line"><span class="nav-text">Winmain Command line</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#option-group-and-hidden-options"><span class="nav-text">Option Group and Hidden
+Options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#custom-validators"><span class="nav-text">Custom Validators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unicode-support"><span class="nav-text">Unicode Support</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#allowing-unknown-options"><span class="nav-text">Allowing Unknown Options</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#design-discussion"><span class="nav-text">Design Discussion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#unicode-support-1"><span class="nav-text">Unicode Support</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/02/21/howto/boost/program-options/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="boost &#x2F; program options | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          boost / program options
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-02-21 19:35:33" itemprop="dateCreated datePublished" datetime="2017-02-21T19:35:33+08:00">2017-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/" itemprop="url" rel="index"><span itemprop="name">howto</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/boost/" itemprop="url" rel="index"><span itemprop="name">boost</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>what you want for me :)</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="boost-program-options">boost / program options</h1>
+<h2 id="tutorial">Tutorial</h2>
+<p>该部分介绍了Boost库中program
+options最常用的场景。完整的示例可以参看文件夹<code>BOOST_ROOT/libs/program_options/example</code>中的内容。<br />
+以下示例代码中都假设已经预先定义了如下命名空间：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">namespace po = boost::program_options;</span><br></pre></td></tr></table></figure>
+<h3 id="getting-started">Getting Started</h3>
+<p>第一个例子，该例子仅仅处理两个<code>option</code>。代码如下，完整代码参见<code>example/first.cpp</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Declare the supported options</span></span><br><span class="line">po::options_description <span class="title function_">desc</span><span class="params">(<span class="string">&quot;Allowed options&quot;</span>)</span>;</span><br><span class="line">desc.add_options()</span><br><span class="line">    (<span class="string">&quot;help&quot;</span>, <span class="string">&quot;produce help message&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;compression&quot;</span>, po::value&lt;<span class="type">int</span>&gt;(), <span class="string">&quot;set compression level&quot;</span>)</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">po::variables_map vm;</span><br><span class="line">po::store(po::parse_command_line(ac, av, desc), vm);</span><br><span class="line">po::notify(vm);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;help&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; desc &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;compression&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Compression level was set to &quot;</span></span><br><span class="line">  &lt;&lt; vm[<span class="string">&quot;compression&quot;</span>].as&lt;<span class="type">int</span>&gt;() &lt;&lt; <span class="string">&quot;.\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Compression level was not set.\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该例子中我们先定义了一个类<code>options_description</code>，之后调用该类的方法<code>add_options</code>，这个方法返回了一个定义了操作符<code>()</code>的代理对象。该代理对象的方法即操作符<code>()</code>可以声明<em>options</em>，有三个参数：选项名称，选项可取值的信息，选项含义。在该例中，第一个参数没有值，第二个参数的值为类型<code>int</code>。</p>
+<p>之后，我们还声明了一个类型为<code>variables_map</code>的对象。该类可以用来存储任意类型的数值，用来存储options的具体取值。之后，调用了<code>store</code>/<code>parse_command_line</code>/<code>notify</code>函数让<code>vm</code>包含命令行中输入的各个值等。</p>
+<p>之后，我们就可以像使用<code>std::map</code>一样使用<code>vm</code>。除了，我们在取值时，必须使用方法<code>as</code>来指定类型。（如果<code>as</code>中指定的类型与声明时的类型不同，将抛出异常。）</p>
+<p>编译上述代码，可以如下操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bin/gcc/debug/first</span><br><span class="line"><span class="comment"># Compression level was not set</span></span><br><span class="line"></span><br><span class="line">bin/gcc/debug/first --<span class="built_in">help</span></span><br><span class="line"><span class="comment"># Allowed options:</span></span><br><span class="line"><span class="comment">#   --help              : produce help message</span></span><br><span class="line"><span class="comment">#   --compression arg   : set compression level</span></span><br><span class="line"></span><br><span class="line">bin/gcc/debug/first --compression 10</span><br><span class="line"><span class="comment"># Compression level was set to 10.</span></span><br></pre></td></tr></table></figure>
+<h3 id="option-details">Option Details</h3>
+<p>option的取值，除了类型（如上例中的<code>int</code>)外，还有许多值得探讨的地方。我们在这节中予以讨论。该部分的所有代码段可以参见<code>example/options_description.cpp</code>。</p>
+<p>假设我们要正在写跟编译器相关的程序，可能的options有：</p>
+<ul>
+<li>优化级别（optimization level）</li>
+<li>一些头文件路径（a number of include paths）</li>
+<li>一些输入文件（a number of input files）</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> opt;</span><br><span class="line">po::options_description <span class="title function_">desc</span><span class="params">(<span class="string">&quot;Allowed options&quot;</span>)</span>;</span><br><span class="line">desc.add_options()</span><br><span class="line">    (<span class="string">&quot;help&quot;</span>, <span class="string">&quot;produce help message&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;optimization level&quot;</span>, po::value&lt;<span class="type">int</span>&gt;(&amp;opt)-&gt;default_value(<span class="number">10</span>),</span><br><span class="line">     <span class="string">&quot;optimization level&quot;</span>)</span><br><span class="line">     (<span class="string">&quot;include-path,I&quot;</span>, po::value&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;(), <span class="string">&quot;include path&quot;</span>)</span><br><span class="line">     (<span class="string">&quot;input-file&quot;</span>, po::value&lt;&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;(), <span class="string">&quot;input file&quot;</span>)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p><code>help</code>与上例中的并无区别，提供这个选项应当被当作标配。<br />
+选项<code>optimization</code>有两点值得注意：</p>
+<ul>
+<li>我们指定了存值的对象<code>&amp;opt</code>。这样之后我们将可以通过该对象取得命令行输入的具体参数</li>
+<li>我们指定了默认值为<code>10</code>。如果用户没有输入值，则该选项的值就将为<code>10</code><br />
+选项<code>include-path</code>同样有两点值得注意：</li>
+<li>用户常常使用简写字母来代替长指令。我们通过将<code>options name</code>指定为<code>include-path,I</code>来实现这一目的。如此，我们就可以通过<code>-I</code>来代替<code>--include-path</code>了。</li>
+<li><code>include-path</code>的类型被指定为<code>std::vector</code>。这样定义之后，用户输入多个<code>--include-path</code>将会被收集到一个<code>vector</code>中。<br />
+选项<code>input-file</code>与<code>include-path</code>相比，并没有什么不同。但我们会发现，用户常常使用如下指令：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compiler a.cpp</span><br></pre></td></tr></table></figure>
+<p>而不是如下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compiler --input-file=a.cpp</span><br></pre></td></tr></table></figure>
+<p>我们接着就来讨论该问题。</p>
+<p>上述命令行中并没有输入<code>option name</code>，在该库中这些被成为<code>positional options</code>。通过用户输入的格式，实现上述功能的代码见下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">po::positional_options_description p;</span><br><span class="line">p.add(<span class="string">&quot;input-file&quot;</span>, <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">po::variables_map vm;</span><br><span class="line">po::store(po::command_line_parser(ac, av)</span><br><span class="line">          .options(desc)</span><br><span class="line">          .positional(p)</span><br><span class="line">          .run(), vm);</span><br><span class="line">po::notify(vm);</span><br></pre></td></tr></table></figure>
+<p>上述代码段的前两行是说，所有的<code>positional options</code>都当作选项<code>input-file</code>。同样值得注意的是，我们使用了<code>command_line_parser</code>来解析命令行参数，而不是<code>parse_command_line</code>。后者只适用于简单情形。</p>
+<p>到此为止，我们解析了所有的<code>options</code>。现在我们将之打印出来：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;include-path&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Include paths are: &quot;</span></span><br><span class="line">         &lt;&lt; vm[<span class="string">&quot;include-path&quot;</span>].as&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;input-file&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Input files are: &quot;</span></span><br><span class="line">         &lt;&lt; vm[<span class="string">&quot;input-file&quot;</span>].as&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;optimization level is &quot;</span> &lt;&lt; opt &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>测试部分如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">bin/gcc/debug/options_description --<span class="built_in">help</span></span><br><span class="line"><span class="comment"># Usage: options_description [options]</span></span><br><span class="line"><span class="comment"># Allowed options:</span></span><br><span class="line"><span class="comment">#   --help                 : produce help message</span></span><br><span class="line"><span class="comment">#   --optimization arg     : optimization level</span></span><br><span class="line"><span class="comment">#   -I [ --include-path ] arg : include path</span></span><br><span class="line"><span class="comment">#   --input-file arg       : input file</span></span><br><span class="line"></span><br><span class="line">bin/gcc/debug/options_description</span><br><span class="line"><span class="comment"># Optimization level is 10</span></span><br><span class="line"></span><br><span class="line">bin/gcc/debug/options_description --optimization 4 -I foo a.cpp</span><br><span class="line">Include paths are: foo</span><br><span class="line">Input files are: a.cpp</span><br><span class="line">Optimization level is 4</span><br></pre></td></tr></table></figure>
+<p>注意上述程序中可能存在的一个小问题就是，用户仍旧可以使用选项<code>--input-file</code>。这可能导致一些困惑，更好的选择是限制该功能的使用。但我们还是先进入到下一个实例吧。</p>
+<h3 id="multiple-sources">Multiple Sources</h3>
+<p>让用户在命令行中一次性输入所有的options是种不友好的交互形式。更好的选择是用配置文件及命令行来共同配置程序。</p>
+<p>此时，我们就需要同时考虑配置文件及命令行中的参数了。如，命令行中的<code>optimization level</code>应当覆盖配置文件中的该选项；命令行中的<code>include paths</code>与配置文件中的该选项应当组合起来使用。</p>
+<p>我们来阅读下面的代码段，完整的程序可以参见<code>example/multiple_sources.cpp</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Declare a group of options that will be</span></span><br><span class="line"><span class="comment">// allowed only on command line</span></span><br><span class="line">po::options_description <span class="title function_">generic</span><span class="params">(<span class="string">&quot;Generic options&quot;</span>)</span>;</span><br><span class="line">generic.add_options()</span><br><span class="line">    (<span class="string">&quot;version,v&quot;</span>, <span class="string">&quot;print version string&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;help&quot;</span>, <span class="string">&quot;produce help message&quot;</span>)</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Declare a group of options that will be</span></span><br><span class="line"><span class="comment">// allowed both on command line and in config file</span></span><br><span class="line">po::options_description <span class="title function_">config</span><span class="params">(<span class="string">&quot;Configuration&quot;</span>)</span>;</span><br><span class="line">config.add_options()</span><br><span class="line">    (<span class="string">&quot;optimization&quot;</span>, po::value&lt;<span class="type">int</span>&gt;(&amp;opt)-&gt;default_value(<span class="number">10</span>),</span><br><span class="line">        <span class="string">&quot;optimization level&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;include-path,I&quot;</span>, po::value&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;()-&gt;composing(),</span><br><span class="line">        <span class="string">&quot;include path&quot;</span>)</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hidden options, will be allowed both on command line and</span></span><br><span class="line"><span class="comment">// in config file, but will not be shown to the user.</span></span><br><span class="line">po::options_description <span class="title function_">hidden</span><span class="params">(<span class="string">&quot;Hidden options&quot;</span>)</span>;</span><br><span class="line">hidden.add_options()</span><br><span class="line">    (<span class="string">&quot;input-file&quot;</span>, po::value&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;(), <span class="string">&quot;input file&quot;</span>)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p>上述代码中，我们声明了多个类型为<code>options_description</code>的实例。这样做的原因是因为总的来说，并非所有options都是相同的；另外，帮助信息有一定结构比长长一串的罗列好的多。故此，我们将options分为了三组：<code>generic</code>/<code>config</code>/<code>hidden</code>。</p>
+<p>值得注意的有，我们调用了选项<code>include-path</code>的<code>composing</code>，这告诉库去将不同来源的选项组合在一起。</p>
+<p>类<code>options_description</code>的方法<code>add</code>可以用来组合不同的options：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">po::options_description cmdline_options;</span><br><span class="line">cmdline_options.add(generic).add(config).add(hidden);</span><br><span class="line"></span><br><span class="line">po::options_description config_file_options;</span><br><span class="line">config_file_options.add(config).add(hidden);</span><br><span class="line"></span><br><span class="line">po::options_description <span class="title function_">visible</span><span class="params">(<span class="string">&quot;Allowed options&quot;</span>)</span>;</span><br><span class="line">visible.add(generic).add(config);</span><br></pre></td></tr></table></figure>
+<p>解析与存储的过程与以往的大同小异。不同的地方在于我们在调用<code>parse_config_file</code>，并调用了方法<code>store</code>两次。但如果命令行与配置文件都定义了某个选项时，谁发挥作用呢？<strong>通常，最先存储的值最优先。</strong>对于调用了<code>composing</code>的选项，这些值将被合并在一起。</p>
+<p>测试部分如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">bin\gcc\debug\multiple_sources</span><br><span class="line"><span class="comment"># Include paths are: /opt</span></span><br><span class="line"><span class="comment"># Optimization level is 1</span></span><br><span class="line"></span><br><span class="line">bin\gcc\debug\multiple_sources --<span class="built_in">help</span></span><br><span class="line"><span class="comment"># Allowed options:</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># Generic options:</span></span><br><span class="line"><span class="comment">#   -v [ --version ]    : print version string</span></span><br><span class="line"><span class="comment">#   --help              : produce help message</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># Configuration:</span></span><br><span class="line"><span class="comment">#   --optimization n    : optimization level</span></span><br><span class="line"><span class="comment">#   -I [ --include-path ] path : include path</span></span><br><span class="line"></span><br><span class="line">bin\gcc\debug\multiple_sources --optimization=4 -I foo a.cpp b.cpp</span><br><span class="line"><span class="comment"># Include paths are: foo /opt</span></span><br><span class="line"><span class="comment"># Input files are: a.cpp b.cpp</span></span><br><span class="line"><span class="comment"># Optimization level is 4</span></span><br></pre></td></tr></table></figure>
+<p>第一个实例使用了配置文件的取值，第三个实例则同时使用了配置文件与命令行。</p>
+<h2 id="library-overview">Library Overview</h2>
+<p>该部分将讨论<strong>program
+options</strong>的设计及其中各个部件的功能。<br />
+该库包含三个主要组件：</p>
+<ul>
+<li><em>options
+description</em>：描述允许的options及该选项的值可以进行的操作</li>
+<li><em>parsers</em>：用来从数据源处解析option的名称及取值</li>
+<li><em>storage</em>：提供取出选项的值的接口，并能将原始的字符串信息转换为对应的C++类型。<br />
+更具体的说，<code>options_description</code>实现<em>options
+description</em>的功能，<code>parse_command_line</code>实现<em>parsers</em>的功能，<code>variables_map</code>实现<em>storage</em>的功能。</li>
+</ul>
+<p>在<strong>Tutorial</strong>部分我们学习了如何在<code>main</code>函数中解析命令行或者配置文件。在去深究各个组件的细节前，我们先来说说<code>main</code>之外的一些事情。<br />
+总的来说，对于<code>main</code>函数之外的代码而言最重要的组件可能就是<em>storage</em>了。那些需要使用option的组件可以通过<em>storage</em>轻易的取到所需的内容；并且也只能在选项被正确解析之后才能正常工作。当然，也会存在各个单独的组件将选项解析完成之后传给主程序合并的情况。当然，这只会发生在选项数量巨大，并且在一处声明所有选项变得困难的情形下。</p>
+<h3 id="options-description-component">Options Description
+Component</h3>
+<p>组件<em>option
+description</em>提供了三个主要的类：<code>option_description</code>/<code>value_semantic</code>/<code>options_description</code>。前两者共同描述一个单独的选项，<code>option_description</code>包含选项的名称/描述以及一个指向<code>value_semantic</code>的指针；<code>value_semantic</code>则负责选项的值的类别/解析该选项/使用默认值等；<code>options_description</code>则是包含多个<code>option_description</code>的实例的容器。</p>
+<p>我们在定义选项组时，可以使用常规的做法：先声明一个类型为<code>options_description</code>的实例，之后反复调用方法<code>add</code>，增加一个个具体的选项。但当选项数量达到20~30时就显得太过冗长。所以我们选用了操作符<code>()</code>，从而形成了如下的代码段：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">options_description desc;</span><br><span class="line">desc.add_options()</span><br><span class="line">    (<span class="string">&quot;help&quot;</span>, <span class="string">&quot;produce help&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;optimization&quot;</span>, value&lt;<span class="type">int</span>&gt;()-&gt;default_value(<span class="number">10</span>), <span class="string">&quot;optimization level&quot;</span>)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p>调用方法<code>value</code>将返回一个继承自<code>value_semantic</code>的类<code>typed_value</code>。该类包含了如何解析指定类型的代码，并向用户提供了进一步制定其他信息的接口。调用<code>add_options</code>返回的对象的<code>operator()</code>可以创建类<code>option_description</code>的实例。<br />
+库除了提供<code>value</code>之外，还提供了<code>value_semantic</code>的继承类<code>bool_switch</code>。当然用户也可以自定义<code>value_semantic</code>。下面我们来详细地探讨下方法<code>value</code>。</p>
+<p>一个选项的信息可以分为两类：语法信息与句法信息。语法信息包括选项的名称及确定选项值的标识符的个数。这部分信息在解析器将字符串解析为<em>(name,
+value)</em>对时被使用到了，其中<em>value</em>只是类型为<code>std::vector&lt;std::string&gt;</code>的实例。句法信息负责将这些字符串转换为具体的C++类型。</p>
+<p>分隔符在该库的设计中起到的作用相当重要。解析器仅仅依靠语法信息将输入信息转换为复杂的结构。因此，对于解析器来说正确解析<code>calc --expression=1 + 2/3</code>为<code>1 + 2/3</code>并不容易；而如果解析<code>calc --expression="1 + 2/3"</code>则显得容易的多。</p>
+<h4 id="syntactic-information">Syntactic Information</h4>
+<p>语法信息由<code>boost::program_options::option_description</code>及<code>boost::program_options::value_semantic</code>的部分方法提供支持，包括如下内容：</p>
+<ul>
+<li>选项的名称，<em>name</em>，用来确定程序内部使用的选项的名称</li>
+<li>选项的描述信息，<em>description</em>，可以向用户解释选项的含义</li>
+<li>确定选项值时标识符的个数，用来正确解析数据源</li>
+</ul>
+<p>以下面的代码段为例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">options_description desc;</span><br><span class="line">desc.add_options()</span><br><span class="line">    (<span class="string">&quot;help&quot;</span>, <span class="string">&quot;produce help message&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;compression&quot;</span>, value&lt;<span class="built_in">string</span>&gt;(), <span class="string">&quot;compression level&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;verbose&quot;</span>, value&lt;<span class="built_in">string</span>&gt;()-&gt;implicit_value(<span class="string">&quot;0&quot;</span>), <span class="string">&quot;verbosity level&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;email&quot;</span>, value&lt;<span class="built_in">string</span>&gt;()-&gt;multitoken(), <span class="string">&quot;email to send to&quot;</span>)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p>第一个选项只提供了名称与描述信息，并没有提供取值的相关信息；第二个选型确定了只能取一个值；第三个选项可以为值提供一个或者不提供标识符；最后一个选项则可以提供多个标识符。比如说，下面的命令行就是合法的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test --help --compression <span class="number">10</span> --verbose --email beadle@mars beadle2@mars</span><br></pre></td></tr></table></figure>
+<h4 id="description-formatting">Description formatting</h4>
+<p>有时选项的提示信息文档，<em>description</em>，篇幅不短。我们在这节介绍一些简单的排版机制。<br />
+选项的提示信息文档由一个或多个<code>\n</code>分隔的段落组成时，该库将计算出文档的缩进大小，并在每一个段落前自动插入这段缩进。如果一个段落超过了一行，则会缩进一次但跨越多行。<br />
+你也可以在提示文档信息前插入些空格，从而增加第一个段落的缩进。如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">options.add_options()</span><br><span class="line">   (<span class="string">&quot;help&quot;</span>, <span class="string">&quot;    A long help msg a long help msg a long help msg a long help</span></span><br><span class="line"><span class="string">   msg a long help msg a long help msg a long help msg a long help msg&quot;</span>)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p>上述代码将产生如下的输出信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">help</span>                    A long <span class="built_in">help</span> msg a long</span><br><span class="line">                        <span class="built_in">help</span> msg a long <span class="built_in">help</span> msg</span><br><span class="line">                        a long <span class="built_in">help</span> msg a long</span><br><span class="line">                        <span class="built_in">help</span> msg a long <span class="built_in">help</span> msg</span><br><span class="line">                        a long <span class="built_in">help</span> msg a long</span><br><span class="line">                        <span class="built_in">help</span> msg</span><br></pre></td></tr></table></figure>
+<p>当你想在某些行之前插入额外的缩进，可以使用符号<code>\t</code>。如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">options.add_options()</span><br><span class="line">      (<span class="string">&quot;well_formated&quot;</span>, <span class="string">&quot;As you can see this is a very well formatted</span></span><br><span class="line"><span class="string">option description.\n&quot;</span></span><br><span class="line">                        <span class="string">&quot;You can do this for example:\n\n&quot;</span></span><br><span class="line">                        <span class="string">&quot;Values:\n&quot;</span></span><br><span class="line">                        <span class="string">&quot;  Value1: \tdoes this and that, bla bla bla bla</span></span><br><span class="line"><span class="string">bla bla bla bla bla bla bla bla bla bla bla\n&quot;</span></span><br><span class="line">                        <span class="string">&quot;  Value2: \tdoes something else, bla bla bla bla</span></span><br><span class="line"><span class="string">bla bla bla bla bla bla bla bla bla bla bla\n\n&quot;</span></span><br><span class="line">                        <span class="string">&quot;    This paragraph has a first line indent only,</span></span><br><span class="line"><span class="string">bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>输出将会是这个形式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">--well_formated       As you can see this is a</span><br><span class="line">                      very well formatted</span><br><span class="line">                      option description.</span><br><span class="line">                      You can <span class="keyword">do</span> this <span class="keyword">for</span></span><br><span class="line">                      example:</span><br><span class="line"></span><br><span class="line">                      Values:</span><br><span class="line">                        Value1: does this and</span><br><span class="line">                                that, bla bla</span><br><span class="line">                                bla bla bla bla</span><br><span class="line">                                bla bla bla bla</span><br><span class="line">                                bla bla bla bla</span><br><span class="line">                                bla</span><br><span class="line">                        Value2: does something</span><br><span class="line">                                <span class="keyword">else</span>, bla bla</span><br><span class="line">                                bla bla bla bla</span><br><span class="line">                                bla bla bla bla</span><br><span class="line">                                bla bla bla bla</span><br><span class="line">                                bla</span><br><span class="line"></span><br><span class="line">                          This paragraph has a</span><br><span class="line">                      first line indent only,</span><br><span class="line">                      bla bla bla bla bla bla</span><br><span class="line">                      bla bla bla bla bla bla</span><br><span class="line">                      bla bla bla</span><br></pre></td></tr></table></figure>
+<p>在使用<code>\t</code>时注意如下几点：</p>
+<ul>
+<li>在输出之前，<code>\t</code>符号被去除</li>
+<li>每个段落仅仅允许使用一个<code>\t</code>，否则将抛出异常<code>program_options::error</code></li>
+<li>如果<code>\t</code>不在段落的第一行或者在第一行的末尾时，将会被忽略</li>
+</ul>
+<h4 id="semantic-information">Semantic Information</h4>
+<p>句法信息完全由类<code>boost::program_options::value_semantic</code>提供。举例来说：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">options_description desc;</span><br><span class="line">desc.add_options()</span><br><span class="line">    (<span class="string">&quot;compression&quot;</span>, value&lt;<span class="type">int</span>&gt;()-&gt;default_value(<span class="number">10</span>), <span class="string">&quot;compress level&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;email&quot;</span>, value&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;()-&gt;composing()-&gt;notifier(&amp;your_function), <span class="string">&quot;email&quot;</span>)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p>上述代码中，第一个选项的默认值被设置为10；第二个选项允许出现多次，并且在不同数据源的信息将被合并，并且在解析完成之后，将该选项的值作为参数待用函数<code>&amp;your_function</code>。</p>
+<h4 id="positional-options">Positional Options</h4>
+<p>我们将选项视为<em>(name,
+value)</em>是简单有效的。但在某些情形下这样做还不足够，即在命令行中包含了<em>positional
+option</em>，即没有指定任何名称。如<code>archiver --compression=9 /etc/passwd</code>中，<code>/etc/passwd</code>就根本没有指定任何选项名称。<br />
+一种做法是强制用户明确<em>positional
+option</em>的名称。但更好的做法是提供一种自动识别的机制，确定命令行的<em>positional
+option</em>的名称。用上述例子来说，就是转换成如下形式：<code>archiver --compression=9 --input-file=/etc/passwd</code>。</p>
+<p><code>positional_options_description</code>便实现了上述的功能。该类用来指定哪些选项是<em>positional
+option</em>，每个<em>positional option</em>允许多少取值：</p>
+<p>举例来说，<code>positional_options_description pd; pd.add("input-file", 1);"</code>指定了只有一个<em>positional
+option</em>，取值个数为1，名称为<code>input-file</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">positional_options_description pd;</span><br><span class="line">pd.add(<span class="string">&quot;output-file&quot;</span>, <span class="number">2</span>).add(<span class="string">&quot;input-file&quot;</span>, <span class="number">-1</span>);</span><br></pre></td></tr></table></figure>
+<p>上例中，则指定了两个<em>positional
+option</em>。第一个option取值个数为2，名称为<code>output-file</code>，其他所有的<em>positional
+option</em>的名称都为<code>input-file</code>。</p>
+<p>注意：<code>positional_options_description</code>仅仅是将<em>positional
+option</em>与名称绑定在一起；选项的名称（<code>option name</code>）依旧需要在<code>options_description</code>中进行“注册”。</p>
+<h3 id="parsers-component">Parsers Component</h3>
+<p>组件<em>parsers</em>将数据源解析为<em>(name,
+value)</em>。每个解析器都去查找到可能的选项，并根据选项的<em>description</em>组件决定这个option是否已知以及值如何确定。在最简单的情形下，选项的名称被显式指定，这让库很容易知道该选项是否已知。如果该选项已知，<code>value_semantic</code>将判断如果取值；如果不可知，则一个异常将被抛出。常见的场景是用户明确指定了选项的值。当选项不能被明确指定时，但一个选项的出现与否也暗示了该选项的值，如<code>true</code>。所以，解析器在必要时检查该选项的值，并返回新的<em>(name,
+value)</em>对。</p>
+<p>触发解析器的常用做法是将<em>options
+description</em>及命令行内容或者配置文档等作为参数传给某些方法。调用该方法将返回一个类型为<code>parsed_options</code>的实例。该对象一般是直接传给了组件<em>storage</em>，但是我们其实也可以直接使用该对象。</p>
+<p>上述处理过程中可能会抛出三种异常，全都与传统的命令行参数有关。它们的实现都要求组件<em>options
+description</em>的功能，这些附加的复杂度还处于可容忍范围内。</p>
+<ul>
+<li>命令行传入的选项名称与注册的选项名称不符</li>
+<li>多次赋值。比如，选项<code>--email-recipient</code>可能之后跟多个email，并且每一个都是由单独的<code>--email-recipient</code>分开。这种行为是被支持的，但因为可能导致解析过程的不确定性而默认没被打开</li>
+<li>命令行中包含<em>positional
+options</em>，即元素没有任何相关的名称。如我们所见，命令行解析器提供了对每个选项猜测名称的机制。</li>
+</ul>
+<h3 id="storage-component">Storage Component</h3>
+<p>组件<em>storage</em>的作用有：</p>
+<ul>
+<li>将选项的值转换为特定的类型，并存放到普通变量（regular
+variables）中</li>
+<li>处理不同数据源的优先级</li>
+<li>将选项的值作为参数调用用户自定义的<code>notify</code></li>
+</ul>
+<p>举例来说：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">variables_map vm;</span><br><span class="line">store(parse_command_line(argc, argv, desc), vm);</span><br><span class="line">store(parse_config_file(<span class="string">&quot;example.cfg&quot;</span>, desc), vm);</span><br><span class="line">notify(vm);</span><br></pre></td></tr></table></figure>
+<p>类<code>variables_map</code>用来存储选项的具体取值。两次调用方法<code>store</code>分别从命令行与配置文件中读取值到<code>vm</code>中；最后调用方法<code>notify</code>则运行用户自定义的<code>notify</code>的逻辑，并将必要的变量存放到普通变量中。<br />
+优先级的处理则基于如下这样的规则：如果选项已经确定了值，则函数<code>store</code>不会改变选项的值。所以在上例中，命令行确定某个选项的值的话；配置文件中对应的选项将被忽略。</p>
+<p>注意：在调用了所有函数<code>store</code>之后，别忘了调用函数<code>notify</code>。</p>
+<h3 id="specific-parsers">Specific Parsers</h3>
+<h4 id="configuration-file-parser">Configuration file parser</h4>
+<p>函数<code>parse_config_file</code>实现了简单的解析类<em>INI</em>配置文件的解析器。配置文件的语法是基于行的：</p>
+<ul>
+<li>如<code>name=value</code>给出一个选项的取值</li>
+<li>如<code>[section name]</code>则开启新的一节</li>
+<li><code>#</code>表示从这个符号到行末都是注释<br />
+选项名称是与<code>section names</code>相对的，所以下列的配置项：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[gui.accessibility]</span><br><span class="line">visual_bell=<span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+<p>等价于<code>gui.accessibility.visual_bell=yes</code></p>
+<h4 id="environment-variables-parser">Environment variables parser</h4>
+<p>在C程序中所有的程序都可以通过调用函数<code>getenv</code>来获取字符串类型的<em>environment
+variables</em>。系统可以根据用户的不同设置不同的值，并且可以通过命令行对这些变量进行修改。比如，在Windows系统下用户可以通过控制面板进行修改；在Unix系统下，则通过修改文件<code>/etc/profile</code>/<code>~/.profile</code>/<code>~/.bash_profile</code>来进行修改。因为环境变量的作用域是整个系统，故而特别适合用来设置那些对所有程序都适用的选项。</p>
+<p>环境变量可以通过调用函数<code>parse_environment</code>来解析。该函数有多个重载版本。其第一个参数是类型为<code>options_description</code>的实例；第二个参数指出那些变量应当被处理，其对应的是那个选项。为了描述第二个参数，我们需要考虑环境变量的名称转换问题。</p>
+<p>如果你要通过环境变量来决定选项的值，你需要先为它想个名字。为了避免<em>name
+clashes</em>，我们建议你为环境变量添加一个独一无二的前缀。另外，相较于其他类型的选项名为小写，我们建议环境变量相关的选项名称全为大写。举例来说，选项名称为<code>proxy</code>的环境变量名可以取为<code>BOOST_PROXY</code>。在解析过程中，我们需要反向操作。这个过程通过传入选定的<em>前缀</em>作为函数<code>parse_environment</code>的第二个参数。比如说，你将第二个参数设为<code>BOOST_</code>，同时环境变量有<code>CSVROOT</code>和<code>BOOST_PROXY</code>，则第一个变量直接被忽略，第二个将转换赋值给<code>proxy</code>。</p>
+<p>上述的逻辑已经足够应付大多数的情形了。此外，我们也可以将<code>parse_environment</code>的第二个参数赋值为一个参数为<code>std::string</code>并返回<code>std::string</code>的函数。这个函数将对每个环境变量调用一次，它姚明返回对应选项的名称，要么返回空字符串（此时表示该环境变量应当被忽略）。</p>
+<h2 id="how-to">How to</h2>
+<p>该节更详细的介绍本库的使用场景。</p>
+<h3 id="non-conventional-syntax">Non-conventional Syntax</h3>
+<p>有时候本库提供的默认的命令行语法格式不适用。例如，GCC编译器的命令行就有这样的选项<code>-frtti</code>及<code>-fno-rtti</code>，这些都没有直接提供支持。<br />
+对于这种场景，用户可以通过定义自己的<strong>additional
+parser</strong>来解析。<strong>additional
+parser</strong>是一个函数，它将会在每一个命令行的元素上进行调用，并且会在本库所有操作直接进行。如果这个额外添加的解析器识别出了该句法，则返回选项的名称与值，这些都会被直接使用。上述例子中的方法就可以用下述代码实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pair</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; <span class="title function_">reg_foo</span><span class="params">(<span class="type">const</span> <span class="built_in">string</span>&amp; s)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (s.find(<span class="string">&quot;-f&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (s.substr(<span class="number">2</span>, <span class="number">3</span>) == <span class="string">&quot;no-&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">make_pair</span>(s.substr(<span class="number">5</span>), <span class="built_in">string</span>(<span class="string">&quot;false&quot;</span>));</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">make_pair</span>(s.substr(<span class="number">2</span>), <span class="built_in">string</span>(<span class="string">&quot;true&quot;</span>));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">make_pair</span>(<span class="built_in">string</span>(), <span class="built_in">string</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了上述的<strong>additional
+parser</strong>的定义外，还需要如下处理：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store(command_line_parser(ac, av).options(desc).extra_parser(reg_foo).run(), vm);</span><br></pre></td></tr></table></figure>
+<p>完整样例可以参见文件<code>example/custom_syntax.cpp</code>。</p>
+<h3 id="response-files">Response Files</h3>
+<p>某些系统对命令行的输入命令长度有所限制。对此处理的常规做法是使用<strong>response
+file</strong>，其就是一个使用与命令行相同语法的配置文件。如果命令行中指定了该文件的路径，则在处理原先命令行输入的命令外还应当加载并解析该文件。该库并没有直接对该应用情景提供支持，但我们可以通过如下三步进行处理：</p>
+<p>第一步，你需要为<strong>response file</strong>定义选项：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">&quot;response-file&quot;</span>, value&lt;<span class="built_in">string</span>&gt;(), <span class="string">&quot;can be specified with &#x27;@name&#x27;, too&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>第二步，定义解析<code>@file</code>的<strong>additional
+parser</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pair</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; <span class="title function_">at_option_parser</span><span class="params">(<span class="built_in">string</span> <span class="type">const</span>&amp; s)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&#x27;@&#x27;</span> == s[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">std</span>::<span class="built_in">make_pair</span>(<span class="built_in">string</span>(<span class="string">&quot;response-file&quot;</span>), s.substr(<span class="number">1</span>));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">pair</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后一步，当选项<code>response-file</code>出现时，你要解析该文件，并将之传递给命令行解析器。这部分最为麻烦。我们可以使用库<code>Boost.Tokenizer</code>，也可以使用<code>Boost.StringAlgo</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;response-file&quot;</span>)) &#123;</span><br><span class="line">    <span class="comment">// Load the file and tokenize it</span></span><br><span class="line">    ifstream <span class="title function_">ifs</span><span class="params">(vm[<span class="string">&quot;response-file&quot;</span>].as&lt;<span class="built_in">string</span>&gt;().c_str())</span>;</span><br><span class="line">    <span class="keyword">if</span> (!ifs) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Could not open the response file\n&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Read the whole file into a string</span></span><br><span class="line">    <span class="built_in">stringstream</span> ss;</span><br><span class="line">    ss &lt;&lt; ifs.rdbuf();</span><br><span class="line">    <span class="comment">// Split the file content</span></span><br><span class="line">    char_separator&lt;<span class="type">char</span>&gt; <span class="title function_">sep</span><span class="params">(<span class="string">&quot; \n\r&quot;</span>)</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> <span class="title function_">ResponsefileContents</span><span class="params">(ss.str())</span>;</span><br><span class="line">    tokenizer&lt;char_separator&lt;<span class="type">char</span>&gt;&gt; tok(<span class="keyword">return</span>, sep);</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; args;</span><br><span class="line">    copy(tok.begin(), tok.end(), back_inserter(args));</span><br><span class="line">    <span class="comment">// Parse the file and store the options</span></span><br><span class="line">    store(command_line_parser(args).options(desc).run(), vm);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码可以参见文件<code>example/response_file.cpp</code>。</p>
+<h3 id="winmain-command-line">Winmain Command line</h3>
+<p>在Windows操作系统下，GUI应用处理命令行命令时是作为完整的一个字符串，而不是分割为组。因此命令行解析器不能被直接应用。虽然有些编译器对此进行处理了，但是这种做法无法保证在所有操作系统的所有版本上有同样的处理机制。为此，该库提供了函数<code>split_winmain</code>。<br />
+使用示例代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; args = split_winmain(lpCmdLine);</span><br><span class="line">store(command_line_parser(args).options(desc).run(), vm);</span><br></pre></td></tr></table></figure>
+<p>函数<code>split_winmain</code>也有重载为处理类型<code>wchar_t</code>的字符串，因此也可以在使用<code>Unicode</code>的字符集应用中使用。</p>
+<h3 id="option-group-and-hidden-options">Option Group and Hidden
+Options</h3>
+<p>在一个程序中只使用一个<code>options_description</code>实例来处理所有的选项，可能会存在如下问题：</p>
+<ul>
+<li>一些选项仅仅对特定的源有效</li>
+<li>用户更喜欢有结构有层次的帮助文档</li>
+<li>一些选项不应当出现在帮助文档中</li>
+</ul>
+<p>为了解决上述存在的问题，该库允许程序员创建多个<code>options_description</code>实例，并按照不同方式组合起来使用。下面的例子中定义了三组选项：命令行及两组为特定模块定义的选项组。</p>
+<p>每一组都是使用标准的语法，但是你应当为每个实例取个具有表现力的名字：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">options_description <span class="title function_">general</span><span class="params">(<span class="string">&quot;General options&quot;</span>)</span>;</span><br><span class="line">general.add_options()</span><br><span class="line">    (<span class="string">&quot;help&quot;</span>, <span class="string">&quot;produce a help message&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;help-module&quot;</span>, value&lt;<span class="built_in">string</span>&gt;(),</span><br><span class="line">        <span class="string">&quot;produce a help for a given module&quot;</span>)</span><br><span class="line">    (<span class="string">&quot;version&quot;</span>, <span class="string">&quot;output the version number&quot;</span>)</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">options_description <span class="title function_">gui</span><span class="params">(<span class="string">&quot;GUI options&quot;</span>)</span>;</span><br><span class="line">gui.add_options()</span><br><span class="line">    (<span class="string">&quot;display&quot;</span>, value&lt;<span class="built_in">string</span>&gt;(), <span class="string">&quot;display to use&quot;</span>)</span><br><span class="line">;</span><br><span class="line"></span><br><span class="line">options_description <span class="title function_">backend</span><span class="params">(<span class="string">&quot;Backend options&quot;</span>)</span>;</span><br><span class="line">backend.add_options()</span><br><span class="line">    (<span class="string">&quot;num-threads&quot;</span>, value&lt;<span class="type">int</span>&gt;(), <span class="string">&quot;the initial number of threads&quot;</span>)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<p>如上声明之后，我们将其合并为两组。第一组包含所有选项并用来解析，第二组用来展示提示信息，即选项<code>--help</code>的帮助文档。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Declare an options description instance which will include</span></span><br><span class="line"><span class="comment">// all the options</span></span><br><span class="line">options_description <span class="title function_">all</span><span class="params">(<span class="string">&quot;Allowed options&quot;</span>)</span>;</span><br><span class="line">all.add(general).add(gui).add(backend);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Declare an options description instance which will be shown</span></span><br><span class="line"><span class="comment">// to the user</span></span><br><span class="line">options_description <span class="title function_">visible</span><span class="params">(<span class="string">&quot;Allowed options&quot;</span>)</span>;</span><br><span class="line">visible.add(general).add(gui);</span><br></pre></td></tr></table></figure>
+<p>剩下的就是解析处理选项了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">variables_map vm;</span><br><span class="line">store(parse_command_line(ac, av, all), vm);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;help&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; visible;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;help-module&quot;</span>)) &#123;</span><br><span class="line">    <span class="type">const</span> <span class="built_in">string</span>&amp; s = vm[<span class="string">&quot;help-module&quot;</span>].as&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="string">&quot;gui&quot;</span>) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; gui;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (s == <span class="string">&quot;backend&quot;</span>) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; backend;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Unknown module &#x27;&quot;</span></span><br><span class="line">             &lt;&lt; s &lt;&lt; <span class="string">&quot;&#x27; in the --help-module option\n&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (vm.count(<span class="string">&quot;num-threads&quot;</span>)) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;The &#x27;num-threads&#x27; options was set to &quot;</span></span><br><span class="line">         &lt;&lt; vm[<span class="string">&quot;num-threads&quot;</span>].as&lt;<span class="type">int</span>&gt;() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码可以参见文件<code>example/option_groups.cpp</code>。</p>
+<h3 id="custom-validators">Custom Validators</h3>
+<p>默认情况下，将字符串转换为C++类型时是借助<code>iostream</code>实现的。这有时不太适宜。该库允许用户为特定类型自定义转换过程。为了实现这个目的，用户需要定义合适的<code>validate</code>的重载函数。</p>
+<p>首先，定义个简单的类：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">magic_number</span> &#123;</span></span><br><span class="line">public:</span><br><span class="line">    magic_number(<span class="type">int</span> n) : n(n) &#123;&#125;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>之后，重载函数<code>validate</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">validate</span><span class="params">(boost::any&amp; v</span></span><br><span class="line"><span class="params">              <span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;&amp; values,</span></span><br><span class="line"><span class="params">              magic_number* target_type,</span></span><br><span class="line"><span class="params">              <span class="type">int</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">static</span> regex <span class="title function_">r</span><span class="params">(<span class="string">&quot;\\d\\d\\d-(\\d\\d\\d)&quot;</span>)</span>;</span><br><span class="line"></span><br><span class="line">    using namespace boost::program_options;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Make sure no previous assignment to &#x27;a&#x27; was made.</span></span><br><span class="line">    validators::check_first_occurrence(v);</span><br><span class="line">    <span class="comment">// Extract the first string from &#x27;values&#x27;.</span></span><br><span class="line">    <span class="comment">// If there is more than one string,</span></span><br><span class="line">    <span class="comment">// it&#x27;s an error, and exception will be thrown.</span></span><br><span class="line">    <span class="type">const</span> <span class="built_in">string</span>&amp; s = validators::get_single_string(values);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do regex match and convert the interesting part to int.</span></span><br><span class="line">    smatch match;</span><br><span class="line">    <span class="keyword">if</span> (regex_match(s, match, r)) &#123;</span><br><span class="line">        v = any(magic_number(lexical_cast&lt;<span class="type">int</span>&gt;(match[<span class="number">1</span>])));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        thrown validation_error(validation_error::invalid_option_value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述函数<code>validate</code>有四个参数。第一个参数是存储该值的变量，在上例中该值要么为空要么就是类型为<code>magic_number</code>的实例；第二个参数是在下一个选项中查找到的字符串等；剩余两个参数是为了满足一些编译器的模板特异化以及<strong>partial
+function template ordering</strong>。</p>
+<p>该函数首先保证我们对同一个选项只处理一次；之后检查了传入的第一个字符串；接着使用库<code>Boost.Regex</code>来匹配该值，并将该值存在变量<code>v</code>中。</p>
+<p>上述完整的例子可以参见文件<code>example/regex.cpp</code>。</p>
+<h3 id="unicode-support">Unicode Support</h3>
+<p>为了让该库支持字符集<code>Unicode</code>，你需要：</p>
+<ul>
+<li>对字符集Unicode的输入应当使用适用于Unicode的解析器</li>
+<li>对必要的选项提供Unicode支持</li>
+</ul>
+<p>大部分的解析器都有Unicode版本。例如函数<code>parse_command_line</code>有个<code>wchar_t</code>类型的重载版本。</p>
+<p>即便部分解析器是适用于Unicode的，你也不必对所有的选项的定义都进行修改。例如，对于为<code>integer</code>的选项就不必进行什么修改。为了实现Unicode，你可能需要定义一些适用于Unicode的选项。他们与通常的选项的不同点在于：他们解析类型为<code>wstring</code>的输入，并使用宽字符流进行解析。创建一个适用于Unicode的选项很简单：只需要用函数<code>wvalue</code>替换原先的<code>value</code>。</p>
+<p>当ASCII解析器解析ASCII的选项或者Unicode解析器解析Unicode的选项时，数据根本不会发生改变。但如果两者不匹配时会发生什么呢？该库将自动转换，将Unicode转化为本地的8位编码。举例来说，如果命令行是ASCII，但是选项定义为<code>wstring</code>类型，则ASCII输入将被自动转换为Unicode。</p>
+<p>为了实现上述的转换，该库使用了<code>codecvt&lt;wchar_t, char&gt;</code>（the
+library uses the codecvt&lt;wchar_t, char&gt; locale facet from the
+global
+locale.）如果你想使用本地的8位编码（而不是7位的ASCII子集），你的应用最前面应当有如下代码：<code>locale::global(locale(""));</code>，这样就可以根据用户选择的进行转换。</p>
+<p>至于如何检验自己使用的C++实现是否支持本地化，可以参见Boost官方文档。</p>
+<h3 id="allowing-unknown-options">Allowing Unknown Options</h3>
+<p>通常情况下，程序没有识别出option的名称时将抛出异常。但有时，我们的应用可能只是用库<code>program_options</code>来处理一部分的命令时，或者你只处理一部分选项而将另一部分传给其他程序处理等。<br />
+应对上述情形时，你可以使用<code>basic_command_line_parser</code>来解析并如下调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">parsed_options parsed = command_line_parser(argc, argv)</span><br><span class="line">                        .options(desc)</span><br><span class="line">                        .allow_unregistered().run();</span><br></pre></td></tr></table></figure>
+<p>对于每一个看起来像选项但又没有确定名字的，都会被创建一个类型为<code>basic_option</code>的实例，并添加到<code>parsed</code>。该实例的字段<code>string_key</code>与<code>value</code>将被设置为该标识符按照已有的句法解析的结果，字段<code>unregistered</code>的值将为<code>true</code>，字段<code>original_tokens</code>将被设置为命令行中的原有字段。<br />
+如果你想将这些未识别出来的选项收集起来传给其他程序处理，则可以使用函数<code>collect_unrecognized</code>。这个函数将手机所有没被识别的选项的标识符（也可以包含<strong>positional
+options</strong>）。假设你只处理一部分选项，根本不处理positional
+options，你可以如下调用该函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; to_pass_further = collect_unrecognized(parsed.options, include_positional);</span><br></pre></td></tr></table></figure>
+<h2 id="design-discussion">Design Discussion</h2>
+<p>这节将讨论一些设计问题。</p>
+<h3 id="unicode-support-1">Unicode Support</h3>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="http://www.boost.org/doc/libs/1_63_0/doc/html/program_options.html">Boost.Program_options
+- Boost.org</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/02/21/howto/boost/program-options/" title="boost &#x2F; program options">https://wrran.github.io/blog/2017/02/21/howto/boost/program-options/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/boost/" rel="tag"># boost</a>
+              <a href="/tags/program-options/" rel="tag"># program options</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/02/21/acm/leetcode/0122-best-time-to-buy-and-sell-stock-ii/" rel="prev" title="LC[0122] - Best Time to Buy and Sell Stock II">
+                  <i class="fa fa-angle-left"></i> LC[0122] - Best Time to Buy and Sell Stock II
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/02/22/acm/leetcode/0121-best-time-to-buy-and-sell-stock-i/" rel="next" title="LC[0121] - Best Time to Buy and Sell Stock">
+                  LC[0121] - Best Time to Buy and Sell Stock <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

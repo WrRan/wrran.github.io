@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统 - 概述">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/16/review/distributed-system/1-introduction/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-16T04:44:39.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.779Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="distributed system">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/16/review/distributed-system/1-introduction/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/16/review/distributed-system/1-introduction/","path":"blog/2017/12/16/review/distributed-system/1-introduction/","title":"分布式系统 - 概述"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式系统 - 概述 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-text">目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7"><span class="nav-text">资源可访问性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E6%98%8E%E6%80%A7"><span class="nav-text">透明性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-text">类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%8F%E6%98%8E%E5%BA%A6"><span class="nav-text">透明度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E6%80%A7"><span class="nav-text">开放性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7"><span class="nav-text">可扩展性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-text">可扩展性问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%8A%80%E6%9C%AF"><span class="nav-text">扩展技术</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B-1"><span class="nav-text">类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F"><span class="nav-text">分布式计算系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BF%A1%E6%81%AF%E7%B3%BB%E7%BB%9F"><span class="nav-text">分布式信息系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-text">事务处理系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90"><span class="nav-text">企业应用集成</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%99%AE%E9%80%82%E5%B5%8C%E5%85%A5%E7%B3%BB%E7%BB%9F"><span class="nav-text">分布式普适（嵌入）系统</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/16/review/distributed-system/1-introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式系统 - 概述 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式系统 - 概述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-16 12:44:39" itemprop="dateCreated datePublished" datetime="2017-12-16T12:44:39+08:00">2017-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/distributed-system/" itemprop="url" rel="index"><span itemprop="name">distributed-system</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>三个臭皮匠赛过诸葛亮</p>
+</blockquote>
+<span id="more"></span>
+<p>本书涉及两大块内容：分布式系统的原理及分布式应用的范型。</p>
+<h1 id="概述">概述</h1>
+<p>随着（一）单机计算机性能的提升、价格的下降，高性能计算设备越发普及（二）高速计算机网络的发展，让计算机间的设备互联更易实现；在这两种技术的推动下，出现了与传统的<strong>集中式系统</strong>相区别的所谓的<strong>分布式系统</strong>。</p>
+<h2 id="定义">定义</h2>
+<p>在教材中给出了分布式的粗略描述：<strong>分布式系统</strong>是若干独立计算机的集合，这些计算机对于用户来说就像是单个相关系统。其内涵在软硬件上就是：硬件上，机器本身是独立的；软件上，对用户来说，就像是与单个系统打交道。<br />
+分布式系统的特性有：</p>
+<ol type="1">
+<li>各种计算机之间的差别及计算机之间的通讯方式的差异对用户是隐藏的，用户也看不到分布式系统的内部组织结构</li>
+<li>用户和应用程序无论何时何地都能够以一种一致和统一的方式与分布式系统进行交互</li>
+</ol>
+<p>为了让种类各异的计算机和网络都呈现为单个系统，分布式系统常常通过一个“软件层”（被称为<strong>中间件</strong>），该软件层在逻辑上位于由用户和应用程序组成的高层与操作系统组成的底层之间。</p>
+<h2 id="目标">目标</h2>
+<p>分布式系统真正物有所值的四个关键目标：</p>
+<ol type="1">
+<li>分布式系统必须能够让用户方便地访问资源</li>
+<li>分布式系统必须隐藏在一个网络上分布这一事实</li>
+<li>分布式系统必须是开放的</li>
+<li>分布式系统必须是可扩展的</li>
+</ol>
+<h3 id="资源可访问性">资源可访问性</h3>
+<p>分布式系统的最主要目标是使用户能够方便地访问远程资源，并且以一种受控的方式与其他用户共享资源。</p>
+<p>用处：协作和信息交换<br />
+隐患：安全性，对通信的跟踪行为</p>
+<h3 id="透明性">透明性</h3>
+<p>如果一个分布式系统能够在用户和应用程序面前呈现为单个计算机系统，这样的分布式系统就被称为是<strong>透明的</strong>。<br />
+下面将分别介绍透明性的类别，再分析是否在任何情况下都需要保持透明性。</p>
+<h4 id="类型">类型</h4>
+<p>透明性的概念包括如下几个方面：</p>
+<table>
+<thead>
+<tr>
+<th>透明性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>访问</td>
+<td>隐藏数据表示形式的不同以及资源访问方式的不同</td>
+</tr>
+<tr>
+<td>位置</td>
+<td>隐藏资源所在位置</td>
+</tr>
+<tr>
+<td>迁移</td>
+<td>隐藏资源是否移动到另一个位置</td>
+</tr>
+<tr>
+<td>重定位</td>
+<td>隐藏资源是否在使用过程中移动到另一个位置</td>
+</tr>
+<tr>
+<td>复制</td>
+<td>隐藏是否对资源进行复制</td>
+</tr>
+<tr>
+<td>并发</td>
+<td>隐藏资源是否由若干相互竞争的用户共享</td>
+</tr>
+<tr>
+<td>故障</td>
+<td>隐藏资源的故障和恢复</td>
+</tr>
+</tbody>
+</table>
+<p><strong>访问透明性</strong>是指对不同数据表示形式及资源访问方式的隐藏。如：大端编码或小端编码；或不同操作系统中文件系统的访问方式。<br />
+透明性中有一大类是关于<em>资源位置</em>的。<strong>位置透明性</strong>是指用户无法判别资源在系统中的物理位置。<em>命名</em>
+在确保位置透明性上发挥了重要作用：如可以通过仅为资源分配逻辑名来实现位置透明性。<strong>迁移透明性</strong>是指分布式系统中的资源移动不会影响该资源的访问方式。<strong>重定向透明性</strong>是指分布式系统中的资源可以在接受访问的同时进行重新定位，而不引起用户和应用程序的注意：如当移动通信用户从一个地点一道另一个地点时，可以一直保持手机联网。<br />
+<em>复制</em>在分布式系统也是很重要的方面，它既可以增加系统的可用性或者提升系统性能。<strong>复制透明性</strong>是指对同一个资源存在多个副本这一事实的隐藏。其实，<em>复制透明性</em>蕴含<em>位置透明性</em>：为了对用户隐藏存在多个副本的事实，所有副本的名字都必须相同；不然系统就无法引用位于不同位置的多个副本。<br />
+<strong>并发透明性</strong>是指在存有竞争式资源共享的分布式系统中，让任何一个用户都不会感觉到他人也在使用自己正使用的资源，即必须确保对共享资源的并发访问不会破坏资源的一致状态。一致性资源可以通过<em>锁定机制</em>来保证，也可以使用更精致的<em>事务处理机制</em>。<br />
+<strong>故障透明性</strong>是指用户不会注意到某个资源（也许他从未听说过这个资源）无法正常工作，以及系统随后从故障中恢复的过程。这是分布式系统最为困难的问题之一；而屏蔽故障最大的困难在于无法区别<em>出现故障的资源</em>和<em>反应速度极慢的资源</em>。<br />
+<strong>持久性透明性</strong>是指分布系统对于资源位于易失性存储器中还是位于磁盘上的隐藏。</p>
+<h4 id="透明度">透明度</h4>
+<p>由于物理世界的限制，如信息传播速度快不过光速；或由于必须在高度的透明性和系统性能之间的权衡，不得不牺牲分布式系统中的某些某种程度的透明性。总之，在设计并实现分布式系统时，把实现分布的透明性作为目标是正确的，但应当将它与其他方面的问题结合起来考虑。</p>
+<h3 id="开放性">开放性</h3>
+<p>分布式系统的另一个重要目标是<strong>开放性</strong>：分布式系统根据一系列准则来提供服务，这些准则描述了所提供服务的语法和语义。在分布式系统中，服务通常是通过<strong>接口</strong>指定的，而接口一般是通过<strong>接口定义语言</strong>来描述的。这些让<em>语法</em>的限定更加容易，而困难的<em>语义</em>在实际中常常使用自然语言来描述。<br />
+良好的接口规范说明应当是完整且中立的。“完整”意味着完成接口实现不可少的所有内容都已经被规定好了；“中立”是指规范说明不应描述接口的实现应该是什么样子的。完整性和中立性对于实现互操作性和可移植性很重要。<em>互操作性</em>刻画了来自不同厂商的系统或组件的两种实现能够在何种程度上共存且协同工作，这种共存和协同工作只能依赖于通过双方在公共标准中规定的各自所提供的服务来完成；<em>可移植性</em>刻画了这样的性能：如果为分布式系统A开发了某个应用程序，且另一个分布式系统B与A具有相同的接口，该应用程序在不做任何修改的情况下在B上执行的可行程度。<br />
+<strong>开放性</strong>实质上也应当蕴含着<strong>可扩展性</strong>：可以方便地把不同开发人员开发的不同组件组合成整个系统；还必须能够方便地添加新组件、替换现有的组件，而不会对那些无须改动的组件造成影响。实现可扩展性的<strong>关键</strong>在于：要把系统组织成规模相对较小而且容易替换或者修改的组件的集合。这意味着我们不仅要提供最高层的接口定义（即对用户和应用程序可见的那部分内容），还应该提供系统内部各部分间的接口定义，且要描述它们的交互方式。在分布式系统中，进行改动的需求常常出自于某个不能对特定用户或者应用程序提供最优策略的组件。为此需要的是<strong>将策略与机制相分离</strong>。</p>
+<h3 id="可扩展性">可扩展性</h3>
+<p><strong>可扩展性</strong>在分布式系统中也是很重要的目标，包括三个方面：</p>
+<ol type="1">
+<li>规模上的可扩展性。指可以方便地把更多的用户和资源加入到分布式系统中去。</li>
+<li>地域上的可扩展性。指分布式系统中的用户和资源可以相隔极其遥远。</li>
+<li>管理上的可扩展性。指分布式系统跨越多个独立的管理机构，仍可以方便地对其进行管理。</li>
+</ol>
+<p>但上述三个方面中的某个或某些常会在扩展后表现出性能的下降。</p>
+<h4 id="可扩展性问题">可扩展性问题</h4>
+<p>同样我们从三个层面上来仔细看看会出现什么问题。只看<strong>规模上的可扩展性</strong>就有如下问题：</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>集中式服务</td>
+<td>供所有用户访问的单个服务器</td>
+</tr>
+<tr>
+<td>集中式数据</td>
+<td>单个在线电话薄</td>
+</tr>
+<tr>
+<td>集中式算法</td>
+<td>根据完整的信息来安排路由</td>
+</tr>
+</tbody>
+</table>
+<p>集中式服务的问题在于用户增多时该服务器将称为系统的瓶颈。集中式数据的问题是通信系统可能充满数据而成为系统的瓶颈。集中式算法的缺陷是需要收集系统完整的信息，并将最终的算法输出传播到整个系统，此时就不应当采用这种算法，而该采用<em>分散式算法</em>。<br />
+<strong>分散式算法</strong>一般有下列特性：</p>
+<ol type="1">
+<li>没有任何计算机拥有关于系统状态的完整信息</li>
+<li>计算机只根据本地信息做出决策</li>
+<li>某台计算机的故障不会使算法崩溃</li>
+<li>没有假设存在全局性的时钟</li>
+</ol>
+<p><strong>地域上的可扩展性</strong>在广域网上尤为突出：一是广域网时延长，而如果采用基于同步通信开发的程序则无法忍受；二是广域网的通信本质上是不可靠的、几乎总是点对点的。<br />
+<strong>管理上的可扩展性</strong>则更为尴尬，在许多情况下都还没有答案。这方面要解决的关键问题是在资源使用及付费、管理和安全问题上各域有着相互冲突的策略。</p>
+<h4 id="扩展技术">扩展技术</h4>
+<p>由于分布式系统中的可扩展性问题表现为服务器和网络能力有限所造成的性能问题，因此基本上只有三种扩展技术：</p>
+<ol type="1">
+<li>隐藏通信等待时间</li>
+<li>分布技术</li>
+<li>复制技术</li>
+</ol>
+<p>隐藏通信等待时间的技术对于解决“地域上的可扩展性”是比较适用的，其基本想法就是：尽量避免等待远程服务对请求的响应。如：当对远程计算机的某个服务发出请求时，在发出请求端，除了等待服务器响应之外，还可以利用这段时间做其他工作。本质上，以这种方式构建的应用程序是基于<strong>异步通信</strong>。当响应到来时，应用程序产生中断，并且调用专门的处理程序对前面发出的请求进行处理；另外一种选择是启动一个新的控制线程来执行请求，虽然该控制线程因为等待响应而受到阻塞，但是进程中的其他线程可以继续执行。然而，在许多应用程序无法充分利用异步通信的优点，如在交互式应用程序中客户端要根据回答再选择合适的操作。在这种情况下，较好的解决方案是<strong>减少通信的总量</strong>，如把由服务器完成的部分计算工作交由请求服务的客户端进程来进行。<br />
+<strong>分布技术</strong>也是很重要的扩展技术，它是指把某个组件分割成多个部分，然后再将它们分散到系统中去。如因特网DNS服务，再如万维网。另外，对组件进行复制并将副本分布到系统各处也可以缓解可扩展性过程中的性能下降问题。复制不仅能够增加可用性；而且还有助于组件间的负载平衡，从而使得性能得到提高；同时，在请求者附近的一个副本也可以很大程度上隐藏通信等待时间。<br />
+<strong>缓存</strong>是复制的一种特殊形式，其独特在于：是否要进行缓存是由访问资源的客户决定的，而不是由资源拥有者决定的。缓存与复制都存在严重的缺点：在进行缓存或复制以后，由于资源存在多个副本，修改其中的一个会导致它与其他副本不相同，进而导致<strong>一致性</strong>方面的问题。而多大程度容忍不一致性主要取决于资源的用法。高度一致性的关键问题是：对某个副本的更新必须立即传播到其他所有副本上；此外，如果两个更新操作并发执行，一般会要求每个副本都按照相同的次序进行更新。对这些情形的处理多需要采取某些<em>全局同步机制</em>，但以一种可扩展的方式来实现这样的机制是极为困难的，甚至是不可能的。因此，通过复制来提高可扩展性将会引入另一种本质上不可扩展的解决方案。</p>
+<h2 id="类型-1">类型</h2>
+<p>分布式系统主要有三种不同类型：分布式计算系统、分布式信息系统和分布式嵌入系统。</p>
+<h3 id="分布式计算系统">分布式计算系统</h3>
+<p>分布式系统一个重要的分类就是<strong>用于高性能计算任务的系统</strong>。<br />
+粗略地说，可以分为两个子分组：</p>
+<ol type="1">
+<li><strong>集群计算</strong>：底层硬件是由类似的工作站或PC集组成的，通过高速的局域网紧密连接起来，且每个结点运行的是相同操作系统。</li>
+<li><strong>网格计算</strong>：该类型的分布式系统通过构建成一个计算机系统联盟，其中的每个系统归属于不同的管理域，且在硬件、软件和部署网络技术上也差别很大。</li>
+</ol>
+<h3 id="分布式信息系统">分布式信息系统</h3>
+<p>分布式系统另一个重要分类是在组织中的应用，这些组织面临大量的网络应用，但这些应用之间的互操作性很差。<strong>分布式信息系统</strong>即是提供一种基础设施，可以把这些应用集成到企业范围内的信息系统中去。<br />
+我们按照集成程度进行分类。最低级的集成就是允许客户端把多个请求（可能是发往多个服务器的）封装成单个较大的请求，并使这个较大的请求作为一个<em>分布式事务处理</em>来运行（关键点是要么所有请求被运行，要么所有都不运行）。这种系统被称为<strong>事务处理系统</strong>。随着应用程序变得更加复杂，并逐步分割为各自独立的组件（<em>最明显</em>的是把数据库组件与事务处理组件分开），通过让应用程序直接与其他程序进行通信，也可以实现集成。这就是现在大型企业所关注的<strong>企业应用集成</strong>。</p>
+<h4 id="事务处理系统">事务处理系统</h4>
+<p>事务处理的突出特征是要么所有这些操作都被运行，要么都不运行。这些操作可以是系统调用、库过程或实现语言的分支语句等。<br />
+具体地说，事务处理具有以下四种特性（ACID）：</p>
+<ol type="1">
+<li>原子性：对外部来说，事务处理的中间状态是不可见的</li>
+<li>一致性：事务处理不会违反系统的不变形</li>
+<li>独立性：并发的事务处理不会互相干扰</li>
+<li>持久性：事务处理一旦提交，所发生的改变是永久性的</li>
+</ol>
+<p>至此，事务处理是在单个的数据库上进行定义的。<strong>嵌套式事务处理</strong>是由多个子事务处理构成的。上面所说的<em>持久性</em>只适用于<em>最顶层</em>的事务处理。在分布式系统中，嵌套式事务处理很重要，因为它们提供了一种很自然的方法，可以把一个事务处理分布到多台机器上，它们是按照原始事务处理工作的逻辑分支进行的。在企业中间件系统的早期，负责处理分布式或嵌套式事务处理的组件在服务器或数据库级上构成了集成应用的核心。这种组件被称为<strong>事务处理监视器</strong>或简称为<strong>TP监视器</strong>。</p>
+<h4 id="企业应用集成">企业应用集成</h4>
+<p>应用程序与其关联的数据库越是独立，就越需要有工具来把这些与数据库无关的应用程序集成到一起。特别是，应用程序组件之间应当可以直接进行通信，而不仅限于通过由事务处理系统所支持的请求/回复。应用程序间的通信需求导致出现了不同的通信模式。<br />
+下面介绍两类通信中间件：<br />
+<strong>远程过程调用（Rmote Procedure Call,
+RPC）</strong>可以通过一个本地过程调用，有效地往另一个应用程序组件发送一个请求；本地过程调用可以使其请求封装成一个消息，并发送给被调用者；同样，过程调用的结果被发送回来并返给应用程序。而调用远程对象的技术，被称为<strong>远程方法调用（Remote
+Method Invocation,
+RMI）</strong>。RMI与RPC实质上是相同的，只不过RMI操作的是对象而不是应用程序。RPC和RMI的不足之处是：调用者和被调用者都必须正在运行之中，且必须正确地知道如何引用对方。<br />
+RPC和RMI的缺陷导致了<strong>面向消息的中间件（Message-Oriented
+Middleware,
+MOM）</strong>的产生：应用程序只需要发送一个消息给逻辑意义上的联系点（通常用目标来描述）；同样，应用程序也可以表明它对某些类型的消息感兴趣，通信中间件会将这些消息移交给这些应用程序。这种也被称为所谓的<strong>分布/订阅（Publish/Subscribe）</strong>系统。</p>
+<h3 id="分布式普适嵌入系统">分布式普适（嵌入）系统</h3>
+<p>上述两类分布式系统的最大特点就是<em>稳定性</em>：结点是固定的，具有或多或少的持续性和高质量的网络连接。但移动和嵌入式计算设备的一大特点就是<strong>不稳定性</strong>是其默认的行为，并且这些设备缺乏人的管理控制或充其量由其所有者进行配置。<br />
+普适应用程序的需求可以归纳为以下三点：</p>
+<ol type="1">
+<li>接受上下文的变化：设备必须知道其环境可能总是在变化的。</li>
+<li>促使自主合成：普适系统中的很多设备可能被不同用户以不同的俄方时使用，因此通过用户或自动化（但可控的）干预，可以很容易地配置运行在设备上的应用程序簇。</li>
+<li>认可共享为默认行为：普适系统中的设备要经常加入到系统中，以便访问（或提供）信息；这就要求有容易读取、存储、管理和共享信息的方法。</li>
+</ol>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/3108801/">分布式系统的原理与范型</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/16/review/distributed-system/1-introduction/" title="分布式系统 - 概述">https://wrran.github.io/blog/2017/12/16/review/distributed-system/1-introduction/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/distributed-system/" rel="tag"># distributed system</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/15/people-say/171215-01/" rel="prev" title="写给未来的自己">
+                  <i class="fa fa-angle-left"></i> 写给未来的自己
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/17/review/distributed-system/2-architecture/" rel="next" title="分布式系统 - 体系结构">
+                  分布式系统 - 体系结构 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

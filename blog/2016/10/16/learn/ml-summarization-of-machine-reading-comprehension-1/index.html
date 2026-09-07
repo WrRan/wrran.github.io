@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="I want to understand you …">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习《机器阅读理解任务综述》 - 算法篇">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/10/16/learn/ml-summarization-of-machine-reading-comprehension-1/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="I want to understand you …">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-10-16T05:06:15.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.704Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="machine reading comprehension">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/10/16/learn/ml-summarization-of-machine-reading-comprehension-1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/10/16/learn/ml-summarization-of-machine-reading-comprehension-1/","path":"blog/2016/10/16/learn/ml-summarization-of-machine-reading-comprehension-1/","title":"学习《机器阅读理解任务综述》 - 算法篇"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>学习《机器阅读理解任务综述》 - 算法篇 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3%E4%BB%BB%E5%8A%A1%E7%BB%BC%E8%BF%B0"><span class="nav-text">机器阅读理解任务综述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BC%A0%E7%BB%9F%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">基于传统特征工程的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memory-network"><span class="nav-text">Memory Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%B1%82%E6%AC%A1%E8%AF%AD%E4%B9%89%E7%9A%84%E5%9B%BE%E5%8C%B9%E9%85%8D%E6%96%B9%E6%B3%95"><span class="nav-text">基于深层次语义的图匹配方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#more"><span class="nav-text">MORE</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/10/16/learn/ml-summarization-of-machine-reading-comprehension-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="学习《机器阅读理解任务综述》 - 算法篇 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          学习《机器阅读理解任务综述》 - 算法篇
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-10-16 13:06:15" itemprop="dateCreated datePublished" datetime="2016-10-16T13:06:15+08:00">2016-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>I want to understand you …</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="机器阅读理解任务综述">机器阅读理解任务综述</h1>
+<p>本博文主要是学习林鸿宇等的《机器阅读理解任务综述》过程中的整理。<br />
+相比较于传统的自然语言处理任务，机器阅读理解任务涉及到词法、句法、语法、语义和语用等多方面的信息，需要综合运用文本的表示、分析、理解、推理等自然语言处理与理解技术。</p>
+<p>形式化地说，解决阅读理解问题可以表示为寻求<span
+class="math inline"><em>P</em>(<em>A</em>|<em>Q</em>, <em>C</em>)</span>的最优解的过程，其中<span
+class="math inline"><em>A</em></span>表示候选答案，<span
+class="math inline"><em>Q</em></span>表示问题本身，<span
+class="math inline"><em>C</em></span>表示给定的文档（表示文档时，更倾向于使用符号<span
+class="math inline"><em>D</em></span>）或者上下文信息。<br />
+要让机器能够完成阅读理解任务，我们必须解决3个重要的问题：</p>
+<ol type="1">
+<li><em>表示问题</em>：我们该如何将自然语言转化为计算机可读的表示形式，并且能够从这种表示中得到完成阅读理解任务所需的信息。</li>
+<li><em>检索问题</em>：由于阅读理解的上下文较为宽泛，因此如何从大规模的上下文信息中检索出与问题以及答案相关的部分是一个重要的问题。检索结果的质量将直接决定了阅读理解任务回答的质量。</li>
+<li><em>答案生成问题</em>：如何根据问题以及检索得到的相关上下文，选择或生成所需要的答案。</li>
+</ol>
+<p>当前提出的解决该问题的方案，多是把阅读理解问题当成一个匹配问题或者打分问题来解决的。对于给定的<span
+class="math inline">(<em>D</em>, <em>Q</em>, <em>A</em>)</span>三元组，其中<span
+class="math inline"><em>D</em></span>代表文档，<span
+class="math inline"><em>Q</em></span>代表问题，<span
+class="math inline"><em>A</em></span>代表答案，有如下三种解决思路：</p>
+<ol type="1">
+<li>将每个<span
+class="math inline">(<em>Q</em>, <em>A</em>)</span>对通过某些启发式规则合并成一个<em>hypothesis</em>，然后计算<em>hypothesis</em>与<span
+class="math inline"><em>D</em></span>的匹配情况</li>
+<li>综合考虑<span class="math inline"><em>D</em></span>与<span
+class="math inline"><em>Q</em></span>，然后计算与<span
+class="math inline">(<em>D</em>, <em>Q</em>)</span>对最匹配的<span
+class="math inline"><em>A</em></span></li>
+<li>计算<span class="math inline"><em>A</em></span>在<span
+class="math inline"><em>D</em></span>下的具体表示，然后与<span
+class="math inline"><em>Q</em></span>做匹配</li>
+</ol>
+<p>在当下的任务中，每个问题的候选答案的个数总是<strong>有限的</strong>。因此总的来说，该问题被转化为一个为<span
+class="math inline">(<em>D</em>, <em>Q</em>, <em>A</em>)</span>三元组打分的排序问题。</p>
+<h1 id="算法">算法</h1>
+<p>针对机器阅读理解问题，现在有如下三种方案：</p>
+<ol type="1">
+<li>基于传统<strong>特征工程</strong>的方法</li>
+<li>基于神经网络的方法，这种方法以<strong>Memory
+Network</strong>为基本结构</li>
+<li>基于深层次的语义信息的<strong>图匹配算法</strong>，尤其适用于与事件有关的阅读理解问答</li>
+</ol>
+<h2 id="基于传统特征工程的方法">基于传统特征工程的方法</h2>
+<p>该算法的核心在于<strong>选取不同的特征</strong>，然后基于选取的特征构造并学习一个三元打分函数<span
+class="math inline"><em>f</em>(<em>a</em>, <em>q</em>, <em>d</em>)</span>，将得分最高的候选答案<span
+class="math inline"><em>a</em></span>作为问题<span
+class="math inline"><em>q</em></span>在文档<span
+class="math inline"><em>d</em></span>中的答案。较为常用的打分函数有线性模型和对数模型。</p>
+<p>当前被证明有效的<strong>浅层特征</strong>主要包括如下几类：</p>
+<ol type="1">
+<li>与答案本身相关：考察答案<span
+class="math inline"><em>A</em></span>在原文<span
+class="math inline"><em>D</em></span>中是否出现、出现的频率等信息</li>
+<li>答案与问题在原文中的关联：例如，考察答案<span
+class="math inline"><em>A</em></span>与问题<span
+class="math inline"><em>Q</em></span>中的词语在原文<span
+class="math inline"><em>D</em></span>中的距离，答案<span
+class="math inline"><em>A</em></span>与问题<span
+class="math inline"><em>Q</em></span>在原文<span
+class="math inline"><em>D</em></span>中的窗口序列的n-gram匹配度、答案<span
+class="math inline"><em>A</em></span>中的实体与问题<span
+class="math inline"><em>Q</em></span>中的实体的共现问题等。</li>
+<li>依存语法：该方法一般通过启发式规则将问题<span
+class="math inline"><em>Q</em></span>与答案<span
+class="math inline"><em>A</em></span>结合，然后抽取出依存关系对，同时对原文<span
+class="math inline"><em>D</em></span>进行依存句法分析，然后考察问题/答案对<span
+class="math inline"><em>Q</em>/<em>A</em></span>的依存句法与原文的依存句法的匹配情况。</li>
+<li>语篇关系：考察与问题<span
+class="math inline"><em>Q</em></span>相关的多个句子在原文<span
+class="math inline"><em>D</em></span>中的语篇关系。如一个以why开头的问句，则这个问题的多个相关句子在原文中可能存在因果关系。</li>
+</ol>
+<p>除了上述浅层的特征之外，还有一些较为<strong>深层次的语义特征</strong>被引入到该问题的解决方案中，包括：</p>
+<ol type="1">
+<li>语义框架匹配：考察答案/问题<span
+class="math inline"><em>A</em>/<em>Q</em></span>与文章<span
+class="math inline"><em>D</em></span>当中的句子的语义框架匹配程度。</li>
+<li>Word Embedding：使用了两种基于<em>word
+embedding</em>的方法，包括有<em>BOW</em>以及<em>基于依存树结构的匹配方法</em>。</li>
+</ol>
+<p>基于传统特征工程的方法的问题在于</p>
+<ol type="1">
+<li>由于大多数传统特征是基于离散的串匹配的，因此在解决表达的<strong>多样性问题</strong>上显得较为困难</li>
+<li>由于大多数特征工程的方法都是基于窗口匹配的，因此很难处理多个句子之间的<strong>长距离依赖问题</strong>。虽然近来有学者提出基于多种不同层次窗口的模型可以缓解该问题，但由于窗口或n-gram并不是一个最有效的语义单元，存在<strong>语义缺失</strong>（缺少部分使语义完整的词）或者<strong>噪音</strong>（引入与主体语义无关的词）等问题。</li>
+</ol>
+<h2 id="memory-network">Memory Network</h2>
+<p>在神经网络中，各种语义单元被表示为<em>连续的语义空间上的向量</em>，可以有效的解决<em>语义稀疏性</em>以及<em>复述</em>的问题。<br />
+在这个方向中，最具代表的是由Weston等人提出的Memory
+Network，其包括如下几个部分：</p>
+<ol type="1">
+<li>输入特征映射：将输入层（文本序列）转化到特征空间之中，类似于<code>embedding</code></li>
+<li>泛化层：根据新的输入，来更新旧的、已有的记忆</li>
+<li>输出特征层：根据现时的记忆，输出一个或多个特征向量作为反馈</li>
+<li>反馈层：将输出的特征空间的向量转换为现实空间中的反馈信息，如一个词。</li>
+</ol>
+<p>具体的说，Weston等人提出的是：</p>
+<ol type="1">
+<li>输入特征映射：以句子作为基本的输入单元，使用句子的BOW表示作为句子表示</li>
+<li>泛化层：直接将输入层的输入信号存储下来</li>
+<li>输出特征层：查找与当前输入最匹配的k个记忆向量作为输出的反馈。具体地，当<span
+class="math inline"><em>K</em> = 1</span>时，该模型首先输出一个特征向量，满足<br />
+<span
+class="math display"><em>o</em><sub>1</sub> = <em>O</em><sub>1</sub>(<em>x</em>, <em>m</em>) = <em>a</em><em>r</em><em>g</em><em>m</em><em>a</em><em>x</em><sub><em>i</em> = 1…<em>n</em></sub><em>s</em><sub><em>o</em></sub>(<em>x</em>, <em>m</em><sub><em>i</em></sub>)</span><br />
+即找出与当前输入最相似的从前记忆，其中<span
+class="math inline"><em>s</em><sub><em>o</em></sub></span>是一个打分函数，原文中使用的是<em>bilinear</em>的打分函数，有<br />
+<span
+class="math display"><em>s</em>(<em>x</em>, <em>y</em>) = <em>ϕ</em><sub><em>x</em></sub>(<em>x</em>)<sup><em>T</em></sup><em>U</em><sup><em>T</em></sup><em>U</em><em>ϕ</em><sub><em>y</em></sub>(<em>y</em>)</span><br />
+其中是<span
+class="math inline"><em>ϕ</em></span>将输入映射到特征向量（即句子映射到其BOW表示）的函数，则<span
+class="math inline"><em>U</em></span>可以理解为一个隐含空间中的<code>embedding</code>矩阵。<br />
+该相似度函数本质上度量的是<strong><span
+class="math inline"><em>x</em></span>与<span
+class="math inline"><em>y</em></span>中所有词的内积距离之和</strong>，是一种<code>matching</code>函数。<br />
+在查找完第一个相关记忆之后，我们在给定第一个记忆的基础上，获取第二个最相似记忆，即<br />
+<span
+class="math display"><em>o</em><sub>2</sub> = <em>O</em><sub>2</sub>(<em>x</em>, <em>m</em>) = <em>a</em><em>r</em><em>g</em><em>m</em><em>a</em><em>x</em><sub><em>i</em> = 1…<em>N</em></sub><em>s</em><sub><em>o</em></sub>([<em>x</em>, <em>m</em><sub>1</sub>], <em>m</em><sub><em>i</em></sub>)</span><br />
+在得到全部的输出特征之后，我们可以根据所检索到的相关记忆以及输入信息得到最终的反馈。</li>
+<li>反馈层：如果反馈需要的是一个词的话，我们可以做出如下定义：<br />
+<span
+class="math display"><em>r</em> = <em>a</em><em>r</em><em>g</em><em>m</em><em>a</em><em>x</em><sub><em>x</em> ∈ <em>W</em></sub><em>s</em><sub><em>r</em></sub>([<em>x</em>, <em>m</em><sub>1</sub>, <em>m</em>2], <em>w</em>)</span></li>
+</ol>
+<p>该模型可以很好的用于<em>QA问题</em>，只需要将文档的<em>BOW</em>作为记忆层，将<em>Question</em>作为最新的输入，然后通过该网络匹配原文中最相关的句子之后，即可得到相应的输出。<br />
+由于该模型保留了每一个输入语义单元（句子或者片段）的信息，因此在输出特征层可以很好的处理<strong>长距离依赖问题</strong>。同时由于在输出特征层使用了多层的结构，该模型可以处理<strong>多句之间的推理问题</strong>。</p>
+<p>但这个模型的中有<span
+class="math inline"><em>a</em><em>r</em><em>g</em><em>m</em><em>a</em><em>x</em></span>操作的存在，导致Weston等的模型必须使用是<strong>完全有监督</strong>的算法进行，即在训练的过程中不仅仅需要标注每个问题的答案，还需要标注有答案匹配的关键句子。对此，Subhaatear等人提出了一种端到端的模型，主要是正对原模型的<strong>输出层</strong>进行了修改，将原本的因匹配机制换成了<strong>一种基于attention的软匹配机制</strong>。<br />
+对于第<span
+class="math inline"><em>k</em></span>次匹配中的输入向量，其与每个记忆向量的匹配得分按照如下方式算出：<br />
+<span
+class="math display"><em>p</em><sub><em>i</em></sub> = <em>s</em><em>o</em><em>f</em><em>t</em><em>m</em><em>a</em><em>x</em>(<em>u</em><sub><em>k</em></sub><sup><em>T</em></sup><em>m</em><sub><em>i</em></sub>)</span><br />
+之后，根据<code>attention</code>的匹配结果，我们得到第<span
+class="math inline"><em>k</em></span>次匹配的输出结果：<br />
+<span
+class="math display"><em>o</em><sub><em>k</em></sub> = ∑<em>p</em><sub><em>i</em></sub><em>A</em><em>m</em><sub><em>i</em></sub></span><br />
+其中，<span
+class="math inline"><em>A</em></span>是记忆层到输出层的<code>embedding</code>参数矩阵。<br />
+之后，我们根据第<span
+class="math inline"><em>k</em></span>轮的输出结果，我们更新第<span
+class="math inline"><em>k</em> + 1</span>轮的输出信息<br />
+<span
+class="math display"><em>u</em><sub><em>k</em> + 1</sub> = <em>u</em><sub><em>k</em></sub> + <em>o</em><sub><em>k</em></sub></span></p>
+<p>Memory
+Network在阅读理解中被证明是一种有效方法，它将表示、检索、答案生成，由离散的空间转换到了连续的语义空间之中，从而可以有效的处理复述以及传统的<code>one-hot</code>词表示的数据稀疏问题。但如何在该框架下学习到更好的语义表示、如何更好的检索相关句子、如何更好的依据相关问题以及问题的生成答案都是需要我们努力的地方。</p>
+<h2 id="基于深层次语义的图匹配方法">基于深层次语义的图匹配方法</h2>
+<p>对于魔蝎<strong>需要引入外部知识</strong>进行更深层次的推理、几乎无法通过相似度匹配的阅读理解问题来说，我们就需要参考下<em>易于深层次语义的图匹配方法</em>的想法了。<br />
+Berant等人提出了一种图匹配算法，该方法：</p>
+<ol type="1">
+<li>首先通过类似于语义角色标注的方法，将整篇文章转化成一个图结构</li>
+<li>然后将问题与答案组合（称为查询），也转化为一个图结构</li>
+<li>最后考虑文章的图结构与查询的图结构之间的匹配度</li>
+</ol>
+<p>具体的，Berant等人针对<code>Biological Processes</code>问题，如下解决：</p>
+<ol type="1">
+<li>文章生成图结构：使用一种<em>扩展的语义角色标注</em>的方法。具体地，鉴于生化过程的核心是<strong>动词</strong>，因此文档使用了以动词（trigger）为核心来构造图。<br />
+作者将该语义图内的边分为两种：<strong>动词 -
+参数</strong>以及<strong>动词 - 动词</strong>连边。针对动词 -
+动词连边，又将动作A和动作B分为三种可能的关系：<code>cause</code>、<code>enable</code>和<code>prevent</code>，分别表示A是导致B的直接原因（即A发生后B立即发生）、A是B的发生条件（但B不一定紧随A发生）以及A阻止了B的发生。在动词
+-
+参数连边上，由于性质类似，沿用了语义角色标注中的相关标记。除此之外，文章还定义了一些启发式的约束条件，来保证全文标记的<em>一致性</em>。<br />
+最后，文章使用了一个<code>ILP</code>算法来求解每篇文章的图结构。</li>
+<li>问题/答案生成图结构：首先将一个问题/答案对组合转化成一个三元组，这个三元组中包含有一个源节点、目标节点以及一个由关系的正则表达式组成的边的组合。正则表达式是由问句的类型(直接导致、阻止、以及默认关系)根据规则而产生的，实际上就是指在文章图中可以接受的边的组合。这种转化是基于某些简单的启发式规则完成的。</li>
+<li>图匹配：在那之后，只需要将问题/答案三元组中的源节点与目标节点映射到文章中，并且检查文章图中两个节点之间是否存在满足正则表达式的边即可。这样，该阅读理解问题被转化成了一个图匹配问题。</li>
+</ol>
+<p>该方法的<strong>优点</strong>在于：由于引入了更深层次的语义结构，该方法能够捕捉到更深层次的语义信息，从而获得了更好的理解能力。同样，也是由于这种语义结构的定义是与问题高度相关的，并且结构的定义十分依赖于人工干预，导致这种方法成为一种领域相关的方法，应用的范围有较大限制。</p>
+<h1 id="数据集">数据集</h1>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMjM4NDU4MA==&amp;mid=2649191077&amp;idx=1&amp;sn=47ed5e2bdfca8aeb8092d47122036794&amp;chksm=82d8e50eb5af6c184d9d0f30cfe65bc820f4887d7b1420cc2dde5b492fef41a3fc75f817d01c&amp;mpshare=1&amp;scene=1&amp;srcid=1013bpGjKaWT9f6r4BPPu26x#rd">机器阅读理解任务综述</a></p>
+<h1 id="more">MORE</h1>
+<p>综述里面一长串参考文献中，你要看的有：<br />
+<a href="下次再看">TODO</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/10/16/learn/ml-summarization-of-machine-reading-comprehension-1/" title="学习《机器阅读理解任务综述》 - 算法篇">https://wrran.github.io/blog/2016/10/16/learn/ml-summarization-of-machine-reading-comprehension-1/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/machine-reading-comprehension/" rel="tag"># machine reading comprehension</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/10/15/howto/sails/2-routers/" rel="prev" title="Sails.js学习笔记 - 路由">
+                  <i class="fa fa-angle-left"></i> Sails.js学习笔记 - 路由
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/10/17/bugfix/mysql-1022/" rel="next" title="bugfix-mysql-1022">
+                  bugfix-mysql-1022 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

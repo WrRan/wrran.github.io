@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="善工必先利其器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Python Standard Library">
+<meta property="og:url" content="https://wrran.github.io/blog/2019/08/18/learn/python/stdlib/index/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="善工必先利其器">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-08-17T19:35:46.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.712Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="python-stdlib">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2019/08/18/learn/python/stdlib/index/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2019/08/18/learn/python/stdlib/index/","path":"blog/2019/08/18/learn/python/stdlib/index/","title":"The Python Standard Library"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>The Python Standard Library | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-text">常用标准库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%9B%AE%E5%BD%95"><span class="nav-text">完整目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8"><span class="nav-text">通用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7"><span class="nav-text">系统工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%B9%B3%E5%8F%B0%E6%97%A0%E5%85%B3%E9%80%9A%E7%94%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1"><span class="nav-text">系统平台无关（通用操作系统服务）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%B9%B3%E5%8F%B0%E7%9B%B8%E5%85%B3"><span class="nav-text">系统平台相关</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3%E6%A8%A1%E5%9D%97"><span class="nav-text">Windows系统相关模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#unix%E4%B8%93%E6%9C%89%E6%A8%A1%E5%9D%97"><span class="nav-text">Unix专有模块</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E9%97%A8%E7%BA%A7"><span class="nav-text">入门级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="nav-text">解释器相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="nav-text">内置函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%B8%B8%E9%87%8F"><span class="nav-text">内置常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">内置类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%BC%82%E5%B8%B8"><span class="nav-text">内置异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%92%8C%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9D%97"><span class="nav-text">数学和数学模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E8%AE%BF%E9%97%AE"><span class="nav-text">文件和目录访问</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%89%8B%E7%BA%A7"><span class="nav-text">高手级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F"><span class="nav-text">编程范式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9D%97"><span class="nav-text">函数式编程模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C"><span class="nav-text">并发执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9B%B8%E5%85%B3"><span class="nav-text">开发生命周期相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-text">开发工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%92%8C%E5%88%86%E6%9E%90"><span class="nav-text">调试和分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%89%93%E5%8C%85%E5%92%8C%E5%88%86%E5%8F%91"><span class="nav-text">软件打包和分发</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%A8%E7%81%B0%E7%BA%A7"><span class="nav-text">骨灰级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9C%8D%E5%8A%A1"><span class="nav-text">Python运行时服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89python%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-text">自定义Python解释器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97"><span class="nav-text">导入模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python%E8%AF%AD%E8%A8%80%E6%9C%8D%E5%8A%A1"><span class="nav-text">Python语言服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%9B%B8%E5%85%B3"><span class="nav-text">任务相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86"><span class="nav-text">文字处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E6%9C%8D%E5%8A%A1"><span class="nav-text">文本处理服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-text">数据处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-text">文件格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E6%A1%A3"><span class="nav-text">数据压缩和存档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E6%A0%87%E8%AE%B0%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-text">结构化标记处理工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1"><span class="nav-text">二进制数据服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-text">数据持久化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%BC%80%E5%8F%91"><span class="nav-text">网络开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="nav-text">网络和进程间通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-text">互联网数据处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E5%8D%8F%E8%AE%AE%E5%92%8C%E6%94%AF%E6%8C%81"><span class="nav-text">互联网协议和支持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BD%E9%99%85%E5%8C%96"><span class="nav-text">国际化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1"><span class="nav-text">多媒体服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E6%9C%8D%E5%8A%A1"><span class="nav-text">加密服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6%E7%95%8C%E9%9D%A2"><span class="nav-text">程序框架界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%82%E9%A1%B9"><span class="nav-text">杂项</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2019/08/18/learn/python/stdlib/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="The Python Standard Library | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          The Python Standard Library
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-18 03:35:46" itemprop="dateCreated datePublished" datetime="2019-08-18T03:35:46+08:00">2019-08-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/python/stdlib/" itemprop="url" rel="index"><span itemprop="name">stdlib</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>善工必先利其器</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="介绍">介绍</h1>
+<p>标准库意味着由官方维护，会随着语言的演变而演变；因而值得大下功夫，好好琢磨。</p>
+<p>标准库非常庞大，所提供的组件涉及范围十分广泛。该库包含了多个内置模块
+(以C编写)，Python
+程序员必须依靠它们来实现<strong>系统级功能</strong>，例如文件
+I/O；此外还有大量以Python编写的模块，提供了日常编程中许多问题的<strong>标准解决方案</strong>。</p>
+<h1 id="概述">概述</h1>
+<p>本文将罗列出这些标准库，但鉴于数量众多、功能复杂。<br />
+因此，先根据模块所针对的目标人群进行分类：入门级、高手级、骨灰级；之后根据其处理的问题进行大致分类（部分重叠）。</p>
+<p>但出于方便，单独列出一节简述常用标准库的功能。</p>
+<h1 id="常用标准库">常用标准库</h1>
+<h1 id="完整目录">完整目录</h1>
+<h2 id="通用">通用</h2>
+<p>这部分单独列出各个阶段玩家都会使用到的一些工具。</p>
+<h3 id="系统工具">系统工具</h3>
+<p>该部分主要用来支持调用操作系统的一些标准库。</p>
+<h4
+id="系统平台无关通用操作系统服务">系统平台无关（通用操作系统服务）</h4>
+<p>本章中描述的各模块提供了在（几乎）所有的操作系统上可用的操作系统特性的接口，例如文件和时钟。这些接口通常以
+Unix 或 C 接口为参照对象设计，不过在大多数其他系统上也可用。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>os</code></td>
+<td>操作系统接口模块</td>
+</tr>
+<tr>
+<td><code>io</code></td>
+<td>处理流的核心工具</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>时间的访问和转换</td>
+</tr>
+<tr>
+<td><code>argparse</code></td>
+<td>命令行选项、参数和子命令解析器</td>
+</tr>
+<tr>
+<td><code>getopt</code></td>
+<td>C风格的命令行解析器</td>
+</tr>
+<tr>
+<td><code>logging</code></td>
+<td>Python 的日志记录工具</td>
+</tr>
+<tr>
+<td><code>logging.config</code></td>
+<td>日志记录配置</td>
+</tr>
+<tr>
+<td><code>logging.handlers</code></td>
+<td>日志处理器</td>
+</tr>
+<tr>
+<td><code>getpass</code></td>
+<td>便携式密码输入工具</td>
+</tr>
+<tr>
+<td><code>curses</code></td>
+<td>终端字符单元显示的处理</td>
+</tr>
+<tr>
+<td><code>platform</code></td>
+<td>获取底层平台的标识数据</td>
+</tr>
+<tr>
+<td><code>errno</code></td>
+<td>标准errno系统符号</td>
+</tr>
+<tr>
+<td><code>ctypes</code></td>
+<td>Python 的外部函数库</td>
+</tr>
+</tbody>
+</table>
+<h4 id="系统平台相关">系统平台相关</h4>
+<h5 id="windows系统相关模块">Windows系统相关模块</h5>
+<h5 id="unix专有模块">Unix专有模块</h5>
+<h2 id="入门级">入门级</h2>
+<h3 id="解释器相关">解释器相关</h3>
+<h4 id="内置函数">内置函数</h4>
+<p>Python
+解释器内置了很多函数和类型，您可以在任何时候使用它们；具体目录参见<a
+target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/functions.html。">https://docs.python.org/zh-cn/3/library/functions.html。</a></p>
+<h4 id="内置常量">内置常量</h4>
+<p>有少数的常量存在于内置命名空间中。它们是：</p>
+<ul>
+<li><code>False</code></li>
+<li><code>True</code></li>
+<li><code>None</code></li>
+<li><code>NotImplemented</code></li>
+<li><code>Ellipsis</code>，等同于<code>...</code></li>
+<li><code>__debug__</code></li>
+</ul>
+<p>注解：变量名<code>None</code>，<code>False</code>，<code>True</code>
+和 <code>__debug__</code>
+无法重新赋值（赋值给它们，即使是属性名，将引发<code>SyntaxError</code>），所以它们可以被认为是“真正的”常数。</p>
+<p><code>site</code> 模块（在启动期间自动导入，除非给出 -S
+命令行选项）将几个常量添加到内置命名空间。
+它们对交互式解释器<code>shell</code>很有用，并且不应在程序中使用。</p>
+<ul>
+<li><code>quit(code=None)</code></li>
+<li><code>exit(code=None)</code>：当打印此对象时，会打印出一条消息，例如“Use
+quit() or Ctrl-D (i.e. EOF) to
+exit”，当调用此对象时，将使用指定的退出代码来引发 SystemExit。</li>
+<li><code>copyright</code></li>
+<li><code>credits</code>：打印或调用的对象分别打印版权或作者的文本。</li>
+<li><code>license</code>：当打印此对象时，会打印出一条消息“Type
+license() to see the full license
+text”，当调用此对象时，将以分页形式显示完整的许可证文本（每次显示一屏）。</li>
+</ul>
+<h4 id="内置类型">内置类型</h4>
+<p>主要内置类型有数字、序列、映射、类、实例和异常。<br />
+有些多项集类是可变的。它们用于添加、移除或重排其成员的方法将原地执行，并不返回特定的项，绝对不会返回多项集实例自身而是返回<code>None</code>。<br />
+有些操作受多种对象类型的支持；特别地，实际上所有对象都可以被比较、检测逻辑值，以及转换为字符串（使用<code>repr()</code>函数或略有差异的<code>str()</code>函数）。后一个函数是在对象由<code>print()</code>函数输出时被隐式地调用的。</p>
+<h4 id="内置异常">内置异常</h4>
+<p>在Python中，所有异常必须为一个派生自<code>BaseException</code>的类的实例。在带有提及一个特定类的<code>except</code>子句的<code>try</code>语句中，该子句也会处理任何派生自该类的异常类（但不处理<strong>它所派生出的异常类</strong>）。
+通过子类化创建的两个不相关异常类永远是不等效的，既使它们具有相同的名称。</p>
+<h4 id="数据结构">数据结构</h4>
+<p>本章节描述的模块提供了一系列专门的数据类型例如日期与时间、固定类型的数组、堆队列、同步队列与集合等。<br />
+Python同样提供一些内置的数据类型，特别的，<code>dict</code>，<code>list</code>，<code>set</code>与<code>frozenset</code>
+以及<code>tuple</code>。 <code>str</code>类通常指<strong>Unicode
+字符串</strong>，并且<code>bytes</code>通常指<strong>二进制数据</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>datetime</code></td>
+<td>基本的日期和时间类型</td>
+</tr>
+<tr>
+<td><code>calendar</code></td>
+<td>日历相关函数</td>
+</tr>
+<tr>
+<td><code>collections</code></td>
+<td>容器数据类型</td>
+</tr>
+<tr>
+<td><code>collections.abc</code></td>
+<td>容器的抽象基类</td>
+</tr>
+<tr>
+<td><code>heapq</code></td>
+<td>堆队列算法</td>
+</tr>
+<tr>
+<td><code>bisect</code></td>
+<td>数组二分查找算法</td>
+</tr>
+<tr>
+<td><code>array</code></td>
+<td>处理数值类型高效的数组</td>
+</tr>
+<tr>
+<td><code>weakref</code></td>
+<td>弱引用</td>
+</tr>
+<tr>
+<td><code>types</code></td>
+<td>动态创建类型，为内建类型提供指代</td>
+</tr>
+<tr>
+<td><code>copy</code></td>
+<td>浅层 (shallow) 和深层 (deep) 复制操作</td>
+</tr>
+<tr>
+<td><code>pprint</code></td>
+<td>数据美化输出</td>
+</tr>
+<tr>
+<td><code>reprlib</code></td>
+<td><code>repr()</code>的可替换实现</td>
+</tr>
+<tr>
+<td><code>enum</code></td>
+<td>对枚举（enumerations）进行支持</td>
+</tr>
+</tbody>
+</table>
+<h4 id="数学和数学模块">数学和数学模块</h4>
+<p>本章介绍的模块提供与数字和数学相关的函数和数据类型。<code>numbers</code>模块定义了数字类型的抽象层次结构。
+<code>math</code>和<code>cmath</code>模块包含浮点数和复数的各种数学函数。<code>decimal</code>模块支持使用任意精度算术的十进制数的精确表示。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>numbers</code></td>
+<td>数字的抽象基类</td>
+</tr>
+<tr>
+<td><code>math</code></td>
+<td>数学函数</td>
+</tr>
+<tr>
+<td><code>decimal</code></td>
+<td>十进制定点和浮点运算</td>
+</tr>
+<tr>
+<td><code>fractions</code></td>
+<td>分数</td>
+</tr>
+<tr>
+<td><code>random</code></td>
+<td>生成伪随机数</td>
+</tr>
+<tr>
+<td><code>statistics</code></td>
+<td>数学统计函数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="文件和目录访问">文件和目录访问</h4>
+<p>本章中描述的模块处理磁盘文件和目录。
+例如，有一些模块用于读取文件的属性，以可移植的方式操作路径以及创建临时文件。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pathlib</code></td>
+<td>面向对象的文件系统路径</td>
+</tr>
+<tr>
+<td><code>os.path</code></td>
+<td>常见路径操作</td>
+</tr>
+<tr>
+<td><code>fileinput</code></td>
+<td>提供多个输入流的迭代功能</td>
+</tr>
+<tr>
+<td><code>stat</code></td>
+<td>解释<code>stat()</code>的结果</td>
+</tr>
+<tr>
+<td><code>filecmp</code></td>
+<td>文件及目录的比较</td>
+</tr>
+<tr>
+<td><code>tempfile</code></td>
+<td>产生临时文件及文件夹</td>
+</tr>
+<tr>
+<td><code>glob</code></td>
+<td>Unix类型路径名扩展</td>
+</tr>
+<tr>
+<td><code>fnmatch</code></td>
+<td>Unix类型文件名匹配</td>
+</tr>
+<tr>
+<td><code>linecache</code></td>
+<td>随机访问文本行</td>
+</tr>
+<tr>
+<td><code>shutil</code></td>
+<td>高层次文件操作接口</td>
+</tr>
+<tr>
+<td><code>macpath</code></td>
+<td>Mac OS 9 路径操作函数</td>
+</tr>
+</tbody>
+</table>
+<p>更多：<br />
+<strong>模块
+os</strong>：操作系统接口，包括处理比<strong>Python文件对象</strong>更低级别文件的功能。<br />
+<strong>模块 io</strong>：Python的内置 I/O
+库，包括抽象类和一些具体的类，如文件 I/O 。<br />
+<strong>内置函数 open()</strong>：使用 Python
+打开文件进行读写的标准方法。</p>
+<h2 id="高手级">高手级</h2>
+<h3 id="编程范式">编程范式</h3>
+<h4 id="函数式编程模块">函数式编程模块</h4>
+<p>本章里描述的模块提供了函数和类，以支持函数式编程风格和在可调用对象上的通用操作。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>itertools</code></td>
+<td>为高效循环而创建迭代器的函数</td>
+</tr>
+<tr>
+<td><code>functools</code></td>
+<td>高阶函数和可调用对象上的操作</td>
+</tr>
+<tr>
+<td><code>operator</code></td>
+<td>标准运算符替代函数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="并发执行">并发执行</h4>
+<p>本章中描述的模块支持并发执行代码。
+适当的工具选择取决于要执行的任务（CPU密集型或IO密集型）和偏好的开发风格（事件驱动的协作式多任务或抢占式多任务处理）。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>threading</code></td>
+<td>基于线程的并行</td>
+</tr>
+<tr>
+<td><code>multiprocessing</code></td>
+<td>基于进程的并行</td>
+</tr>
+<tr>
+<td><code>concurrent</code></td>
+<td>启动并行任</td>
+</tr>
+<tr>
+<td><code>subprocess</code></td>
+<td>子进程管理</td>
+</tr>
+<tr>
+<td><code>sched</code></td>
+<td>事件调度器</td>
+</tr>
+<tr>
+<td><code>queue</code></td>
+<td>一个同步的队列类</td>
+</tr>
+<tr>
+<td><code>_thread</code></td>
+<td>底层多线程 API</td>
+</tr>
+<tr>
+<td><code>_dummy_thread</code></td>
+<td>_thread 的替代模块</td>
+</tr>
+<tr>
+<td><code>dummy_threading</code></td>
+<td>可直接替代 threading 模块。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="开发生命周期相关">开发生命周期相关</h3>
+<p>该部分主要是用来支撑软件工程的某些生命周期所需的功能。</p>
+<h4 id="开发工具">开发工具</h4>
+<p>本章中描述的各模块可帮你编写 Python 程序。例如，<code>pydoc</code>
+模块接受一个模块并根据该模块的内容来生成文档。<code>doctest</code> 和
+<code>unittest</code>
+这两个模块包含了用于编写单元测试的框架，并可用于自动测试所编写的代码，验证预期的输出是否产生。<code>2to3</code>
+程序能够将 Python 2.x 源代码翻译成有效的 Python 3.x 源代码。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>typing</code></td>
+<td>类型标注支持</td>
+</tr>
+<tr>
+<td><code>pydoc</code></td>
+<td>文档生成器及在线求助系统</td>
+</tr>
+<tr>
+<td><code>doctest</code></td>
+<td>测试交互性的Python示例</td>
+</tr>
+<tr>
+<td><code>unittest</code></td>
+<td>单元测试框架</td>
+</tr>
+<tr>
+<td><code>unittest.mock</code></td>
+<td>mock对象库</td>
+</tr>
+<tr>
+<td><code>2to3 - 自动将 Python 2 代码转为 Python 3 代码 | |</code>test<code>| 支持 Python 回归测试 | |</code>test.support<code>| Python 测试组曲的实用工具 | |</code>test.support.script_helper`</td>
+<td>Python执行测试的使用工具</td>
+</tr>
+</tbody>
+</table>
+<h4 id="调试和分析">调试和分析</h4>
+<p>这些库可以帮助你进行Python开发：调试器使你能够逐步执行代码，分析堆栈帧并设置断点等，而分析器运行代码并为你提供执行时间的详细分类，从而使你能够找出你程序中的瓶颈。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bdb</code></td>
+<td>debugger框架</td>
+</tr>
+<tr>
+<td><code>faulthandler</code></td>
+<td>转存 Python 错误回溯</td>
+</tr>
+<tr>
+<td><code>pdb</code></td>
+<td>Python的调试器</td>
+</tr>
+<tr>
+<td><code>timeit</code></td>
+<td>测量小代码片段的执行时间</td>
+</tr>
+<tr>
+<td><code>trace</code></td>
+<td>追溯 Python 语句执行情况</td>
+</tr>
+<tr>
+<td><code>tracemalloc</code></td>
+<td>跟踪内存分配</td>
+</tr>
+</tbody>
+</table>
+<h4 id="软件打包和分发">软件打包和分发</h4>
+<p>这些库可帮助你发布和安装 Python 软件。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>distutils</code></td>
+<td>构建和安装 Python 模块</td>
+</tr>
+<tr>
+<td><code>ensurepip</code></td>
+<td>引导 pip 安装器</td>
+</tr>
+<tr>
+<td><code>venv</code></td>
+<td>创建虚拟环境</td>
+</tr>
+<tr>
+<td><code>zipapp</code></td>
+<td>管理可执行的 Python zip压缩包</td>
+</tr>
+</tbody>
+</table>
+<h2 id="骨灰级">骨灰级</h2>
+<h3 id="python运行时服务">Python运行时服务</h3>
+<p>本章里描述的模块提供了和Python解释器及其环境交互相关的广泛服务。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sys</code></td>
+<td>系统相关的参数和函数</td>
+</tr>
+<tr>
+<td><code>sysconfig</code></td>
+<td>访问 Python’s 配置信息</td>
+</tr>
+<tr>
+<td><code>builtins</code></td>
+<td>内建对象</td>
+</tr>
+<tr>
+<td><code>__main__</code></td>
+<td>顶层脚本环境</td>
+</tr>
+<tr>
+<td><code>warnings</code></td>
+<td>警告控制</td>
+</tr>
+<tr>
+<td><code>dataclasses</code></td>
+<td>数据类</td>
+</tr>
+<tr>
+<td><code>contextlib</code></td>
+<td>with语句上下文的实用工具</td>
+</tr>
+<tr>
+<td><code>abc</code></td>
+<td>抽象基类</td>
+</tr>
+<tr>
+<td><code>atexit</code></td>
+<td>退出处理器</td>
+</tr>
+<tr>
+<td><code>traceback</code></td>
+<td>打印或检索堆栈回溯</td>
+</tr>
+<tr>
+<td><code>__future__</code></td>
+<td>Future 语句定义</td>
+</tr>
+<tr>
+<td><code>gc</code></td>
+<td>垃圾回收器接口</td>
+</tr>
+<tr>
+<td><code>inspect</code></td>
+<td>检查对象</td>
+</tr>
+<tr>
+<td><code>site</code></td>
+<td>site配置钩子</td>
+</tr>
+</tbody>
+</table>
+<h3 id="自定义python解释器">自定义Python解释器</h3>
+<p>本章中描述的模块允许编写类似于 Python 的交互式解释器的接口。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>code</code></td>
+<td>解释器基类</td>
+</tr>
+<tr>
+<td><code>codeop</code></td>
+<td>编译Python代码</td>
+</tr>
+</tbody>
+</table>
+<h3 id="导入模块">导入模块</h3>
+<p>本章中介绍的模块提供了导入其他Python模块和挂钩以自定义导入过程的新方法。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zipimport</code></td>
+<td>从zip压缩包中导入模块</td>
+</tr>
+<tr>
+<td><code>pkgutil</code></td>
+<td>包扩展的实用工具</td>
+</tr>
+<tr>
+<td><code>modulefinder</code></td>
+<td>查找脚本使用的模块</td>
+</tr>
+<tr>
+<td><code>runpy</code></td>
+<td>定位与执行 Python 模块</td>
+</tr>
+<tr>
+<td><code>importlib</code></td>
+<td>import 的实现</td>
+</tr>
+</tbody>
+</table>
+<h3 id="python语言服务">Python语言服务</h3>
+<p>Python 提供了许多模块来帮助使用 Python 语言。
+这些模块支持标记化、解析、语法分析、字节码反汇编以及各种其他工具。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parser</code></td>
+<td>访问 Python 解析树</td>
+</tr>
+<tr>
+<td><code>ast</code></td>
+<td>抽象语法树</td>
+</tr>
+<tr>
+<td><code>symtable</code></td>
+<td>访问 编译器的符号表</td>
+</tr>
+<tr>
+<td><code>symbol</code></td>
+<td>与 Python 解析树一起使用的常量</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>与Python解析树一起使用的常量</td>
+</tr>
+<tr>
+<td><code>keyword</code></td>
+<td>检验Python关键字</td>
+</tr>
+<tr>
+<td><code>tokenize</code></td>
+<td>Python源码的Tokenizer</td>
+</tr>
+<tr>
+<td><code>tabnanny</code></td>
+<td>模糊缩进检测</td>
+</tr>
+<tr>
+<td><code>pyclbr</code></td>
+<td>Python 类浏览器的支撑包</td>
+</tr>
+<tr>
+<td><code>py_compile</code></td>
+<td>编译 Python 源码</td>
+</tr>
+<tr>
+<td><code>compileall</code></td>
+<td>二进制编码 Python库</td>
+</tr>
+<tr>
+<td><code>dis</code></td>
+<td>Python 字节码反汇编器</td>
+</tr>
+<tr>
+<td><code>pickletools</code></td>
+<td>pickle开发者的工具箱</td>
+</tr>
+</tbody>
+</table>
+<h2 id="任务相关">任务相关</h2>
+<p>该部分罗列的是与需求域相关的一些标准库。</p>
+<h3 id="文字处理">文字处理</h3>
+<h4 id="文本处理服务">文本处理服务</h4>
+<p>本小节介绍的模块提供了广泛的字符串操作和其他文本处理服务。<br />
+在<strong>二进制数据服务</strong>之下描述的<code>codecs</code>模块也与文本处理高度相关。此外也请参阅Python内置字符串类型的文档文本序列类型
+– <code>str</code>。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>string</code></td>
+<td>常见的字符串操作</td>
+</tr>
+<tr>
+<td><code>re</code></td>
+<td>正则表达式操作</td>
+</tr>
+<tr>
+<td><code>difflib</code></td>
+<td>计算差异的辅助工具</td>
+</tr>
+<tr>
+<td><code>textwrap</code></td>
+<td>文本自动换行与填充</td>
+</tr>
+<tr>
+<td><code>unicodedata</code></td>
+<td>Unicode 数据库</td>
+</tr>
+<tr>
+<td><code>stringprep</code></td>
+<td>因特网字符串预备</td>
+</tr>
+<tr>
+<td><code>readline</code></td>
+<td>GNU readline 接口</td>
+</tr>
+<tr>
+<td><code>rlcompleter</code></td>
+<td>GNU readline 的补全函数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据处理">数据处理</h3>
+<h4 id="文件格式">文件格式</h4>
+<p>本章中描述的模块解析各种不是标记语言且与电子邮件无关的杂项文件格式。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>csv</code></td>
+<td>CSV 文件读写</td>
+</tr>
+<tr>
+<td><code>configparser</code></td>
+<td>Configuration file parser</td>
+</tr>
+<tr>
+<td><code>netrc</code></td>
+<td>netrc file processing</td>
+</tr>
+<tr>
+<td><code>xdrlib</code></td>
+<td>Encode and decode XDR data</td>
+</tr>
+<tr>
+<td><code>plistlib</code></td>
+<td>Generate and parse Mac OS X .plist files</td>
+</tr>
+</tbody>
+</table>
+<h4 id="数据压缩和存档">数据压缩和存档</h4>
+<p>本章中描述的模块支持 zlib、gzip、bzip2 和 lzma 数据压缩算法，以及创建
+ZIP 和 tar 格式的归档文件。参见由 shutil 模块提供的 Archiving operations
+。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zlib</code></td>
+<td>与 gzip 兼容的压缩</td>
+</tr>
+<tr>
+<td><code>gzip</code></td>
+<td>对 gzip 格式的支持</td>
+</tr>
+<tr>
+<td><code>bz2</code></td>
+<td>对 bzip2 压缩算法的支持</td>
+</tr>
+<tr>
+<td><code>lzma</code></td>
+<td>用 LZMA 算法压缩</td>
+</tr>
+<tr>
+<td><code>zipfile</code></td>
+<td>使用ZIP存档</td>
+</tr>
+<tr>
+<td><code>tarfile</code></td>
+<td>读写tar归档文件</td>
+</tr>
+</tbody>
+</table>
+<h4 id="结构化标记处理工具">结构化标记处理工具</h4>
+<p>Python 支持各种模块，以处理各种形式的结构化数据标记。
+这包括使用标准通用标记语言（SGML）和超文本标记语言（HTML）的模块，以及使用可扩展标记语言（XML）的几个接口。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>html</code></td>
+<td>超文本标记语言支持</td>
+</tr>
+<tr>
+<td><code>html.parser</code></td>
+<td>简单的 HTML 和 XHTML 解析器</td>
+</tr>
+<tr>
+<td><code>html.entities</code></td>
+<td>HTML 一般实体的定义</td>
+</tr>
+<tr>
+<td><code>xml.etree.ElementTree</code></td>
+<td>The ElementTree XML API</td>
+</tr>
+<tr>
+<td><code>xml.dom</code></td>
+<td>The Document Object Model API</td>
+</tr>
+<tr>
+<td><code>xml.dom.minidom</code></td>
+<td>最小 DOM 实现</td>
+</tr>
+<tr>
+<td><code>xml.dom.pulldom</code></td>
+<td>支持构建部分 DOM 树</td>
+</tr>
+<tr>
+<td><code>xml.sax</code></td>
+<td>SAX2 解析器</td>
+</tr>
+<tr>
+<td><code>xml.sax.handler</code></td>
+<td>SAX 处理器的基类</td>
+</tr>
+<tr>
+<td><code>xml.sax.saxutils</code></td>
+<td>SAX 实用工具</td>
+</tr>
+<tr>
+<td><code>xml.sax.xmlreader</code></td>
+<td>XML 解析器接口</td>
+</tr>
+<tr>
+<td><code>xml.parsers.expat</code></td>
+<td>实用 Expat 实现的快速XML解析</td>
+</tr>
+</tbody>
+</table>
+<h4 id="二进制数据服务">二进制数据服务</h4>
+<p>本章介绍的模块提供了一些操作二进制数据的基本服务操作。
+有关二进制数据的其他操作，特别是与文件格式和网络协议有关的操作，将在相关章节中介绍。<br />
+下面描述的一些库<strong>文本处理服务</strong>也可以使用<strong>ASCII</strong>兼容的二进制格式（例如<code>re</code>）或所有二进制数据（例如<code>difflib</code>）。<br />
+另外，请参阅Python的内置二进制数据类型的文档<strong>二进制序列类型</strong>
+— <code>bytes</code>, <code>bytearray</code>,
+<code>memoryview</code>。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>struct</code></td>
+<td>将字节串解读为打包的二进制数据</td>
+</tr>
+<tr>
+<td><code>codecs</code></td>
+<td>编解码器注册和相关基类</td>
+</tr>
+</tbody>
+</table>
+<h4 id="数据持久化">数据持久化</h4>
+<p>本章中描述的模块支持在磁盘上以持久形式存储 Python
+数据。<code>pickle</code>和<code>marshal</code>模块可以将许多 Python
+数据类型转换为字节流，然后从字节中重新创建对象。各种与 DBM
+相关的模块支持一系列基于散列的文件格式，这些格式存储字符串到其他字符串的映射。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pickle</code></td>
+<td>Python 对象序列化</td>
+</tr>
+<tr>
+<td><code>copyreg</code></td>
+<td><code>pickle</code>支撑函数的注册表</td>
+</tr>
+<tr>
+<td><code>shelve</code></td>
+<td>Python 对象持久化</td>
+</tr>
+<tr>
+<td><code>marshal</code></td>
+<td>内部 Python 对象序列化</td>
+</tr>
+<tr>
+<td><code>dbm</code></td>
+<td>UNIX “数据库”的接口</td>
+</tr>
+<tr>
+<td><code>sqlite3</code></td>
+<td>SQLite 数据库 DB-API 2.0 接口模块</td>
+</tr>
+</tbody>
+</table>
+<h3 id="网络开发">网络开发</h3>
+<h4 id="网络和进程间通信">网络和进程间通信</h4>
+<p>本章介绍的模块提供了网络和进程间通信的机制。</p>
+<p>某些模块仅适用于同一台机器上的两个进程，例如<code>signal</code>和<code>mmap</code>。其他模块支持两个或多个进程可用于跨机器通信的网络协议。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>asyncio</code></td>
+<td>异步 I/O</td>
+</tr>
+<tr>
+<td><code>socket</code></td>
+<td>底层网络接口</td>
+</tr>
+<tr>
+<td><code>ssl</code></td>
+<td>socket对象的TLS/SSL包装器</td>
+</tr>
+<tr>
+<td><code>select</code></td>
+<td>等待 I/O 完成</td>
+</tr>
+<tr>
+<td><code>selectors</code></td>
+<td>高级 I/O 复用库</td>
+</tr>
+<tr>
+<td><code>asyncore</code></td>
+<td>异步socket处理器</td>
+</tr>
+<tr>
+<td><code>asynchat</code></td>
+<td>异步 socket 指令/响应 处理器</td>
+</tr>
+<tr>
+<td><code>signal</code></td>
+<td>设置异步事件处理程序</td>
+</tr>
+<tr>
+<td><code>mmap</code></td>
+<td>内存映射文件支持</td>
+</tr>
+</tbody>
+</table>
+<h4 id="互联网数据处理">互联网数据处理</h4>
+<p>本章介绍了支持处理互联网上常用数据格式的模块。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td>电子邮件与 MIME 处理包</td>
+</tr>
+<tr>
+<td><code>json</code></td>
+<td>JSON 编码和解码器</td>
+</tr>
+<tr>
+<td><code>mailcap</code></td>
+<td>处理Mailcap文件 file handling</td>
+</tr>
+<tr>
+<td><code>mailbox</code></td>
+<td>管理不同格式的邮箱</td>
+</tr>
+<tr>
+<td><code>mimetypes</code></td>
+<td>将文件名映射为MIME类型</td>
+</tr>
+<tr>
+<td><code>base64</code></td>
+<td>Base16, Base32, Base64, Base85 数据编码</td>
+</tr>
+<tr>
+<td><code>binhex</code></td>
+<td>对binhex4文件进行编码和解码</td>
+</tr>
+<tr>
+<td><code>binascii</code></td>
+<td>二进制和 ASCII 码互转</td>
+</tr>
+<tr>
+<td><code>quopri</code></td>
+<td>MIME 可打印字符引用编码数据（MIME quoted-printable
+data）的解码与编码</td>
+</tr>
+<tr>
+<td><code>uu</code></td>
+<td>uuencode格式数据的编码与解码</td>
+</tr>
+</tbody>
+</table>
+<h4 id="互联网协议和支持">互联网协议和支持</h4>
+<p>本章介绍的模块实现了互联网协议并支持相关技术。 它们都是用 Python
+实现的。 这些模块中的大多数都需要存在依赖于系统的模块 socket
+，目前大多数流行平台都支持它。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>webbrowser</code></td>
+<td>方便的Web浏览器控制器</td>
+</tr>
+<tr>
+<td><code>cgi</code></td>
+<td>支持<strong>C</strong>ommon <strong>G</strong>ateway
+<strong>I</strong>nterface</td>
+</tr>
+<tr>
+<td><code>cgitb</code></td>
+<td>CGI脚本的追踪管理器</td>
+</tr>
+<tr>
+<td><code>wsgiref</code></td>
+<td>WSGI实用工具及参考实现</td>
+</tr>
+<tr>
+<td><code>urllib</code></td>
+<td>URL 处理模块</td>
+</tr>
+<tr>
+<td><code>urllib.request</code></td>
+<td>用于打开 URL 的可扩展库</td>
+</tr>
+<tr>
+<td><code>urllib.response</code></td>
+<td>urllib 使用的 Response 类</td>
+</tr>
+<tr>
+<td><code>urllib.parse</code></td>
+<td>将 URLs 解析为各组件</td>
+</tr>
+<tr>
+<td><code>urllib.error</code></td>
+<td>urllib.request 引发的异常类</td>
+</tr>
+<tr>
+<td><code>urllib.robotparser</code></td>
+<td>robots.txt 语法分析程序</td>
+</tr>
+<tr>
+<td><code>http.client</code></td>
+<td>HTTP 协议客户端</td>
+</tr>
+<tr>
+<td><code>ftplib</code></td>
+<td>FTP 协议客户端</td>
+</tr>
+<tr>
+<td><code>poplib</code></td>
+<td>POP3 协议客户端</td>
+</tr>
+<tr>
+<td><code>imaplib</code></td>
+<td>IMAP4 协议客户端</td>
+</tr>
+<tr>
+<td><code>nntplib</code></td>
+<td>NNTP 协议客户端</td>
+</tr>
+<tr>
+<td><code>smtplib</code></td>
+<td>SMTP 协议客户端</td>
+</tr>
+<tr>
+<td><code>smtpd</code></td>
+<td>SMTP 服务端</td>
+</tr>
+<tr>
+<td><code>telnetlib</code></td>
+<td>Telnet 客户端</td>
+</tr>
+<tr>
+<td><code>uuid</code></td>
+<td>UUID（RFC 4122） 对象</td>
+</tr>
+<tr>
+<td><code>socketserver</code></td>
+<td>网络服务器框架</td>
+</tr>
+<tr>
+<td><code>http.server</code></td>
+<td>HTTP 服务器</td>
+</tr>
+<tr>
+<td><code>http.cookies</code></td>
+<td>HTTP 状态管理</td>
+</tr>
+<tr>
+<td><code>http.cookiejar</code></td>
+<td>HTTP 客户端的 Cookie 处理</td>
+</tr>
+<tr>
+<td><code>xmlrpc</code></td>
+<td>XMLRPC 服务端与客户端模块</td>
+</tr>
+<tr>
+<td><code>xmlrpc.client</code></td>
+<td>XML-RPC 客户端</td>
+</tr>
+<tr>
+<td><code>xmlrpc.server</code></td>
+<td>基础的 XML-RPC 服务器</td>
+</tr>
+<tr>
+<td><code>ipaddress</code></td>
+<td>IPv4/IPv6 操作库</td>
+</tr>
+</tbody>
+</table>
+<h4 id="国际化">国际化</h4>
+<p>本章中介绍的模块通过提供选择要在程序信息中使用的语言的机制或通过定制输出以匹配本地约定来帮助你编写不依赖于语言和区域设置的软件。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gettext</code></td>
+<td>多语种国际化服务</td>
+</tr>
+<tr>
+<td><code>locale</code></td>
+<td>国际化服务</td>
+</tr>
+</tbody>
+</table>
+<h3 id="其他">其他</h3>
+<h4 id="多媒体服务">多媒体服务</h4>
+<p>本章描述的模块实现了主要用于多媒体应用的各种算法或接口。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>audioop</code></td>
+<td>操作原始音频数据</td>
+</tr>
+<tr>
+<td><code>aifc</code></td>
+<td>读写AIFF/AIFC文件</td>
+</tr>
+<tr>
+<td><code>sunau</code></td>
+<td>读写 Sun AU 文件</td>
+</tr>
+<tr>
+<td><code>wave</code></td>
+<td>读写WAV格式文件</td>
+</tr>
+<tr>
+<td><code>chunk</code></td>
+<td>读写IFF块文件</td>
+</tr>
+<tr>
+<td><code>colorsys</code></td>
+<td>颜色系统间的转换</td>
+</tr>
+<tr>
+<td><code>imghdr</code></td>
+<td>推测图像类型</td>
+</tr>
+<tr>
+<td><code>sndhdr</code></td>
+<td>推测声音文件的类型</td>
+</tr>
+<tr>
+<td><code>ossaudiodev</code></td>
+<td>访问兼容OSS的音频设备</td>
+</tr>
+</tbody>
+</table>
+<h4 id="加密服务">加密服务</h4>
+<p>本章中描述的模块实现了加密性质的各种算法。 它们可由安装人员自行决定。
+在Unix系统上，<code>crypt</code>模块也可以使用。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hashlib</code></td>
+<td>安全哈希与消息摘要</td>
+</tr>
+<tr>
+<td><code>hmac</code></td>
+<td>基于密钥的消息验证</td>
+</tr>
+<tr>
+<td><code>secrets</code></td>
+<td>为密钥生成安全的随机数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="程序框架界面">程序框架界面</h4>
+<p>本章中描述的模块是很大程度上决定程序结构的框架。
+目前，这里描述的模块都面向编写命令行接口。</p>
+<table>
+<thead>
+<tr>
+<th>LIBRARY</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>turtle</code></td>
+<td>海龟绘图</td>
+</tr>
+<tr>
+<td><code>cmd</code></td>
+<td>支持面向行的命令解释器</td>
+</tr>
+<tr>
+<td><code>shlex</code></td>
+<td>简单词法分析器</td>
+</tr>
+</tbody>
+</table>
+<h4 id="杂项">杂项</h4>
+<p>Tk图形用户界面：<a
+target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/tk.html">https://docs.python.org/zh-cn/3/library/tk.html</a><br />
+formatter (已移除，通用的输出排版）：<a
+target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/formatter.html">https://docs.python.org/zh-cn/3/library/formatter.html</a><br />
+contextvars（上下文变量管理）：<a
+target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/contextvars.html">https://docs.python.org/zh-cn/3/library/contextvars.html</a></p>
+<h1 id="参考资料">参考资料</h1>
+<p>Python3官方文档：<a
+target="_blank" rel="noopener" href="https://docs.python.org/3/library/">https://docs.python.org/3/library/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2019/08/18/learn/python/stdlib/index/" title="The Python Standard Library">https://wrran.github.io/blog/2019/08/18/learn/python/stdlib/index/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/python-stdlib/" rel="tag"># python-stdlib</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/18/learn/python/index/" rel="prev" title="python@cs-lang">
+                  <i class="fa fa-angle-left"></i> python@cs-lang
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/18/cheatsheet/cs-terms/" rel="next" title="CS常用术语">
+                  CS常用术语 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

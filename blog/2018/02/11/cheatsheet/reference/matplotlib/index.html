@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Matplotlib tries to make easy things easy and hard things possible.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Matplotlib - 常用方法及示例">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/02/11/cheatsheet/reference/matplotlib/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Matplotlib tries to make easy things easy and hard things possible.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-11T02:11:12.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.654Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="cheatsheet">
+<meta property="article:tag" content="matplotlib">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/02/11/cheatsheet/reference/matplotlib/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/02/11/cheatsheet/reference/matplotlib/","path":"blog/2018/02/11/cheatsheet/reference/matplotlib/","title":"Matplotlib - 常用方法及示例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Matplotlib - 常用方法及示例 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#concepts"><span class="nav-text">Concepts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#examples"><span class="nav-text">Examples</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#more"><span class="nav-text">More</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/02/11/cheatsheet/reference/matplotlib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Matplotlib - 常用方法及示例 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Matplotlib - 常用方法及示例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-11 10:11:12" itemprop="dateCreated datePublished" datetime="2018-02-11T10:11:12+08:00">2018-02-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/cheatsheet/" itemprop="url" rel="index"><span itemprop="name">cheatsheet</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/cheatsheet/reference/" itemprop="url" rel="index"><span itemprop="name">reference</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p><code>Matplotlib</code> tries to make easy things easy and hard
+things possible.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="concepts">Concepts</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Name</th>
+<th>Abstract</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Colormaps in Matplotlib</td>
+<td>How (and why) to choose a particular colormap.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/tutorials/colors/colormaps.html">Details</a></td>
+</tr>
+<tr>
+<td>Text Introduction</td>
+<td>Introduction to plottting and working with text in Matplotlib.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/tutorials/text/text_intro.html">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="examples">Examples</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Name</th>
+<th>Content</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plots with different scales</td>
+<td>Demonstrate how to do two plots on the same axes with different left
+and right scales.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/api/two_scales.html">Details</a></td>
+</tr>
+<tr>
+<td>Pyplot Annotate</td>
+<td>-</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/pyplots/pyplot_annotate.html">Details</a></td>
+</tr>
+<tr>
+<td>Boxplot Demo</td>
+<td>Example boxplot code</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/pyplots/boxplot_demo.html">Details</a></td>
+</tr>
+<tr>
+<td>Subplots Adjust</td>
+<td>Adjusting the spacing of margins and subplots using
+<code>matplotlib.pyplot.subplots_adjust</code>.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/subplots_axes_and_figures/subplots_adjust.html">Details</a></td>
+</tr>
+<tr>
+<td>Multiple subplots</td>
+<td>Simple demo with multiple subplots.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/subplots_axes_and_figures/subplot.html">Details</a></td>
+</tr>
+<tr>
+<td>Figure Title</td>
+<td>Create a figure with separate subplot titles and a centered figure
+title.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/subplots_axes_and_figures/figure_title.html">Details</a></td>
+</tr>
+<tr>
+<td>Axes Demo</td>
+<td>Example use of <code>plt.axes</code> to create inset axes within the
+main plot axes.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/subplots_axes_and_figures/axes_demo.html">Details</a></td>
+</tr>
+<tr>
+<td>Color Demo</td>
+<td><code>matplotlib</code> gives you 5 ways to specify colors.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/color/color_demo.html">Details</a></td>
+</tr>
+<tr>
+<td>Box plot vs. violin plot comparison</td>
+<td>Demonstrate the differences between box-plots and violin-plots.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/statistics/boxplot_vs_violin.html">Details</a></td>
+</tr>
+<tr>
+<td>Box plots with custom fill colors</td>
+<td>Demonstrate how to create two types of box-plots (rectangular and
+notched).</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/statistics/boxplot_color.html">Details</a></td>
+</tr>
+<tr>
+<td>Hexbin Demo</td>
+<td>Plotting hexbins with Matplotlib.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/statistics/hexbin_demo.html">Details</a></td>
+</tr>
+<tr>
+<td>Scatter Hist</td>
+<td>-</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/lines_bars_and_markers/scatter_hist.html">Details</a></td>
+</tr>
+<tr>
+<td>Eventplot Demo</td>
+<td>An eventplot showing sequences of events with various line
+properties.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/lines_bars_and_markers/eventplot_demo.html">Details</a></td>
+</tr>
+<tr>
+<td>Line Collection</td>
+<td>Plotting lines with Matplotlib.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/shapes_and_collections/line_collection.html">Details</a></td>
+</tr>
+<tr>
+<td>Auto-wrapping text</td>
+<td>Matplotlib can wrap text automatically. But sometimes, it goes
+wrong.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/text_labels_and_annotations/autowrap.html">Details</a></td>
+</tr>
+<tr>
+<td>3D animation</td>
+<td>An animated plot in 3D.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/animation/simple_3danim.html">Details</a></td>
+</tr>
+<tr>
+<td>2D and 3D Axes in same Figure</td>
+<td>This example shows a how to plot a 2D and 3D plot on the same
+figure.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/mplot3d/mixed_subplots.html">Details</a></td>
+</tr>
+<tr>
+<td>Plot 2D data on 3D plot</td>
+<td>Demonstrates using ax.plot’s zdir keyword to plot 2D data on
+selective axes of a 3D plot.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/mplot3d/2dcollections3d.html">Details</a></td>
+</tr>
+<tr>
+<td>Custom Ticker1</td>
+<td>The new ticker code was designed to explicitly support user
+customized ticking.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/ticks_and_spines/custom_ticker1.html">Details</a></td>
+</tr>
+<tr>
+<td>Automatically setting tick labels</td>
+<td>Setting the behavior of the auto-placement.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/ticks_and_spines/auto_ticks.html">Details</a></td>
+</tr>
+<tr>
+<td>Setting tick labels from a list of values</td>
+<td>Read it, if you want to allow <code>matplotlib</code> to dynamically
+choose the number of ticks and their spacing.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/ticks_and_spines/tick_labels_from_values.html">Details</a></td>
+</tr>
+<tr>
+<td>Date Index Formatter</td>
+<td>When plotting daily data, a frequent request is to plot the data
+ignoring skips.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/ticks_and_spines/date_index_formatter.html">Details</a></td>
+</tr>
+<tr>
+<td>Tick formatting using the ScalarFromatter</td>
+<td>The example shows use of <code>ScalarFormatter</code> with different
+settings.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/ticks_and_spines/scalarformatter.html">Details</a></td>
+</tr>
+<tr>
+<td>Textbox</td>
+<td>Allowing text input with the TextBox widget.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/widgets/textbox.html">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="reference">Reference</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Name</th>
+<th>Content</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visiualizing named colors</td>
+<td>Simple plot example with the named colors and its viual
+representation</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/color/named_colors.html">Details</a></td>
+</tr>
+<tr>
+<td>Line-style Reference</td>
+<td>Reference for line-styles included with Matplotlib</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/lines_bars_and_markers/line_styles_reference.html">Details</a></td>
+</tr>
+<tr>
+<td>Linestyles</td>
+<td>This examples showcases different linestyles copying those of
+Tikz/PGF.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/lines_bars_and_markers/linestyles.html">Details</a></td>
+</tr>
+<tr>
+<td>Marker filling-styles</td>
+<td>Reference for marker fill-styles included with Matplotlib.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/lines_bars_and_markers/marker_fillstyle_reference.html">Details</a></td>
+</tr>
+<tr>
+<td>Filled and unfilled-marker types</td>
+<td>Reference for filled- and unfilled-marker types included with
+Matplotlib.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/lines_bars_and_markers/marker_reference.html">Details</a></td>
+</tr>
+<tr>
+<td>Reference for matplotlib artists</td>
+<td>This example displays several of matplotlib’s graphics primitives
+(artists) drawn using matplotlib API.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/shapes_and_collections/artist_reference.html">Details</a></td>
+</tr>
+<tr>
+<td>Tick formatters</td>
+<td>Show the different tick formatters</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/ticks_and_spines/tick-formatters.html">Details</a></td>
+</tr>
+<tr>
+<td>Tick locators</td>
+<td>Show the different tick locators.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/gallery/ticks_and_spines/tick-locators.html">Details</a></td>
+</tr>
+<tr>
+<td>Text properties and layout</td>
+<td>Controlling properties of text and its layout with Matplotlib.</td>
+<td><a
+target="_blank" rel="noopener" href="https://matplotlib.org/tutorials/text/text_props.html">Details</a></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_named_colors_001.png"
+title="Visiualizing named colors" alt="Visiualizing named colors" />
+<figcaption aria-hidden="true">Visiualizing named colors</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_line_styles_reference_001.png"
+title="Line-style reference" alt="Line-style reference" />
+<figcaption aria-hidden="true">Line-style reference</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_marker_fillstyle_reference_001.png"
+title="Marker filling-styles" alt="Marker filling-styles" />
+<figcaption aria-hidden="true">Marker filling-styles</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_linestyles_001.png"
+title="Marker filling-styles" alt="Marker filling-styles" />
+<figcaption aria-hidden="true">Marker filling-styles</figcaption>
+</figure>
+<figure>
+<embed
+src="https://matplotlib.org/gallery/lines_bars_and_markers/marker_reference.html"
+title="Filled and unfilled-marker types" />
+<figcaption aria-hidden="true">Filled and unfilled-marker
+types</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_marker_reference_001.png"
+title="Un-filled Markers" alt="Un-filled Markers" />
+<figcaption aria-hidden="true">Un-filled Markers</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_marker_reference_002.png"
+title="Fill Markers" alt="Fill Markers" />
+<figcaption aria-hidden="true">Fill Markers</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_artist_reference_001.png"
+title="Matplotlib Artists" alt="Matplotlib Artists" />
+<figcaption aria-hidden="true">Matplotlib Artists</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_tick-formatters_001.png"
+title="Tick formatters" alt="Tick formatters" />
+<figcaption aria-hidden="true">Tick formatters</figcaption>
+</figure>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/cheatsheet/matplotlib/sphx_glr_tick-locators_001.png"
+title="Tick Locators" alt="Tick Locators" />
+<figcaption aria-hidden="true">Tick Locators</figcaption>
+</figure>
+<h1 id="more">More</h1>
+<p><a
+target="_blank" rel="noopener" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show"
+title="`matplotlib.pyplot.show` - Matplotlib"><code>matplotlib.pyplot.show</code>
+- Matplotlib</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/02/11/cheatsheet/reference/matplotlib/" title="Matplotlib - 常用方法及示例">https://wrran.github.io/blog/2018/02/11/cheatsheet/reference/matplotlib/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/cheatsheet/" rel="tag"># cheatsheet</a>
+              <a href="/tags/matplotlib/" rel="tag"># matplotlib</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/01/30/cheatsheet/reference/jupyter-magic-cmd/" rel="prev" title="Jupyter常用魔法命令">
+                  <i class="fa fa-angle-left"></i> Jupyter常用魔法命令
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/02/26/people-say/luxun/180226-01/" rel="next" title="题记">
+                  题记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

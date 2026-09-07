@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="logging, Logging facility for Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python的模块 - logging">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/08/10/learn/python/logging/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="logging, Logging facility for Python">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-08-10T14:19:21.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.709Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="logging">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/08/10/learn/python/logging/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/08/10/learn/python/logging/","path":"blog/2017/08/10/learn/python/logging/","title":"Python的模块 - logging"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python的模块 - logging | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#basic-logging-tutorial"><span class="nav-text">Basic Logging Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#a-simple-example"><span class="nav-text">A Simple Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logging-to-a-file"><span class="nav-text">Logging to a file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logging-from-multiple-modules"><span class="nav-text">Logging from multiple
+modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logging-variable-data"><span class="nav-text">Logging variable data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#changing-the-format-of-displayed-messages"><span class="nav-text">Changing the format
+of displayed messages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#displaying-the-datatime-in-messages"><span class="nav-text">Displaying the data&#x2F;time in
+messages</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#advanced-logging-tutorial"><span class="nav-text">Advanced Logging Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#logging-flow"><span class="nav-text">Logging Flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loggers"><span class="nav-text">Loggers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#handlers"><span class="nav-text">handlers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#formatters"><span class="nav-text">Formatters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configuring-logging"><span class="nav-text">Configuring Logging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-happens-if-no-configuration-is-provided"><span class="nav-text">What happens if no
+configuration is provided</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other"><span class="nav-text">Other</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/08/10/learn/python/logging/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Python的模块 - logging | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python的模块 - logging
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-08-10 22:19:21" itemprop="dateCreated datePublished" datetime="2017-08-10T22:19:21+08:00">2017-08-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p><code>logging</code>, Logging facility for Python</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="basic-logging-tutorial">Basic Logging Tutorial</h1>
+<p><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#logging-basic-tutorial">Basic
+Logging Tutorial - Logging HOWTO</a><br />
+该教程前言中的<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#when-to-use-logging">When
+to use logging</a>值得一看。</p>
+<h2 id="a-simple-example">A Simple Example</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.warning(<span class="string">&#x27;Watch out!&#x27;</span>)  <span class="comment"># will print a message to the console</span></span><br><span class="line"><span class="comment"># WARNING:root:Watch out!</span></span><br><span class="line">logging.info(<span class="string">&#x27;I told you so&#x27;</span>)  <span class="comment"># will not print anything</span></span><br></pre></td></tr></table></figure>
+<h2 id="logging-to-a-file">Logging to a file</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(filename=<span class="string">&#x27;example.log&#x27;</span>, level=logging.DEBUG)</span><br><span class="line">logging.debug(<span class="string">&#x27;This message should go to the log file&#x27;</span>)</span><br><span class="line">logging.info(<span class="string">&#x27;So should this&#x27;</span>)</span><br><span class="line">logging.warning(<span class="string">&#x27;And this, too&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># vim example.log</span></span><br><span class="line"><span class="comment"># DE<span class="doctag">BUG:</span>root:This message should go to the log file</span></span><br><span class="line"><span class="comment"># INFO:root:So should this</span></span><br><span class="line"><span class="comment"># WARNING:root:And this, too</span></span><br></pre></td></tr></table></figure>
+<h2 id="logging-from-multiple-modules">Logging from multiple
+modules</h2>
+<p><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#logging-from-multiple-modules">Click
+Me</a></p>
+<h2 id="logging-variable-data">Logging variable data</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.warning(<span class="string">&#x27;%s before you %s&#x27;</span>, <span class="string">&#x27;Look&#x27;</span>, <span class="string">&#x27;leap!&#x27;</span>)</span><br><span class="line"><span class="comment"># WARNING:root:Look before you leap!</span></span><br></pre></td></tr></table></figure>
+<p>There are some newer formatting options:</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/stdtypes.html#str.format">str.format()</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/string.html#string.Template">string.Template</a></li>
+</ul>
+<h2 id="changing-the-format-of-displayed-messages">Changing the format
+of displayed messages</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(<span class="built_in">format</span>=<span class="string">&#x27;%(levelname)s:%(message)s&#x27;</span>, level=logging.DEBUG)</span><br><span class="line">logging.debug(<span class="string">&#x27;This message should appear on the console&#x27;</span>)</span><br><span class="line">logging.info(<span class="string">&#x27;So should this&#x27;</span>)</span><br><span class="line">logging.warning(<span class="string">&#x27;And this, too&#x27;</span>)</span><br><span class="line"><span class="comment"># DE<span class="doctag">BUG:</span>This message should appear on the console</span></span><br><span class="line"><span class="comment"># INFO:So should this</span></span><br><span class="line"><span class="comment"># WARNING:And this, too</span></span><br></pre></td></tr></table></figure>
+<p>For a full set of things that can appear in format strings, you can
+refer to the documentation for <a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.html#logrecord-attributes">LogRecord
+attributes</a>.</p>
+<h2 id="displaying-the-datatime-in-messages">Displaying the data/time in
+messages</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(<span class="built_in">format</span>=<span class="string">&#x27;%(asctime)s %(message)s&#x27;</span>)</span><br><span class="line">logging.warning(<span class="string">&#x27;is when this event was logged.&#x27;</span>)</span><br><span class="line"><span class="comment"># 2012-12-12 11:41:42,612 is when this event was logged.</span></span><br></pre></td></tr></table></figure>
+<p>If you need more control over the formatting of the data/time,
+provide a <em>datefmt</em> argument to <code>basicConfig</code>. The
+format of the <code>datefmt</code> argument is the same as supported by
+<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/time.html#time.strftime">time.strftime()</a>.</p>
+<h1 id="advanced-logging-tutorial">Advanced Logging Tutorial</h1>
+<p><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#advanced-logging-tutorial">Advanced
+Logging Tutorial</a></p>
+<p><code>logging</code>中含有四类角色：</p>
+<ul>
+<li><strong>logger</strong>暴露出应用代码需要的接口</li>
+<li><strong>hander</strong>将<em>logger</em>创建出的日志记录发送给合适的目的地</li>
+<li><strong>filter</strong>提供了更细节的管理手段，决定那些日志记录应当输出</li>
+<li><strong>formatter</strong>则决定日志记录的最终排版格式</li>
+</ul>
+<p>上述四者的沟通通过一个类型为<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.html#logging.LogRecord"><code>LogRecord</code></a>的实例得以沟通。</p>
+<p>其外，该部分前言还介绍了日志的命名惯例及一些默认设置。</p>
+<h2 id="logging-flow">Logging Flow</h2>
+<figure>
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/learn-python-logging/logging_flow.png"
+alt="日志事件 流程图" />
+<figcaption aria-hidden="true">日志事件 流程图</figcaption>
+</figure>
+<h2 id="loggers">Loggers</h2>
+<p><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.html#logging.Logger"><code>Logger</code></a>有三重作用：</p>
+<ol type="1">
+<li>暴露一些接口给使用者使用</li>
+<li>根据默认的或者绑定的<code>filter</code>决定要如何处理每条日志记录</li>
+<li>将日志记录发给所有相关的日志处理器</li>
+</ol>
+<p><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.html#logging.Logger"><code>Logger</code></a>的方法可以分为两大类：</p>
+<ol type="1">
+<li>配置类
+<ul>
+<li>Logger.setLevel()</li>
+<li>Logger.addHandler(), Logger.removeHandler()</li>
+<li>Logger.addFilter(), Logger.removeFilter()</li>
+</ul></li>
+<li>消息发送类
+<ul>
+<li>Logger.debug(), Logger.info(), Logger.warning(), Logger.error() and
+Logger.critical()</li>
+<li>Logger.exception()</li>
+<li>Logger.log()</li>
+</ul></li>
+</ol>
+<p><code>getLogger()</code>的效果为：</p>
+<blockquote>
+<p><code>getLogger()</code> returns a reference to a logger instance
+with the specified name if it is provided, or root if not. The names are
+period-separated hierarchical structures. Multiple calls to
+<code>getLogger()</code> with the same name will return a reference to
+the same logger object. Loggers that are further down in the
+hierarchical list are children of loggers higher up in the list. For
+example, given a logger with a name of <code>foo</code>, loggers with
+names of <code>foo.bar</code>, <code>foo.bar.baz</code>, and
+<code>foo.bam</code> are all descendants of foo.</p>
+</blockquote>
+<p>Loggers have a concept of effective level. If a level is not
+explicitly set on a logger, the level of its parent is used instead as
+its effective level. If the parent has no explicit level set, its parent
+is examined, and so on - all ancestors are searched until an explicitly
+set level is found. The root logger always has an explicit level set
+(<code>WARNING</code> by default). When deciding whether to process an
+event, the effective level of the logger is used to determine whether
+the event is passed to the logger’s handlers.</p>
+<p>Child loggers propagate messages up to the handlers associated with
+their ancestor loggers. Because of this, it is unnecessary to define and
+configure handlers for all the loggers an application uses. It is
+sufficient to configure handlers for a top-level logger and create child
+loggers as needed. (You can, however, turn off propagation by setting
+the propagate attribute of a logger to <code>False</code>.)</p>
+<h2 id="handlers">handlers</h2>
+<p><code>handler</code>负责分发合适的日志消息（基于日志的严重级别）给特定的处理器处理。</p>
+<p>常用的<code>handler</code>可以参见<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#useful-handlers">Useful
+Handlers</a>。</p>
+<p>对于不需要自定义<code>Handler</code>的使用者来说，常用的几个方法如下：</p>
+<ul>
+<li><code>setLevel()</code>与<em>logger</em>相似，<em>logger</em>使用严重级别来决定信息传送给哪个处理器，而<em>handler</em>的该方法决定哪些级别的日志应当被处理</li>
+<li><code>setFormatter()</code>设定该处理器要使用的<em>Formatter</em></li>
+<li><code>addFilter()</code>与<code>removeFilter()</code>分别决定处理器上绑定的过滤器</li>
+</ul>
+<p>需要注意的是使用者不应当直接实例化或者使用<code>Handler</code>的实例，它只是一个默认的接口并提供了一些默认的行为而已。</p>
+<h2 id="formatters">Formatters</h2>
+<p><code>formatter</code>是最终负责控制日志的顺序，结构和内容的组件。与上述的<code>handler</code>不同，使用者往往需要使用该组件。<br />
+控制格式的具体内容可以参见<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#formatters">Formatters</a>。</p>
+<h2 id="configuring-logging">Configuring Logging</h2>
+<p>程序配置日志可以通过三种方式：</p>
+<ol type="1">
+<li>使用Python代码硬编码进行配置。</li>
+<li>创建一个配置文件，并通过<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.config.html#logging.config.fileConfig"><code>fileConfig()</code></a>读取配置。</li>
+<li>创建一个存储配置信息的对象（如JSON，YAML等）并传递给方法<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.config.html#logging.config.dictConfig"><code>dictConfig()</code></a>。</li>
+</ol>
+<p>后面两种方式可以参考<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.config.html#logging-config-api">Configuration
+functions</a>。</p>
+<p>下例是使用Python进行直接配置的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># create logger</span></span><br><span class="line">logger = logging.getLogger(<span class="string">&#x27;simple_example&#x27;</span>)</span><br><span class="line">logger.setLevel(logger.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create console handler and set level to debug</span></span><br><span class="line">ch = logging.StreamHandler()</span><br><span class="line">ch.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create formatter</span></span><br><span class="line">formatter = logging.Formatter(<span class="string">&#x27;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add formatter to ch</span></span><br><span class="line">ch.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add ch to logger</span></span><br><span class="line">logger.addHandler(ch)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x27;application&#x27; code</span></span><br><span class="line">logger.debug(<span class="string">&#x27;debug message&#x27;</span>)</span><br><span class="line">logger.info(<span class="string">&#x27;info message&#x27;</span>)</span><br><span class="line">logger.warn(<span class="string">&#x27;warn message&#x27;</span>)</span><br><span class="line">logger.error(<span class="string">&#x27;error message&#x27;</span>)</span><br><span class="line">logger.critical(<span class="string">&#x27;critical message&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>下例是使用配置文件进行配置的方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> logging.config</span><br><span class="line"></span><br><span class="line">logging.config.fileConfig(<span class="string">&#x27;logging.conf&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># create logger</span></span><br><span class="line">logger = logging.getLogger(<span class="string">&#x27;simpleExample&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x27;application&#x27; code</span></span><br><span class="line">logger.debug(<span class="string">&#x27;debug message&#x27;</span>)</span><br><span class="line">logger.info(<span class="string">&#x27;info message&#x27;</span>)</span><br><span class="line">logger.warn(<span class="string">&#x27;warn message&#x27;</span>)</span><br><span class="line">logger.error(<span class="string">&#x27;error message&#x27;</span>)</span><br><span class="line">logger.critical(<span class="string">&#x27;critical message&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>配置文件<code>logging.conf</code>的内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[loggers]</span><br><span class="line">keys=root,simpleExample</span><br><span class="line"></span><br><span class="line">[handlers]</span><br><span class="line">keys=consoleHandler</span><br><span class="line"></span><br><span class="line">[formatters]</span><br><span class="line">keys=simpleFormatter</span><br><span class="line"></span><br><span class="line">[logger_root]</span><br><span class="line">level=DEBUG</span><br><span class="line">handlers=consoleHandler</span><br><span class="line"></span><br><span class="line">[logger_simpleExample]</span><br><span class="line">level=DEBUG</span><br><span class="line">handlers=consoleHandler</span><br><span class="line">qualname=simpleExample</span><br><span class="line">propagate=0</span><br><span class="line"></span><br><span class="line">[handler_consoleHandler]</span><br><span class="line">class=StreamHandler</span><br><span class="line">level=DEBUG</span><br><span class="line">formatter=simpleFormatter</span><br><span class="line">args=(sys.stdout,)</span><br><span class="line"></span><br><span class="line">[formatter_simpleFormatter]</span><br><span class="line">format=%(asctime)s - %(name)s - %(levelname)s - %(message)s</span><br><span class="line">datefmt=</span><br></pre></td></tr></table></figure>
+<p>同时要注意配置文件的位置：</p>
+<blockquote>
+<p>Note that the class names referenced in config files need to be
+either relative to the logging module, or absolute values which can be
+resolved using normal import mechanisms.</p>
+</blockquote>
+<p>下例为达到与上述相同方式的YAML配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">formatters:</span></span><br><span class="line">  <span class="attr">simple:</span></span><br><span class="line">    <span class="attr">format:</span> <span class="string">&#x27;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#x27;</span></span><br><span class="line"><span class="attr">handlers:</span></span><br><span class="line">  <span class="attr">console:</span></span><br><span class="line">    <span class="attr">class:</span> <span class="string">logging.StreamHandler</span></span><br><span class="line">    <span class="attr">level:</span> <span class="string">DEBUG</span></span><br><span class="line">    <span class="attr">formatter:</span> <span class="string">simple</span></span><br><span class="line">    <span class="attr">stream:</span> <span class="string">ext://sys.stdout</span></span><br><span class="line"><span class="attr">loggers:</span></span><br><span class="line">  <span class="attr">simpleExample:</span></span><br><span class="line">    <span class="attr">level:</span> <span class="string">DEBUG</span></span><br><span class="line">    <span class="attr">handlers:</span> [<span class="string">console</span>]</span><br><span class="line">    <span class="attr">propagate:</span> <span class="literal">no</span></span><br><span class="line"><span class="attr">root:</span></span><br><span class="line">  <span class="attr">level:</span> <span class="string">DEBUG</span></span><br><span class="line">  <span class="attr">handlers:</span> [<span class="string">console</span>]</span><br></pre></td></tr></table></figure>
+<p>关于第三种的配置方式，详情可以参见<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.config.html#logging-config-api">Configuration
+functions</a>。</p>
+<h2 id="what-happens-if-no-configuration-is-provided">What happens if no
+configuration is provided</h2>
+<p>当没有找到必需的配置信息时，<code>logging</code>的行为取决于Python的版本号：</p>
+<blockquote>
+<p>For Python 2.x, the behaviour is as follows:</p>
+<ul>
+<li>If logging.raiseExceptions is False (production mode), the event is
+silently dropped.</li>
+<li>If logging.raiseExceptions is True (development mode), a message ‘No
+handlers could be found for logger X.Y.Z’ is printed once.</li>
+</ul>
+</blockquote>
+<h2 id="other">Other</h2>
+<p><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#configuring-logging-for-a-library">Configuring
+Logging for a Library</a><br />
+<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#logging-levels">Logging
+Levels</a><br />
+<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#custom-levels">Custom
+Levels</a><br />
+<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#useful-handlers">Useful
+Handlers</a><br />
+<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#exceptions-raised-during-logging">Exception
+raised during logging</a><br />
+<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#using-arbitrary-objects-as-messages">Using
+arbitrary objects as messages</a><br />
+<a
+target="_blank" rel="noopener" href="https://docs.python.org/2/howto/logging.html#optimization">Optimization</a></p>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/logging.html">logging</a><br />
+<a
+target="_blank" rel="noopener" href="http://www.cnblogs.com/dkblog/archive/2011/08/26/2155018.html">Python的日志logging模块学习</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/08/10/learn/python/logging/" title="Python的模块 - logging">https://wrran.github.io/blog/2017/08/10/learn/python/logging/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/logging/" rel="tag"># logging</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/08/09/learn/python/property/" rel="prev" title="Python的property">
+                  <i class="fa fa-angle-left"></i> Python的property
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/08/11/learn/python/abcmeta/" rel="next" title="Python中的ABC">
+                  Python中的ABC <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

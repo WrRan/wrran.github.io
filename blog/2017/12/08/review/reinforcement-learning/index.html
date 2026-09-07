@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Learn by Doing.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习复习">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/08/review/reinforcement-learning/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Learn by Doing.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-08T12:34:58.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.791Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="reinforcement learning">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/08/review/reinforcement-learning/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/08/review/reinforcement-learning/","path":"blog/2017/12/08/review/reinforcement-learning/","title":"强化学习复习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>强化学习复习 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B"><span class="nav-text">马尔可夫过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%85%8B%E5%A4%AB%E5%9B%9E%E6%8A%A5%E8%BF%87%E7%A8%8B"><span class="nav-text">马尔克夫回报过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="nav-text">马尔可夫决策过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3mdp%E6%9C%80%E4%BC%98%E7%AD%96%E7%95%A5"><span class="nav-text">求解MDP最优策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E4%B8%8E%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">马尔可夫与强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">基于模型的强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%8D%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">免模型的强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#monte-carlo%E5%AD%A6%E4%B9%A0"><span class="nav-text">Monte-Carlo学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E6%96%B9%E6%B3%95"><span class="nav-text">时序差分方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda-return"><span class="nav-text">λ-return</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC"><span class="nav-text">值函数近似</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/08/review/reinforcement-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="强化学习复习 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          强化学习复习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-08 20:34:58" itemprop="dateCreated datePublished" datetime="2017-12-08T20:34:58+08:00">2017-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/reinforcement-learning/" itemprop="url" rel="index"><span itemprop="name">reinforcement learning</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>Learn by Doing.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>该文与《机器学习》的第16章相对应，将快速粗略的了解强化学习这一领域。</p>
+<p>强化学习与其他学习模式不同之处，在于其<em>不只是预测</em>，更多的是要<em>做决策</em>。<br />
+其涉及的问题背景涉及四个不同的元素：动作空间<span
+class="math display"><em>A</em></span>、状态空间<span
+class="math display"><em>X</em></span>、奖赏函数：<span
+class="math display">R : <em>X</em> × <em>A</em> × <em>X</em> ↦ ℝ</span>、状态转移概率函数<span
+class="math display">P : <em>X</em> × <em>A</em> × <em>X</em> ↦ ℝ</span>，可被描述为四元组<span
+class="math display"> &lt; <em>A</em>, <em>X</em>, R, P&gt;</span>。各个元素的关系如下图所示：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/4-keys-in-rl.PNG"
+title="强化学习示意图" alt="强化学习示意图" /><br />
+而强化学习的目的在于学习出选取动作的“策略”，常记为<span
+class="math display"><em>π</em>(⋅)</span>。就针对最终确定的动作是否为确定的，可以形式化为确定性策略<span
+class="math display"><em>a</em> = <em>π</em>(<em>x</em>)</span>；非确定性策略则为<span
+class="math display"><em>P</em>(<em>a</em>|<em>x</em>) = <em>π</em>(<em>x</em>, <em>a</em>)</span>，此时<span
+class="math display"><em>π</em>(<em>x</em>, <em>a</em>)</span>要满足概率的性质：<span
+class="math display">∑<sub><em>a</em> ∈ <em>A</em></sub><em>π</em>(<em>x</em>, <em>a</em>) = 1</span>及<span
+class="math display">∀<em>a</em> ∈ <em>A</em>, <em>π</em>(<em>x</em>, <em>a</em>) ≥ 0</span>。而“策略”的好坏又建立在“回报”的概念上，即奖赏函数<span
+class="math display">R</span>，常用<em>策略评价</em>的方式又分为两种：<code>T-step</code><span
+class="math display">$$\frac{1}{T}\sum_{t=1}^Tr_t$$</span>和<code>discount</code><span
+class="math display">$$\sum_{t}^\infty\gamma^tr_t$$</span>。</p>
+<h1 id="马尔可夫过程">马尔可夫过程</h1>
+<p>马尔可夫过程中仅仅涉及到强化学习要素的两个：状态空间<span
+class="math display"><em>X</em></span>和状态转移概率函数<span
+class="math display">P</span>，故可以记为二元组<span
+class="math display"> &lt; <em>X</em>, P&gt;</span>。但同时其又满足<strong>无记忆性</strong>：<span
+class="math display"><em>P</em>(<em>x</em><sub><em>t</em> + 1</sub>|<em>x</em><sub><em>t</em></sub>, …, <em>x</em><sub>0</sub>) = <em>P</em>(<em>x</em><sub><em>t</em> + 1</sub>|<em>x</em><sub><em>t</em></sub>)</span>及<strong>稳态分布</strong>：<span
+class="math display">$$\underset{t\rightarrow\infty}{\mathrm{P}(x_{t+1})-\mathrm{P}(x_t)=0}$$</span>。<br />
+表示马尔可夫过程，可以使用如下的状态图展示其关键的两元素：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/state_diagram-markov_process.PNG"
+title="马尔可夫过程状态图" alt="马尔可夫过程状态图" /><br />
+但为了凸显<span
+class="math display"><em>t</em></span>，也更易于处理，将其转为如下的水平视图：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/horizontal_state_diagram-markov_process.PNG"
+title="马尔可夫过程状态图-水平视图"
+alt="马尔可夫过程状态图-水平视图" /></p>
+<h1 id="马尔克夫回报过程">马尔克夫回报过程</h1>
+<p>与马尔可夫过程相比，马尔可夫回报过程MRP则又添加在每一个转移的路径上添加了对应的奖赏函数<span
+class="math display">R</span>，构成三元组<span
+class="math display"> &lt; <em>X</em>, <em>P</em>, <em>R</em>&gt;</span>。其状态图就如下所示<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/state_diagram-markov_reward_process.PNG"
+title="马尔可夫回报过程状态图" alt="马尔可夫回报过程状态图" /><br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/horizontal_state_diagram-markov_reward_process.PNG"
+title="马尔可夫回报过程状态图-水平视图"
+alt="马尔可夫回报过程状态图-水平视图" /><br />
+根据上图，我们也可以计算不同“策略评价”方式下的状态值函数<span
+class="math display">$$V(b)=E[\sum_{t=1}^{T}r_t\vert
+x_0=b]$$</span>或<span class="math display">$$V(b)=E[\sum_{t=1}^T\gamma
+r_t\vert x_0=b]$$</span>。<br />
+但要如何计算状态值函数才是可行的呢？如果直接进行计算，无疑会遇到“指数爆炸”问题。方法就是使用动态规划，由后往前反推着计算值函数。先计算第<span
+class="math display"><em>T</em></span>步的值函数：由于无转移发生，所以将奖赏值设置为<span
+class="math display">0</span>；而在获得第<span
+class="math display"><em>t</em></span>时刻的奖赏后，上一时刻<span
+class="math display"><em>t</em> − 1</span>就可以通过递归式<span
+class="math display"><em>V</em>(<em>x</em>) = ∑<sub><em>x</em>’</sub>P(<em>x</em>’|<em>x</em>)(<em>R</em>(<em>x</em>’, <em>x</em>) + <em>V</em>(<em>x</em>’))</span>计算得到（其中<span
+class="math display"><em>x</em>’</span>表示<span
+class="math display"><em>t</em></span>时刻的状态）。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/solved-horizontal_state_diagram-markov_reward_process.PNG"
+title="马尔可夫回报过程状态值求解"
+alt="马尔可夫回报过程状态值求解" /><br />
+再具体到不同的“评价策略”方式，在<code>T-step</code>下迭代<span
+class="math display"><em>T</em></span>步即可；在<code>discount</code>方式下当相连时刻的值函数差值足够小时就停止：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/solved_algorithm-horizontal_state_diagram-markov_reward_process.PNG"
+title="马尔可夫回报过程状态值求解算法"
+alt="马尔可夫回报过程状态值求解算法" /></p>
+<h1 id="马尔可夫决策过程">马尔可夫决策过程</h1>
+<p>上述的马尔可夫过程与马尔可夫回报过程都只能用于观测，而无法进行干预。马尔可夫决策过程MDP通过引入动作空间<span
+class="math display"><em>A</em></span>，组成四元组<span
+class="math display"> &lt; <em>A</em>, <em>X</em>, <em>R</em>, <em>P</em>&gt;</span>，可进一步刻画模型对环境的干预过程。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/state_diagram-markov_decision_process.PNG"
+title="马尔可夫决策过程状态图" alt="马尔可夫决策过程状态图" /><br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/horizontal_state_diagram-markov_decision_process.PNG"
+title="马尔可夫决策过程状态图-水平视图"
+alt="马尔可夫决策过程状态图-水平视图" /><br />
+在MDP中，给定了“策略”<span
+class="math display"><em>π</em>(⋅)</span>后，即可按照策略动作选择概率加和进而得到其累积回报：<br />
+<span
+class="math display"><em>V</em><sup><em>π</em></sup>(<em>x</em>) = ∑<sub><em>a</em> ∈ <em>A</em></sub><em>π</em>(<em>a</em>|<em>x</em>)∑<sub><em>x</em>’ ∈ <em>X</em></sub><em>P</em>(<em>x</em>’|<em>x</em>, <em>a</em>)(<em>R</em>(<em>x</em>, <em>a</em>, <em>x</em>’) + <em>V</em><sup><em>π</em></sup>(<em>x</em>’))</span><br />
+我们将形如上式的函数定义为状态值函数”state value function”：<span
+class="math display">$$V^{\pi}(x)=E[\sum_{t=1}^Tr_t\vert
+x]$$</span><br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/state_value_function.PNG"
+title="状态值函数" alt="状态值函数" /><br />
+另外，还定义了状态动作值函数”state-action value function”：<span
+class="math display">$$Q^{\pi}(x, a)=E[\sum_{t=1}^Tr_t\vert x,
+a]=\sum_{x’\in X}P(x’\vert x, a)\Big(R(x, a,
+x’)+V^{\pi}(x’)\Big)$$</span><br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/state-action_value_function.PNG"
+title="状态动作值函数" alt="状态动作值函数" /><br />
+可知，状态值函数<span
+class="math display"><em>V</em><sup><em>π</em></sup>(⋅)</span>是处于某种状态<span
+class="math display"><em>x</em></span>的总体评价，与具体的动作无关，而是考虑选择所有动作的可能性做出的评价；状态动作值函数<span
+class="math display"><em>Q</em><sup><em>π</em></sup>(⋅)</span>则是处于某种状态<span
+class="math display"><em>x</em></span>并做出动作<span
+class="math display"><em>a</em></span>后的总体评价。这两种值函数有内在联系：<span
+class="math display"><em>V</em><sup><em>π</em></sup>(<em>x</em>) = ∑<sub><em>a</em> ∈ <em>A</em></sub><em>π</em>(<em>a</em>|<em>x</em>)<em>Q</em><sup><em>π</em></sup>(<em>x</em>, <em>a</em>)</span>。另外，状态动作函数<span
+class="math display"><em>Q</em><sup><em>π</em></sup>(⋅)</span>参数涉及到动作<span
+class="math display"><em>a</em></span>，因而更方便获取策略<span
+class="math display"><em>π</em>(⋅)</span>。</p>
+<p><strong>？最优性质</strong><br />
+这有两方面的含义，一是存在最优策略<span
+class="math display">$$\pi^_$$</span>使得<span
+class="math display">$$\forall\pi,\forall x, V^{\pi^_}(x)\ge
+V^{\pi}(x)$$</span>；二是存在最优值函数<span
+class="math display">$$\forall x,
+V^{_}(x)=V^{\pi^_}(x)$$</span>，且<span class="math display">$$\forall
+x, \forall a, Q^_(x,a)=Q^{\pi^_}(x, a)$$</span>。<br />
+<em>注</em>：<span
+class="math display"><em>V</em><sup><sub>(</sub></sup>⋅)</span>与<span
+class="math display"><em>Q</em><sup><sub>(</sub></sup>⋅)</span>都不与具体的策略相关。<br />
+<strong>Bellman Optimality Equation</strong><br />
+根据最优状态值的定义可以得到<span
+class="math display">$$V^_(x)=\underset{a\in A}{\mathrm{max}}Q^_(x,
+a)$$</span>；根据状态值函数与状态动作值函数的关系，可以得到<span
+class="math display"><em>Q</em><sup><sub>(</sub></sup><em>x</em>, <em>a</em>) = ∑<sub><em>x</em>’ ∈ <em>X</em></sub>P(<em>x</em>’|<em>x</em>, <em>a</em>)(R(<em>x</em>, <em>a</em>, <em>x</em>’) + <em>γ</em><em>V</em><sup><sub>(</sub></sup><em>x</em>’))</span>。至此，将得到下式：<br />
+<span class="math display">$$Q^_(x,a)=\sum_{x’ \in X}\mathrm{P}(x’\vert
+x, a)\Big(\mathrm{R}(x,a,x’)+\gamma\underset{a\in
+A}{\mathrm{max}}Q^_(x’,a)\Big)$$</span><br />
+<span class="math display">$$V^_(x)=\underset{a\in
+A}{\mathrm{max}}\sum_{x’\in X}\mathrm{P}(x’\vert
+x,a)\Big(\mathrm{R}(x,a,x’)+\gamma V^_(x’)\Big)$$</span><br />
+<strong>?</strong>即唯一不动点就是最优值。</p>
+<h2 id="求解mdp最优策略">求解MDP最优策略</h2>
+<p>主要思想是，一是获取策略性能评估（policy
+evaluation），二是改进策略（policy imporovement）。<br />
+策略评估，即借助先前介绍的迭代计算，对<span
+class="math display"><em>V</em><sup><em>π</em></sup>(<em>x</em>)</span>做出计算；策略改进，则借助Bellman
+Optimality Equation对策略<span
+class="math display"><em>π</em>(⋅)</span>进行更新。<br />
+<em>注</em>：使用Bellman Optimality
+Equation更新策略是可以改进该策略的，即通过该策略获得的回报至少不会下降：<br />
+记<span class="math display">$$\pi’(x)=\underset{a\in
+A}{\mathrm{argmax}}\ Q^{\pi}(x,a)$$</span><br />
+<span class="math display">$$
+\begin{align}
+V^\pi(x)&amp;\le Q^\pi(x,\pi’(x))\
+&amp;=\sum_{x’}\mathrm{P}(x’\vert
+x,\pi’(x))\Big(\mathrm{R}(x,\pi’(x),x’)+\gamma V^\pi(x’)\Big)\
+&amp;=\le\sum_{x’}\mathrm{P}(x’\vert
+x,\pi’(x))\Big(\mathrm{R}(x,\pi’(x),x’)+\gamma Q^\pi(x’,\pi’(x))\Big)\
+&amp;=\cdots\
+&amp;=V^{\pi’}(x)\
+\end{align}
+$$</span><br />
+综上得到所谓的<strong>策略迭代算法</strong>：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/policy_iterator_algorithm.PNG"
+title="策略迭代算法" alt="策略迭代算法" /><br />
+收敛是指<span
+class="math display"><em>V</em><sup><em>π</em><sub><em>t</em> + 1</sub></sup>(<em>x</em>) = <em>V</em><sup><em>π</em><sub><em>t</em></sub></sup>(<em>x</em>)</span><br />
+而图中的<span
+class="math display"><em>Q</em><sup><em>π</em><sub><em>t</em></sub></sup>(⋅)</span>按照<span
+class="math display">$$Q^{\pi_{t+1}}(x,a)=\sum_{x’}\mathrm{P}(x’\vert
+x,a)\Big(\mathrm{R}(x,a,x’)+\gamma\underset{a}{\mathrm{max}}Q^{\pi_t}(x’,a)\Big)$$</span>计算。<br />
+这导致该算法存在大量冗余（评估策略和更新策略时进行了相近的计算）。<br />
+针对这点提出改进，我们就可以得到<strong>值迭代算法</strong>：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/value_iteration_algorithm.PNG"
+title="值迭代算法" alt="值迭代算法" /><br />
+但即便如此，在仅仅考虑确定性MDP问题时，为使得上述算法收敛也需要迭代<span
+class="math display">$$\Theta(\vert X\vert\dot\vert
+A\vert)$$</span>次。这几乎是不可用的算法，如在<span
+class="math display">19 × 19</span>
+的围棋问题中状态空间数量就达到了<span
+class="math display">|<em>X</em>| = 2.0 × 10<sup>170</sup></span>.</p>
+<h1 id="强化学习">强化学习</h1>
+<h2 id="马尔可夫与强化学习">马尔可夫与强化学习</h2>
+<p>在MDP中我们假定已知四元组<span
+class="math display"> &lt; <em>X</em>, <em>A</em>, <em>R</em>, <em>P</em>&gt;</span>的所有信息；而在强化学习中，奖赏函数<span
+class="math display">R</span>和状态转移函数<span
+class="math display">P</span>往往不可知。此处，学者们提出了两种策略：一种是还原出<span
+class="math display">R</span>和<span
+class="math display">P</span>后，再求解MDP最优策略；另一种是不还原<span
+class="math display">R</span>和<span
+class="math display">P</span>，直接逼近最优策略。前者被成为“基于模型的强化学习”，后者被称为“免模型的强化学习”。<em>此处的模型是指马尔可夫决策过程的模型</em>。</p>
+<h2 id="基于模型的强化学习">基于模型的强化学习</h2>
+<p>基于模型的强化学习概览图如下，“agent”在学习的过程中对马尔可夫决策过程进行了建模（对应图上的模型）。<br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com//image/171210/overview_model-based_learning.PNG"
+title="基于模型的强化学习-概览图"
+alt="基于模型的强化学习-概览图" /><br />
+其基本思路就是：</p>
+<ol type="1">
+<li>探索环境</li>
+<li>从观测中学习环境，优化“agent”中的模型</li>
+<li>通过值迭代算法或者策略迭代算法优化策略</li>
+</ol>
+<p>其关键问题在于</p>
+<ol type="1">
+<li>如何有效探索和学习模型</li>
+<li>如何利用模型</li>
+<li>如何结合模型学习与策略学习</li>
+</ol>
+<p>该思路的典型算法代表就是<code>RMax algorithm</code>:<br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com//image/171210/RMax-algorithm.PNG"
+title="RMax Algorithm" alt="RMax Algorithm" /><br />
+该算法的思想就是随机游走，并记录转移与回报的信息；访问未充分探索的状态与动作。但是其要求的样本复杂度过高：<span
+class="math display">O(|<em>X</em>|<sup>2</sup>|<em>A</em>|<em>V</em><sub>max</sub><sup>3</sup>/(<em>ϵ</em>(1 − <em>γ</em>))<sup>3</sup>)</span>。</p>
+<h2 id="免模型的强化学习">免模型的强化学习</h2>
+<p>免模型的强化学习的思路就是，在探索环境同时进行策略的学习。主要方法有两种：”Monte-Carlo方法”和”时序差分方法”。注意在免模型的强化学习中，常常使用<span
+class="math display">Q<sup><em>π</em></sup>(⋅)</span>函数而非<span
+class="math display">V(⋅)</span>，因为将函数<span
+class="math display">V(⋅)</span>转化为函数<span
+class="math display">Q(⋅)</span>是要借助无法观测的转移概率函数<span
+class="math display">P</span>。</p>
+<h3 id="monte-carlo学习">Monte-Carlo学习</h3>
+<p>该学习的思想就是<strong>用采样逼近期望</strong>。即用均值<span
+class="math display">$$\hat{\mathrm{Q}}^\pi(x,a)=\frac{1}{m}\sum_{i=1}^m\mathrm{R}(\tau_i),
+\tau_i \text{is sample by following } \pi \text{ after }
+x,a$$</span>去逼近期望<span
+class="math display">$$\mathrm{Q}^\pi(x,a)=\mathbb{E}[\sum_{t=1}^T
+r_t\vert x,a]$$</span>。<br />
+基于此出发，就可以得到如下的算法：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/before%20~monte-carlo%20rl%20algorithm.PNG"
+title="Before ~Monte-Carlo RL Algorithm"
+alt="Before ~Monte-Carlo RL Algorithm" /></p>
+<p>但我们考虑极端情况，即仅仅只执行当前策略收集样本；这将导致我们无法知晓其他路径的好坏，进而无法提高策略。警示我们需要<strong>探索环境</strong>。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/example%20of%20bad%20before%20~monte-carlo%20rl%20algorithm.PNG" /></p>
+<p>强化学习的目标是最大化长期累积奖赏。如果只探索，平均的分配尝试次数，无疑会浪费大量资源于探索上；如果只利用，又可能因为之前的经验不足，导致选择存在很大误差，而没有选到最优的策略。这就是强化学习中的一对需要平衡的关系：探索和利用。<br />
+根据平衡关系策略的不同，又可以分为三种：</p>
+<ol type="1">
+<li><span class="math display"><em>ϵ</em></span>-greedy<br />
+以概率<span
+class="math display">1 − <em>ϵ</em></span>选取当下最好的决策，以概率<span
+class="math display"><em>ϵ</em></span>随机选择随机选取决策。另外应当注意<span
+class="math display"><em>ϵ</em></span>应当随时间慢慢减小；倘若发现在学习的过程中，决策所带来的回报不够高，则“重启”：将<span
+class="math display"><em>ϵ</em></span>的值置为初始值。</li>
+<li>softmax<br />
+以概率<span
+class="math display">$$P(k)=e^{\mathrm{Q}(k)/\theta}/\sum_{i=1}^{K}
+e^{\mathrm{Q}(i)/\theta}$$</span>选取决策（<span
+class="math display">Q(<em>i</em>)</span>表示？）。注意，当<span
+class="math display"><em>θ</em></span>越大，该概率越接近均匀分布；当<span
+class="math display"><em>θ</em></span>越小，该概率越接近<span
+class="math display">Q(⋅)</span>的值分布。但这种平衡关系策略可能会因为探索的不够，而导致<strong>概率坍陷</strong>。</li>
+<li>upper confidence bound, UCB<br />
+另一种是根据Q值与置信度选取决策：<span
+class="math display">$$\mathrm{Q}(k)+\sqrt{2\mathrm{ln}(n/n_k)}$$</span>。其中，<span
+class="math display"><em>n</em></span>为尝试的总次数，而<span
+class="math display"><em>n</em><sub><em>k</em></sub></span>为当前动作尝试的总次数。当尝试某动作的次数慢慢变多后，置信度上升，后项<span
+class="math display">$$\sqrt{2\mathrm{ln}(n/n_k)}$$</span>的值变小；尝试概率应当变小。</li>
+</ol>
+<p>注意上述平衡探索与利用的策略可以是作用在<em>路径</em>层面，也可以是作用在<em>动作</em>层面。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/monte-carlo%20rl%20algorithm.PNG"
+title="epsilon-greedy RL Algorithm"
+alt="epsilon-greedy RL Algorithm" /></p>
+<p>但这又引起另一个问题，我们在Monte-Carlo算法框架下学习的策略实质上是带有随机性的<span
+class="math display"><em>π</em><sub><em>ϵ</em></sub></span>，而在使用时却是策略<span
+class="math display"><em>π</em></span>。如果我们学习和使用的都是带有随机性的策略<span
+class="math display"><em>π</em><sub><em>ϵ</em></sub></span>，则称为<strong>同策略</strong>（on-policy）；而如果在学习中的策略是<span
+class="math display"><em>π</em><sub><em>ϵ</em></sub></span>，而使用时希望使用<span
+class="math display"><em>π</em></span>，则称为<strong>异策略</strong>（off-policy）。<br />
+为此使用的方式就是<strong>重要性采样</strong>：<br />
+<span
+class="math display">$$\mathbb{E}[f]=\int_xp(x)f(x)\mathrm{d}x=\int_x
+q(x)\frac{p(x)}{q(x)}f(x)\mathrm{d}x$$</span><br />
+上式中在数学上是等价的，但却意味着不同的采样方式：前者的采样方式是从分布<span
+class="math display"><em>p</em></span>中进行<span
+class="math display">$$\frac{1}{m}\sum_{i=1}^mf(x)$$</span>；后者的采样方式是从分布<span
+class="math display"><em>q</em></span>中进行<span
+class="math display">$$\frac{1}{m}\sum_{i=1}^{m}\frac{p(x)}{q(x)}f(x)$$</span>。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/off-policy%20monte-carlo%20rl%20algorithm.PNG"
+title="Off-Policy Epsilon-Greedy RL Algorithm"
+alt="Off-Policy Epsilon-Greedy RL Algorithm" /></p>
+<h3 id="时序差分方法">时序差分方法</h3>
+<p>我们在此先介绍<em>增量式求均值</em>：<br />
+<span class="math display">$$
+\begin{align}
+\mu_t &amp;= \frac{1}{t}\sum_{i=1}{t}x_i\
+&amp;=\frac{1}{t}(x_t+\sum_{i=1}^{t-1}x_i)=\frac{1}{t}(x_t+(t-1)\mu_{t-1})\
+&amp;=\mu_{t-1}+\frac{1}{t}(x_t-\mu_{t-1})
+\end{align}
+$$</span><br />
+该方法的求均值方式与一般的求均值方式（算出所有数字的和及数字个数后进行，上述第一行公式）在数学上都可以得到相同的均值，但不同地方在于其可以“在线”计算：要求的存储量很少，且可以在时间上不断变化。<br />
+不是一般性的，可以将“增量式求均值”进行推广，得到<span
+class="math display"><em>μ</em><sub><em>t</em></sub> = <em>μ</em><sub><em>t</em> − 1</sub> + <em>α</em>(<em>x</em><sub><em>t</em></sub> − <em>μ</em><sub><em>t</em> − 1</sub>)</span>。<br />
+回过头再来看所谓的”Monte-Carlo更新”，即为<span
+class="math display">Q’(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) ⇐ Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) + <em>α</em>(<em>R</em> − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>))</span>。而我们也可以将<span
+class="math display"><em>R</em></span>视为从环境总抽取到的真实观测值，而<span
+class="math display">Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>)</span>是旧策略对其估计，因此也将<span
+class="math display"><em>R</em> − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>)</span>称为”MC误差”。注意，此处<span
+class="math display"><em>α</em></span>越大，则当前采样对新<span
+class="math display">Q’</span>函数的影响越大。<br />
+而在时序差分方法中将上式设定为（？？）<br />
+<span
+class="math display">Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) ⇐ Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) + <em>α</em>(<em>r</em><sub><em>t</em> + 1</sub> + <em>γ</em>Q(<em>x</em><sub><em>t</em> + 1</sub>, <em>a</em><sub><em>t</em> + 1</sub>) − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>))</span><br />
+后项中的<span
+class="math display"><em>α</em>(<em>r</em><sub><em>t</em> + 1</sub> + <em>γ</em>Q(<em>x</em><sub><em>t</em> + 1</sub>, <em>a</em><sub><em>t</em> + 1</sub>) − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>))</span>被称为”TD误差”。其中，<span
+class="math display"><em>x</em><sub><em>t</em> + 1</sub></span>是在上一次状态<span
+class="math display"><em>x</em><sub><em>t</em></sub></span>后采取动作<span
+class="math display"><em>a</em></span>后跳转到的下一个状态；<span
+class="math display"><em>a</em><sub><em>t</em> + 1</sub></span>则是状态<span
+class="math display"><em>x</em><sub><em>t</em> + 1</sub></span>上选择的动作。<br />
+据此就有人提出了相应的算法。针对“同策略”情形，典型的算法为SARSA。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/SARSA%20-%20on-policy%20time-difference%20rl%20algorithm.PNG"
+title="SARSA - OnPolicy Time-Difference RL Algorithm"
+alt="SARSA - OnPolicy Time-Difference RL Algorithm" /><br />
+针对“异策略”情形，典型的算法为Q-Learning。其相较SARSA的不同之处为在决定处于下一状态<span
+class="math display"><em>x</em><sub><em>t</em> + 1</sub></span>时该采用的动作<span
+class="math display"><em>a</em><sub><em>t</em> + 1</sub></span>使用的是策略<span
+class="math display"><em>π</em>(⋅)</span>而非带有随机性的策略<span
+class="math display"><em>π</em><sub><em>ϵ</em></sub></span>。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/Q-learning%20-%20off-policy%20time-difference%20rl%20algorithm.PNG"
+title="Q-learning - OffPolicy Time-Difference RL Algorithm"
+alt="Q-learning - OffPolicy Time-Difference RL Algorithm" /></p>
+<h2 id="lambda-return"><span
+class="math display"><em>λ</em></span>-return</h2>
+<p>但是单步时序差分控制的一个明显局限就是：值函数更新过慢。于是就有人提出了介于时序差分和蒙特卡罗评估的<span
+class="math display"><em>n</em></span>-步评估，被称为<span
+class="math display"><em>λ</em></span>-return。<br />
+我们再回顾下时序差分方法，其想法即是<span
+class="math display">Q’(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) ⇐ Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) + <em>α</em>(<em>R</em> − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>))</span>，而<span
+class="math display"><em>R</em> = <em>r</em><sub><em>t</em> + 1</sub> + <em>γ</em>Q(<em>x</em><sub><em>t</em> + 1</sub>, <em>a</em><sub><em>t</em> + 1</sub>)</span>。但我们也可进一步推广，将时序差分中的步数扩大，如扩大至两步<span
+class="math display"><em>R</em><sup>(2)</sup> = <em>r</em><sub><em>t</em> + 1</sub> + <em>γ</em><em>r</em><sub><em>t</em> + 2</sub> + <em>γ</em><sup>2</sup>Q(<em>x</em><sub><em>t</em> + 2</sub>, <em>a</em><sub><em>t</em> + 2</sub>)</span>、扩大至三步<span
+class="math display"><em>R</em><sup>(3)</sup> = <em>r</em><sub><em>t</em> + 1</sub> + <em>γ</em><em>r</em><sub><em>t</em> + 2</sub> + <em>γ</em><sup>2</sup><em>r</em><sub><em>t</em> + 3</sub> + <em>γ</em><sup>3</sup>Q(<em>x</em><sub><em>t</em> + 3</sub>, <em>a</em><sub><em>t</em> + 3</sub>)</span>，乃至第<span
+class="math display"><em>i</em></span>步<span
+class="math display">$$R^{(i)}=\Big(\sum_{i=1}^n\gamma^{i-1}r_{t+i}\Big)+\gamma^n\mathrm{Q}(x_{t+n},a_{t+n})$$</span>。其实，考虑最极端情况时<span
+class="math display">$$R^{(\mathrm{max})}=\sum_{i=1}^{T}\gamma^{i-1}r_{t+i}$$</span>就等价于蒙特卡罗的评估方法了。至此，我们可以将“增式求和”的公式设置为<span
+class="math display">Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) ⇐ Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) + <em>α</em>(<em>R</em><sup>(<em>k</em>)</sup> − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>))</span>。<br />
+学者们在上述思想的基础上，又提出了<span
+class="math display"><em>λ</em></span>-return，即<span
+class="math display"><em>k</em></span>步加权平均。其将上面的<span
+class="math display"><em>R</em><sup>(<em>k</em>)</sup></span>设置为<span
+class="math display">$$R^\lambda=(1-\lambda)\sum_{k=1}^{\infty}\lambda^{k-1}R^{k}$$</span>，并定义<span
+class="math display">TD(<em>λ</em>) : Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) = Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>) + <em>α</em>(<em>R</em><sup><em>λ</em></sup> − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>))</span><br />
+但上述求法并没有解决要到第<span
+class="math display"><em>k</em></span>步才能更新策略的弊端。为此，学者们设计了<strong>资格迹</strong>（Eligibility
+Traces）。其想法就是通过维护状态——上次访问时间记忆<span
+class="math display"><em>E</em><sub><em>t</em></sub>(<em>x</em>, <em>a</em>)</span>：<br />
+<span class="math display">$$
+\begin{align}
+E_0(x, a) &amp;=0\
+E_t(x, a) &amp;=\gamma\lambda E_{t-1}(x, a)+\mathbb{I}(x_t=x,a_t=a)\
+\end{align}
+$$</span><br />
+这样设计的<span
+class="math display"><em>E</em><sub><em>t</em></sub>(<em>x</em>, <em>a</em>)</span>图像如下：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/E%28x%29.PNG"
+title="E_t(x, a)" alt="E_t(x, a)" /><br />
+之后将”TD误差”还如往常：<span
+class="math display"><em>δ</em><sub><em>t</em></sub> = <em>r</em><sub><em>t</em> + 1</sub> + <em>λ</em>Q(<em>x</em><sub><em>t</em> + 1</sub>, <em>a</em><sub><em>t</em> + 1</sub>) − Q(<em>x</em><sub><em>t</em></sub>, <em>a</em><sub><em>t</em></sub>)</span><br />
+而对所有状态-动作对，更新对应的<span
+class="math display">Q</span>函数：<span
+class="math display">Q(<em>x</em>, <em>a</em>) ⇐ Q(<em>x</em>, <em>a</em>) + <em>α</em><em>δ</em><sub><em>t</em></sub><em>E</em><sub><em>t</em></sub>(<em>x</em>, <em>a</em>)</span><br />
+将该想法融入到原先的”SARSA”算法中就可以得到算法”SARSA(<span
+class="math display"><em>λ</em></span>)”：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/SARAS%28lambda%29.PNG"
+title="SARAS(\lambda)" alt="SARAS(\lambda)" /></p>
+<h2 id="值函数近似">值函数近似</h2>
+<p>说完了怎么在强化学习问题中进行学习，我们再来关注下如何表示“值函数”。原先的表格表达方式十分灵活，能够表示所有可能的策略，但其天生缺陷就是无法表示连续空间的策略；而为此就出现了<strong>值函数近似</strong>，如<span
+class="math display">$$\hat{\mathrm{V}}(x)=w^T\phi(x)$$</span>，<span
+class="math display">$$\hat{\mathrm{Q}}(x, a)=w^T\phi(x,
+a)$$</span>（其中<span
+class="math display"><em>w</em></span>为参数向量，<span
+class="math display"><em>ϕ</em>(⋅)</span>为特征映射函数），其可以表示连续空间上的一些问题，但付出的代价就是无法表达所有可能的策略。<br />
+而针对上述情形，我们该如何学习、更新策略或模型呢？<br />
+回顾之前的MC误差与TD误差：<br />
+<span class="math display">$$
+\begin{align}
+\mathrm{Q}(x_t, a_t) &amp;\Leftarrow\mathrm{Q}(x_t,
+a_t)+\alpha(R-\mathrm{Q}(x_t, a_t))\
+\mathrm{Q}(x, a)
+&amp;\Leftarrow\mathrm{Q}(x,a)+\alpha(r_{t+1}+\gamma\mathrm{Q}(x_{t+1},
+a_{t+1})-\mathrm{Q}(x_t, a_t))\
+\end{align}
+$$</span><br />
+其中对于<span class="math display">Q(⋅)</span>的更新都形如<span
+class="math display">Q(⋅)+ = <em>Δ</em></span>，且<span
+class="math display"><em>Δ</em></span>都是目标值与通过<span
+class="math display">Q(⋅)</span>预估值的差别。对应到连续空间上，我们就可以使用梯度下降的算法，计算出随机梯度以替代上述的<span
+class="math display"><em>Δ</em></span>：<br />
+<span class="math display">$$
+\mathrm{\Delta}w_t
+=\mathrm{\theta}(\mathrm{Q}^\pi(x_t,a_t)-\hat{\mathrm{Q}}(x_t,a_t))\nabla\hat{\mathrm{Q}}(x_t,a_t)
+$$</span></p>
+<p>具体到MC误差中，即用下式替代：<br />
+<span class="math display">$$\mathrm{\Delta}w_t
+=\mathrm{\theta}(R-\hat{\mathrm{Q}}(x_t,a_t))\nabla\hat{\mathrm{Q}}(x_t,a_t)$$</span><br />
+而在TD误差中，则使用下式替代：<br />
+<span class="math display">$$\mathrm{\Delta}w_t
+=\mathrm{\theta}(r_{t+1}+\lambda\hat{\mathrm{Q}}(x_{t+1},a_{t+1})-\hat{\mathrm{Q}}(x_t,a_t))\nabla\hat{\mathrm{Q}}(x_t,a_t)$$</span><br />
+在资格迹中，则使用下式替换原先的<span
+class="math display"><em>E</em><sub><em>t</em></sub></span><br />
+<span class="math display">$$E_t=\gamma\lambda
+E_{t-1}+\nabla_w\hat{\mathrm{Q}}(x_t, a_t)$$</span></p>
+<p>将值函数近似的想法融入到”Q-learning”中，可以得到如下算法：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/approximate-value-function%20q-learning.PNG"
+title="值函数近似Q-Learning" alt="值函数近似Q-Learning" /></p>
+<p>我们再回过头来，看看除了最简单的线性函数近似模型外，还可以使用什么模型？<br />
+线性模型近似：<span
+class="math display">$$\hat{\mathrm{Q}}(x,a)=w^T\phi(x,a)$$</span>；对应的梯度为<span
+class="math display">$$\nabla_w\hat{\mathrm{Q}}(w,a)=\phi(x,a)$$</span>。<br />
+有人也尝试将原始特征“离散化”形成离散表格，进而处理；但这种做法的问题就是可能粒度太粗。而有人将“核化”思想运用进来：<span
+class="math display">$$\hat{\mathrm{Q}}(x,a)=\sum_{i=1}^{m}w_i\mathrm{K}((x,a),(x_i,
+a_i))$$</span>，其中<span
+class="math display">(<em>x</em><sub><em>i</em></sub>, <em>a</em><sub><em>i</em></sub>)</span>为初始随机采样。还有使用非线性模型，如神经网络<span
+class="math display">$$\hat{\mathrm{Q}}(x, a)=f(x,
+a)$$</span>，此时就可以将梯度<span
+class="math display">$$\nabla_w\hat{\mathrm{Q}}(x_t,
+a_t)$$</span>传给神经网络以训练参数。</p>
+<p>另外在实现过程中，针对单个样本求梯度会出现方差极大的问题；对此的解决方案就是“批量评估”，收集历史数据<span
+class="math display"><em>D</em> = (<em>x</em><sub>1</sub>, <em>Q</em><sub>1</sub><sup><em>π</em></sup>), (<em>x</em><sub>2</sub>, <em>Q</em><sub>2</sub><sup><em>π</em></sup>), ⋯, (<em>x</em><sub><em>m</em></sub>, <em>Q</em><sub><em>m</em></sub><sup><em>π</em></sup>)</span>，求解回归模型<span
+class="math display"><em>J</em>(<em>w</em>) = 𝔼<sub><em>D</em></sub>[(<em>Q</em><sup><em>π</em></sup> − <em>Q̂</em>(<em>x</em>))<sup>2</sup>]</span>（在线性模型上有对应的闭式解，在神经网络上可以使用”batch
+update”技术）。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-reinforcement-learning/batch-update%20policy-iteration.PNG"
+title="批量决策迭代算法" alt="批量决策迭代算法" /></p>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://book.douban.com/subject/26708119/">周志华.
+机器学习</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/08/review/reinforcement-learning/" title="强化学习复习">https://wrran.github.io/blog/2017/12/08/review/reinforcement-learning/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/reinforcement-learning/" rel="tag"># reinforcement learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/08/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-12-09/" rel="prev" title="Reinforced mnemonic reader for machine comprehension">
+                  <i class="fa fa-angle-left"></i> Reinforced mnemonic reader for machine comprehension
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/15/people-say/171215-01/" rel="next" title="写给未来的自己">
+                  写给未来的自己 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="open source, open mind 你信吗，我反正是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C&#x2F;C++ 常用开源库">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/02/27/cheatsheet/dev/open-lib-in-c/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="open source, open mind 你信吗，我反正是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-02-27T08:16:44.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.648Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="cheatsheet">
+<meta property="article:tag" content="dev-libs">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/02/27/cheatsheet/dev/open-lib-in-c/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/02/27/cheatsheet/dev/open-lib-in-c/","path":"blog/2017/02/27/cheatsheet/dev/open-lib-in-c/","title":"C/C++ 常用开源库"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C/C++ 常用开源库 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-text">C开源项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c%E8%B5%84%E6%BA%90%E5%88%97%E8%A1%A8"><span class="nav-text">C++资源列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-text">标准库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6"><span class="nav-text">框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86"><span class="nav-text">图形图像处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6"><span class="nav-text">数学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-text">机器学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/02/27/cheatsheet/dev/open-lib-in-c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="C&#x2F;C++ 常用开源库 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C/C++ 常用开源库
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-02-27 16:16:44" itemprop="dateCreated datePublished" datetime="2017-02-27T16:16:44+08:00">2017-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/cheatsheet/" itemprop="url" rel="index"><span itemprop="name">cheatsheet</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/cheatsheet/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>open source, open mind<br />
+你信吗，我反正是</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>这份开源库的推荐列表已经看过很多次了，但没有仔细研读过，使用过的就更少了。不过，将这份资料列表展示在我的博客上。一方面了解C++的强大，一方面了解自己可能会涉及的领域。</p>
+<h1 id="c开源项目">C开源项目</h1>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="http://home.tiscali.cz/~cz210552/webbench.html">webbench</a></td>
+<td>linux下的网站压测工具</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="https://sourceforge.net/projects/tinyhttpd/">tinyhttpd</a></td>
+<td>超轻量级的HTTP Server</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/cjson/">cJSON</a></td>
+<td>JSON编码器</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="http://code.google.com/p/cmockery/downloads/list">cMockery</a></td>
+<td>轻量级C语言单元测试框架</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://software.schmorp.de/pkg/libev.html">libev</a></td>
+<td>开源的事件驱动库</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://memcached.org/">memcached</a></td>
+<td>高性能分布式内存对象缓存系统</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.lua.org/">Lua</a></td>
+<td>c语言实现的“新”语言</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.sqlite.org/">SQLite</a></td>
+<td>嵌入式关系数据库</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://minnie.tuhs.org/cgi-bin/utree.pl?file=V6">UNIX
+v6</a></td>
+<td>操作系统内核代码</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.netbsd.org/">NETBSD</a></td>
+<td>高度移植性的UNIX-like操作系统</td>
+</tr>
+</tbody>
+</table>
+<h1 id="c资源列表">C++资源列表</h1>
+<p>C++资源丰富，我们按照以下顺序介绍，更完整的列表可以参见<a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25443704">值得推荐的C/C++框架和库</a>：</p>
+<ul>
+<li><a href="#cpp.stl">标准库</a></li>
+<li><a href="#cpp.framework">框架</a></li>
+<li><a href="#cpp.db">数据库</a></li>
+<li><a href="#cpp.mp">图像处理</a></li>
+<li><a href="#cpp.math">数学</a></li>
+<li><a href="#cpp.ml">机器学习</a></li>
+<li><a href="#cpp.other">其他</a></li>
+</ul>
+<h2 id="标准库">标准库</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/C%2B%2B_Standard_Library">C++
+Standard library</a></td>
+<td>核心语言编写，同时也是C++ISO标准的一部分</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Standard_Template_Library">Standard
+Template Library</a></td>
+<td>标准模板库</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/C_POSIX_library">C POSIX
+Library</a></td>
+<td>POSIX系统的C标准库规范</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/cplusplus">ISO C++ Standards
+Committee</a></td>
+<td>C++标准委员会</td>
+</tr>
+</tbody>
+</table>
+<h2 id="框架">框架</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apache C++ Standard Library</td>
+<td>算法，容器，迭代器和其他基本组件的集合</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://stlab.adobe.com/">ASL</a></td>
+<td>Adobe公司的C++开源库</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/boostorg">Boost</a></td>
+<td>C++准标准库</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/bloomberg/bde">BDE</a></td>
+<td>Bloomberg公司使用的开发环境</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://libcinder.org/">Cinder</a></td>
+<td>Cinder is a free and open source library for professional-quality
+creative coding in C++.</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="http://ryan.gulix.cl/fossil.cgi/cxxomfort/home">Cxxomfort</a></td>
+<td>Cxxomfort is a small, header-only library that backports to C++03 or
+C++11 some of the nifty C++11 and later goodies, including some
+proposals still in the works.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://dlib.net/">Dlib</a></td>
+<td>Dlib is a modern C++ toolkit containing machine learning algorithms
+and tools for creating complex software in C++ to solve real world
+problems.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/electronicarts/EASTL">EASTL</a></td>
+<td>EASTL stands for Electronic Arts Standard Template Library. It is an
+extensive and robust implementation that has an emphasis on high
+performance.</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="https://github.com/sumeetchhetri/ffead-cpp">ffead-cpp</a></td>
+<td>Framework for Enterprise Application Development, c++ framework, c++
+web framework, c++ application framework, c++ rest framework, c++ soap
+framework, c++ web sites,c++ web applications, c++ driven web
+development - c++</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/facebook/folly">Folly</a></td>
+<td>An open-source C++ library developed and used at Facebook.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/julianstorer/JUCE">JUCE</a></td>
+<td>The JUCE cross-platform C++ framework.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/facebook/libphenom">libPhenom</a></td>
+<td>An eventing framework for building high performance and high
+scalability systems in C.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/sourcey/libsourcey">libSourcey</a></td>
+<td>C++11 evented IO libraries for high performance networking and media
+based applications</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/koanlogic/libu">libU</a></td>
+<td>LibU is a multiplatform utility library written in C, with APIs for
+handling memory allocation, networking and URI parsing, string
+manipulation, debugging, and logging in a very compact way, plus many
+other miscellaneous tasks</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://loki-lib.sourceforge.net/">loki</a></td>
+<td>Loki is a C++ library of designs, containing flexible
+implementations of common design patterns and idioms.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://code.google.com/p/reason/">Reason</a></td>
+<td>跨平台的框架，使开发者能够更容易地使用Java，.Net和Python，同时也满足了他们对C++性能和优势的需求。</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://root.cern.ch/">ROOT</a></td>
+<td>ROOT is a modular scientific software framework. It provides all the
+functionalities needed to deal with big data processing, statistical
+analysis, visualisation and storage. It is mainly written in C++ but
+integrated with other languages such as Python and R.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.stlport.org/">STLport</a></td>
+<td>STL中具有代表性的版本</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://stxxl.org/">STXXL</a></td>
+<td>STXXL: Standard Template Library for Extra Large Data Sets</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.ultimatepp.org/">Ultimate++</a></td>
+<td>Ultimate++ is a C++ cross-platform rapid application development
+framework</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/wtl/">Windows Template
+Library</a></td>
+<td>Windows Template Library (WTL) is a C++ library for developing
+Windows applications and UI components.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数据库">数据库</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/paulftw/hiberlite">hiberlite</a></td>
+<td>C++ ORM for SQLite</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/redis/hiredis">Hiredis</a></td>
+<td>Minimalistic C client for Redis &gt;= 1.2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/google/leveldb">LevelDB</a></td>
+<td>LevelDB is a fast key-value storage library written at Google that
+provides an ordered mapping from string keys to string values.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.tangentsoft.net/mysql++/">MySQL++</a></td>
+<td>MySQL++ is a C++ wrapper for MySQL’s C API.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/facebook/rocksdb">RocksDB</a></td>
+<td>A library that provides an embeddable, persistent key-value store
+for fast storage.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.sqlite.org/">SQLite</a></td>
+<td>SQLite is a self-contained, high-reliability, embedded,
+full-featured, public-domain, SQL database engine.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="图形图像处理">图形图像处理</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.cgal.org/">CGAL</a></td>
+<td>CGAL is a software project that provides easy access to efficient
+and reliable geometric algorithms in the form of a C++ library.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://ggt.sourceforge.net/">GMTL</a></td>
+<td>GGT is a collection of tools implementing Graphics primitives in
+generalized ways. Using modern C++ template metaprogramming and generic
+programming paradigms, GGT is a fast and flexible base for any modern
+graphics project.</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="http://www.boost.org/doc/libs/1_56_0/libs/gil/doc/index.html">Boost.GIL</a></td>
+<td>Generic Image Library</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/cimg/">CImg</a></td>
+<td>An easy-to-use, efficient, portable C++ library for image
+processing.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.xdp.it/cximage.htm">xdp</a></td>
+<td>CxImage is a C++ class that can load, save, display, transform
+images in a very simple and fast way.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://freeimage.sourceforge.net/">FreeImage</a></td>
+<td>FreeImage is an Open Source library project for developers who would
+like to support popular graphics image formats like PNG, BMP, JPEG, TIFF
+and others as needed by today’s multimedia applications.</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="http://gdcm.sourceforge.net/wiki/index.php/Main_Page">GDCM</a></td>
+<td>GDCM is an open source implementation of the DICOM standard. Digital
+Imaging and Communications in Medicine (DICOM) is a standard that
+governs this capability by specifying handling, storing, printing, and
+transmitting information in medical imaging.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://itk.org/">ITK</a></td>
+<td>ITK is an open-source, cross-platform system that provides
+developers with an extensive suite of software tools for image
+analysis.</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="http://www.imagemagick.org/script/api.php">ImageMagick</a></td>
+<td>ImageMagick includes a number of ready-made interfaces. This makes
+it possible to modify or create images automagically and dynamically
+utilizing your favorite development platform.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.vtk.org/">VTK</a></td>
+<td>The Visualization Toolkit (VTK) is an open-source, freely available
+software system for 3D computer graphics, image processing, and
+visualization.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数学">数学</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/FFTW/fftw3">FFTW</a></td>
+<td>This is the official repository for the FFTW Fourier transform
+library, version 3.x</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.gnu.org/software/gsl/">GSL</a></td>
+<td>The GNU Scientific Library (GSL) is a numerical library for C and
+C++ programmers.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://arma.sourceforge.net/">Armadillo</a></td>
+<td>Armadillo is a high quality linear algebra library (matrix maths)
+for the C++ language, aiming towards a good balance between speed and
+ease of use</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://ceres-solver.org/">Ceres Solver</a></td>
+<td>Ceres Solver is an open source C++ library for modeling and solving
+large, complicated optimization problems.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://cmldev.net/">CML</a></td>
+<td>The CML (Configurable Math Library) is a free C++ math library for
+games and graphics.</td>
+</tr>
+<tr>
+<td><a
+target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a></td>
+<td>Eigen is a C++ template library for linear algebra: matrices,
+vectors, numerical solvers, and related algorithms.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="机器学习">机器学习</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>项目名称</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://eodev.sourceforge.net/">Evolving Objects</a></td>
+<td>EO is a template-based, ANSI-C++ evolutionary computation library
+which helps you to write your own stochastic optimization algorithms
+insanely fast.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/BVLC/caffe">Caffe</a></td>
+<td>Caffe: a fast open framework for deep learning.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/liuliu/ccv">CCV</a></td>
+<td>C-based/Cached/Core Computer Vision Library, A Modern Computer
+Vision Library</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.mlpack.org/">mlpack</a></td>
+<td>mlpack is a scalable machine learning library, written in C++, that
+aims to provide fast, extensible implementations of cutting-edge machine
+learning algorithms.</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv">OpenCV</a></td>
+<td>Open Source Computer Vision Library</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/shogun-toolbox/shogun">shogun</a></td>
+<td>The Shogun Machine Learning Toolbox (Source Code)</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gmplib.org/">GMP</a></td>
+<td>GMP is a free library for arbitrary precision arithmetic, operating
+on signed integers, rational numbers, and floating-point numbers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他">其他</h2>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25443704">值得推荐的C/C++框架和库</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/02/27/cheatsheet/dev/open-lib-in-c/" title="C&#x2F;C++ 常用开源库">https://wrran.github.io/blog/2017/02/27/cheatsheet/dev/open-lib-in-c/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/cheatsheet/" rel="tag"># cheatsheet</a>
+              <a href="/tags/dev-libs/" rel="tag"># dev-libs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/02/25/howto/boost/asio/" rel="prev" title="boost &#x2F; asio">
+                  <i class="fa fa-angle-left"></i> boost / asio
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/02/27/howto/python/re/" rel="next" title="Python中正则表达式语法 简介">
+                  Python中正则表达式语法 简介 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

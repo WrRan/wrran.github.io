@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Get in IT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git工作流">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/08/18/howto/git-control-flow/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Get in IT">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-08-18T07:09:32.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.670Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/08/18/howto/git-control-flow/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/08/18/howto/git-control-flow/","path":"blog/2017/08/18/howto/git-control-flow/","title":"Git工作流"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git工作流 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E"><span class="nav-text">版权声明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%80%9D%E8%B7%AF"><span class="nav-text">主要思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%94%AF"><span class="nav-text">分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%86%E6%94%AF%E7%9A%84%E7%90%86%E7%94%B1"><span class="nav-text">使用分支的理由</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%91%BD%E5%90%8D"><span class="nav-text">分支命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E5%91%BD%E5%90%8D"><span class="nav-text">标签命名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-text">Git常用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%88%86%E6%94%AF%E7%9A%84%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-text">关于分支的常用指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E9%87%8D%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-text">本地开发重用指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6"><span class="nav-text">代码合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%A0%87%E7%AD%BE"><span class="nav-text">代码标签</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/08/18/howto/git-control-flow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git工作流 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git工作流
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-08-18 15:09:32" itemprop="dateCreated datePublished" datetime="2017-08-18T15:09:32+08:00">2017-08-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/" itemprop="url" rel="index"><span itemprop="name">howto</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>Get in IT</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="版权声明">版权声明</h1>
+<p>本博文内容来自于<a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22835128">GIT工作流管理代码 -
+知乎专栏</a>，其作者其所有合法权益。</p>
+<h1 id="主要思路">主要思路</h1>
+<blockquote>
+<ol type="1">
+<li>依靠两个主分支master、develop保证代码的持续更新与部署的有序性。</li>
+<li>开发的时候主要是依托于develop分支开发，基于develop分支新建分支，经过严格测试之后，才能合并到develop中，保证develop代码的稳定性，也就是日常开发中不再轻易修改develop分支代码。</li>
+<li>master的代码等于或者落后于develop的代码，是作为develop分支一个更加稳定版的保存与跟踪，用来部署正式的代码。</li>
+<li>master分支和develop分支配置不一样，前者是正式环境（生产环境），后者是开发环境。通过这两个分支保证团队代码的持续迭代更新。</li>
+</ol>
+</blockquote>
+<h1 id="分支">分支</h1>
+<h2 id="使用分支的理由">使用分支的理由</h2>
+<blockquote>
+<ol type="1">
+<li>在<strong>项目层面</strong>，一个大项目切分成多个小项目，利用分支来管理每个小项目，保证项目的同步进行，提高开发效率。</li>
+<li>在<strong>代码层面</strong>，利用分支管理代码的提交、回滚、合并等操作，减少人工合并的成本，提高代码管理的效率。</li>
+<li>在<strong>个人层面</strong>，利用分支管理自己开发代码与团队代码，方便自己合并代码、开发单独的特色分支，提高个人开发效率。</li>
+</ol>
+</blockquote>
+<p><img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/git-control-flow/branchs.png"
+alt="分支示意图" /><br />
+如上图所示，我们将分支分为四类：</p>
+<blockquote>
+<ol type="1">
+<li>master: 专门用于部署以及负责线上代码回滚的分支</li>
+<li>develop: 专门存放经过测试之后，保证代码无bug代码的分支</li>
+<li>feature:
+项目开发分支。此分支特点是周期长（最短项目周期可能为一周，最长可能会长达一个月甚至更久）、团队协作（一般至少包括一个前端和一个后台）、代码量大，工作方式是需要创建本地以及远程分支，代码基于develop分支代码，经过开发及测试之后，最终合并到develop分支上。当项目上线之后，分支会保留一段时间（一般一周左右，最长不超过一个月），直至最终删除。</li>
+<li>hotfix:
+紧急bug、其他问题修复分支。该分支特点是修改时间端（一般时间可能为几个小时，也有可能会是一天甚至更久）、优先级高、代码量稍小，改完之后急需测试上线。此分支也是基于develop（此时需要确认develop的纯度，不能有不稳定的污染代码，如有回滚到稳定版代码，否则影响bug修复）。此分支会是团队协作或者单人，团队协作工作方式会类似feature分支，单人只需构建本地分支即可满足开发要求（本地分支千万不要放在线上，以免给同伴带来干扰），当修复上线一段时间之后（一般为3~7天），便可以删除。</li>
+</ol>
+</blockquote>
+<h1 id="注意事项">注意事项</h1>
+<blockquote>
+<p>正常情况下，代码起源于develop分支。开发者自己本地的开发分支不要太多，避免分支过多遗忘分支作用。</p>
+</blockquote>
+<blockquote>
+<p>特殊情况下，如遇到节日banner活动上线，此时develop正好代码有问题，那么a同学可以基于master开发，此时代码量修改很小，不会影响代码稳定性，但a同学需要非常细心，避免发生低级错误。</p>
+</blockquote>
+<blockquote>
+<p>新项目进入开发阶段之前，负责管理代码的人首先新建分支，并通知到团队中所有的人并附上说明。</p>
+</blockquote>
+<blockquote>
+<p>项目进行时，a同学需要去处理优先级更高的bug或者是项目时，a有可能会新建一个自己的本地分支S，但是功能还未修改完，此时a同学有可能会遇到优先级更高的问题，a同学需要暂时中断S，然后将代码提交到本地分支；新建新分支X，当完成X开发后，将代码合并到本地根分支，删去X分支；然后切换到分支S，继续开发，直到最终完成各个项目的开发。</p>
+</blockquote>
+<blockquote>
+<p>优先级特别高的分支需要合并到develop上的时候，提前通知其他人需要合并代码，其他人暂停对develop代码的操作，来保证合并代码的有条不紊</p>
+</blockquote>
+<h1 id="其他">其他</h1>
+<h2 id="分支命名">分支命名</h2>
+<p>分支命名规范：<br />
+feature分支：feature-xxx 例如 feature-paltforms<br />
+hotfix分支：hotfix-xxx 例如 hotfix-wholenet</p>
+<h2 id="测试">测试</h2>
+<p>在各步骤分支操作时，需要不断进行测试：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/git-control-flow/tests.png"
+alt="代码测试" /></p>
+<h2 id="优先级">优先级</h2>
+<p>合并代码的时候根据优先级顺序来合并代码：</p>
+<blockquote>
+<p><strong>P0级</strong>：如急需上线的项目代码，包括活动项目、紧急bug修改，为最高级；<br />
+<strong>P1级</strong>：大项目代码、合并时间较长、影响较大的代码；<br />
+<strong>P2级</strong>：优化样式、修复小问题、影响不大的代码。</p>
+</blockquote>
+<h2 id="标签命名">标签命名</h2>
+<p>每次正式上线需要打一次标签，标签分级：</p>
+<blockquote>
+<p><code>VX.[ ].[ ]</code>:新功能上线，大量的功能优化等；<br />
+<code>V[ ].X.[ ]</code>:较大的功能优化，性能优化等；<br />
+<code>V[ ].[ ].X</code>：较小的功能优化、性能优化等。</p>
+</blockquote>
+<h1 id="git常用指令">Git常用指令</h1>
+<h2 id="关于分支的常用指令">关于分支的常用指令</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建分支</span></span><br><span class="line">git branch [branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建基于`commit-head`提交的分支</span></span><br><span class="line">git branch [branch-name] [commit-head]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出分支</span></span><br><span class="line">git branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出远程分支</span></span><br><span class="line">git branch -r</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有分支</span></span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个本地分支，并切换到该分支</span></span><br><span class="line">git checkout -b [branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个基于远程分支的本地分支，并切换到该分支</span></span><br><span class="line">git checkout -b [branch-name] origin/[branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换分支</span></span><br><span class="line">git checkout [branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除分支</span></span><br><span class="line">git branch -d [branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git branch -dr [remote/branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载远程仓库代码的变动</span></span><br><span class="line">git fetch origin</span><br></pre></td></tr></table></figure>
+<h2 id="本地开发重用指令">本地开发重用指令</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示有变更的文件</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看最近5条历史记录</span></span><br><span class="line">git <span class="built_in">log</span> -5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示commit历史及每次commit发生变更的文件</span></span><br><span class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件添加到缓存去区</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将特定文件添加到缓存区</span></span><br><span class="line">git add [file]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除工作空间的文件</span></span><br><span class="line">git <span class="built_in">rm</span> [file]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交到本地仓库</span></span><br><span class="line">git commit -m [comment]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送到远程分支</span></span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送到对应的远程分支</span></span><br><span class="line">git push origin [branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接提交到本地仓库</span></span><br><span class="line">git commit -a -m [branch-name]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>本地仓库代码提交条件</strong>：完成功能点，自测无问题，在保持头脑清晰情况下提交到本地分支。</p>
+</blockquote>
+<blockquote>
+<p><strong>远程仓库代码推送条件</strong>：通过一轮测试，bug问题不大，对同伴的影响较小；联调时是代码提交最为频繁的时候，注意解决好每个问题后，做好自测流程，千万不要匆忙提交影响同伴工作效率。测试的时候尽量做到bug批量解决，自测无误之后，再进行提交，减少代码污染。</p>
+</blockquote>
+<blockquote>
+<p><strong>提交代码之前的代码审查</strong>：在代码提交过程中可以做很多控制操作，例如pre-commit钩子是最先触发运行的脚本。在提交一个commit之前，该hook有能力做许多工作，比如检查待提交东西的快照，以确保这份提交中没有缺少什么东西、文件名是否符合规范、是否对这份提交进行了测试、代码风格是否符合团队要求等等。</p>
+</blockquote>
+<h2 id="代码合并">代码合并</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要合并的分支名</span></span><br><span class="line">git merge [branch-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 代码存储到储藏室</span></span><br><span class="line">git stash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看储藏室列表</span></span><br><span class="line">git stash list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 弹出储藏室堆栈</span></span><br><span class="line">git stash pop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下拉代码</span></span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<h2 id="代码标签">代码标签</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有标签</span></span><br><span class="line">git tag</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除本地分支</span></span><br><span class="line">git tag -d [tag]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建本地标签</span></span><br><span class="line">git tag [tag-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看标签信息</span></span><br><span class="line">git show [tag]</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22835128">GIT工作流管理代码 -
+知乎专栏</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/08/18/howto/git-control-flow/" title="Git工作流">https://wrran.github.io/blog/2017/08/18/howto/git-control-flow/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/08/18/people-say-170818-01/" rel="prev" title="他说">
+                  <i class="fa fa-angle-left"></i> 他说
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/09/11/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-09-11/" rel="next" title="CAS &amp; AoA - 解决机器阅读理解问题的两个模型">
+                  CAS & AoA - 解决机器阅读理解问题的两个模型 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

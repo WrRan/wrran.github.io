@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="象形文字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning Chinese Word Representations From Glyphs Of Characters">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/08/26/note/paper-reading/word%20embedding/2018-08-26/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="象形文字">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://ow3xn0dt6.bkt.clouddn.com/image/180826/CWE_and_MGE.PNG">
+<meta property="article:published_time" content="2018-08-26T02:17:00.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.732Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="word embedding">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:image" content="http://ow3xn0dt6.bkt.clouddn.com/image/180826/CWE_and_MGE.PNG">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/08/26/note/paper-reading/word%20embedding/2018-08-26/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/08/26/note/paper-reading/word%20embedding/2018-08-26/","path":"blog/2018/08/26/note/paper-reading/word embedding/2018-08-26/","title":"Learning Chinese Word Representations From Glyphs Of Characters"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Learning Chinese Word Representations From Glyphs Of Characters | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA%E7%AE%80%E8%BF%B0"><span class="nav-text">动机简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="nav-text">模型介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#baselines"><span class="nav-text">Baselines</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-and-skip-gram"><span class="nav-text">CBOW and Skip-Gram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glove"><span class="nav-text">GloVe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#character-enhanced-word-embedding-cwe"><span class="nav-text">Character-enhanced Word
+Embedding (CWE)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multi-granularity-embedding-mge"><span class="nav-text">Multi-granularity Embedding
+(MGE)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#models"><span class="nav-text">Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#glyph-enhanced-word-embedding-gwe"><span class="nav-text">Glyph-Enhanced Word Embedding
+(GWE)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#directly-learn-from-character-glyph-features"><span class="nav-text">Directly Learn
+From Character Glyph Features</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/08/26/note/paper-reading/word%20embedding/2018-08-26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Learning Chinese Word Representations From Glyphs Of Characters | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Learning Chinese Word Representations From Glyphs Of Characters
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-26 10:17:00" itemprop="dateCreated datePublished" datetime="2018-08-26T10:17:00+08:00">2018-08-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/word-embedding/" itemprop="url" rel="index"><span itemprop="name">word embedding</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>象形文字</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>本文从汉字为象形文字这一点出发，提出从汉字的图像上学习“词向量”，并在三个数据集上进行了“词义相似度”和“词语类比”的实验，发现：直接从图像中学习词向量表现并不优良，而将图像词向量作为原先词向量的辅助信息确实可以带来一定的提升。<br />
+但就本人而言实验部分中的三个数据集，究竟偏重的是词向量哪部分的性能测试呢，是否切合了象形文字的优势呢？另外，作者从图像中学习词向量的方法能否最有效地从词向量中捕捉词语直接的相关关系呢？</p>
+<h1 id="动机简述">动机简述</h1>
+<p>在中文中，汉字往往有多个组件构成。这有两层含义：一是汉字的含义往往与组件相关，因此在学习词向量的过程中，兼顾这些信息有助于提升最终词向量的质量；二是共享相同偏旁的多个汉字语义或发音上也有一定联系。这些组件的信息对于词向量学习都是有益的。</p>
+<h1 id="模型介绍">模型介绍</h1>
+<p>作者在基于原先的几个词向量表示学习的模型的基础上，提出了自己的改进方式。</p>
+<h1 id="baselines">Baselines</h1>
+<h2 id="cbow-and-skip-gram">CBOW and Skip-Gram</h2>
+<p>这是word2vec中提出的两个经典模型，简单有效。CBOW是给定上下文预测目标词，Skip-Gram是给定目标词预测上下文。除此之外，还有一些训练技巧，如层次化的softmax、哈夫曼编码、负采样等。</p>
+<h2 id="glove">GloVe</h2>
+<p>GloVe是通过词语共现矩阵学习词向量的。在统计词语共现信息时，GloVe使用了调和权重，即距离为<span
+class="math inline"><em>d</em></span>的两个词语共现频率记为<span
+class="math inline">1/<em>d</em></span>；GloVe的目标函数如下：<br />
+<span class="math display">$$
+\sum_{i, j \in \text{non-zero of} X}
+f(X_{ij})(\vec{w}_i^T\vec{\tilde{w}}_j + b_i + \tilde{b}_j -
+\log{X_{ij}})
+$$</span><br />
+其中，考虑到共现频次过低时统计数据不可信，故而引入如下<span
+class="math inline"><em>f</em>(<em>X</em><sub><em>i</em><em>j</em></sub>)</span>作为权重。<br />
+<span class="math display">$$
+f(X_{ij}) =
+\begin{cases}
+(X_{ij}/x_{max})^{\alpha}, \text{if } X_{ij}&lt; x_{max}\
+1, &amp; \text{otherwise}\
+\end{cases}
+$$</span></p>
+<h2 id="character-enhanced-word-embedding-cwe">Character-enhanced Word
+Embedding (CWE)</h2>
+<p>CWE寄希望于通过融入构成词语的字信息来提升词向量的质量，如下：<br />
+<span class="math display">$$
+\vec{w}_i^{cwe} = \vec{w}_i + \frac{1}{\vert C(i)\vert}\sum_{c_j\in
+C(i)}\vec{c}_j
+$$</span><br />
+其中，<span
+class="math inline"><em>w⃗</em><sub><em>i</em></sub></span>是词向量，<span
+class="math inline"><em>c⃗</em><sub><em>j</em></sub></span>是字向量，<span
+class="math inline"><em>C</em>(<em>i</em>)</span>是词语<span
+class="math inline"><em>w</em><sub><em>i</em></sub></span>的字集合。<br />
+另外，由于一个字往往含有多个含义，CWE为每个字分配多个向量，不能给提出了三种挑选字向量的方式：基于位置，基于簇丛，非参数的基于簇丛的挑选方式。</p>
+<figure>
+<img src="http://ow3xn0dt6.bkt.clouddn.com/image/180826/CWE_and_MGE.PNG"
+alt="Model Comparison of Character-enhanced Word Embedding (CWE) and Multi-granularity Embedding (MGE)" />
+<figcaption aria-hidden="true">Model Comparison of Character-enhanced
+Word Embedding (CWE) and Multi-granularity Embedding (MGE)</figcaption>
+</figure>
+<h2 id="multi-granularity-embedding-mge">Multi-granularity Embedding
+(MGE)</h2>
+<p>MGE基于CBOW和CWE模型，并融入了目标词的偏旁信息。MGE通过如下隐层表示预测目标词：<br />
+<span class="math display">$$
+\vec{h}_i = \frac{1}{\vert C(i)\vert} \sum_{c_k\in C(i)} \vec{r}_k +
+\frac{1}{\vert W(i)\vert} \sum_{w_j \in W(i)} \vec{w}_j^{cwe}
+$$</span><br />
+其中<span
+class="math inline"><em>r⃗</em><sub><em>k</em></sub></span>是目标词的偏旁向量，<span
+class="math inline"><em>C</em>(<em>i</em>)</span>是目标词包含的字，<span
+class="math inline"><em>W</em>(<em>i</em>)</span>是上下文词语。</p>
+<h1 id="models">Models</h1>
+<p>作者使用convAE从字生成的图像中抽取表示。</p>
+<figure>
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180826/The_architecture_of_convAE.PNG"
+alt="The architecture of convAE" />
+<figcaption aria-hidden="true">The architecture of convAE</figcaption>
+</figure>
+<h2 id="glyph-enhanced-word-embedding-gwe">Glyph-Enhanced Word Embedding
+(GWE)</h2>
+<p>在预训练好上述的convAE后，模型就可以得出字的向量表示。类似于MGE的做法，作者基于CBOW和CWE模型，融入字的图像向量，并可以细分为两类：<br />
+<strong>context character glyph feature</strong><br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180826/Illustration_of_exploiting_context_word_glyphs.PNG"
+alt="Illustration of exploiting context word glyphs." /></p>
+<p><strong>target character glyph feature</strong><br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180826/Illustration_of_exploiting_target_word_glyphs.PNG"
+alt="Illustration of exploiting target word glyphs." /></p>
+<h2 id="directly-learn-from-character-glyph-features">Directly Learn
+From Character Glyph Features</h2>
+<p>作者也尝试直接从字的图像中学到词向量，无论是SkipGram或者GloVe，更改的地方都是如何产生词向量。在该工作中，作者先是通过convAE学到字图像向量，之后通过双层的GRU，最后通过两层全连接层得到对应的词向量。<br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180826/Model_architecture_of_RNN-Skipgram.PNG"
+alt="Model architecture of RNN-Skipgram." /><br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180826/Model_architecture_of_RNN-GloVe.PNG"
+alt="Model architecture of RNN-GloVe." /></p>
+<h1 id="参考文献">参考文献</h1>
+<p><a target="_blank" rel="noopener" href="http://www.aclweb.org/anthology/D/D17/D17-1025.pdf">Learning
+Chinese Word Representation From Glyphs Of Characters</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/08/26/note/paper-reading/word%20embedding/2018-08-26/" title="Learning Chinese Word Representations From Glyphs Of Characters">https://wrran.github.io/blog/2018/08/26/note/paper-reading/word embedding/2018-08-26/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/word-embedding/" rel="tag"># word embedding</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/08/05/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-08-05/" rel="prev" title="Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering">
+                  <i class="fa fa-angle-left"></i> Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/09/16/note/paper-reading/question%20and%20answering/question%20generation/2018-09-16/" rel="next" title="Learning to Ask Question in Open-domain Conversational Systems with Typed Decoders">
+                  Learning to Ask Question in Open-domain Conversational Systems with Typed Decoders <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

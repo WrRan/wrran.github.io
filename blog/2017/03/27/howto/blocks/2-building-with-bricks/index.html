@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Blocks is a framework that helps you build and manage neural network models on using Theano.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blocks学习手册（三） - bricks">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/03/27/howto/blocks/2-building-with-bricks/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Blocks is a framework that helps you build and manage neural network models on using Theano.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-26T16:53:10.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.664Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="theano">
+<meta property="article:tag" content="blocks">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/03/27/howto/blocks/2-building-with-bricks/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/03/27/howto/blocks/2-building-with-bricks/","path":"blog/2017/03/27/howto/blocks/2-building-with-bricks/","title":"Blocks学习手册（三） - bricks"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Blocks学习手册（三） - bricks | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lazy-initialization"><span class="nav-text">lazy initialization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nested-bricks"><span class="nav-text">nested bricks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#brick%E5%91%A8%E6%9C%9F%E6%80%BB%E8%A7%88"><span class="nav-text">brick周期总览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/03/27/howto/blocks/2-building-with-bricks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Blocks学习手册（三） - bricks | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Blocks学习手册（三） - bricks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-03-27 00:53:10" itemprop="dateCreated datePublished" datetime="2017-03-27T00:53:10+08:00">2017-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/" itemprop="url" rel="index"><span itemprop="name">howto</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/theano/" itemprop="url" rel="index"><span itemprop="name">theano</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/theano/blocks/" itemprop="url" rel="index"><span itemprop="name">blocks</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p><code>Blocks</code> is a framework that helps you build and manage
+neural network models on using Theano.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>在<a
+target="_blank" rel="noopener" href="http://wrran.com/blog/2017/03/26/howto-blocks-0-overview/#more">Blocks学习手册（一）
+- 概览</a>
+中我们说到了构建神经网络的基本单元<strong>bricks</strong>。我们现在就来详细了解下这种对象的作用与生命周期，以便我们更好的使用该类。</p>
+<h1 id="生命周期">生命周期</h1>
+<p><strong>bricks</strong>实质上是<strong>parametrized Theano
+operations</strong>。brick通常又一些<em>attributes</em>和<em>parameters</em>定义组成。其中，<em>attributes</em>是用来定义<strong>Block</strong>的（如，输入向量的维数等）；后者<em>parameters</em>则是指模型训练过程中不断计算的参数（如，W和b）</p>
+<p>brick的生命周期涉及到如下四个方面：</p>
+<ol type="1">
+<li><strong>Configuration</strong>：设置（全部或者部分）brick的<em>attributes</em>。当我们通过构造函数常见brick并传入一些值时，或者我们改变brick对象的属性时，都算在进行configuration。这个步骤中不会有theano变量被创建。</li>
+<li><strong>Allocation</strong>：（可选）创建brick对象代表的theano
+shared
+variables。当调用<code>allocate()</code>时，theano变量将被创建并被默认初始化为<code>NaN</code>。</li>
+<li><strong>Application</strong>：这一步是为了构建出Theano中的计算图（Computational
+graph），根据<em>attributes</em>将输入与输出（<em>parameters</em>）连接起来。这一步只有当对象被完全配置好后才可以进行。</li>
+<li><strong>Initialization</strong>：设置brick中<em>parameters</em>，即theano变量的实际数值。用户蹄冻的量将替换掉默认的初始化值。</li>
+</ol>
+<p><em>注意</em>：当brick对象没有调用<code>allocate()</code>而直接调用<code>apply()</code>方法时，将静默调用<code>allocate()</code>方法。</p>
+<h1 id="示例">示例</h1>
+<p>bricks读入theano变量，输出theano变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> theano</span><br><span class="line"><span class="keyword">from</span> theano <span class="keyword">import</span> tensor</span><br><span class="line"><span class="keyword">from</span> blocks.bricks <span class="keyword">import</span> Tanh</span><br><span class="line">x = tensor.vector(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">y = Tanh().apply(x)</span><br><span class="line"><span class="built_in">print</span>(y)  <span class="comment"># tanh_apply_output</span></span><br><span class="line"><span class="built_in">isinstance</span>(y, theano.Variable)  <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+<p>再来看看更贴近实际的示例，来观察这些过程都发生了什么：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> blocks.bricks <span class="keyword">import</span> Linear</span><br><span class="line"><span class="keyword">from</span> blocks.initialization <span class="keyword">import</span> IsotropicGaussian, Constant</span><br><span class="line">linear = Linear(</span><br><span class="line">    input_dim=<span class="number">10</span>, output_dim=<span class="number">5</span>,</span><br><span class="line">    weights_init=IsotropicGaussian(),</span><br><span class="line">    biases_init=Constant(<span class="number">0.01</span>)</span><br><span class="line">)</span><br><span class="line">y = linear.apply(x)</span><br><span class="line"></span><br><span class="line">linear.parameters  <span class="comment"># [W, b]</span></span><br><span class="line">linear.parameters[<span class="number">1</span>].get_value()</span><br><span class="line"><span class="comment"># array([ nan, nan, nan, nan, nan ])</span></span><br></pre></td></tr></table></figure>
+<p>当我们构造对象<code>linear = Linear(...)</code>时，进入了brick的<strong>configuration</strong>阶段：输入维度（10），输出维度（5）。<br />
+当我们调用<code>linear.apply(x)</code>时，将自动完成brick的<strong>allocation</strong>，并在之后进入到<strong>application</strong>。<br />
+也可以观察到此时<code>linear</code>的参数都是默认为<code>NaN</code>。</p>
+<p>我们通过调用<code>initialize()</code>方法，将进入到bricks的<strong>initialization</strong>阶段：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">linear.initialize()</span><br><span class="line">linear.parameters[<span class="number">1</span>].get_values()</span><br><span class="line"><span class="comment"># array([ 0.01, 0.01, 0.01, 0.01, 0.01 ])</span></span><br></pre></td></tr></table></figure>
+<p><em>注意</em>：bricks是用来帮助我们构建thenao computational
+graph的，所以我们可以在常规的theano语句中混用bricks（当然，你就浪费了bricks的辅助功能啦）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z = tensor.<span class="built_in">max</span>(y + <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="lazy-initialization">lazy initialization</h1>
+<p>在上述构建<code>Linear</code>的过程中，我们指定了输入与输出的维数，以及权重矩阵初始化的方式。但是，我们常常会遇到如下情景：我们项将某个模型的输出作为另一个模型的输入，但是输入与输出的维数并不一样，所以我们需要在之中加一个线性变换的处理。</p>
+<p>为了实现上述场景，<em>Blocks</em>允许<em>lazy
+initialization</em>（默认也是开启状态）。这就意味着，你创建模型时不必一次性全部设定完brick的<em>attributes</em>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">linear2 = Linear(output_dim=<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(linear2.input_dim)</span><br><span class="line"><span class="comment"># NoneAllocation</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># apply必须在所有attribute都被设定之后</span></span><br><span class="line"><span class="comment"># 才能调用</span></span><br><span class="line">linear2.apply(x)</span><br><span class="line"><span class="comment"># Traceback (most recent call last):</span></span><br><span class="line"><span class="comment">#   ...</span></span><br><span class="line"><span class="comment"># ValueError: allocation config not set: input_dim</span></span><br></pre></td></tr></table></figure>
+<p>现在我们可以轻松地根据其他brick的属性来配置需要的brick：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">linear2.input_dim = linear.output_dim</span><br><span class="line">linear2.apply(x)</span><br><span class="line"><span class="comment"># linear_apply_output</span></span><br></pre></td></tr></table></figure>
+<p>上述例子都是隐式地进行了参数的分配，我们其实也可以显式调用<code>apply</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">linear3 = Linear(input_dim=<span class="number">10</span>, output_dim=<span class="number">5</span>)</span><br><span class="line">linear3.parameters</span><br><span class="line"><span class="comment"># Traceback (most recent call last):</span></span><br><span class="line"><span class="comment">#   ...</span></span><br><span class="line"><span class="comment"># AttributeError: &#x27;Linear&#x27; object has no attribute &#x27;parameters&#x27;</span></span><br><span class="line">linear3.allocate()</span><br><span class="line">linear3.parameters</span><br><span class="line"><span class="comment"># [W, b]</span></span><br></pre></td></tr></table></figure>
+<h1 id="nested-bricks">nested bricks</h1>
+<p>许多神经网络模型，特别是那些复杂模型都可以当成层次模型。即便是简单如MLP，也可以分为线性变换层与非线性变换层。</p>
+<p>具体到Blocks上，就是说bricks也可以有children。parent
+bricks负责配置children bricks，即保证children bricks的配置是合法的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> blocks.bricks <span class="keyword">import</span> MLP, Logistic</span><br><span class="line">mlp = MLP(</span><br><span class="line">    activations=[</span><br><span class="line">        Logistic(name=<span class="string">&#x27;sigmoid_0&#x27;</span>),</span><br><span class="line">        Logistic(name=<span class="string">&#x27;sigmoid_1&#x27;</span>)</span><br><span class="line">        ],</span><br><span class="line">    dims=[<span class="number">16</span>, <span class="number">8</span>, <span class="number">4</span>],</span><br><span class="line">    weights_init=IsotropicGaussian(),</span><br><span class="line">    biases_init=Constant(<span class="number">0.01</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">[child.name <span class="keyword">for</span> child <span class="keyword">in</span> mlp.children]</span><br><span class="line"><span class="comment"># [&#x27;linear_0&#x27;, &#x27;sigmoid_0&#x27;, &#x27;linear_1&#x27;, &#x27;sigmoid_1&#x27;]</span></span><br><span class="line"></span><br><span class="line">y = mlp.apply(x)</span><br><span class="line">mlp.children[<span class="number">0</span>].input_dim</span><br><span class="line"><span class="comment"># 16</span></span><br></pre></td></tr></table></figure>
+<p>通过上例可以看出<code>MLP</code>自动构造了child
+bricks进行线性变换。当我们将MLP应用到<code>x</code>上时，它自动的配置好了child
+bricks的输入维数与输出维数。相同的，当我们调用<code>initialize()</code>时，它自动的初始化了child
+bricks的参数。</p>
+<p>当时又会出现这样的场景，我们可能需要复写parent bricks对children
+bricks的配置。举例来说，我们假设上例中MLP的第一层参数的初始化方式与其他层不太一致。为了实现这个目的，我们先回顾下brick的生命周期：</p>
+<ol type="1">
+<li>构造brick</li>
+<li>分配brick的参数</li>
+<li>初始化brick的参数</li>
+</ol>
+<p>当涉及到children
+bricks时，生命周期会变得更加复杂（完整文档可以参考类<code>Brick</code>的内部文档）。在分配或者初始化参数之前，parent
+brick将调用<code>push_allocation_config()</code>及<code>push_initalization_config()</code>方法。前面方法就是用来配置children
+brick的。所以当我们想复写children
+bricks的配置时，只需要手动调用该方法，并在之后复写配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mlp = MLP(</span><br><span class="line">    activation=[</span><br><span class="line">        Logistic(name=<span class="string">&#x27;sigmoid_0&#x27;</span>),</span><br><span class="line">        Logistic(name=<span class="string">&#x27;sigmoid_1&#x27;</span>)</span><br><span class="line">    ],</span><br><span class="line">    dims=[<span class="number">16</span>, <span class="number">8</span>, <span class="number">4</span>],</span><br><span class="line">    weights_init=IsotropicGaussian(),</span><br><span class="line">    biases_init=Constant(<span class="number">0.01</span>)</span><br><span class="line">)</span><br><span class="line">y = mlp.apply(x)</span><br><span class="line">mlp.push_initializion_config()</span><br><span class="line">mlp.children[<span class="number">0</span>].weights_init = Constant(<span class="number">0.01</span>)</span><br><span class="line">mlp.initialize()</span><br></pre></td></tr></table></figure>
+<h1 id="brick周期总览">brick周期总览</h1>
+<p><img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/howto-blocks/blocks%20-%20bricks%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png"
+title="Bricks生命周期" /></p>
+<p>通过bricks就可以满足<a
+target="_blank" rel="noopener" href="http://wrran.com/blog/2017/03/26/howto-blocks-0-overview/#analysis-of-building-model">Blocks学习手册（一）
+- 概览</a>中模型建构分析中的：</p>
+<ul>
+<li>模型计算（架构）</li>
+<li>初始化模型参数</li>
+</ul>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="http://blocks.readthedocs.io/en/latest/bricks_overview.html">Blocks’
+doc - Building with bricks</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/03/27/howto/blocks/2-building-with-bricks/" title="Blocks学习手册（三） - bricks">https://wrran.github.io/blog/2017/03/27/howto/blocks/2-building-with-bricks/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/theano/" rel="tag"># theano</a>
+              <a href="/tags/blocks/" rel="tag"># blocks</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/03/26/howto/blocks/1-installation/" rel="prev" title="Blocks学习手册（二） - 安装">
+                  <i class="fa fa-angle-left"></i> Blocks学习手册（二） - 安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/03/27/howto/blocks/3-managing-the-computation-graph/" rel="next" title="Blocks学习手册（四） - Managing the computation graph">
+                  Blocks学习手册（四） - Managing the computation graph <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

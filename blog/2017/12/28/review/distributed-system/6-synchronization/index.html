@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统 - 同步化">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/28/review/distributed-system/6-synchronization/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-28T03:18:57.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.783Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="distributed system">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/6-synchronization/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/28/review/distributed-system/6-synchronization/","path":"blog/2017/12/28/review/distributed-system/6-synchronization/","title":"分布式系统 - 同步化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式系统 - 同步化 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5"><span class="nav-text">时钟同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%97%B6%E9%92%9F"><span class="nav-text">物理时钟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5%E7%AE%97%E6%B3%95"><span class="nav-text">时钟同步算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%97%B6%E9%97%B4%E5%8D%8F%E8%AE%AE"><span class="nav-text">网络时间协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#berkeley%E7%AE%97%E6%B3%95"><span class="nav-text">Berkeley算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5"><span class="nav-text">无线网络中的时钟同步</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E6%97%B6%E9%92%9F"><span class="nav-text">逻辑时钟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lamport%E9%80%BB%E8%BE%91%E6%97%B6%E9%92%9F"><span class="nav-text">Lamport逻辑时钟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E6%97%B6%E9%92%9F"><span class="nav-text">向量时钟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%9B%A0%E6%9E%9C%E6%9C%89%E5%BA%8F%E9%80%9A%E4%BF%A1"><span class="nav-text">强制因果有序通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%89%E5%BA%8F%E6%B6%88%E6%81%AF%E4%BA%A4%E4%BB%98%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="nav-text">关于有序消息交付的说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%92%E6%96%A5"><span class="nav-text">互斥</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E4%B8%AD%E5%BC%8F%E7%AE%97%E6%B3%95"><span class="nav-text">集中式算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%9B%86%E4%B8%AD%E5%BC%8F%E7%AE%97%E6%B3%95"><span class="nav-text">非集中式算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95"><span class="nav-text">分布式算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A4%E7%89%8C%E7%8E%AF%E7%AE%97%E6%B3%95"><span class="nav-text">令牌环算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E7%AE%97%E6%B3%95%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-text">四种算法的比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E7%9A%84%E5%85%A8%E5%B1%80%E5%AE%9A%E4%BD%8D"><span class="nav-text">结点的全局定位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95"><span class="nav-text">选举算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E7%9A%84%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95"><span class="nav-text">传统的选举算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AC%BA%E8%B4%9F%E7%AE%97%E6%B3%95"><span class="nav-text">欺负算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E7%AE%97%E6%B3%95"><span class="nav-text">环算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A9%E7%BA%BF%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95"><span class="nav-text">天线系统环境中的选举算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%9E%8B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95"><span class="nav-text">大型系统中的选举算法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/6-synchronization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式系统 - 同步化 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式系统 - 同步化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-28 11:18:57" itemprop="dateCreated datePublished" datetime="2017-12-28T11:18:57+08:00">2017-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/distributed-system/" itemprop="url" rel="index"><span itemprop="name">distributed-system</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>三个臭皮匠赛过诸葛亮</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>在前面,我们已经讨论了进程及进程间的通信。虽然进程间通信很重要,但它并不是分布式系统的全部内容。与之紧密相关的问题是<em>进程间如何协作和同步</em>。进程协作通过命名方式得到部分支持,进程协作使得进程可以共享资源,或者一般地说是共享实体<br />
+本章中,我们主要集中精力研究进程间是如何同步的。例如,多个进程不能同时访问个共享资源(例如打印机),而是相互协作,彼此授权暂时地独占访问。另一个例子是多个进程有时可能需要就事件的顺序达成一致,比方说来自进程P的消息m1是在来自进程Q的消息m2之前还是之后被发送出去。<br />
+实践表明,分布式系统的同步常常比单处理器或者多处理器系统中的同步更加困难。本章中讨论的问题及其解决方法本质上是比较常见的,它们出现在分布式系统的许多不同情况下。<br />
+我们从基于真实时间的同步问题开始讨论,接着讨论以相对排序的方式而不是以绝对时间的方式来实现的同步。我们也要讨论分布式全局状态的概念,以及如何通过进程同步来记录全局状态。<br />
+在许多情况下,一组进程能指定一个进程作为协作者是重要的,这可以通过选举算法来实现。我们将在单独的一节中讨论各种各样的选举算法。<br />
+与同步相关的两个主题是分布式系统中的互斥和分布式事务。分布式互斥保护共享资源不被多个进程同时访问。分布式事务也作类似的事情,但是它通过高级的并发控制机制来优化访问。互斥和事务将在单独的小节中讨论。</p>
+<h1 id="时钟同步">时钟同步</h1>
+<p>在集中式系统中,时间是明确的。当进程想知道时间时,它就进行一次系统调用,然后系统内核就会告诉它。如果进程A询问时间,稍后进程B也询问时间,那么进程B获取的时间值将比进程A获取的时间值大,或者可能相等,但无论如何不会小于后者。在分布式系统中,取得时间上的一致是不容易的。<br />
+由于时间是人们思考问题的基础,并且容易看到,所有的时钟没有完全同步可能导致很多程序无法正常运行,所以我们先从一个简单问题开始有关同步的学习:是否有可能对分布式系统中的所有时钟进行同步?</p>
+<h2 id="物理时钟">物理时钟</h2>
+<p>几乎所有的计算机都有一个计时电路。尽管一般使用“时钟”这个词来表达这些设备,但它们实际上不是通常意义的时钟,把它们称为<strong>计时器(timer)</strong>可能更恰当一点。计算机的计时器通常是一个精密加工过的石英晶体。石英晶体在其张力限度内以一定的频率振荡,这个频率取决于晶体本身如何被切割及其受到张力的大小。有两个寄存器与每个石英晶体相关联,一个是<strong>计数器(counter)</strong>,另一个是<strong>保持寄存器(holding
+register)</strong>。石英晶体的每次振荡使计数器减1。当计数器减为0时,产生一个中断,计数器从保持计数器中重新装入初始值。这种方法使得对一个计时器进行编程,令其每秒产生60次中断(或者以任何其他希望的频率产生中断)成为可能。每次中断称为一个<strong>时钟滴答(clock
+tick)</strong>。</p>
+<p>在单机单时钟的情况下,如果这个时钟有少许偏差是不会有多大问题的。因为这台机器上的所有进程使用同一个时钟,所以它们内部仍然会保持一致。真正重要的是相对时间。<br />
+一旦引入多CPU系统,每个CPU都有自己的时钟,情况将发生变化。尽管石英晶体振荡的频率通常是相当稳定的,但仍不可能保证不同计算机中的石英晶体都以完全相同的频率在振荡。实际上,当一个系统有n台计算机时,所有n个晶体都将以略微不同的速度振荡,导致(软)时钟逐渐不同步;当同时读这些时钟值时,将得到不同的值。这种时间值的不同称为<strong>时钟偏移(clock
+skew)</strong>。时钟偏移的后果就是那些期望与文件、对象、进程或消息相关的时间(即所使用的时钟)不仅正确,而且独立于产生它们的机器的程序可能失败。</p>
+<p>在一些系统(例如实时系统)中,真实的时钟时间是很重要的。对于这些系统,外部物理时钟是必须的。考虑到效率和冗余,通常认为使用多个物理时钟比较合适,但有两个问题:(1)我们如何使它们与真实世界的时钟同步呢?(2)我们如何使这些时钟彼此同步?<br />
+第一个问题涉及到UTC的历史，此处不再赘述。</p>
+<h2 id="时钟同步算法">时钟同步算法</h2>
+<p>所有同步算法都有相同的系统基础模型,我们下面对其进行描述。假设每台机器都有一个每秒产生<span
+class="math display"><em>H</em></span>次中断的计时器。当计时器产生中断时,中断处理程序将软件时钟加1,软件时钟记录从过去某一约定时间开始的滴答(中断)数。我们将这个时钟值称为<span
+class="math display"><em>C</em></span>。更具体地说,当UTC时间为<span
+class="math display"><em>t</em></span>时,机器P上的时钟值为<span
+class="math display">Cp(<em>t</em>)</span>。最理想的情况是对所有的p和t,都有<span
+class="math display">Cp(<em>t</em>) = <em>t</em></span>;换言之,<span
+class="math display"><em>d</em><em>C</em>/<em>d</em><em>t</em></span>的理想值为1。<br />
+真正的计时器并不是每秒精确地中断<span
+class="math display"><em>H</em></span>次。理论上,当H=60时,计时器应每小时产生216000个滴答。实际上,现代计时器芯片所能达到的错误率大约是<span
+class="math display">10<sup>−5</sup></span>,这意味着每台具体机器的计时器每小时可以产生的滴答次数在215998到216002之间。更准确地说,若<br />
+存在某一常数<span class="math display"><em>ρ</em></span>,使得:<br />
+<span class="math display">$$1-\rho\le\frac{dC}{dt}\le
+1+\rho$$</span><br />
+那么可以说计时器在它的规定范围内工作。<br />
+这个常量<span
+class="math display"><em>ρ</em></span>由厂商规定,称为<strong>最大偏移率(maximum
+drift rate)</strong>。稍慢的、精确的及稍快的时钟如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/relation%20of%20utc%20and%20timer.PNG"
+alt="当时钟以不同的速率滴答时，时钟时间和UTC之间的关系" /></p>
+<p>若两个时钟以相反的方向偏离UTC,在它们同步后的<span
+class="math display"><em>δ</em><em>t</em></span>时,它们间的最大可能差值是<span
+class="math display">2<em>ρ</em><em>δ</em><em>t</em></span>。如果操作系统设计者要保证每两个时钟之间的差值不超过<span
+class="math display"><em>ϵ</em></span>,那么时钟必须至少每<span
+class="math display"><em>e</em><em>p</em><em>s</em><em>i</em><em>l</em><em>o</em><em>n</em>/2<em>ρ</em></span>秒重新同步一次。各种算法的差异在于实现重新同步的方法不同。</p>
+<h3 id="网络时间协议">网络时间协议</h3>
+<p>很多协议中常用的方法是由Cristian(1989)提出的,那就是让客户与<strong>时间服务器(time
+server)</strong>联系。时间服务器可以精确地提供当前时间,因为它装备了一个WwV接收器或一个精确的时钟。当然,问题是,何时与该服务器联系,消息延时也会使得报告的时间过时。<br />
+其中的技巧是对这些延时做出很好的估计。请看图中所描绘的情况。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/get%20real-time%20from%20time-server.PNG"
+alt="从一个时间服务器得到当前时间" /></p>
+<p>在这种情况下,A发送一个请求给B,时间为<span
+class="math display"><em>T</em><sub>1</sub></span>。反过来,B会记录接收时间<span
+class="math display"><em>T</em><sub>2</sub></span>(依据自己的时钟),并返回一个响应消息,时间为<span
+class="math display"><em>T</em><sub>3</sub></span>,该时间比<span
+class="math display"><em>T</em><sub>2</sub></span>晚。最后,A记录下响应消息达到的时间<span
+class="math display"><em>T</em><sub>4</sub></span>。假设从A到B的传输延时与从B到A的大致相同,即<span
+class="math display"><em>T</em><sub>2</sub> − <em>T</em><sub>1</sub> ≈ <em>T</em><sub>4</sub> − <em>T</em><sub>3</sub></span>。这样,A就可以计算出与B的时间偏差:<br />
+<span
+class="math display">$$\theta=T_3-\frac{(T_4-T_1)+(T_4-T_3)}{2}=\frac{(T_2-T_1)+(T_3-T_4)}{2}$$</span><br />
+当然,时间是不准许往后退的。如果A的时钟快了,<span
+class="math display"><em>θ</em> &lt; 0</span>,表示原则上A应该把它的时钟往后调。这是<strong>不准许</strong>的,因为这将会导致严重的问题。这种修改必须逐步进行。一种方法如下。假设把计时器设置为每秒产生100个中断。正常情况下,每个中断将添加10毫秒。当减慢时,每个中断例程只添加9毫秒,直到校正完成。同样,通过在每个中断中添加11毫秒,时钟也可以逐步往前调</p>
+<p><strong>网络时间协议(network time protocol,
+NTP)</strong>在服务器之间创建了两条连接。换句话说,B也可以探查A的当前时间。偏差<span
+class="math display"><em>θ</em></span>的计算同上,而延时<span
+class="math display"><em>δ</em></span>的计算如下<br />
+<span
+class="math display">$$\delta=\frac{(T_2-T_1)+(T_4-T_3)}{2}$$</span><br />
+可以先将每个<span
+class="math display">(<em>θ</em>, <em>δ</em>)</span>对缓存起来,最后以<span
+class="math display"><em>δ</em></span>的最小值作为两个服务器之间的延时,从而,相应的<span
+class="math display"><em>θ</em></span>值就是最可靠的偏差。</p>
+<p>原则上,对称地应用NTP也可以让B参照A来调整它的时钟。但是,如果已知B的时钟更精确,那么这种调整就是愚蠢的了。要解决这个问题,NTP把服务器分成多个层。含有<strong>参考时钟(reference
+clock)</strong>的服务器(如Wwv接收器或原子时钟)称为1层服务器(stratum-1
+server)(时钟本身为0层)。当A与B联系时,如果它的层比B的要高,那么它只调整自己的时间。而且,经过同步化后,A将比B高一层。换句话说,如果B是k层服务器,且A的初始层已经大于k,那么,经过时间调整后,A就变成了(k+1)层服务器。由于NTP的对称性,如果A的层数比B的低,那么B将按照A来调整自己。NTP有很多重要的特性,其中很多是与错误的识别和屏蔽有关,还有一些是与安全攻击有关。</p>
+<h3 id="berkeley算法">Berkeley算法</h3>
+<p>在很多算法(如NTP)中,时间服务器是被动的。其他机器定期向时间服务器询问时间,时间服务器所做的就是回答它们的请求。
+Berkeley Unix系统采取了完全相反的方法。<br />
+该系统中的时间服务器(实际上是时间守护程序)是主动的,它定期地询问每台机器的时间。基于这些回答,它计算出一个平均时间,并告诉所有其他机器将它们的时钟拨快到一个新的时间,或者拨慢,直到某个指定的减少量达到为止。这种方法<strong>适合于</strong>没有WWv接收器的系统。时间守护程序的时间必须由操作者定期手工设置。下图描述了这种方法。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/berkeley%20time%20sync.PNG"
+alt="Berkeley时钟同步算法" /><br />
+在上图(a)中,在3:00时,时间守护程序把它的时间告诉其他机器,并询问它们各自的时间。在上图(b)中,各台机器将它们各自的时间与时间守护程序时间的差值告诉时间守护程序。有了这些值,时间守护程序计算出它们的平均值,并通知各台机器如何调整各自的时钟,如上图(c)所示。<br />
+很多情况下,所有机器达成同一时间就足够了,没有必要使它们的时间与广播中所播的时间（实际时间）一致。在图中示例,不会手工调整守护程序的时钟,假使其他结点都没有与外部计算机通信,也不会有什么危害。人人都乐意与当前时间达成一致,而不关心这个值是否与实际的时间有何联系。</p>
+<h3 id="无线网络中的时钟同步">无线网络中的时钟同步</h3>
+<p>更传统的分布式系统中一个重要的优点是,我们可以很容易而且很有效地部署时间服务器。而且,大多数机器可以相互联系,准许信息的相对分散。这些假设在很多<strong>无线网络</strong>(最著名的就是传感器网络)中就不再有效了。结点是受资源限制的,多跳路由很昂贵。而且,针对能量消耗的优化算法往往很重要。这些以及其他因素使得需要为无线网络设计不同时钟的同步化设计算法。下面我们将介绍一种解决方法。</p>
+<p><strong>参考广播同步化(reference broadcast
+synchronizat1on,RBS)</strong>是一种时钟同步化协议,它与其他协议很不相同。首先,该协议没有假设具有精确时间的结点。它不是为所有结点提供UTC时间,而只是在内部实现时钟的同步化,就像Berkeley算法样。第二,到目前为止我们所讨论的方法是用来为发送器和接收器实现同步,基本上是遵循双向协议。RBS与这种模式不同,它只是使接收器同步化,发送器则位于该循环之外。</p>
+<p>在RBS中,发送器广播一个参考消息,让接收器调整它们的时钟。一个关键因素是,在传感器网络中,信号到其他结点的时间大致是固定的。在这种情况下的传播时间是从消息离开发送器的网络接口那一刻开始计算的。因此,消息传输中两个重要的变源(即构建消息所花费的时间和访问网络所花费的时间)对延时的计算不再其作用了，图示如下。注意,在诸如NTP的协议中,消息在网络接口中传输是就把时间添加到其中了。而且,由于无线网络是基于内容的协议,通常无法确定消息在真正传输之前已经花费了多少时间。这些不确定因素在RBS中都被去除了。所留下的是在接收器中的传送时间,但这个时间比网络访问时间小很多。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch4/critical%20path%20of%20rbs%20and%20normal-situation.PNG"
+alt="RBS与通常情况下的关键路径" /></p>
+<p>RBS的基本思想很简单:当一个结点广播一个参考消息m时,每个结点P只是记录它接收到m的时间<span
+class="math display"><em>T</em><sub><em>p</em>, <em>M</em></sub></span>。注意,<span
+class="math display"><em>T</em><sub><em>p</em>, <em>M</em></sub></span>是从p的本地时钟读取的。忽视时钟偏差,两个结点p和q就可以交换各自的传送时间,以便计算相互的相对偏差:<br />
+<span
+class="math display">$$\Delta[p,q]=\frac{\sum_{k=1}^M(T_{p,k}-T_{q,k})}{M}$$</span><br />
+其中,<span
+class="math display"><em>M</em></span>是发送的参考消息总数。这个信息很重要:结点p将知道q的时钟值相对于自己时钟值的偏差。而且,如果它存储了这些偏差,就没有必要调整自己的时钟,这就可以节省能量消耗。但是,时钟是会变化的。这导致的结果是,上面计算的平均偏差将不再有用:最后发送的值没有第一个精确。而且,随着时间的流逝,偏移量将增加。<br />
+这可以通过一种非常简单的方法来进行补偿:他们不是计算平均值,而是应用标准线性回归来计算偏差,如下面函数所示:<br />
+<span class="math display">$$\\Delta[p,q](t$=\alpha t+\beta$
+常数$$</span><span class="math display"><em>和</em></span><span
+class="math display"><em>可</em><em>以</em><em>从</em></span>(T_{p,k},T_{q,k})$$对计算出来。这种新方法可以通过结点p来更精确地计算出q的当前时钟,反之亦然。</p>
+<h1 id="逻辑时钟">逻辑时钟</h1>
+<p>至此,我们假设时钟同步化是与实际时间相关的。但是,在许多应用中,只要所有的机器具有相同的时间就够了,这个时间不一定要与实际时间相同。依据相对时间的算法通常将时钟称为<strong>逻辑时钟(logical
+clock)</strong>。<br />
+在一篇著名的论文中,Lamport(1978)阐明,尽管时钟同步是可能的,但它不是绝对必要的。如果两个进程不进行交互,那么它们的时钟也无需同步,这是因为即使没有同步也觉察不出来,并且也不会产生问题。他进一步指出,通常,重要的不是所有的进程在时间上完全一致,而是它们在事件的<strong>发生顺序</strong>上要达成一致。<br />
+本节我们将讨论Lamport算法,这是一个逻辑时钟同步化的算法。我们还要讨论一个称为向量时间戳的Lamport扩展算法。</p>
+<h2 id="lamport逻辑时钟">Lamport逻辑时钟</h2>
+<p>为了同步逻辑时钟，Lamport定义了一个称为<strong>“先发生”</strong>（happens-before）的关系。表达式<code>a-&gt;b</code>读作“a在b之前发生”,意思是所有进程一致认为事件a先发生,然后事件b才发生。这种先发生关系有两种情况：</p>
+<ol type="1">
+<li>如果a和b是同一个进程中的两个事件,且a在b之前发生,则<code>a-&gt;b</code>为真。</li>
+<li>如果a是一个进程发送消息的事件,而b为另一个进程接收这个消息的事件,则<code>a-&gt;b</code>也为真。消息不可能在发送之前就被接收,也不能在发送的同时被接收,这是因为消息需要一定时间才能到达接收端</li>
+</ol>
+<p>先发生关系是一个传递关系,所以若<code>a-&gt;b</code>且<code>b-&gt;c</code>,则<code>a-&gt;c</code>。如果事件x和y发生在两个互不交换消息的进程中(也不通过第三方间接交换消息),那么<code>x-&gt;y</code>不真,<code>y-&gt;x</code>也同样不真。这两个事件称为<strong>并发的(concurrent)</strong>,这意味着无法说(或者不必说)这两个事件什么时候发生,哪个事件先发生。</p>
+<p>我们需要一种测量时间的方法,使得对于每个事件a,我们都能为它分配一个所有进程都认可的时间值C(a)。这些时间值必须具有如下性质:<strong>如果<code>a-&gt;b</code>,那么<code>C(a)&lt;C(b)</code></strong>。重述我们前面陈述的情况,若a和b是同一进程中的两个事件,且a在b之前发生,则C(a)&lt;C(b)。与此类似,如果a是一个进程发送消息的事件,而b是另一个进程接收该消息的事件,那么C(a)和C(b)必须赋予大家都认可的具有C(a)&lt;C(b)关系的值。另外,<strong>时钟时间值C必须总是前进(增加)不能倒退(减少)</strong>。校正时间的操作是给时间加上一个正值,而不能是减掉一个正值。</p>
+<p>现在我们来看一看Lamport算法怎样为事件分配时间。考虑如下图所示的三个进程。各个进程运行在不同的机器上,每台机器都有自己的时钟,它们以各自不同的速率工作。如图所示,当进程0的时钟滴答了6次时,进程1的时钟滴答了8次,进程2的时钟则滴答了10次。每个时钟均以一个不变的速率工作,但是由于晶体之间的差异,各时钟的工作速率不同。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/1/Lamport%E7%AE%97%E6%B3%95%E6%A0%A1%E6%AD%A3%E4%B8%89%E4%B8%AA%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%8D%E5%90%8C%E6%97%B6%E9%92%9F.PNG"
+alt="Lamport算法校正三个进程的不同时钟" /><br />
+在时刻6,进程0将消息A发送给进程1,消息的传输时间取决于信任哪个时钟。不管怎样,当它到达时,进程1的时钟值为16。如果消息携带有自身的起始时间6,那么进程1将会推算该消息从进程0到进程1需要10个滴答。这个值的确是可能的。依此类推,消息B从进程1到进程2需要16个滴答,这也是可能的。<br />
+现在出现了有趣的问题。从进程2到进程1的消息C在时刻60离开,却在时刻56到达。与之类似,从进程1到进程0的消息在时刻64离开,却在时刻54到达。这些值显然是不可能的。必须防止这种情况出现。<br />
+Lamport的解决方法直接遵循先发生关系。既然m3在时刻60离开,那么它只能在时刻61或更晚的时刻到达。所以,每个消息都应携带依据发送者时钟的发送时间。当消息到达并且接收者时钟显示的时间值比消息的发送时间早时,接收者就将它的时钟调到一个比发送时间大1的值。在上图中,我们看到m3现在到达的时间是61。与此类似,m4到达的时间是70。</p>
+<p>为了准备有关向量时钟的讨论,让我们来更精确地规则化这个过程。这里,很重要的点是,要区分在前面内容中所介绍过的软件的三个不同层:网络层、中间件层和应用层,如下图所示。这是中间件层的一个典型部分。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/1/%E5%9C%A8%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%ADLamport%E9%80%BB%E8%BE%91%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9A%E4%BD%8D.PNG"
+alt="在分布式系统中Lamport逻辑时钟的定位" /><br />
+要实现Lamport逻辑时钟,每个时钟<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>维护一个局部计数器<span
+class="math display"><em>C</em><sub><em>i</em></sub></span>。这些计数器按如下步骤进行更新:</p>
+<ol type="1">
+<li>在执行一个事件之前，<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>执行<span
+class="math display"><em>C</em><sub><em>i</em></sub> ← <em>C</em><sub><em>i</em></sub> + 1</span></li>
+<li>当进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>发送一个消息m给<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>时，在执行第一步的操作之后，把m的时间戳<span
+class="math display">ts(<em>m</em>)</span>设置为等于<span
+class="math display"><em>C</em><sub><em>i</em></sub></span></li>
+<li>在接收消息m时，进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>调整自己的局部计数器为<span
+class="math display"><em>C</em><sub><em>j</em></sub> ← max <em>C</em><sub><em>j</em></sub>, ts(<em>m</em>)</span>，之后执行第一步，并把该消息传送给应用程序</li>
+</ol>
+<p>在某些情况下,还需要一个<strong>附加条件</strong>:即两个事件不会完全同时发生。为了实现这个目标,我们可以将事件发生所在的进程号附加在时间的低位后,并用小数点分开。例如,进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>中的事件都发生在时刻40,那么就记为40.i。注意,如果a发生在进程P的C(a)时刻,那么,通过把事件时间赋值为<span
+class="math display"><em>C</em>(<em>a</em>) ← <em>C</em><sub><em>i</em></sub>(<em>a</em>)</span>,就可以得到我们最初寻找的全局时间值的分布式实现。</p>
+<p><strong>示例：全序多播</strong><br />
+作为Lamport时间戳的一个应用，让我们来考虑下已经把一个数据库复制到几个站点的情况。例如，为了提高查询的效率，银行可能在两个不同的城市都保存一个账户数据库的副本，如纽约和旧金山。一个查询总是被发送到最近的那个副本。查询的快速应答在一定程度上是以较高的更新开销为代价的，这是因为每次更新都必须在每个副本上执行。</p>
+<p>事实上,对更新的要求更严格。假设一位旧金山的客户想在他的账户中存进100美元,且当前他账户上有1000美元。与此同时,纽约的银行职员要向该账户加进1%的利息。此数据库的两个副本都应该执行这两次更新操作。但是,由于网络中的传输延迟,这两次更新可能以图所示的顺序到达,而分别在不同的数据库中产生不同的更新效果。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/1/%E6%9B%B4%E6%96%B0%E4%B8%80%E4%B8%AA%E5%A4%8D%E5%88%B6%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E5%AE%83%E5%A4%84%E4%BA%8E%E4%BA%86%E4%B8%80%E7%A7%8D%E4%B8%8D%E4%B8%80%E8%87%B4%E7%9A%84%E7%8A%B6%E6%80%81.PNG"
+alt="更新一个复制的数据库使它处于了一种不一致的状态" /><br />
+我们要处理的问题就是<strong>在每个副本上的两个更新操作应该以相同的顺序执行</strong>。其实对于一致性而言，遵循哪个顺序是无关紧要的；真正重要的是两个副本完全相同。一般来说，上述情形需要进行一次<strong>全序多播（totally-ordered
+multicast）</strong>，即一次将所有的消息以同样的顺序传送给每个接收的多播操作。Lamport时间戳可以用于以完全分布式的方式实现全序多播。<br />
+考虑一组彼此互相多播消息的进程。每个消息都以它的发送者的当前逻辑时间作为时间戳。当一个消息被多播时，理论上它也被传送给它的发送者。另外，假定来自同一个发送者的消息以它们被发送的顺序被接收，并且没有任何消息的丢失。<br />
+进程接收到一个消息后，将它放进一个本地队列中，并根据它的时间戳进行排序。然后接收者向其他所有进程广播一个确认消息。如果我们按照Lamport算法来校正本地时钟，那么接收到的消息的时间戳总是早于确认消息的时间戳。该方法有趣的地方是所有的进程最终将有相同的本地队列副本（就好像没有消息被删除一样）。只有当队列中的一个消息处于队列头，并且已经被所有其他进程确认的时候，进程才可以将它传送给运行中的应用程序。此时把消息从队列中删除并传送给应用程序，相关的确认消息可以被简单地删除。因为每个进程都有相同的队列，所以在任何地方，所有的消息都以相同的顺序交付。换言之，我们已经建立了全序多播。</p>
+<p>正如我们将要看到的，对于复制服务来说，为了让这些服务在任何地方都可以以相同的顺序执行相同的操作，全序多播是一个重要的工具。由于复制所遵循的处理过程基本上与相同的有限状态机相同，因此又被称为<strong>状态机复制(state
+machine replication)</strong>。</p>
+<h2 id="向量时钟">向量时钟</h2>
+<p>Lamport逻辑时钟导致分布式系统中的所有事件都要经过排序以具有这样的性质：如果事件a在事件b之前发生，那么a也应该排在b之前，即<span
+class="math display">C(<em>a</em>) &lt; C(<em>b</em>)</span><br />
+但使用Lamport时间戳之后，指通过比较事件a和b各自的时间值<span
+class="math display">C(<em>a</em>)</span>和<span
+class="math display">C(<em>b</em>)</span>,无法说明它们之间的关系。换句话说，<span
+class="math display">C(<em>a</em>) &lt; C(<em>b</em>)</span>不能说明事件a就是在事件b之前发生。还需要另外一些信息。<br />
+为了便于介绍，我们来考虑如下图所示的三个进程发送的消息。<span
+class="math display">T<sub><em>s</em><em>n</em><em>d</em></sub>(<em>m</em><sub><em>i</em></sub>)</span>表示在该逻辑时间发送消息<span
+class="math display"><em>m</em><sub><em>i</em></sub></span>，同样<span
+class="math display">T<sub><em>r</em><em>e</em><em>v</em></sub>(<em>m</em><sub><em>i</em></sub>)</span>表示在逻辑时间接收消息<span
+class="math display"><em>m</em><sub><em>i</em></sub></span>。这样，我们就知道，对每个消息有<span
+class="math display">T<sub><em>s</em><em>n</em><em>d</em></sub>(<em>m</em><sub><em>i</em></sub>) &lt; T<sub><em>r</em><em>e</em><em>v</em></sub>(<em>m</em><sub><em>i</em></sub>)</span>，但从<span
+class="math display">T<sub><em>s</em><em>n</em><em>d</em></sub>(<em>m</em><sub><em>i</em></sub>) &lt; T<sub><em>r</em><em>e</em><em>c</em></sub>(<em>m</em><sub><em>i</em></sub>)</span>中我们可以得到什么结论呢？<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/2/%E4%BD%BF%E7%94%A8%E9%80%BB%E8%BE%91%E6%97%B6%E9%92%9F%E8%BF%9B%E8%A1%8C%E5%B9%B6%E5%8F%91%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%81.PNG"
+alt="使用逻辑时钟进行并发消息传送" /><br />
+如果<span
+class="math display"><em>m</em><sub><em>i</em></sub> = <em>m</em><sub>1</sub></span>且<span
+class="math display"><em>m</em><sub><em>j</em></sub> = <em>m</em><sub>3</sub></span>，那么我们就可以知道，这些值对应着进程<span
+class="math display"><em>P</em><sub>2</sub></span>发生的事件，说明<span
+class="math display"><em>m</em><sub>3</sub></span>的确是在接收消息<span
+class="math display"><em>m</em><sub>1</sub></span>之后发送的。这表明消息<span
+class="math display"><em>m</em><sub>3</sub></span>的发送与消息<span
+class="math display"><em>m</em><sub>1</sub></span>的接收有关。我们还知道<span
+class="math display">T<sub><em>r</em><em>e</em><em>c</em></sub>(<em>m</em><sub>1</sub>) &lt; T<sub><em>s</em><em>n</em><em>d</em></sub>(<em>m</em><sub>2</sub>)</span>，但消息<span
+class="math display"><em>m</em><sub>2</sub></span>的发送与消息<span
+class="math display"><em>m</em><sub>1</sub></span>的接收无关。</p>
+<p>上面的陈述是想突出Lamport时间戳并不能捕获<strong>因果关系(causality)</strong>。因果关系可以通过<strong>向量时钟(vector
+clock)</strong>来捕获。分配给事件a的向量时钟<span
+class="math display">VC(<em>a</em>)</span>具有下列性质：如果对某一事件b，有<span
+class="math display">VC(<em>a</em>) &lt; VC(<em>b</em>)</span>，那么认为事件a在因果关系上先于事件b。向量时钟的创建是通过让每个进程<span
+class="math inline"><em>P</em><sub><em>i</em></sub></span>维护一个向量<span
+class="math display">VC<sub><em>i</em></sub></span>来完成的，该向量具有下面两个性质：</p>
+<ol type="1">
+<li><span
+class="math display">VC<sub><em>i</em></sub>[<em>i</em>]</span>是目前为止进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>发生的事件的数量</li>
+<li>如果<span
+class="math display">VC<sub><em>i</em></sub>[<em>j</em>] = <em>k</em></span>，则进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>知道进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>中已经发生了<span
+class="math display"><em>k</em></span>个事件。因此，<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>知道<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>的逻辑时间</li>
+</ol>
+<p>第一个性质是通过在进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>中的新事件发生时递增<span
+class="math display">VC<sub><em>i</em></sub>[<em>i</em>]</span>来维护的。第二个性质是通过在所发送的消息中携带向量来维护的。具体来说，要执行以下步骤：</p>
+<ol type="1">
+<li>在执行一个事件之前，<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>执行<span
+class="math display">VC<sub><em>i</em></sub>[<em>i</em>] ← VC<sub><em>i</em></sub>[<em>i</em>] + 1</span></li>
+<li>当进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>发送一个消息m给<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>时，在执行第一步的步骤后，把m的时间戳<span
+class="math display">ts(<em>m</em>)</span>设置为等于<span
+class="math display">VC<sub><em>i</em></sub></span></li>
+<li>在接收消息m时，进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>通过为每个<span
+class="math display"><em>k</em></span>设置<span
+class="math display">VC<sub><em>j</em></sub>[<em>k</em>] ← max VC<sub><em>j</em></sub>[<em>k</em>], ts(<em>m</em>)[<em>k</em>]</span>来调整自己的向量。之后，再执行第一步并把消息传递给应用程序。</li>
+</ol>
+<p>注意，如果事件a具有事件戳<span
+class="math display">ts(<em>a</em>)</span>，那么<span
+class="math display">ts(<em>a</em>)[<em>i</em>] − 1</span>表示在进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>中先于a所处理的事件数量。因此，当进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>从进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>接收一个时间戳为<span
+class="math display">ts(<em>m</em>)</span>的消息时，它知道进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>在发送消息m之前发生了多少事件。更为重要的是，进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>还知道进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>发送消息m之前其他进程发生了多少事件。换言之，时间戳<span
+class="math display">ts(<em>m</em>)</span>告诉接收者其他进程中有多少事件发生在发送消息m之前，并且m可能在因果关系上与哪些事件有关。</p>
+<h3 id="强制因果有序通信">强制因果有序通信</h3>
+<p>使用向量时钟,就有可能确保所有先于某个消息的所有消息接收后才传送这个消息。要使这种方案可行,我们假设消息是在一组进程中进行多播的。注意,<strong>因果有序多播(causally-ordered
+multicasting)比我们前面讨论的全序多播更弱</strong>。尤其是如果两个消息互相没有任何关系时,并不用关心以哪种顺序传送给应用程序。它们可能在不同的地方以不同的顺序进行传送。<br />
+而且,我们还假设只在发送和接收消息时才调整时钟。特别是在发送消息时,进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>只将<span
+class="math display">VC<sub><em>i</em></sub>[<em>i</em>]</span>增加<span
+class="math display">1</span>。当它接收一个时间戳为<span
+class="math display">ts(<em>m</em>)</span>的消息m时,它只对每个<span
+class="math display"><em>k</em></span>将<span
+class="math display">VC<sub><em>j</em></sub>[<em>k</em>]</span>在<span
+class="math display">$$\max(\mathrm{VC}[k],\mathrm{ts}(m)[k]}$$</span>之间进行调整。<br />
+现在,假设进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>从进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>接收一个(向量)时间戳为<span
+class="math display">ts(<em>m</em>)</span>的消息m。把该消息传送到应用层将被延时,直到以下两个条件满足为止:</p>
+<ol type="1">
+<li><span
+class="math display">ts(<em>m</em>)[<em>i</em>] = VC<sub><em>j</em></sub>[<em>i</em>] + 1</span></li>
+<li><span
+class="math display">ts(<em>m</em>)[<em>k</em>] ≤ VC<sub><em>j</em></sub>[<em>k</em>], if
+<em>k</em> ≠ <em>i</em></span></li>
+</ol>
+<p>第一个条件表示,消息m是进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>希望从进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>接收的下一条消息。第二个条件表示,当进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>接收发送消息m时,<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>已经接收到了所有来自进程<span
+class="math display"><em>P</em><sub><em>i</em></sub></span>的消息。注意,这里没有必要让进程<span
+class="math display"><em>P</em><sub><em>j</em></sub></span>延迟其自己消息的传送。<br />
+作为一个示例,来看看下图所示的三个进程<span
+class="math display"><em>P</em><sub>0</sub></span>、<span
+class="math display"><em>P</em><sub>1</sub></span>和<span
+class="math display"><em>P</em><sub>2</sub></span>。在本地时间<span
+class="math display">(1, 0, 0)</span>进程<span
+class="math display"><em>P</em><sub>0</sub></span>发送消息m到其他两个进程。该消息由进程<span
+class="math display"><em>P</em><sub>1</sub></span>接收后,进程<span
+class="math display"><em>P</em><sub>1</sub></span>决定发送消息m<em>,它比m先到达进程<span
+class="math display"><em>P</em><sub>2</sub></span>。此时,m</em>的传送被进程<span
+class="math display"><em>P</em><sub>2</sub></span>延迟,直到m被接收且传送给了<span
+class="math display"><em>P</em><sub>2</sub></span>的应用层。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/2/%E5%BC%BA%E5%88%B6%E5%9B%A0%E6%9E%9C%E9%80%9A%E4%BF%A1.PNG"
+alt="强制因果通信" /></p>
+<h3 id="关于有序消息交付的说明">关于有序消息交付的说明</h3>
+<p>有些中间件系统,尤其是IsIs和它的后继Horus,提供了对全序和因果排序的可靠多播的支持。对于应由消息通信层支持排序还是由应用层处理排序存在一些争议。事情还没有解决,更重要的是,这种争议今天仍存在。<br />
+让通信层处理消息排序存在两个主要问题。首先,因为通信层不能判断消息包含的内容,所以只能捕获潜在的因果关系。例如,来源相同的两个完全独立的消息总是被通信层标记为因果相关的。这种方法过于严格,可能会导致效率问题。第二个问题是,并不是所有的因果关系都可以捕获。假设Alice张贴了一篇文章。如果随后她打电话给Bob,告之她刚才所写的内容,Bob可能没有看见Alice发在新闻系统上的文章就发了一篇文章作为回复。换句话说,由于外部通信,Bob和Alice的张贴之间有了因果关系。这个因果关系却不会被网络新闻系统所捕获。<br />
+本质上，像许多其他特定于应用的通信问题一样，排序问题可以根据通信的具体应用而得到充分的解决。在系统设计中，这也被称为<strong>端对端参数(end-to-end
+argument)</strong>。只具有应用层解决方案的系统的一个缺点是，开发者不得不关注与应用系统的核心功能不直接相关的问题。例如，当开发一个诸如网络新闻这样的消息系统时，排序问题可能并不是最重要的问题。在这种情况下，让低层的通信层处理排序问题可能比较方便。</p>
+<h1 id="互斥">互斥</h1>
+<p>分布式系统的基础是多进程之间的并发和协作。在很大情况下,这也就意味着进程将需要同时访问相同的资源。为了保证这种并发访问不会崩溃资源或使得它不一致,需要一些解决办法来保证进程的互斥访问。本节将介绍一些已发表的更为重要的分布式算法。</p>
+<h2 id="概述-1">概述</h2>
+<p>分布式互斥算法可以分为两种不同的类型。在<strong>基于令牌的解决方法(token-based
+solution)</strong>中,互斥是通过在进程之间传递一个特殊的消息来实现的,这个消息称为<strong>令牌(token)</strong>。这里只有一个令牌,拥有该令牌的进程就准许访问共享资源。完成后把该令牌传递给下一个进程。如果某个进程拥有该令牌但不需要访问资源,那么它就只是把该令牌往下传递。<br />
+基于令牌的解决方法有一些重要的特性。首先,按照进程的组织结构,可以很容易地确保每个进程都有机会访问资源。换句话说,它们避免了饥荒(starvation)。第二,由于简单,可以很容易地避免死锁(deadlock)。然而,基于令牌的解决方法的重大缺陷是很严重的个:如果令牌丢失(例如,拥有令牌的进程崩溃了),就需要重新开启一个复杂的分布式进程,以确保创建一个新的令牌,但总之,这也是唯一的一个令牌。<br />
+另外,很多分布式遵循的是<strong>基于许可的方法(permission-based
+approach)</strong>。在这种情况下,一个进程如果需要访问资源,首先需要获得其他进程的许可。授予这样一种许可的方法有很多,下面章节将介绍其中一些。</p>
+<h2 id="集中式算法">集中式算法</h2>
+<p><strong>在分布式系统中达到互斥的最直接的方法是仿照单处理器系统中的方法,选举一个进程作为协作者</strong>(例如,运行在具有最大网络地址号的机器上的进程)。无论何时一个进程要访问共享资源,它都要向协作者发送一个请求消息,说明它想要访问哪个资源并请求准许。奶果当前没有其他进程访问资源,协作者就发送准许的应答消息,如下图(a)所示。收到应答后,该请求进程即可访问资源。</p>
+<p><img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/3/%E9%9B%86%E4%B8%AD%E5%BC%8F%E7%AE%97%E6%B3%95.PNG"
+alt="集中式算法" /><br />
+现在假设另一个进程,即进程2,请求准许访问资源,如图(b)所示。协作者知道一个与此不同的进程正在访问资源,所以它不能准许该请求。拒绝进入的方法依系统而定。在图(b)中,协作者只是<em>不进行应答</em>,这样就阻塞进程2,因为进程2正在等待应答。另一种方式,协作者也可以发送一个<em>“拒绝请求”</em>的应答。不管采用哪种方法,协作者都将进程2的请求放到队列中,并等待更多的消息到来。<br />
+当进程1释放资源时,它向协作者发送一个消息以让协作者释放它的独占访问,如图(c)所示。该协作者从处于等待状态的请求队列中取出第一个进程,并向该进程发送一个允许进入消息。如果该进程仍然处于阻塞状态(也就是说这是发送给它的一个消息),它将解除阻塞并访问资源。如果已经明确发送一个消息拒绝准许,那么该进程将不断查询进入的消息,或者稍后进入阻塞状态。不管使用了哪种方法,当进程获得准许,它就能够访问资源。</p>
+<p>显然,该算法保证了互斥的实现,即协作者在某一时刻只让一个进程访问资源。它也很公平,因为准许请求的顺序同接收它们的顺序是一致的。没有进程会处于永远等待状态(不会出现饿死的情况)。此方法也易于实现,对每个共享资源只需3条消息(请求、准许和释放)。对很大实际的解决方法,其简单性很有吸引力。<br />
+但是,集中式方法也存在缺点。<strong>协作者是一个单个故障点</strong>,所以如果它崩溃了,整个系统可能瘫痪。在一般情况下,如果进程在发出请求之后被阻塞,那么请求者就不能区分“拒绝进人”和协作者已经崩溃这两种情况,因为上述两种情况都没有消息返回。此外,在规模较大的系统中,单个协作者会成为性能的瓶颈。然而,其简单性带来的好处大于潜在的缺点。而且,正如后面示例所示的那样,分布式解决方法并不比这更好。</p>
+<h2 id="非集中式算法">非集中式算法</h2>
+<p>只有单个的协作者往往是一种较差的方法。我们来看看一种非集中式的解决方法。Lin(2004)提出了一种投票算法,它可以使用基于DHT的系统来运行。本质上,其解决方法是按如下方式<strong>扩展了集中式协作者</strong>。假定每种复制了<span
+class="math display"><em>n</em></span>次。通过并发进程,每个副本有其自身的协作者用于控制访问。<br />
+但是,只要某个进程要访问资源,它只需从<span
+class="math display"><em>m</em> &gt; <em>n</em>/2</span>个协作者中获得多数投票即可。与前面介绍的集中式解决方法不同,我们假设,当某个协作者没有获得访问某个资源的许可时(如果访问许可授给了另外一个进程,就会这样),它将告诉请求者。</p>
+<p>这种算法主要是使得原来的集中式算法少受单个协作者失效的影响。它假设当某个协作者崩溃时，能迅速地恢复，但会忘记崩溃前的所有投票。其风险是，重置将使得协作者忘记它前面已经授权某进程访问资源的许可，因此，在其恢复后，可能错误地把该许可又赋给了另外一个进程。<br />
+设<span class="math display"><em>p</em></span>为时间段<span
+class="math display"><em>δ</em><em>t</em></span>里协作者重置的概率，那么在相同的时间段里，<span
+class="math display"><em>m</em></span>个协作者中有<span
+class="math display"><em>k</em></span>个进行重置概率为：<br />
+<span class="math display">$$P(k)={m \choose k
+}p^k(1-p)^{(m-k)}$$</span><br />
+假设要破坏投票算法的正确性,至少应有<span
+class="math display">(2<em>m</em> − <em>n</em>)</span>个协作者需要重置,那么发生这种情况的概率为<span
+class="math display">$$\sum_{k=2m-n}^{n}P(k)$$</span>。为了加深读者对其含义的理解,假设我们正使用一个基于DHT的系统,其中每个结点分享3个小时时间。设<span
+class="math display"><em>δ</em><em>t</em></span>为10秒,这被认为是单个进程要访问共享资源的保守值。当<span
+class="math display"><em>n</em> = 32</span>且<span
+class="math display"><em>m</em> = 0.75<em>n</em></span>时,违反正确性的概率小于<span
+class="math display">10<sup>−40</sup></span>。该概率肯定小于所有资源的可用性。</p>
+<p>为了实现这种算法,Lin(2004)使用了一个基于DHT系统,其中一个资源被复制了<span
+class="math display"><em>n</em></span>次。假设该资源具有唯一的名称”rname”。那么就可以假设把第i个副本命名为”rname-i”，使用一个已知的散列函数,就可以用”rhame-i”来计算出一个唯一键值。因此,给定一个资源名,每个进程可以生成<span
+class="math display"><em>n</em></span>个键值,从而可以查找出每个副本对应的结点(并控制对给副本的访问)。<br />
+如果对资源的访问被拒绝(即某个进程获得了少于<span
+class="math display"><em>m</em></span>的投票),那么它将在一个随机选择的时间后再进行下一次尝试。这种方案的问题是,如果很多结点要访问同一资源,将证明其实用性大大降低。换句话说,如果太多的结点去竞争获得许可,最终使得谁也得不到足够的投票,从而使得资源谁也用不了。这个问题的解决方法可以在(Lin等2004)找到。</p>
+<h2 id="分布式算法">分布式算法</h2>
+<p>拥有单个故障点往往是不可接受的,所以研究者开发了分布式互斥算法。Lamport在1978年发表的关于时钟同步的论文中首次提出了一种分布式互斥算法。Ricart和Agrawala(1981)对它作了进一步的改进。本节将讨论他们的方法。</p>
+<p>Ricart和Agrawala算法要求系统中的所有事件都是<strong>完全排序</strong>的。也就是说,对于每对事件,比方说消息,哪个事件先发生必须非常明确。之前给出的Lamport算法是一种完成这种排序的方法,该算法还能用于为分布式互斥提供时间戳。<br />
+该算法的工作过程如下:当一个进程要访问一个共享资源时,它构造一个消息,其中包含它要访问的资源名、它的进程号和当前(逻辑)时间。然后,它将该消息发送给所有其他的进程,理论上讲也包括它自己。假设消息的传送是可靠的,也就是说,没有消息丢失。<br />
+当一个进程接收到来自另一个进程的请求消息时,它根据自己与消息中的资源相关的状态来决定它要采取的动作。可以分为三种情况:<br />
+a.
+若接收者没有访问资源,而且也不想访问它,就向发送者发送一个OK消息。<br />
+b.
+若接收者已获得对资源的访问,那么它就不进行应答,而是将该请求放人队列中。<br />
+c. 如果接收者想访问资源但尚未访问时,它将收到的消息的时间戳与包含在它发送给其他进程的消息中的时间戳进行比较。时间戳最早的那个进程获胜。如果收到的消息的时间戳比较早,那么接收者向发送者发回一个OK消息。如果它自己的消息的时间戳比较早,那么接收者将收到的请求放入队列中,并且不发送任何消息。</p>
+<p>发送许可请求后,进程进行等待,直到其他所有进程都给予了许可消息为止。一旦得到所有进程的许可,它就可以继续了。当它完成后时,它向其队列中的所有进程发送OK消息,并从队列中删除。</p>
+<p>我们来理解一下该算法的工作原理。如果没有冲突,显然,该算法正常工作。然而,假设两个进程同时试图访问同一资源,如图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/3/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95.PNG"
+alt="分布式算法" /><br />
+进程0给每个进程发送一个时间戳为8的请求,然而,与此同时,进程2给每个进程发送了一个具有时间戳12的请求。进程1不想访问该资源,所以它给两个发送者都发回OK消息。进程0和进程2都发现了它们之间有冲突,都比较时间戳。进程2发现它失败了,所以它向进程0发送OK消息准许其访问。进程0现在把来自进程2的请求放入它的队列中,以便以后处理,然后访问该资源,如上图(b)所示。当进程0完成时,它将进程2的请求从队列中删除,并给进程2发送OK消息,准许进程2继续,如图(c)所示。该算法<strong>之所以能工作</strong>,是因为它规定了在产生冲突的情况下,具有最小时间戳的进程获胜,并且每个进程都对时间戳的顺序达成了一致.<br />
+注意,在上图中,如果进程2比进程0早发送消息,使得进程0在自己发送请求前收到了进程2的请求,并准许进程2访问资源,那么有根本的不同。在这种情况下,进程2在接收到进程0的请求时,会发现自己已经获得对资源的访问,那么它就不会给进程0发送应答,而是将该请求放入自己的队列中。</p>
+<p>与前面讨论的集中式算法一样,该算法实现的互斥也不会发生死锁或饿死现象。每次需要<span
+class="math display">2(<em>n</em> − 1)</span>个消息,这里的<span
+class="math display"><em>n</em></span>是系统中的进程数目。这种算法的一个<strong>最大的优点</strong>是不存在单个故障点。<br />
+不幸的是,单个故障点被<span
+class="math display"><em>n</em></span>个故障点所取代。如果任何一个进程崩溃,它就不能回答请求。这种不应答被错误地解释为拒绝请求,这样就阻塞了所有请求进入所有临界区的后续进程。因为<span
+class="math display"><em>n</em></span>个进程之一发生故障的可能性至少是单一协作者发生故障的<span
+class="math display"><em>n</em></span>倍,所以这样算法比前面的要糟糕<span
+class="math display"><em>n</em></span>倍,同时要求有更多的网络流量。<br />
+该算法的这个弱点可用我们前面提到的技巧来修补。当请求到达时，接收者无论是准许还是拒绝都发送应答。一旦请求或者应答消息丢失，发送者超时，它就继续发送请求消息，直到收到一个应答消息为止,或者直到发送者得出目的进程已崩溃的结论为止。在一个请求被拒绝后,发送者将进入阻塞状态,以等待OK消息。<br />
+该算法的<strong>另一个问题</strong>是,要么必须使用多播通信原语,要么每个进程都必须自己维护组成员的列表,该列表中包括进入组的进程、离开组的进程以及崩溃的进程。该方法最适用于进程数目较少并且从不改变组成员的情况。<br />
+最后,回顾集中式算法存在的一个问题,即<em>处理所有请求时会产生瓶颈问题</em>。在分布式算法中,所有进程要参与决定共享资源的访问许可。即使有一个进程不能处理这种负载,那么让每个进程都并行地做完全相同的事情也是不可能的。<br />
+可以对该算法进行各种小的改进。例如,从所有进程获得访问许可其实并不必要。真正需要的是一种防止两个进程同时访问资源的方法。可以把该算法修改为,当一个进程从<em>大多数</em>进程获得许可(而不需获得所有进程的许可)时,它就可以获得访问许可。当然,在该算法的这种变体中,一个进程许可另一个进程后,它在第一个进程释放许可之前,是不能授给其他进程相同的许可了。</p>
+<p>但是,这种算法与原来的集中式算法相比更慢、更复杂、花费更高,而且更不健壮。既然如此,为什么还要研究该算法呢?原因之一是它说明了<strong>分布式算法至少也是可能实现的,这点我们开始并不知道</strong>。另外,通过指出它的不足,可以鼓励未来的理论家们试着创造出更具实用性的算法。最后,就像吃菠菜和在高中学习拉丁语一样,可能会有某些东西对你是有好处的。这需要花些时间去发现。</p>
+<h2 id="令牌环算法">令牌环算法</h2>
+<p>下图示意了在分布式系统中实现互斥的一种完全不同的方法。这里是一个总线式网络(例如以太网),如图(a)所示,进程没有固有的顺序。在软件中,可以构造出一个逻辑环,在该环中,为每个进程分配了一个它在环中的位置,如图(b)所示。环的位置可以按照网络地址或以其他方式来分配。按照什么顺序进行排列并不重要。重要的是每个进程要知道谁在它的下一个位置上。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/3/%E4%BB%A4%E7%89%8C%E7%8E%AF%E7%AE%97%E6%B3%95.PNG"
+alt="令牌环算法" /><br />
+当环初始化时,进程0得到一个<strong>令牌(token)</strong>。该令牌绕着环运行,用点对点发送消息的方式把该令牌从进程<span
+class="math display"><em>k</em></span>传到进程<span
+class="math display"><em>k</em> + 1</span>(以环大小为模)。进程从它邻近的进程得到令牌后,检查自己是否需要访问资源。如果要,那么它就继续,完成它要做的工作,然后释放资源。在该进程完成后,它沿着环继续传递令牌。这里不准许进程在释放资源后,使用同一令牌立即再次访问资源。如果一个进程得到了邻近进程传来的令牌,但是它并不想访问资源,那么它就把令牌沿环往下传递。因而,当没有进程要访问资源时,令牌就绕环高速地传递。</p>
+<p>该算法的正确性是显而易见的。在任何时刻都只有一个进程拥有令牌,所以实际上只有一个进程才能访问资源。由于令牌以预定顺序在进程间循环传递,所以不会发生饿死现象。一旦某个进程要访问资源,那么最差的情况是等到其他所有进程都使用了这个资源后。<br />
+同样,该算法也存在问题。如果令牌丢失了,那么它必须重新生成令牌。实际上,<strong>检测令牌丢失是很困难的</strong>,这是因为网络中令牌两次出现的时间间隔是不确定的。一小时没有发现令牌并不意味着它就丢失了,也许某个进程还在使用它。<br />
+如果有进程崩溃,该算法也会出现麻烦,但是恢复起来却比其他算法更容易。如果我们要求每个进程在收到令牌后发出确认信息,那么当一个进程的邻近进程试图把令牌传递给它但是没有成功时,就会检测到这个崩溃的进程。这时,就可以将这个崩溃的进程从组中删除,令牌的持有者将令牌沿环传给这个崩溃进程的下一个进程,如果必要,传给再下一个。当然,这样做就需要每个进程都维护当前环的配置信息。</p>
+<h2 id="四种算法的比较">四种算法的比较</h2>
+<p>下面简略地比较一下我们已讨论的四种互斥算法。在下表中列举了这四个算法及它们的三个关键性质:进程访问和释放资源所需的消息数目,访问资源的延迟(假设消息在网络中顺序传递),以及每个算法存在的问题。</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>消息数</th>
+<th>延迟</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>集中式</td>
+<td>3</td>
+<td>2</td>
+<td>协作者崩溃</td>
+</tr>
+<tr>
+<td>非集中式</td>
+<td>3mk,k=1,2,…</td>
+<td>mk</td>
+<td>会发生饥饿，效率低</td>
+</tr>
+<tr>
+<td>分布式</td>
+<td>2(n-1)</td>
+<td>2(n-1)</td>
+<td>任何进程崩溃</td>
+</tr>
+<tr>
+<td>令牌环</td>
+<td>1~<span class="math display">inf </span></td>
+<td>0~n-1</td>
+<td>令牌丢失，进程崩溃</td>
+</tr>
+</tbody>
+</table>
+<p>集中式算法是最简单也最有效的。使用这种算法,进入和离开临界区一次只需要三个消息:一个请求进入消息、一个许可进入消息和一个释放退出消息。在非集中式算法中,这些消息需要m个协作者执行一次,而现在则可能需要进行多次尝试(为此引入了变量k)。分布式算法要求(n-1)个请求消息,每个消息对应于其他的进程,以及(n-1)个授权消息,这样总共有2(n-1)个(我们假定只使用点对点的通信通道。)对令牌环算法,这个数是变化的。如果每个进程都总想进入临界区,那么令牌每传递一步就会导致一次进出,这样平均每进入一次临界区就需要一个消息。在另一种极端的情况下,有时令牌可能在环中绕行了几个小时也没有进程要进入临界区。在这种情况下,每进入一次临界区需要的消息数目是不确定的。<br />
+对于这四种算法来说,从进程想进人一个临界区到它真正进入临界区的这段延迟时间也是不同的。当使用资源的时间很短时,产生延迟的主要困素是如何访问资源的实际机制。当使用资源时间较长时,产生延迟的主要因素是等待其他进程使用的时间。在上表中显示的是前一种情况。在集中式算法中,进入一次临界区只需两个消息时间,而在非集中式算法中,则需要3mk个消息时间,其中k是需要进行的尝试次数。假设消息是一个接一个地发送,那么在分布式算法中需要2(n-1)个消息时间。对于令牌环算法,所需的时间从0(恰好接到令牌)到n-1(恰好刚刚释放令牌)个消息时间里变化<br />
+最后,除非集中式算法外,其余三种算法在进程崩溃的情况下都损失惨重。为了避免进程崩溃造成整个系统瘫痪,必须引入一些专门的措施和额外的复杂性。很有讽刺意味的是,分布式算法甚至比集中式算法对进程的崩溃更敏感。在容错系统中,这些算法都不适用,但是如果进程不经常崩溃,这些算法还是可以使用的。非集中式算法对进程的崩溃不那么敏感,但进程可能会发生饥饿,需要特殊方法来保证其效率。</p>
+<h1 id="结点的全局定位">结点的全局定位</h1>
+<p>在分布式系统中,随着结点数目的增长,任意结点要与其他结点保持联系也就变得很困难。这对运行诸如路由、多播、数据放置、査找等之类的分布式算法很重要。我们已经见过不同的示例,其中,大型的结点集被组织成特定的拓扑结构,从而有助于这些算法的有效运行。本节将来看看另一种与<em>计时问题</em>有关的组织形式。<br />
+在<strong>几何覆盖网络(geometric overlay
+network)</strong>中，每个结点给予一个<span
+class="math display"><em>m</em></span>维几何空间位置，这样，在该空间中的两个结点之间的距离反映了实际的性能度量。最简单也最使用的示例是，结点间的距离对应于它们之间的延时。换言之，给定两个结点P和Q，那么距离<span
+class="math display">d(<em>P</em>, <em>Q</em>)</span>反映的是消息从P到Q传输所花费的时间；反之亦然。<br />
+几何覆盖网络的应用很多。请看这样一种情况，服务器O中的Web站点复制给了因特网上的多个服务器<span
+class="math display"><em>S</em><sub>1</sub>, ⋯, <em>S</em><sub><em>k</em></sub></span>。当客户C从O请求一个网页时，O将把该请求转发给离C最近的服务器，也就是那个能做出最佳响应时间的那个服务器。如果C和每个副本服务器的几何位置都是已知的，那么O就选择<span
+class="math display">d(<em>C</em>, <em>S</em><sub><em>i</em></sub>)</span>最小的服务器<span
+class="math display"><em>S</em><sub><em>i</em></sub></span>。注意，这种选择只需要在O做本地处理即可。也就是说，无需提取C和每个副本服务器之间的所有延迟。<br />
+另一个示例是最佳副本替换,我们将在下面的文章详细讨论。再来看一个Web站点,它已收集了其客户的位置。如果该站点把其内容复制给<span
+class="math display"><em>K</em></span>个服务器,那么它就可以计算出<span
+class="math display"><em>K</em></span>个替换副本的最佳位置,使得客户到副本的平均响应时间最小。如果客户和服务器具有能反映结点间延时的几何位置,完成这种计算是不值得一提的。<br />
+最后一个示例来看看基于位置的路由(position-based
+routing)。在这种方案中,只是使用定位信息来把消息转发给目的地。例如,一个很简单的路由算法是让每个结点把消息转发给离目的地最近的邻结点。可以很容易证明,这种算法无需汇集,只需用本地信息来做决定。这里无需传播链接信息给网络中的所有结点,就像常用的路由算法那样。</p>
+<p>理论上,在<span
+class="math display"><em>m</em></span>维几何空间定位一个结点需要<span
+class="math display"><em>m</em> + 1</span>个到位置已知的结点的距离度量。通过m=2的情况就很容易明白这一点,如图所示。假设结点P要计算自己的位置,它需要计算出到另外三个位置已知的结点的距离。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/4/%E5%9C%A8%E4%BA%8C%E7%BB%B4%E7%A9%BA%E9%97%B4%E4%B8%AD%E8%AE%A1%E7%AE%97%E7%BB%93%E7%82%B9%E7%9A%84%E4%BD%8D%E7%BD%AE.PNG"
+alt="在二维空间中计算结点的位置" /><br />
+就像在GPS中一样，通过求解如下三个不等式，结点P就可以计算出自己的坐标<span
+class="math display">$$(x_p,y_p)$：  
+$$</span> d_i=, i=1,2,3 <span class="math display"></span>d_i<span
+class="math display"><em>对</em><em>应</em><em>与</em><em>P</em><em>到</em><em>位</em><em>于</em></span>(x_i,y_i)<span
+class="math display"><em>的</em><em>结</em><em>点</em><em>的</em><em>延</em><em>时</em>。<em>该</em><em>延</em><em>时</em><em>可</em><em>以</em><em>取</em><em>往</em><em>返</em><em>延</em><em>时</em><em>的</em><em>一</em><em>半</em><em>来</em><em>估</em><em>算</em>，<em>但</em><em>应</em><em>当</em><em>明</em><em>白</em><em>的</em><em>是</em>，<em>该</em><em>值</em><em>随</em><em>着</em><em>时</em><em>间</em><em>的</em><em>过</em><em>去</em><em>将</em><em>会</em><em>有</em><em>所</em><em>不</em><em>同</em>。<em>P</em><em>每</em><em>次</em><em>重</em><em>新</em><em>计</em><em>算</em><em>其</em><em>位</em><em>置</em><em>时</em>，<em>其</em><em>结</em><em>果</em><em>都</em><em>是</em><em>不</em><em>同</em><em>的</em>。<em>而</em><em>且</em><em>如</em><em>果</em><em>其</em><em>他</em><em>结</em><em>点</em><em>使</em><em>用</em><em>P</em><em>的</em><em>当</em><em>前</em><em>位</em><em>置</em><em>来</em><em>计</em><em>算</em><em>它</em><em>们</em><em>的</em><em>坐</em><em>标</em>，<em>则</em><em>应</em><em>该</em><em>脑</em><em>际</em>，<em>P</em><em>位</em><em>置</em><em>的</em><em>误</em><em>差</em><em>会</em><em>影</em><em>响</em><em>到</em><em>其</em><em>他</em><em>结</em><em>点</em><em>定</em><em>位</em><em>的</em><em>精</em><em>度</em>。<em>而</em><em>且</em>, <em>还</em><em>要</em><em>明</em><em>白</em><em>的</em><em>是</em>, <em>利</em><em>用</em><em>不</em><em>同</em><em>结</em><em>点</em><em>计</em><em>算</em><em>出</em><em>的</em><em>距</em><em>离</em><em>往</em><em>往</em><em>也</em><em>是</em><em>不</em><em>一</em><em>致</em><em>的</em>。<em>例</em><em>如</em>, <em>假</em><em>设</em><em>要</em><em>计</em><em>算</em><em>图</em><em>所</em><em>示</em><em>的</em><em>一</em><em>维</em><em>空</em><em>间</em><em>距</em><em>离</em>。<em>在</em><em>这</em><em>个</em><em>示</em><em>例</em><em>中</em>, <em>我</em><em>们</em><em>将</em><em>看</em><em>到</em>, <em>尽</em><em>管</em><em>R</em><em>到</em><em>Q</em><em>的</em><em>距</em><em>离</em><em>是</em>2.0,</span>(P,Q)<span
+class="math display"><em>为</em>1.0, <em>但</em></span>(P,R)<span
+class="math display"><em>却</em><em>是</em>3.2, <em>显</em><em>然</em><em>这</em><em>与</em><em>另</em><em>两</em><em>个</em><em>测</em><em>量</em><em>不</em><em>一</em><em>致</em>。![<em>在</em><em>一</em><em>维</em><em>空</em><em>间</em><em>中</em><em>距</em><em>离</em><em>测</em><em>量</em><em>不</em><em>一</em><em>致</em>](<em>h</em><em>t</em><em>t</em><em>p</em> : //7<em>x</em><em>u</em><em>t</em><em>h</em><em>x</em>.<em>c</em><em>o</em><em>m</em>1.<em>z</em>0.<em>g</em><em>l</em><em>b</em>.<em>c</em><em>l</em><em>o</em><em>u</em><em>d</em><em>d</em><em>n</em>.<em>c</em><em>o</em><em>m</em>/<em>i</em><em>m</em><em>a</em><em>g</em><em>e</em>/<em>r</em><em>e</em><em>v</em><em>i</em><em>e</em><em>w</em> − <em>d</em><em>i</em><em>s</em><em>t</em><em>r</em><em>i</em><em>b</em><em>u</em><em>t</em><em>e</em><em>d</em> − <em>s</em><em>y</em><em>s</em><em>t</em><em>e</em><em>m</em>/<em>c</em><em>h</em>6/4/<em>图</em><em>中</em><em>还</em><em>提</em><em>示</em><em>了</em><em>如</em><em>何</em><em>改</em><em>进</em><em>这</em><em>种</em><em>情</em><em>况</em>。<em>在</em><em>我</em><em>们</em><em>的</em><em>示</em><em>例</em><em>中</em>, <em>只</em><em>要</em><em>在</em><em>二</em><em>维</em><em>空</em><em>间</em><em>中</em><em>计</em><em>算</em><em>其</em><em>位</em><em>置</em><em>就</em><em>可</em><em>以</em><em>解</em><em>决</em><em>这</em><em>种</em><em>不</em><em>一</em><em>致</em><em>性</em>。<em>但</em><em>是</em>, <em>如</em><em>果</em><em>要</em><em>处</em><em>理</em><em>多</em><em>个</em><em>度</em><em>量</em><em>时</em>, <em>这</em><em>往</em><em>往</em><em>不</em><em>是</em><em>一</em><em>种</em><em>通</em><em>用</em><em>的</em><em>解</em><em>决</em><em>方</em><em>法</em>。<em>事</em><em>实</em><em>上</em>, <em>考</em><em>虑</em><em>到</em><em>因</em><em>特</em><em>网</em><em>延</em><em>时</em><em>度</em><em>量</em><em>可</em><em>能</em><em>会</em><em>违</em><em>反</em> * *<em>三</em><em>角</em><em>不</em><em>等</em><em>式</em>(<em>t</em><em>r</em><em>i</em><em>a</em><em>n</em><em>g</em><em>l</em><em>e</em><em>i</em><em>n</em><em>e</em><em>q</em><em>u</em><em>a</em><em>l</em><em>i</em><em>t</em><em>y</em>) * *, <em>通</em><em>常</em><em>不</em><em>可</em><em>能</em><em>完</em><em>全</em><em>解</em><em>决</em><em>这</em><em>种</em><em>不</em><em>一</em><em>致</em><em>性</em>。<em>三</em><em>角</em><em>表</em><em>达</em><em>式</em><em>表</em><em>示</em>, <em>在</em><em>几</em><em>何</em><em>空</em><em>间</em><em>中</em>, <em>对</em><em>任</em><em>意</em><em>的</em><em>三</em><em>个</em><em>结</em><em>点</em><em>P</em>、<em>Q</em><em>和</em><em>R</em>, <em>总</em><em>有</em><em>不</em><em>等</em><em>式</em></span>(P,R)(P,Q)+(Q,R)$$成立。</p>
+<p>有多种方法来解决这些问题。(Ng和Zhang2002)提出的一种方法是使用<span
+class="math display"><em>L</em></span>个特殊结点<span
+class="math display"><em>b</em><sub>1</sub>, ⋯, <em>b</em><sub><em>L</em></sub></span>,,称为<strong>地标(landmark)</strong>。先度量每两个地标之间的延时<span
+class="math display">d(<em>d</em><sub><em>i</em></sub>, <em>b</em><sub><em>j</em></sub>)</span>,然后用中心结点来计算每个地标的坐标。最后,中心结点寻求最小化下面的合计误差函数:<br />
+<span class="math display">$$
+\sum_{i=1}^{L}\sum_{j=i+1}^{L}[\frac{\mathrm{d}(b_i,b_j)-\hat{\mathrm{d}}(b_i,b_j)}{\mathrm{d}(b_i,b_j)}]^2
+$$</span><br />
+其中,<span
+class="math display">$$\hat{\mathrm{d}}(d_i,b_j)$$</span>对应于几何距离,即结点<span
+class="math display"><em>d</em><sub><em>i</em></sub></span>和<span
+class="math display"><em>b</em><sub><em>j</em></sub></span>定位后的距离.<br />
+最小化合计误差函数中隐含的参数是维数<span
+class="math display"><em>m</em></span>。这里显然有<span
+class="math display"><em>L</em> &gt; <em>m</em></span>,但我们可以为<span
+class="math display"><em>m</em></span>选择一个比<span
+class="math display"><em>L</em></span>小很多的值。在这种情况下,结点P度量它到<span
+class="math display"><em>L</em></span>个地标中的每个地标的距离,<br />
+并通过最小化如下算式来计算其坐标:<br />
+<span class="math display">$$
+\sum_{i=1}^{L}[\frac{\mathrm{d}(b_i,P)-\hat{\mathrm{d}}(b_i,
+P)}{\mathrm{d}(b_i,P)}]^2
+$$</span><br />
+事实证明,选择好地标,<span
+class="math display"><em>m</em></span>可以小至6或7,而对任意结点P和Q,<span
+class="math display">$$\hat{\mathrm{d}}(P,Q)$$</span>与实际延时<span
+class="math display">d(<em>P</em>, <em>Q</em>)</span>的差异不会大于因子系数2.</p>
+<p>处理这种问题的另一种方法是把结点集视作为一个巨型系统,结点与其余每个结点之间是通过弹簧连接在一起的。在这种情况下,<span
+class="math display">$$\vert\mathrm{d}(P,Q)-\hat{\mathrm{d}}(P,Q)\vert$$</span>表明了结点P和Q被替换的程度与弹簧系统在静止状态有关。可以证明,通过让每个结点(轻微地)改变其位置,系统将趋向一个最佳组织结构,其中的合计误差是最小的。</p>
+<h1 id="选举算法">选举算法</h1>
+<p>很多分布式算法需要有一个进程作为协作者、发起者或者其他某种特殊的角色。<strong>通常,由哪个进程充当这个特殊的角色并不重要,重要的是它们中要有一个进程来充当。</strong>本节讨论用于选举出一个协作者的算法(这里使用协作者来作为那个特殊进程的通用名字)。<br />
+如果所有的进程都完全相同,没有任何区别,那么就无法选择其中的一个作为特殊进程。因此,我们假设每个进程有一个唯一的编号,例如它的网络地址(为了简单起见,我们假设每台机器只有一个进程)。通常,选举算法试着找出进程号最大的进程,将它指定为协作者。各个算法在找出这个进程时使用的方法有所不同。<br />
+此外，我们还假设每个进程都知道所有其他进程的进程号。但进程并不知道当前哪些进程正在运行，以及哪些进程崩溃了。<strong>选举算法的目标</strong>是确保发起选举后，当所有的进程都同意选出的新协作者时选举结束。</p>
+<h2 id="传统的选举算法">传统的选举算法</h2>
+<p>我们先来看看两种传统的选举算法,从而了解一下在过去的十来年里算法研究人员都在做些什么。在随后的章节中,我们将关注一下选举问题的新应用。</p>
+<h3 id="欺负算法">欺负算法</h3>
+<p>第一个例子来看看由Garcia-Molina(1982)提出的<strong>欺负算法(bully
+algorithm)</strong>。当任何一个进程发现协作者不再响应请求时,它就发起一次选举。进程P按如下过程主持一次选举:</p>
+<ol type="1">
+<li>P向所有编号比它大的进程发送一个ELECTION消息;</li>
+<li>如果无人响应,P获胜并成为协作者;</li>
+<li>如果有编号比它大的进程响应,则由响应者接管选举工作。P的工作完成.</li>
+</ol>
+<p>任何时候,一个进程只能从编号比它小的进程得到一个ELECTION消息。当有ELECTION消息到达时,接收者回送一个OK消息给发送者,表明它仍然在运行,并且接管选举工作。然后接收者主持一个选举,除非它正有一个选举。最终,除了一个进程外,其他所有进程都将放弃,那个进程就是新的协作者。它将选举获胜的消息发送给所有进程,通知这些进程自己是新的协作者。<br />
+当一个以前崩溃了的进程现在恢复过来时,它将主持一次选举。如果该进程恰好是当前正在运行的进程中进程号最大的进程,它将赢得此次选举,接管协作者的工作。<strong>这样,最大的进程总是取胜,故称为“欺负算法”</strong>。</p>
+<p>在下图中,我们看到了欺负算法如何工作的例子。该图显示了由8个进程组成的进程组,编号从0到7。以前进程7是协作者,但是它崩溃了。进程4第一个注意到这一点,所以它发送ELECTION消息给所有比它大的进程,即进程5、6、7,如图(a)所示。进程5和6都用OK消息进行了应答,如图(b)所示。进程4接到第一个应答就知道它的工作已经结束了。它知道,有进程号比它大的进程将接管它的工作并成为协作者。它剩下的工作就是等着看谁将是获胜者(尽管此时它已经可以猜到结果了)。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/5/%E6%AC%BA%E8%B4%9F%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95.PNG"
+alt="欺负选举算法" /><br />
+在图(c)中,进程5和6都主持选举,每个进程都只将消息发送给比自己进程号大的进程。在图(d)中,进程6告诉进程5它将接管成为协作者。此时进程6知道进程7已经崩溃了,它(进程6)将是获胜者。如果从磁盘或其他地方可以获得一些表明原有的协作者在哪里失效的状态信息,那么此时进程6就必须承担所需工作。当进程6准备好接管时,它向所有正在运行着的进程发送一个COORDINATOR消息。当进程4接收到这个消息后,它就可以继续当发现进程7崩溃了时它正要做的工作,但是这次是以进程6作为协作者了。这样,进程7的故障得到了处理,工作可以继续了。<br />
+如果进程7重新启动,它将向其他所有进程发送一个COORDINATOR消息,让它们服从自己的协调。</p>
+<h3 id="环算法">环算法</h3>
+<p>另一个选举算法是基于环(ring)的使用。不像其他一些环算法,该算法不使用令牌。假设进程按照物理或逻辑顺序进行了排序,那么每个进程就都知道它的后继者是谁了。当任何一个进程注意到协作者不工作时,它就构造一个带有它自己的进程号的ELECTION消息,并将该消息发送给它的后继者。如果后继者崩溃了,发送者沿着此环跳过它的后继者发送给下一个进程,或者再下一个,直到找到一个正在运行的进程。在每一步中,发送者都将自己的进程号加到该消息列表中,以使自己成为协作者的候选人之一。<br />
+最终,消息返回到发起此次选举的进程。当发起者进程接收到一个包含它自己进程号的消息时,它识别出这个事件。此时,消息类型变成COORDINATOR消息,并再一次绕环运行,向所有进程通知谁是协作者(成员列表中进程号最大的那个)以及新环中的成员都有谁。这个消息在循环一周后被删除,随后每个进程都恢复原来的工作。</p>
+<p><img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/5/%E4%BD%BF%E7%94%A8%E7%8E%AF%E7%9A%84%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95.PNG"
+alt="使用环的选举算法" /><br />
+如图示意了当进程2和5同时发现以前的协作者进程7崩溃了时,将会发生什么。这两个进程各自构造一个ELECTION消息,并且让它们相互独立地绕环运行。最后,两个消息都将绕环走过全程,进程2和5分别将它们转化为COORDINATOR消息,这两个消息拥有相同的成员,相互顺序也相同。两个消息再绕环一周后都被删除。有多余的消息循环没有害处,最多是花费了一点带宽,但这也不是浪费。</p>
+<h2 id="天线系统环境中的选举算法">天线系统环境中的选举算法</h2>
+<p>传统的选举算法基于的假设在无线系统环境中往往是不切实际的。例如,<strong>传统的选举算法假设消息传送是可靠的,网络的拓扑结构也是不会改变的</strong>。在大多数无线网络环境中,尤其是在移动自主网络中,这些假设都是错误的。</p>
+<p>已开发的能在自主网络中工作的选举协议为数不多。(Vasudevan等2004)提出了一种能处理<em>结点失效</em>和<em>网络分区</em>的解决方法。这种方法的一个重要特性是,可以选举出最佳的领导者,而不是像在前面介绍的解决方法中那样只是随机的。其协议工作如下。为了简化起见,这里我们只是关注自主网络而忽略其中的结点是可以移动的。</p>
+<p>来看一个无线自主网络。要选举一个领导者,网络中的任意结点(称为资源)可以通过往其紧邻结点(即与其在一条边上的结点)发送一条ELECTION消息来开始一个选举。当结点第一次接收到ELECTION消息时,它把该发送者指定为其父结点,然后把ELECTION消息发送给它的所有紧邻结点(其父结点除外)。当结点从某个结点(不是父结点)接收到一条ELECTION消息时,它只是确认这一接收。<br />
+当结点R指定结点Q为其父结点时,它把ELECTION消息转发给所有紧邻结点(结点Q除外),并在确认来自Q的ELECTION消息之前,等待来自其他结点的确认消息。这种等待的顺序很重要。首先要注意的是,已选择了父结点的邻结点会立即响应R。更为特别的情况是,如果所有邻结点都已经有了父结点,R就是一个叶结点,并可以快速响应Q。在这样做的同时,它还向Q报告诸如其电池寿命和其他资源容量的信息。<br />
+随后,利用这些信息,Q就可以将R的容量与其他下游结点的进行比较,并选择最合格的结点作为领导候选者。当然,Q之所以发送一条ELECTION消息,是因为其父结点P也已经这么做了。反过来,当Q最终确认了前面由P发送的ELECTION消息时,它同样会把最合格的结点发送给P。这样,源结点最终就知道哪个结点选作领导者最好,然后它就可以把这个信息广播给所有其他结点了。<br />
+当发起了多个选举时,每个结点只能决定加入其中的一个。每个源结点用一个唯一的标识符来标记自己的ELECTION消息。结点只参与具有最高标识符的选举,同时停止参与其他选举。只要稍作修改,该协议就可以在网络分区以及有结点加入和离开的情况中使用。详细信息请参见(Vasudevan等2004)。</p>
+<p><img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/5/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E9%80%89%E4%B8%BE%E7%AE%97%E6%B3%95.PNG"
+alt="无线网络中的选举算法" /><br />
+在上图中解释了该过程。结点用a<sub>j进行标记,同时还标记了它们的容量。结点a通过向结点b</sub>j广播一个ELECTION消息来发起选举,如图(b)所示。然后,ELECTION消息被传播给所有结点,直到如图(e)所示的情况为止,这里我们省略了由结点f和i发出的广播。然后,每个结点向其父结点报告具有最佳容量的结点,如图(f)所示。例如,当结点g从其孩子结点e和h接收到确认消息时,它就知道h是最佳结点,然后把[h,8]传播给其父结点b。最后,源结点就知道结点h是最佳领导者,并把这一信息<br />
+广播给所有其他结点。</p>
+<h2 id="大型系统中的选举算法">大型系统中的选举算法</h2>
+<p>到目前为止我们所讨论的算法通常是应用在相对较小是分布式系统中。而且,这些算法只关注单个结点的选举。在很多情况下,需要选举多个结点,例如在点对点网络中的<strong>超级点(superpeer)</strong>。在本节中,我们来特别关注一下超级点的选举问题。<br />
+要满足超级点的选举,(Lo等2005)列举了以下一些需求:</p>
+<ol type="1">
+<li>一般的结点访问超级点的延时要低;</li>
+<li>超级点应平均地分布在覆盖网络中</li>
+<li>相对于覆盖网络中的所有结点,应有一部分预定义的超级点;</li>
+<li>每个超级点无需为固定数目的一般结点服务。</li>
+</ol>
+<p>幸运的是,在大多数点对点系统中,如果覆盖网络是结构化的(如基于DHT的系统),或者是随机非结构化的(如可以用基于gossiping的解决方法实现),这些需求的满足还是相对简单的。</p>
+<p>在基于DHT的系统中,基本思想是<strong>为超级点预留一部分标识符</strong>。回忆可知,在基于DHT的系统中,每个结点接收一个随机的且统一赋予的<span
+class="math display"><em>m</em></span>位标识符。现在,假设预留前(即最左边的)<span
+class="math display"><em>k</em></span>位来标识超级点。例如,如果需要<span
+class="math display"><em>N</em></span>个超级点,那么任意键值的前<span
+class="math display">⌈log<sub>2</sub>(<em>N</em>)⌉</span>位可用来标识这些结点.</p>
+<p>为了便于解释,我们假设有一个(小型的)Chord系统,<span
+class="math display"><em>m</em> = 8</span>,<span
+class="math display"><em>k</em> = 3</span>。要查找负责特定键值<span
+class="math display"><em>p</em></span>的结点,首先可以把査询请求路由给如下模式的结点:<code>P AND 11100000</code>，然后把给结点视作超级点。注意,每个结点id可以通过查询<code>id AND 11100000</code>来看看该请求是否路由给了自己,以检查它是否是一个超级点。假设结点标识符统一地赋给了结点,可以看到,总共<span
+class="math display"><em>N</em></span>个结点中平均有<span
+class="math display">2<sup><em>k</em> − <em>m</em></sup></span>个超级点。<br />
+一种完全不同的方法是在<span
+class="math display"><em>m</em></span>维几何空间中定位结点,我们前面已经介绍过。在这种情况下,假设我们需要在整个覆盖网络中均匀地放置<span
+class="math display"><em>N</em></span>个超级点。其基本思想很简单:总共<span
+class="math display"><em>N</em></span>个令牌分布在<span
+class="math display"><em>N</em></span>个随机选择的结点中。没有哪个结点可以拥有不止一个令牌。每个令牌表示一个推动力,推动另一个令牌向前移动。结果是,如果所有令牌发挥相同的推动力,那么它们就会相互之间移开,并均匀地分布在几何空间中。<br />
+这种方法要求结点含有的令牌了解其他令牌的信息。Lo等提议使用goss1plng协议,利用它,令牌的推动力就分散在整个网络中。如果某个结点发现总的推动力超过了某个阀值,那么该结点就向其合力的方向移动如图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/ch6/5/%E4%BD%BF%E7%94%A8%E6%8E%A8%E5%8A%A8%E5%8A%9B%E5%9C%A8%E4%BA%8C%E7%BB%B4%E7%A9%BA%E9%97%B4%E4%B8%AD%E7%A7%BB%E5%8A%A8%E4%BB%A4%E7%89%8C.PNG"
+alt="使用推动力在二维空间中移动令牌" /><br />
+当某个令牌被一个结点拥有了给定长的时间,该结点就会把自己提升为超级点。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/28/review/distributed-system/6-synchronization/" title="分布式系统 - 同步化">https://wrran.github.io/blog/2017/12/28/review/distributed-system/6-synchronization/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/distributed-system/" rel="tag"># distributed system</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/21/review/distributed-system/4-communication/" rel="prev" title="分布式系统 - 通信">
+                  <i class="fa fa-angle-left"></i> 分布式系统 - 通信
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/28/review/distributed-system/7-consistency-and-replication/" rel="next" title="分布式系统 - 一致性和复制">
+                  分布式系统 - 一致性和复制 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

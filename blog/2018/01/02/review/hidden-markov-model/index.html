@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="待老夫算算你的心思">
+<meta property="og:type" content="article">
+<meta property="og:title" content="隐马尔可夫模型">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/01/02/review/hidden-markov-model/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="待老夫算算你的心思">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-02T00:46:16.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.789Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="hidden markov model">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/01/02/review/hidden-markov-model/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/01/02/review/hidden-markov-model/","path":"blog/2018/01/02/review/hidden-markov-model/","title":"隐马尔可夫模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>隐马尔可夫模型 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%AF%9D"><span class="nav-text">写在前面的话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-text">解码问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%B0%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="nav-text">估计问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E9%97%AE%E9%A2%98"><span class="nav-text">学习问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/01/02/review/hidden-markov-model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="隐马尔可夫模型 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          隐马尔可夫模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-01-02 08:46:16" itemprop="dateCreated datePublished" datetime="2018-01-02T08:46:16+08:00">2018-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/hidden-markov-model/" itemprop="url" rel="index"><span itemprop="name">hidden markov model</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>待老夫算算你的心思</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="写在前面的话">写在前面的话</h1>
+<p>本博文摘自<a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/25746399/">《统计自然语言处理（第二版）》</a>的第六章第四小节，版权归原作者所有，请勿商用。</p>
+<h1 id="概述">概述</h1>
+<p>在马尔可夫模型中，每个状态代表了一个可观察的事件，所以马尔可夫模型又被称为可视马尔可夫模型（visible
+Markov Model,
+VMM），这在某种程度上限制了模型的适应性。在隐马尔可夫模型中，我们不知道模型所经过的状态序列，只知道状态的概率函数，也就是说，观察到的事件是状态的随机函数，因此，该模型是一个双重的随机过程。其中，模型的状态转换过程是不可观察的，即隐蔽的，可观察时间的随机过程是隐蔽的状态转移过程的随机函数。<br />
+可以用下图来说明隐马尔可夫模型的基本原理：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review/hidden-markov-model/graph%20of%20HMM.PNG"
+alt="HMM图解" /></p>
+<p>我们可以通过如下例子来说明HMM的含义。假定一暗室中有<span
+class="math display"><em>N</em></span>个口袋,每个口袋中有<span
+class="math display"><em>M</em></span>种不同颜色的球。一个实验员根据某一概率分布随机地选取一个初始口袋,从中根据不同颜色的球的概率分布,随机地取出一个球,并向室外的人报告该球的颜色。然后,再根据口袋的概率分布选择另一个口袋,根据不同颜色的球的概率分布从中随机选择另外个球。重复进行这个过程。对于暗室外边的人来说,可观察的过程只是不同颜色的球的序列,而口袋的序列是不可观察的。在这个过程中,每个口袋对应于HMM中的状态,球的颜色对应于HMM中状态的输出符号,从一个口袋转向另一个口袋对应于状态转换,从口袋中取出球的颜色对应于从一个状态输出的观察符号。<br />
+通过上例可以看出，一个HMM由如下几个部分组成：</p>
+<ol type="1">
+<li>模型中状态的数目<span
+class="math display"><em>N</em></span>（上例中口袋的数目）</li>
+<li>从每个状态可能输出的不同符号的数目<span
+class="math display"><em>M</em></span>（上例中球的不同颜色的数目）</li>
+<li><strong>状态转移概率</strong>矩阵<span
+class="math display"><em>A</em> = <em>a</em><sub><em>i</em><em>j</em></sub></span>（<span
+class="math display"><em>a</em><sub><em>i</em><em>j</em></sub></span>为实验员从一个口袋即状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>转向另一个口袋即状态<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>取球的概率），其中<br />
+<span
+class="math display"><em>a</em><sub><em>i</em><em>j</em></sub> = <em>P</em>(<em>q</em><sub><em>t</em></sub> = <em>s</em><sub><em>j</em></sub>|<em>q</em><sub><em>t</em> − 1</sub> = <em>s</em><sub><em>i</em></sub>), 1 ≤ <em>i</em>, <em>j</em> ≤ <em>N</em></span><br />
+<span
+class="math display"><em>s</em><sub><em>i</em><em>j</em></sub> ≤ 0</span><br />
+<span class="math display">$$\sum_{j=1}^{N}a_{ij}=1$$</span></li>
+<li>从状态<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>观察到符号<span
+class="math display"><em>v</em><sub><em>k</em></sub></span>的概率分布矩阵<span
+class="math display"><em>B</em> = <em>b</em><sub><em>j</em></sub>(<em>k</em>)</span>，其中<br />
+<span
+class="math display"><em>b</em><sub><em>j</em></sub>(<em>k</em>) = <em>P</em>(<em>O</em><sub><em>t</em></sub> = <em>v</em><sub><em>k</em></sub>|<em>q</em><sub><em>t</em></sub> = <em>s</em><sub><em>j</em></sub>), 1 ≤ <em>j</em> ≤ <em>N</em>; 1 ≤ <em>k</em> ≤ <em>M</em></span><br />
+<span
+class="math display"><em>b</em><sub><em>j</em></sub>(<em>k</em>) ≥ 0</span><br />
+<span class="math display">$$\sum_{k=1}^{M}b_j(k)=1$$</span><br />
+观察符号的概率又被称为<strong>符号发射概率</strong></li>
+<li><strong>初始状态概率分布</strong><span
+class="math display"><em>π</em> = <em>π</em><sub><em>i</em></sub></span>，其中<br />
+<span
+class="math display"><em>π</em> = <em>P</em>(<em>q</em><sub>1</sub> = <em>s</em><sub><em>i</em></sub>), 1 ≤ <em>i</em> ≤ <em>N</em></span><br />
+<span class="math display"><em>π</em><sub>1</sub> ≤ 0</span><br />
+<span class="math display">$$\sum_{i=1}^{N}\pi_i=1$$</span></li>
+</ol>
+<p>一般地，一个HMM记为一个五元组<span
+class="math display"><em>μ</em> = (<em>S</em>, <em>K</em>, <em>A</em>, <em>B</em>, <em>π</em>)</span>，其中，<span
+class="math display"><em>S</em></span>为状态的集合，<span
+class="math display"><em>K</em></span>为输出符号的集合，<span
+class="math display"><em>π</em></span>、<span
+class="math display"><em>A</em></span>和<span
+class="math display"><em>B</em></span>分别是初始状态的概率分布、状态转移概率和符号发射概率。为了简单，有时也将其记为三元组<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>.<br />
+当考虑潜在事件随机地生成表面事件时，HMM是非常有用的。假设给定模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>，那么，观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup> = <em>O</em><sub>1</sub><em>O</em><sub>2</sub>⋯<em>O</em><sub><em>T</em></sub></span>可以由下面的步骤直接产生：</p>
+<ol type="1">
+<li>根据初始状态的概率分布<span
+class="math display"><em>π</em><sub><em>i</em></sub></span>选择一个初始状态<span
+class="math display"><em>q</em><sub>1</sub> = <em>s</em><sub>1</sub></span>;</li>
+<li>令<span class="math display"><em>t</em> = 1</span></li>
+<li>根据状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>的输出概率分布<span
+class="math display"><em>b</em><sub><em>i</em></sub>(<em>k</em>)</span>输出<span
+class="math display"><em>O</em><sub><em>t</em></sub> = <em>v</em><sub><em>k</em></sub></span>;</li>
+<li>根据状态转移概率分布<span
+class="math display"><em>a</em><sub><em>i</em><em>j</em></sub></span>，将当前时刻<span
+class="math display"><em>t</em></span>的状态转移到新的状态<span
+class="math display"><em>q</em><sub><em>t</em> + 1</sub> = <em>s</em><sub><em>j</em></sub></span>;</li>
+<li><span
+class="math display"><em>t</em> = <em>t</em> + 1</span>，如果<span
+class="math display"><em>t</em> &lt; <em>T</em></span>，重复执行步骤3和步骤4；否则，结束算法</li>
+</ol>
+<p>HMM中有三个基本问题：</p>
+<ol type="1">
+<li>解码问题：给定一个观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup> = <em>O</em><sub>1</sub><em>O</em><sub>2</sub>⋯<em>O</em><sub><em>T</em></sub></span>和模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>，如何快速有效地选择在一定意义下“最优”的状态序列<span
+class="math display"><em>Q</em><sub>1</sub><sup><em>T</em></sup> = <em>q</em><sub>1</sub><em>q</em><sub>2</sub>⋯<em>q</em><sub><em>T</em></sub></span>，使得该状态序列最好地解释观察序列;</li>
+<li>估计问题：给定一个观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup> = <em>O</em><sub>1</sub><em>O</em><sub>2</sub>⋯<em>O</em><sub><em>T</em></sub></span>和模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>，如何快速地计算出给定模型<span
+class="math display"><em>μ</em></span>情况下，观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup></span>的概率，即<span
+class="math display"><em>P</em>(<em>O</em>|<em>μ</em>)</span>;</li>
+<li>学习问题：给定一个观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup> = <em>O</em><sub>1</sub><em>O</em><sub>2</sub>⋯<em>O</em><sub><em>T</em></sub></span>，如何根据最大似然估计来求模型的参数值。也就是说，如何调节模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>，使得<span
+class="math display"><em>P</em>(<em>O</em>|<em>μ</em>)</span>最大.</li>
+</ol>
+<p>下面将针对这三个基本问题给出解决方案。</p>
+<h1 id="解码问题">解码问题</h1>
+<p>所谓的<strong>解码问题</strong>是指：给定一个观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup> = <em>O</em><sub>1</sub><em>O</em><sub>2</sub>⋯<em>O</em><sub><em>T</em></sub></span>和模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>，要快速地计算出给定模型<span
+class="math display"><em>μ</em></span>情况下观察序列<span
+class="math display"><em>O</em></span>的概率，即<span
+class="math display"><em>P</em>(<em>O</em>|<em>μ</em>)</span>.</p>
+<p>对于任意的状态序列<span
+class="math display"><em>Q</em><sub>1</sub><sup><em>T</em></sup> = <em>q</em><sub>1</sub><em>q</em><sub>2</sub>⋯<em>q</em><sub><em>T</em></sub></span>，有：<br />
+<span class="math display">$$
+\begin{align}
+P(O\vert Q,\mu) &amp;=\prod_{t=1}^{T-1}P(O_t\vert q_t,q_{t+1},\mu)\
+&amp;= b_{q_1}(O_1) b_{q_2}(O_2) \cdots b_{q_T}(O_T)
+\end{align}
+$$</span><br />
+并且<span
+class="math display"><em>P</em>(<em>Q</em>|<em>μ</em>) = <em>π</em><sub><em>q</em><sub>1</sub></sub><em>a</em><sub><em>q</em><sub>1</sub><em>q</em><sub>2</sub></sub><em>a</em><sub><em>q</em><sub>2</sub><em>q</em><sub>3</sub></sub>⋯<em>a</em><sub><em>q</em><sub><em>T</em> − 1</sub> <em>q</em><sub><em>T</em></sub></sub></span><br />
+由于<span
+class="math display"><em>P</em>(<em>O</em>, <em>Q</em>|<em>μ</em>) = <em>P</em>(<em>O</em>|<em>Q</em>, <em>μ</em>)<em>P</em>(<em>Q</em>|<em>μ</em>)</span><br />
+因此可以得到<br />
+<span class="math display">$$
+\begin{align}
+P(O\vert\mu) &amp;=\sum_{Q}P(O,Q\vert\mu) \
+&amp;=\sum_{Q}P(O\vert Q,\mu)P(O\vert\mu) \
+&amp;=\sum_{Q}\pi_{q_1}b_{q_1}(O_1)\prod_{t=1}^{T-1}a_{q_tq_{t+1}}b_{q_{t+1}}(O_{t+1})
+\end{align}
+$$</span></p>
+<p>上式推导方式很直接，但面临一个很大的实现困难：必须穷举所有可能的状态序列。如果模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>中有<span
+class="math display"><em>N</em></span>个不同的状态，时间长度为<span
+class="math display"><em>T</em></span>，那么就有<span
+class="math display"><em>N</em><sup><em>T</em></sup></span>个可能的状态序列。这样计算量就会出现“指数爆炸”。当<span
+class="math display"><em>T</em></span>很大时，几乎不可能有效地执行这个算法。为此，人们提出了<strong>前向算法</strong>或者前向计算过程，利用动态规划的方法来解决这一问题，使得“指数爆炸”问题可以在时间复杂度为<span
+class="math display">O(<em>N</em><sup>2</sup><em>T</em>)</span>的范围内解决。<br />
+HMM的动态规划问题一般用格架的组织形式描述。对于一个在某一时间结束在一定状态的HMM，每一个格能够记录该HMM所有输出符号的概率，较长自路径的概率可以由较短自路径概率计算出来，如下图所示。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review/hidden-markov-model/%E7%BD%91%E6%A0%BC%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.PNG"
+alt="格架算法示意图" /></p>
+<p>前向算法中很重要的一点，就是定义一个<strong>前向变量</strong><span
+class="math display"><em>α</em><sub><em>t</em></sub>(<em>i</em>)</span>是在时间<span
+class="math display"><em>t</em></span>，HMM输出了序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>t</em></sup> = <em>O</em><sub>1</sub><em>O</em><sub>2</sub>⋯<em>O</em><sub><em>t</em></sub></span>，并且位于状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>的概率：<br />
+<span
+class="math display"><em>α</em><sub><em>t</em></sub>(<em>i</em>) = <em>P</em>(<em>O</em><sub>1</sub><sup><em>t</em></sup>, <em>q</em><sub><em>t</em></sub> = <em>s</em><sub><em>i</em></sub>|<em>μ</em>)</span><br />
+如果可以有效计算前向变量，我们就可以根据<span
+class="math display"><em>α</em><sub><em>t</em></sub>(<em>i</em>)</span>计算出<span
+class="math display"><em>P</em>(<em>O</em>|<em>μ</em>)</span>，因为<span
+class="math display"><em>P</em>(<em>O</em>|<em>μ</em>)</span>是在所有状态<span
+class="math display"><em>q</em><sub><em>T</em></sub></span>下观察到序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup></span>的概率：<br />
+<span class="math display">$$
+\begin{align}
+P(O_1^T\vert\mu) &amp;= \sum_{s_{i}}P(O_1^T,q_T=s_i\vert\mu)
+&amp;= \sum_{i=1}^{N}\alpha_T(i)
+\end{align}
+$$</span><br />
+前向算法是动态规划的一种，其状态转移方程也十分关键，而这正是体会前向变量定义的精妙之处：<br />
+<span
+class="math display">$$\alpha_{t+1}(j)=\Big(\sum_{i=1}^{N}\alpha_t(i)a_{ij}\Big)b_j(O_{t+1})$$</span><br />
+在格架结构中，<span
+class="math display"><em>α</em><sub><em>t</em> + 1</sub>(<em>j</em>)</span>存放在<span
+class="math display">(<em>s</em><sub><em>j</em></sub>, <em>t</em> + 1)</span>处的结点上，表示在已知观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>t</em></sup></span>的情况下，从时间<span
+class="math display"><em>t</em></span>到达下一个时间<span
+class="math display"><em>t</em> + 1</span>时状态为<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>的概率，下图描述出了前向变量所蕴含的归纳关系：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review/hidden-markov-model/%E5%89%8D%E5%90%91%E5%8F%98%E9%87%8F%E7%9A%84%E5%BD%92%E7%BA%B3%E5%85%B3%E7%B3%BB.PNG"
+alt="前向变量的归纳关系" /></p>
+<p>从初始时间开始到<span
+class="math display"><em>t</em> + 1</span>，HMM达到状态<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>，并输出观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>t</em> + 1</sup></span>的过程可以分解为以下两个步骤：</p>
+<ol type="1">
+<li>从初始时间开始到时间<span
+class="math display"><em>t</em></span>，HMM到达状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>，并输出观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>t</em></sup></span></li>
+<li>从状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>转移到状态<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>，并在状态<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>输出<span
+class="math display"><em>O</em><sub><em>t</em> + 1</sub></span></li>
+</ol>
+<p>这里<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>可以是HMM的任意状态。根据前向变量<span
+class="math display"><em>α</em><sub><em>t</em></sub>(<em>i</em>)</span>的定义，从某一个状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>出发完成第一步的概率就是<span
+class="math display"><em>α</em><sub><em>t</em></sub>(<em>i</em>)</span>，而实现第二步的概率为<span
+class="math display"><em>a</em><sub><em>i</em><em>j</em></sub><em>b</em><sub><em>j</em></sub>(<em>O</em><sub><em>t</em> + 1</sub>)</span>。因此，从初始时间到<span
+class="math display"><em>t</em> + 1</span>整个过程的概率为<span
+class="math display"><em>α</em><sub><em>t</em></sub>(<em>i</em>)<em>a</em><sub><em>i</em><em>j</em></sub><em>b</em><sub><em>j</em></sub>(<em>O</em><sub><em>t</em> + 1</sub>)</span>。由于HMM可以从不同的<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>转移到<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>，一共有<span
+class="math display"><em>N</em></span>个不同的状态，因此可以推导出上述的状态转移方程。</p>
+<p>由此，得到如下算法：</p>
+<ol type="1">
+<li>初始化：<span
+class="math display"><em>α</em><sub>1</sub>(<em>i</em>) = <em>π</em><sub><em>i</em></sub><em>b</em><sub><em>i</em></sub>(<em>O</em><sub>1</sub>), for
+<em>i</em> = 1 to <em>N</em></span></li>
+<li>归纳计算：<span
+class="math display"><em>α</em><sub><em>t</em> + 1</sub>(<em>j</em>) = ()<em>b</em><sub><em>j</em></sub>(<em>O</em><sub><em>t</em> + 1</sub>), for
+<em>t</em> = 1<em>t</em><em>o</em><em>T</em> − 1</span></li>
+<li>求和终结：<span
+class="math display">$$P(O\vert\mu)=\sum_{i=1}^N\alpha_T(i)$$</span></li>
+</ol>
+<p>在初始化步骤中，<span
+class="math display"><em>π</em><sub><em>i</em></sub></span>是初始状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>的概率，<span
+class="math display"><em>b</em><sub><em>i</em></sub>(<em>O</em><sub>1</sub>)</span>是在<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>状态输出<span
+class="math display"><em>O</em><sub>1</sub></span>的概率；<span
+class="math display"><em>π</em><sub><em>i</em></sub><em>b</em><sub><em>i</em></sub>(<em>O</em><sub>1</sub>)</span>就是在时刻<span
+class="math display"><em>t</em> = 1</span>时，HMM在状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>输出序列<span
+class="math display"><em>O</em><sub>1</sub><sup>1</sup></span>的概率，即前向变量<span
+class="math display"><em>α</em><sub>1</sub>(<em>i</em>)</span>；同时，一共有<span
+class="math display"><em>N</em></span>个状态，因此需要初始化<span
+class="math display"><em>N</em></span>个前向变量<span
+class="math display"><em>α</em><sub>1</sub>(1), <em>α</em><sub>1</sub>(2), ⋯, <em>α</em><sub>1</sub>(<em>N</em>)</span>。</p>
+<p>现在我们来分析前向算法的时间复杂度。由于每计算一个<span
+class="math display"><em>α</em><sub><em>t</em></sub>(<em>i</em>)</span>必须考虑<span
+class="math display"><em>t</em> − 1</span>时的所有<span
+class="math display"><em>N</em></span>个状态转移到状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>的可能性，其时间复杂度为<span
+class="math display">O(<em>N</em>)</span>。则对应每个时间<span
+class="math display"><em>t</em></span>，要计算<span
+class="math display"><em>N</em></span>个前向变量<span
+class="math display"><em>α</em><sub><em>t</em></sub>(1), <em>α</em><sub><em>t</em></sub>(2), ⋯, <em>α</em><sub><em>t</em></sub>(<em>N</em>)</span>。至此可知，时间复杂性为<span
+class="math display">O(<em>N</em>)</span>。因此，在上述的求解过程中，前向算法的总时间复杂度为<span
+class="math display">O(<em>N</em><sup>2</sup><em>T</em>)</span>。</p>
+<p>对于解码问题，其实还有另一种动态规划类解法，它被称为<strong>后向算法</strong>。<br />
+同样，先给出关键的<strong>后向变量</strong>的定义：<span
+class="math display"><em>β</em><sub><em>t</em></sub>(<em>i</em>)</span>是在给定了模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>，并且在时间<span
+class="math display"><em>t</em></span>状态为<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>的条件下，HMM的输出观察序列<span
+class="math display"><em>O</em><sub><em>t</em> + 2</sub><sup><em>T</em></sup></span>的概率。形式化的说就是：<br />
+<span
+class="math display"><em>β</em><sub><em>t</em></sub>(<em>i</em>) = <em>P</em>(<em>O</em><sub><em>t</em> + 1</sub><sup><em>T</em></sup>|<em>q</em><sub><em>t</em></sub> = <em>s</em><sub><em>i</em></sub>, <em>μ</em>)</span></p>
+<p>与上述类似，在时间<span
+class="math display"><em>t</em></span>、状态为<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>的条件下，HMM输出观察序列<span
+class="math display"><em>O</em><sub><em>t</em> + 1</sub><sup><em>T</em></sup></span>的过程可以分解为以下两个步骤：</p>
+<ol type="1">
+<li>从时间<span class="math display"><em>t</em></span>到时间<span
+class="math display"><em>t</em> + 1</span>，HMM由状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>到状态<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>，并从<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>输出到<span
+class="math display"><em>O</em><sub><em>t</em> + 1</sub></span></li>
+<li>在时间<span class="math display"><em>t</em> + 1</span>的状态为<span
+class="math display"><em>s</em><sub><em>j</em></sub></span>的条件下，HMM输出观察序列<span
+class="math display"><em>O</em><sub><em>t</em> + 2</sub><sup><em>T</em></sup></span></li>
+</ol>
+<p>第一步中输出<span
+class="math display"><em>O</em><sub><em>t</em> + 1</sub></span>的概率为<span
+class="math display"><em>a</em><sub><em>i</em><em>j</em></sub><em>b</em><sub><em>j</em></sub>(<em>O</em><sub><em>t</em> + 1</sub>)</span>；第二步中根据后向变量的定义，HMM输出观察序列为<span
+class="math display"><em>O</em><sub><em>t</em> + 2</sub><sup><em>T</em></sup></span>的概率就是后向变量<span
+class="math display"><em>β</em><sub><em>t</em> + 1</sub>(<em>j</em>)</span>。于是得到如下归纳关系：<br />
+<span
+class="math display">$$\beta_t(i)=\sum_{j=1}^Na_{ij}b_j(O_{t+1})\beta_{t+1}(j)$$</span></p>
+<p>上述归纳关系可以用下图来描述：<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review/hidden-markov-model/%E5%90%8E%E5%90%91%E5%8F%98%E9%87%8F%E7%9A%84%E5%BD%92%E7%BA%B3%E5%85%B3%E7%B3%BB.PNG"
+alt="后向变量的归纳关系" /></p>
+<p>根据上述的状态转移关系，我们可以得到如下算法：</p>
+<ol type="1">
+<li>初始化：<span
+class="math display"><em>β</em><sub><em>T</em></sub>(<em>i</em>) = 1, for
+<em>i</em> = 1 to <em>N</em></span></li>
+<li>归纳计算<br />
+<span class="math display">for <em>i</em> = 1 to <em>N</em>
+do:</span><br />
+<span
+class="math display">$$\beta_t(i)=\sum_{j=1}^Na_{ij}b_j(O_{t+1})\beta_{t+1}(j),
+\text{for } t = T-1 \text{ to } 1$$</span></li>
+<li>求和终结：<br />
+<span
+class="math display">$$P(O\vert\mu)=\sum_{i=1}^{N}\pi_ib_i(O_1)\beta_1(i)$$</span></li>
+</ol>
+<p>同样，后向算法的时间复杂度也为<span
+class="math display">O(<em>N</em><sup>2</sup><em>T</em>)</span>.</p>
+<p>更一般地，实际上我们可以结合前向算法和后向算法来观察序列的概率：<br />
+<span class="math display">$$
+\begin{align}
+P(O_1^T,q_t=s_i\vert\mu)
+&amp;=P(O_1^t,q_t=s_i,Q_t^T\vert\mu)\
+&amp;=P(O_1^t,q_t=s_i\vert\mu)P(O_{t+1}^{T}\vert O_{1}^{t},q_t=s_i,\mu)
+\
+&amp;=P(O_1^t,q_t=s_i\vert\mu)P(O_{t+1}^{T}\vert q_t=s_i,\mu)\
+&amp;=\alpha_t(i)\beta_t(i)
+\end{align}
+$$</span><br />
+因此，<span
+class="math display">$$P(O\vert\mu)=\sum_{i=1}^{N}\alpha_t(i)\beta_t(i),
+\text{for } t = 1 \text{ to } T$$</span></p>
+<h1 id="估计问题">估计问题</h1>
+<p>维特比算法用于求解HMM中的估计问题，即给定一个观察序列<span
+class="math display"><em>O</em><sub>1</sub><sup><em>T</em></sup> = <em>O</em><sub>1</sub><em>O</em><sub>2</sub>⋯<em>O</em><sub><em>T</em></sub></span>和模型<span
+class="math display"><em>μ</em> = (<em>A</em>, <em>B</em>, <em>π</em>)</span>，如何快速有效地选择在一定意义上最优的状态序列<span
+class="math display"><em>Q</em><sub>1</sub><sup><em>T</em></sup> = <em>q</em><sub>1</sub><em>q</em><sub>2</sub>⋯<em>q</em><sub><em>T</em></sub></span>，使得该状态序列最好地解释观察序列。<br />
+一种直观定义“最好解释”的说法是，使得该状态序列中每一个状态都单独地具有最大概率，即要使得<span
+class="math display"><em>γ</em><sub><em>t</em></sub>(<em>i</em>) = <em>P</em>(<em>q</em><sub><em>t</em></sub> = <em>s</em><sub><em>i</em></sub>|<em>O</em>, <em>μ</em>)</span>最大。<br />
+根据贝叶斯公式，有<br />
+<span class="math display">$$
+\begin{align}
+\gamma_t(i)
+&amp;= P(q_t=s_i\vert O,\mu)\
+&amp;= \frac{P(q_t=s_j,O\vert\mu)}{P(O\vert\mu)}\
+&amp;= \frac{\alpha_t(i)\beta_t(i)}{\sum_{i=1}^N\alpha_t(i)\beta_t(i)}
+\end{align}
+$$</span><br />
+有了<span
+class="math display"><em>β</em><sub><em>t</em></sub>(<em>i</em>)</span>，则在时间<span
+class="math display"><em>t</em></span>的最优状态为<span
+class="math display">$$\hat{q}_t=\underset{1\le i\le N}{\mathrm{arg
+max}}\ [\gamma_t(i)]$$</span><br />
+但是根据这种对最优状态序列的理解，如果只考虑使得每个状态的出现都单独达到最高概率，而忽略了状态中的两个状态之间的关系，很可能导致两个相邻状态之间的转移概率为0。则在这种情况下，所谓的最优状态序列根本就不是合法的序列。因此，我们常常采用另一种对于“最好解释”的定义：在给定模型<span
+class="math display"><em>μ</em></span>和观察序列<span
+class="math display"><em>O</em></span>的条件下，使得条件概率<span
+class="math display"><em>P</em>(<em>Q</em>|<em>O</em>, <em>μ</em>)</span>最大的状态序列，即<span
+class="math display">$$\hat{Q}=\underset{Q}{\mathrm{arg max}}\ P(Q\vert
+O,\mu)$$</span><br />
+这种理解就可以避免之前定义中引起的“断序”问题。根据后者的定义，要优化的不是状态序列中的单个状态，而是整个状态序列，不合法的状态序列的概率为0，因此不可能被选为最优状态序列。</p>
+<p>维特比算法也是动态规划类的算法。照例，我们来看下关键的<strong>维特比变量</strong>定义：<br />
+<span class="math display">$$\delta_t(i)=\underset{q_1,q_2,\cdot,
+q_{t-1}}{\max} P(q_1^t-1,q_t=s_i,O_1^t\vert\mu)$$</span><br />
+与前向变量类似，<span
+class="math display"><em>δ</em><sub><em>t</em></sub>(<em>i</em>)</span>有如下递归关系：<span
+class="math display">$$\delta_{t+1}(i)=\underset{j}{\max}[\delta_t(j)a_{ji}]b_i(O_{t+1})$$</span></p>
+<p>具体到维特比算法时，为了记录在时间<span
+class="math display"><em>t</em></span>时，HMM通过哪一条概率最大的路径达到状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>，维特比算法设置了另外一个变量<span
+class="math display"><em>ψ</em><sub><em>t</em></sub>(<em>i</em>)</span>用于路径记忆，让<span
+class="math display"><em>ψ</em><sub><em>t</em></sub>(<em>i</em>)</span>记录该路径上状态<span
+class="math display"><em>s</em><sub><em>i</em></sub></span>的前一个时刻的状态。如此，得到下列维特比算法：</p>
+<ol type="1">
+<li>初始化：<br />
+<span
+class="math display"><em>δ</em><sub>1</sub>(<em>i</em>) = <em>π</em><sub><em>i</em></sub><em>b</em><sub><em>i</em></sub>(<em>O</em><sub>1</sub>), 1 ≤ <em>i</em> ≤ <em>N</em></span><br />
+<span
+class="math display"><em>ψ</em><sub>1</sub>(<em>i</em>) = 0</span></li>
+<li>归纳计算：<br />
+计算状态：<br />
+<span class="math display">for <em>j</em> = 1 to <em>N</em>
+do</span><br />
+<span class="math display">$$\delta_t(j)=\underset{1\le i\le
+N}{\max}[\delta_{t-1}(i)a_ij]b_j(O_t), \text{for } t = 2 \text{ to }
+T$$</span><br />
+记忆路径：<br />
+<span class="math display">for <em>i</em> = 1 to <em>N</em>
+do</span><br />
+<span class="math display">$$\psi(j)=\underset{1\le i\le
+N}{\mathrm{argmax}} [\delta_{t-1}(i)a_{ij}]b_j(O_t), \text{for } t = 2
+\text{ to } T$$</span></li>
+<li>终结：<br />
+<span class="math display">$$\hat{Q}_{T}=\underset{i\le i\le
+N}{argmax}[\delta_T(i)]$$</span><br />
+<span class="math display">$$\hat{P}(\hat{Q}_T)=\underset{1\le i\le
+N}{\max}[\delta_T(i)]$$</span></li>
+<li>路径问题：<br />
+<span class="math display">for <em>t</em> = <em>T</em> − 1 to 1
+do</span><br />
+<span
+class="math display"><em>q̂</em><sub><em>t</em></sub> = <em>ψ</em><sub><em>t</em> + 1</sub>(<em>q̂</em><sub><em>t</em> + 1</sub>)</span></li>
+</ol>
+<p>维特比算法的时间复杂度与前向算法、后向算法的时间复杂度一致，都是<span
+class="math display">O(<em>N</em><sup>2</sup><em>T</em>)</span>。<br />
+在实际应用中，往往不只是搜索一个最优状态序列，而是搜索<span
+class="math display"><em>n</em></span>个最佳路径。因此在格架的每个结点上常常需要记录<span
+class="math display"><em>m</em></span>个最佳状态。</p>
+<h1 id="学习问题">学习问题</h1>
+<p>至于模型的学习问题，在此先简略阐述下方法，待后面完善：</p>
+<ol type="1">
+<li>有指导的学习 - 最大似然估计</li>
+<li>无指导的学习 - EM算法</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/01/02/review/hidden-markov-model/" title="隐马尔可夫模型">https://wrran.github.io/blog/2018/01/02/review/hidden-markov-model/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/hidden-markov-model/" rel="tag"># hidden markov model</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/31/people-say/me/171231-01/" rel="prev" title="2017,">
+                  <i class="fa fa-angle-left"></i> 2017,
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/01/20/people-say/luxun/180120-01/" rel="next" title="题辞">
+                  题辞 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

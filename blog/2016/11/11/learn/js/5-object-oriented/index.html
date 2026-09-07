@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="JavaScript is not Script of Java.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript查缺补漏の女娲补天 - 面向对象技术">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/11/11/learn/js/5-object-oriented/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="JavaScript is not Script of Java.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-11T11:17:27.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.697Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="object oriented">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/11/11/learn/js/5-object-oriented/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/11/11/learn/js/5-object-oriented/","path":"blog/2016/11/11/learn/js/5-object-oriented/","title":"JavaScript查缺补漏の女娲补天 - 面向对象技术"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript查缺补漏の女娲补天 - 面向对象技术 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E6%95%B0"><span class="nav-text">复数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88"><span class="nav-text">集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE"><span class="nav-text">枚举</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%91%E5%85%8B%E7%89%8C"><span class="nav-text">扑克牌</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/11/11/learn/js/5-object-oriented/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript查缺补漏の女娲补天 - 面向对象技术 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript查缺补漏の女娲补天 - 面向对象技术
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-11-11 19:17:27" itemprop="dateCreated datePublished" datetime="2016-11-11T19:17:27+08:00">2016-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>JavaScript is not Script of Java.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>话是这么说，但是JavaScript可以通过原型链以及一些技巧实现与Java类似的面向对象机制。下面列出<a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/10549733/">JavaScript权威指南</a>中的例子以供理解。同时，强烈建议大家先阅读<a
+target="_blank" rel="noopener" href="http://wrran.com/blog/2016/11/11/learn-js-3-prototype/#more">JavaScript查缺补漏の女娲补天
+- 原型链</a>。</p>
+<h1 id="复数">复数</h1>
+<p>在Java中类成员可以分为如下几种：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实例字段</td>
+<td>基于实例的属性或者变量，用以保存独立对象的状态</td>
+</tr>
+<tr>
+<td>实例方法</td>
+<td>类的所有实例所共享的方法，由每个独立的实例调用</td>
+</tr>
+<tr>
+<td>类字段</td>
+<td>这些属性或变量是属于类的，而不是属于某一个具体实例</td>
+</tr>
+<tr>
+<td>类方法</td>
+<td>这些方法属于类的，而不是属于某个实例</td>
+</tr>
+</tbody>
+</table>
+<p>而在JavaScript中函数也是变量，所以上述的四个分类变为了两类，即<strong>实例属性</strong>和<strong>类属性</strong>。<br />
+在JavaScript中，这些概念的区分需要三个对象的参与，即构造函数对象、原型对象和实例对象。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>对象</th>
+<th>映射关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构造函数对象</td>
+<td>任何添加到这个构造函数对象中的属性都是<strong>类字段</strong>和<strong>类方法</strong></td>
+</tr>
+<tr>
+<td>原型对象</td>
+<td>原型对象的属性被类的所有实例所继承，如果这个属性是函数的话，则成为<strong>实例方法</strong>；如果不是函数，则成为<strong>默认实例属性</strong></td>
+</tr>
+<tr>
+<td>实例对象</td>
+<td>定义在实例上的属性，都只是这个实例的属性，所以实例对象上的属性就是<strong>实例属性</strong>和<strong>实例方法</strong></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Complex.js : 定义Complex类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例字段 =&gt;</span></span><br><span class="line"><span class="comment">// 这个构造函数为每个实例定义了实例字段r和i</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Complex</span>(<span class="params">real, imaginary</span>) &#123;</span><br><span class="line"><span class="title function_">trueif</span> (<span class="built_in">isNaN</span>(real) || <span class="built_in">isNaN</span>(imaginary)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>();</span><br><span class="line">truethis.<span class="property">r</span> = real;</span><br><span class="line">truethis.<span class="property">i</span> = imaginary;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例方法 =&gt;</span></span><br><span class="line"><span class="comment">// 类的实例方法定义为原型对象的函数的属性</span></span><br><span class="line"><span class="comment">// 这里定义的方法可以宝贝所有实例继承，并为他们提供共享的行为</span></span><br><span class="line"><span class="comment">// 需要注意的是，JavaScript的实例方法必须使用关键字this来存取实例的字段</span></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">add</span> = <span class="keyword">function</span> (<span class="params">that</span>) &#123;</span><br><span class="line">truereturn <span class="keyword">new</span> <span class="title class_">Complex</span>(<span class="variable language_">this</span>.<span class="property">r</span> + that.<span class="property">r</span>, <span class="variable language_">this</span>.<span class="property">i</span> + that.<span class="property">i</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">mul</span> = <span class="keyword">function</span> (<span class="params">that</span>) &#123;</span><br><span class="line">truereturn <span class="keyword">new</span> <span class="title class_">Complex</span>(<span class="variable language_">this</span>.<span class="property">r</span> * that.<span class="property">r</span> - <span class="variable language_">this</span>.<span class="property">i</span> * that.<span class="property">i</span>, <span class="variable language_">this</span>.<span class="property">r</span> * that.<span class="property">i</span> + <span class="variable language_">this</span>.<span class="property">i</span> * that.<span class="property">r</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 负数的模</span></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">mag</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">truereturn <span class="title class_">Math</span>.<span class="title function_">sqrt</span>(<span class="variable language_">this</span>.<span class="property">r</span> * <span class="variable language_">this</span>.<span class="property">r</span> + <span class="variable language_">this</span>.<span class="property">i</span> * <span class="variable language_">this</span>.<span class="property">i</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">neg</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">truereturn <span class="keyword">new</span> <span class="title class_">Complex</span>(-<span class="variable language_">this</span>.<span class="property">r</span>, -<span class="variable language_">this</span>.<span class="property">i</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">truereturn <span class="string">&#x27;&#123;&#x27;</span> + <span class="variable language_">this</span>.<span class="property">r</span> + <span class="string">&#x27;,&#x27;</span> + <span class="variable language_">this</span>.<span class="property">i</span> + <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">equals</span> = <span class="keyword">function</span> (<span class="params">that</span>) &#123;</span><br><span class="line">truereturn that != <span class="literal">null</span> &amp;&amp;                   <span class="comment">// 必须有定义且不能是null</span></span><br><span class="line">truethat.<span class="property">constructor</span> === <span class="title class_">Complex</span> &amp;&amp;          <span class="comment">// 并且必须是Complex的实例</span></span><br><span class="line">truethis.<span class="property">r</span> === that.<span class="property">r</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">i</span> === that.<span class="property">i</span>;  <span class="comment">// 并且必须包含相同的值</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类字段 &amp; 类方法 =&gt;</span></span><br><span class="line"><span class="comment">// 直接定义为构造函数的属性</span></span><br><span class="line"><span class="comment">// 需要注意的是，类的方法通常不使用关键字this</span></span><br><span class="line"><span class="comment">// 它们只针对参数进行操作</span></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property">ZERO</span> = <span class="keyword">new</span> <span class="title class_">Complex</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"><span class="title class_">Complex</span>.<span class="property">ONE</span> = <span class="keyword">new</span> <span class="title class_">Complex</span>(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"><span class="title class_">Complex</span>.<span class="property">I</span> = <span class="keyword">new</span> <span class="title class_">Complex</span>(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property">parse</span> = <span class="keyword">function</span> (<span class="params">s</span>) &#123;</span><br><span class="line">truetry &#123;</span><br><span class="line">truetruevar m = <span class="title class_">Complex</span>.<span class="property">_format</span>.<span class="title function_">exec</span>(s); <span class="comment">// 利用正则表达式进行匹配</span></span><br><span class="line">truetruereturn <span class="keyword">new</span> <span class="title class_">Complex</span>(<span class="built_in">parseFloat</span>(m[<span class="number">1</span>]), <span class="built_in">parseFloat</span>(m[<span class="number">2</span>]));</span><br><span class="line"><span class="literal">true</span>&#125;</span><br><span class="line"><span class="title function_">truecatch</span> (err) &#123;</span><br><span class="line">truetruethrow <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Cannot parse `&#x27;</span> + s + <span class="string">&#x27;` as a complex number.&#x27;</span>);</span><br><span class="line"><span class="literal">true</span>&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义类的“私有”字段</span></span><br><span class="line"><span class="comment">// 下划线前缀表明它是类内部使用的，不属于类的公有API部分</span></span><br><span class="line"><span class="title class_">Complex</span>.<span class="property">_format</span> = <span class="regexp">/^\&#123;([^,]+),([^&#125;]+)\&#125;$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> <span class="title class_">Complex</span>(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> <span class="title class_">Complex</span>(c.<span class="property">i</span>, c.<span class="property">r</span>); <span class="comment">// 实例属性</span></span><br><span class="line">c.<span class="title function_">add</span>(d).<span class="title function_">toString</span>()            <span class="comment">// 实例方法 =&gt; &#x27;&#123;5, 5&#125;&#x27;</span></span><br><span class="line"><span class="title class_">Complex</span>.<span class="title function_">parse</span>(c.<span class="title function_">toString</span>())    <span class="comment">// 类方法</span></span><br><span class="line">  .<span class="title function_">add</span>(c.<span class="title function_">neg</span>())                <span class="comment">// 类方法 &amp; 实例方法</span></span><br><span class="line">  .<span class="title function_">equals</span>(<span class="title class_">Complex</span>.<span class="property">ZERO</span>)        <span class="comment">// 类属性</span></span><br></pre></td></tr></table></figure>
+<p>JavaScript中未介绍的可以模拟Java的一些特性：</p>
+<ol type="1">
+<li>对于Java类的实例方法来说，实例字段可以用作局部变量，而不需要使用关键字this来引用他们<br />
+(其实可以使用with来模拟，但是不推荐)</li>
+<li>Java中使用final声明字段为常量<br />
+(可以使用闭包中的局部变量来模拟)</li>
+<li>Java中的private字段和方法<br />
+(常量属性可以在ECMAScript 5中直接实现)</li>
+</ol>
+<p>针对上述说的2、3，在JavaScript中往往通过约定来约束：<br />
+常量字段 使用全大写命名<br />
+私有字段 使用<code>_</code>开头</p>
+<h1 id="集合">集合</h1>
+<p>JavaScript中没有提供Set这一数据结构。我们可以如下实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Set</span>(<span class="params">argument</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">values</span> = &#123;&#125;; <span class="comment">// 集合数据保存在对象的属性里</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">n</span> = <span class="number">0</span>;          <span class="comment">// 集合中的值的个数</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">add</span>.<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>); <span class="comment">// 把所有参数都添加进这个集合</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将每个参数都添加至集合中</span></span><br><span class="line"><span class="title class_">Set</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">add</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">arguments</span>.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">        <span class="keyword">var</span> val = <span class="variable language_">arguments</span>[i];                   <span class="comment">// 待添加到集合中的值</span></span><br><span class="line">        <span class="keyword">var</span> str = <span class="title class_">Set</span>.<span class="title function_">_v2s</span>(val);                  <span class="comment">// 把它转换为字符串</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">values</span>.<span class="title function_">hasOwnProperty</span>(str)) &#123;   <span class="comment">// 如果不在集合中，则加入集合中</span></span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">values</span>[str] = val;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">n</span>++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;                                  <span class="comment">// 支持链式方式调用</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从集合中删除元素</span></span><br><span class="line"><span class="title class_">Set</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">remove</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">arguments</span>.<span class="property">length</span>; ++i) &#123;</span><br><span class="line">        <span class="keyword">var</span> str = <span class="title class_">Set</span>.<span class="title function_">_v2s</span>(<span class="variable language_">arguments</span>[i]);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">values</span>.<span class="title function_">hasOwnProperty</span>(str)) &#123;</span><br><span class="line">            <span class="keyword">delete</span> <span class="variable language_">this</span>.<span class="property">values</span>[str];</span><br><span class="line">            --<span class="variable language_">this</span>.<span class="property">n</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果集合包含这个值，则返回true，否则返回false</span></span><br><span class="line"><span class="title class_">Set</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">contains</span> = <span class="keyword">function</span> (<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">values</span>.<span class="title function_">hasOwnProperty</span>(<span class="title class_">Set</span>.<span class="title function_">_v2s</span>(value));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回集合的大小</span></span><br><span class="line"><span class="title class_">Set</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">size</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">n</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历集合中的所有元素，在指定的上下文中调用方法f</span></span><br><span class="line"><span class="title class_">Set</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">foreach</span> = <span class="keyword">function</span> (<span class="params">f, context</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> s <span class="keyword">in</span> <span class="variable language_">this</span>.<span class="property">values</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">values</span>.<span class="title function_">hasOwnProperty</span>(s)) &#123;      <span class="comment">// 忽略继承的属性</span></span><br><span class="line">            f.<span class="title function_">call</span>(context, <span class="variable language_">this</span>.<span class="property">values</span>[s]);      <span class="comment">// 调用f，传入value</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这是一个内部函数</span></span><br><span class="line"><span class="comment">// 将任意JavaScript值和唯一的字符串对应起来</span></span><br><span class="line"><span class="title class_">Set</span>.<span class="property">_v2s</span> = <span class="keyword">function</span> (<span class="params">val</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (val) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="attr">undefined</span>: <span class="keyword">return</span> <span class="string">&#x27;u&#x27;</span>; <span class="comment">// 特殊的原始值</span></span><br><span class="line">        <span class="keyword">case</span> <span class="attr">null</span>: <span class="keyword">return</span> <span class="string">&#x27;n&#x27;</span>;      <span class="comment">// 得到一个特殊的代码</span></span><br><span class="line">        <span class="keyword">case</span> <span class="attr">true</span>: <span class="keyword">return</span> <span class="string">&#x27;t&#x27;</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="attr">false</span>: <span class="keyword">return</span> <span class="string">&#x27;f&#x27;</span>;</span><br><span class="line">        <span class="attr">default</span>: <span class="keyword">switch</span> (<span class="keyword">typeof</span> val) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;number&#x27;</span>: <span class="keyword">return</span> <span class="string">&#x27;#&#x27;</span> + val; <span class="comment">// 数字带有 # 前缀</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;string&#x27;</span>: <span class="keyword">return</span> <span class="string">&#x27;`&#x27;</span> + val; <span class="comment">// 字符串带有 ` 前缀</span></span><br><span class="line">            <span class="attr">default</span>: <span class="keyword">return</span> <span class="string">&#x27;@&#x27;</span> + <span class="title function_">objectId</span>(val); <span class="comment">// 对象和函数带有前缀 @</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对任意对象来说，都会返回一个字符串</span></span><br><span class="line">    <span class="comment">// 针对不同的对象，这个函数会返回不同的字符串</span></span><br><span class="line">    <span class="comment">// 对于同一个对象的多次调用，总是返回相同的字符串</span></span><br><span class="line">    <span class="comment">// 为此，我们将在o中创建一个属性</span></span><br><span class="line">    <span class="comment">// 在ES5中，这个属性是不可枚举且只读的</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">objectId</span>(<span class="params">o</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> prop = <span class="string">&#x27;|**objectid**|&#x27;</span>;   <span class="comment">// 私有属性，用以存放id</span></span><br><span class="line">        <span class="keyword">if</span> (!o.<span class="title function_">hasOwnProperty</span>(prop))</span><br><span class="line">            o[prop] = <span class="title class_">Set</span>.<span class="property">_v2s</span>.<span class="property">next</span>++;</span><br><span class="line">        <span class="keyword">return</span> o[prop];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title class_">Set</span>.<span class="property">_v2s</span>.<span class="property">next</span> = <span class="number">100</span>; <span class="comment">// 设置初始id的值</span></span><br></pre></td></tr></table></figure>
+<h1 id="枚举">枚举</h1>
+<p>同样，JavaScript中也没有提供枚举这一常用的数据结构。但本例与集合的例子的差别在于：<strong>下列代码中所提及的<code>enumeration</code>
+不是一个构造函数，它是一个工厂方法，每次调用它都会创建并返回一个新的类</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// enumeration() 不是一个构造函数，它是一个工厂方法，每次调用它都会创建并返回一个新的类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// inherit() 返回了一个继承自原型对象p的属性的新对象</span></span><br><span class="line"><span class="comment">// 这里使用了ECMAScript 5中的Object.create()函数 （如果存在的话）</span></span><br><span class="line"><span class="comment">// 如果不存在Object.create()，则退化使用其他方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">inherit</span>(<span class="params">p</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (p == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="title class_">TypeError</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Objcet</span>.<span class="property">create</span>) <span class="keyword">return</span> <span class="title class_">Objcet</span>.<span class="title function_">create</span>(p);</span><br><span class="line">    <span class="keyword">var</span> t = <span class="keyword">typeof</span> p;</span><br><span class="line">    <span class="keyword">if</span> (t !== <span class="string">&#x27;object&#x27;</span> &amp;&amp; t !== <span class="string">&#x27;function&#x27;</span>) <span class="keyword">throw</span> <span class="title class_">TypeError</span>();</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">f</span>(<span class="params"></span>) &#123;&#125;; <span class="comment">// 定义一个空构造函数</span></span><br><span class="line">    f.<span class="property"><span class="keyword">prototype</span></span> = p; <span class="comment">// 将其原型属性设置为p</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title function_">f</span>();  <span class="comment">// 使用f()创建p的继承对象</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个函数创建一个新的枚举类型，实参对象表示类的每个实例的名字和值</span></span><br><span class="line"><span class="comment">// 返回值是一个构造函数，它标识这个新类</span></span><br><span class="line"><span class="comment">// 注意，这个构造函数也会抛出异常：不能使用它来创建该类型的新的实例</span></span><br><span class="line"><span class="comment">// 返回的构造函数包含名/值对的映射表</span></span><br><span class="line"><span class="comment">// 包括由值组成的数组，以及一个foreach()迭代器函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">enumeration</span>(<span class="params">namesToValues</span>) &#123;</span><br><span class="line">    <span class="comment">// 这个虚拟的构造函数是返回值</span></span><br><span class="line">    <span class="keyword">var</span> enumeration = <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="keyword">throw</span> <span class="string">&#x27;Cannot Instantiate Enumerations&#x27;</span>;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 枚举值继承自这个对象</span></span><br><span class="line">    <span class="keyword">var</span> proto = enumeration.<span class="property"><span class="keyword">prototype</span></span> = &#123;</span><br><span class="line">        <span class="attr">constructor</span>: enumeration, <span class="comment">// 标识类型</span></span><br><span class="line">        <span class="attr">toString</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">name</span>; &#125;,</span><br><span class="line">        <span class="attr">valueOf</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">value</span>; &#125;,</span><br><span class="line">        <span class="attr">toJSON</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">name</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    enumeration.<span class="property">values</span> = []; <span class="comment">// 用以存放枚举对象的数组</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建新类型的实例</span></span><br><span class="line">    <span class="keyword">for</span> (name <span class="keyword">in</span> namesToValues) &#123;</span><br><span class="line">        <span class="keyword">var</span> e = <span class="title function_">inherit</span>(proto); <span class="comment">// 创建一个代表它的对象</span></span><br><span class="line">        e.<span class="property">name</span> = name;</span><br><span class="line">        e.<span class="property">value</span> = namesToValues[name];</span><br><span class="line">        enumeration[name] = e;      <span class="comment">// 将它设置为构造函数的属性</span></span><br><span class="line">        enumeration.<span class="property">values</span>.<span class="title function_">push</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用来对类的实例进行迭代</span></span><br><span class="line">    enumeration.<span class="property">foreach</span> = <span class="keyword">function</span> (<span class="params">f, c</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">values</span>.<span class="property">length</span>; ++i)</span><br><span class="line">            f.<span class="title function_">call</span>(c, <span class="variable language_">this</span>.<span class="property">values</span>[i]);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> enumeration;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用示例</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Coin</span> = <span class="title function_">enumeration</span>(&#123;<span class="title class_">Penny</span>: <span class="number">1</span>, <span class="title class_">Nickel</span>: <span class="number">5</span>, <span class="title class_">Dime</span>: <span class="number">10</span>, <span class="title class_">Quarter</span>:<span class="number">25</span>&#125;);</span><br><span class="line"><span class="keyword">var</span> c = <span class="title class_">Coin</span>.<span class="property">Dime</span>;</span><br><span class="line">c <span class="keyword">instanceof</span> <span class="title class_">Coin</span> <span class="comment">// =&gt; true</span></span><br><span class="line">c.<span class="property">constructor</span> == <span class="title class_">Coin</span> <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="title class_">Coin</span>.<span class="property">Quarter</span> + <span class="number">3</span>*<span class="title class_">Coin</span>.<span class="property">Nickel</span> <span class="comment">// =&gt; 40</span></span><br><span class="line"><span class="title class_">Coin</span>.<span class="property">Dime</span> == <span class="number">10</span> <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="title class_">Coin</span>.<span class="property">Dime</span> &gt; <span class="title class_">Coin</span>.<span class="property">Nickel</span> <span class="comment">// =&gt; true</span></span><br><span class="line"><span class="title class_">String</span>(<span class="title class_">Coin</span>.<span class="property">Dime</span>) + <span class="string">&#x27;:&#x27;</span> + <span class="title class_">Coin</span>.<span class="property">Dime</span> <span class="comment">// =&gt; &#x27;Dime:10&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="扑克牌">扑克牌</h2>
+<p>我们这里用上面创建的枚举类，来创建一副扑克牌：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类 - 牌</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Card</span>(<span class="params">suit, rank</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">suit</span> = suit; <span class="comment">// 花色</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">rank</span> = rank; <span class="comment">// 点数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用枚举类型定义花色和点数</span></span><br><span class="line"><span class="title class_">Card</span>.<span class="property">Suit</span> = <span class="title function_">enumeration</span>(&#123;<span class="title class_">Clubs</span>: <span class="number">1</span>, <span class="title class_">Diamonds</span>: <span class="number">2</span>, <span class="title class_">Hearts</span>: <span class="number">3</span>, <span class="title class_">Spades</span>: <span class="number">4</span>&#125;);</span><br><span class="line"><span class="title class_">Card</span>.<span class="property">Rank</span> = <span class="title function_">enumeration</span>(&#123;<span class="title class_">Two</span>: <span class="number">2</span>, <span class="title class_">Three</span>: <span class="number">3</span>, <span class="title class_">Four</span>: <span class="number">4</span>, <span class="title class_">Five</span>: <span class="number">5</span>, <span class="title class_">Six</span>: <span class="number">6</span>,</span><br><span class="line">                         <span class="title class_">Seven</span>: <span class="number">7</span>, <span class="title class_">Eight</span>: <span class="number">8</span>, <span class="title class_">Nine</span>: <span class="number">9</span>, <span class="title class_">Ten</span>: <span class="number">10</span>,</span><br><span class="line">                         <span class="title class_">Jack</span>: <span class="number">11</span>, <span class="title class_">Queen</span>: <span class="number">12</span>, <span class="title class_">King</span>: <span class="number">13</span>, <span class="title class_">Ace</span>: <span class="number">14</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义用以描述牌面的文本</span></span><br><span class="line"><span class="title class_">Card</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">rank</span>.<span class="title function_">toString</span>() + <span class="string">&#x27; of &#x27;</span> + <span class="variable language_">this</span>.<span class="property">suit</span>.<span class="title function_">toString</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 比较扑克牌中两张牌的大小</span></span><br><span class="line"><span class="title class_">Card</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">compareTo</span> = <span class="keyword">function</span> (<span class="params">that</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">rank</span> &lt; that.<span class="property">rank</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">rank</span> &gt; that.<span class="property">rank</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以扑克牌的玩法规则对牌进行排序的函数</span></span><br><span class="line"><span class="title class_">Card</span>.<span class="property">orderByRank</span> = <span class="keyword">function</span> (<span class="params">a, b</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a.<span class="title function_">compareTo</span>(b);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以桥牌的玩法规则对牌进行排序的函数</span></span><br><span class="line"><span class="title class_">Card</span>.<span class="property">orderBySuit</span> = <span class="keyword">function</span> (<span class="params">a, b</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (a.<span class="property">suit</span> &lt; b.<span class="property">suit</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (a.<span class="property">suit</span> &gt; b.<span class="property">suit</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (a.<span class="property">rank</span> &lt; b.<span class="property">rank</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (a.<span class="property">rank</span> &gt; b.<span class="property">rank</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义用以表示一副标准扑克牌的类</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Deck</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> cards = <span class="variable language_">this</span>.<span class="property">cards</span> = [];</span><br><span class="line">    <span class="title class_">Card</span>.<span class="property">Suit</span>.<span class="title function_">foreach</span>(<span class="keyword">function</span> (<span class="params">s</span>) &#123;</span><br><span class="line">                        <span class="title class_">Card</span>.<span class="property">Rank</span>.<span class="title function_">foreach</span>(<span class="keyword">function</span> (<span class="params">r</span>) &#123;</span><br><span class="line">                            cards.<span class="title function_">push</span>(<span class="keyword">new</span> <span class="title class_">Card</span>(s, r));</span><br><span class="line">                        &#125;)</span><br><span class="line">                     &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 洗牌</span></span><br><span class="line"><span class="title class_">Deck</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">shuffle</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 遍历数组中的每个元素，随机找出牌面最小的元素，并阈值交换</span></span><br><span class="line">    <span class="keyword">var</span> deck = <span class="variable language_">this</span>.<span class="property">cards</span>;</span><br><span class="line">    <span class="keyword">var</span> len = deck.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = len-<span class="number">1</span>; i&gt;<span class="number">0</span> ; --i) &#123;</span><br><span class="line">        <span class="keyword">var</span> r = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * (i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">var</span> temp = deck[i];</span><br><span class="line">        deck[i] = deck[r];</span><br><span class="line">        deck[r] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发牌</span></span><br><span class="line"><span class="title class_">Deck</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">deal</span> = <span class="keyword">function</span> (<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">cards</span>.<span class="property">length</span> &lt; n) <span class="keyword">throw</span> <span class="string">&#x27;Out of cards&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">cards</span>.<span class="title function_">splice</span>(<span class="variable language_">this</span>.<span class="property">cards</span>.<span class="property">length</span> - n, n);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一副新扑克牌，洗牌并发牌</span></span><br><span class="line"><span class="keyword">var</span> deck = (<span class="keyword">new</span> <span class="title class_">Deck</span>()).<span class="title function_">shuffle</span>();</span><br><span class="line"><span class="keyword">var</span> hand = deck.<span class="title function_">deal</span>(<span class="number">13</span>).<span class="title function_">sort</span>(<span class="title class_">Card</span>.<span class="property">orderBySuit</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/10549733/">JavaScript权威指南(第六版)</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/11/11/learn/js/5-object-oriented/" title="JavaScript查缺补漏の女娲补天 - 面向对象技术">https://wrran.github.io/blog/2016/11/11/learn/js/5-object-oriented/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/object-oriented/" rel="tag"># object oriented</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/11/learn/js/4-this/" rel="prev" title="learn-js-4-this">
+                  <i class="fa fa-angle-left"></i> learn-js-4-this
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/11/12/learn/js/6-1-object-property-overview/" rel="next" title="JavaScript查缺补漏 - 对象 &amp; 属性 概述">
+                  JavaScript查缺补漏 - 对象 & 属性 概述 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

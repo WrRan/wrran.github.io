@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="The functools module is for higher-order functions.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="functools @ python">
+<meta property="og:url" content="https://wrran.github.io/blog/2019/08/16/cheatsheet/reference/python-functools/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="The functools module is for higher-order functions.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-08-16T05:30:00.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.654Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="cheatsheet">
+<meta property="article:tag" content="functools">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2019/08/16/cheatsheet/reference/python-functools/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2019/08/16/cheatsheet/reference/python-functools/","path":"blog/2019/08/16/cheatsheet/reference/python-functools/","title":"functools @ python"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>functools @ python | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cmp_to_keyfunc"><span class="nav-text">cmp_to_key(func)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#total_orderingcls"><span class="nav-text">total_ordering(cls)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reducefunction-iterable-initializer"><span class="nav-text">reduce(function, iterable
+[, initializer])</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#partialfun-args-keywords"><span class="nav-text">partial(fun [,*args] [,
+**keywords])</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#partial-objects"><span class="nav-text">partial objects</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update_wrapperwrapper-wrapped-assigned-updated"><span class="nav-text">update_wrapper(wrapper,
+wrapped [, assigned] [, updated])</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wrapswrapped-assigned-updated"><span class="nav-text">wraps(wrapped [, assigned] [,
+updated])</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2019/08/16/cheatsheet/reference/python-functools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="functools @ python | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          functools @ python
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-16 13:30:00" itemprop="dateCreated datePublished" datetime="2019-08-16T13:30:00+08:00">2019-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tools/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>The <code>functools</code> module is for higher-order functions.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="introduction">Introduction</h1>
+<p>The <code>functools</code> module is for higher-order functions:
+functions that act on or return other functions. In general, any
+callable object can be treated as a function for the purposes of this
+module</p>
+<p>The functools module defines the following functions:</p>
+<h1 id="cmp_to_keyfunc">cmp_to_key(func)</h1>
+<blockquote>
+<p>Transform an old-style comparison function to a <em>key
+function</em>.</p>
+</blockquote>
+<p>Used with tools that accept key functions (such as
+<code>sorted()</code>, <code>min()</code>, <code>max()</code>,
+<code>heapq.nlargest()</code>, <code>heapq.nsmallest()</code>,
+<code>itertools.groupby()</code>). This function is primarily used as a
+transition tool for programs being converted to Python 3 where
+comparison functions are no longer supported.</p>
+<p>A <em>comparison function</em> is any callable that accept two
+arguments, compares them, and returns a negative number for less-than,
+zero for equality, or a positive number for greater-than. A key function
+is a callable that accepts one argument and returns another value to be
+used as the sort key.</p>
+<p>A <a
+target="_blank" rel="noopener" href="https://docs.python.org/2/glossary.html#term-key-function"><em>key
+function</em></a> or collation function is a callable that returns a
+value used for sorting or ordering.</p>
+<h1 id="total_orderingcls">total_ordering(cls)</h1>
+<blockquote>
+<p>Given a class defining one or more rich comparison ordering methods,
+this class decorator supplies the rest.</p>
+</blockquote>
+<p>This simplifies the effort involved in specifying all of the possible
+rich comparison operations:</p>
+<p>The class must define one of <code>__lt__()</code>,
+<code>__le__()</code>, <code>__gt__()</code>, or <code>__ge__()</code>.
+In addition, the class should supply an <code>__eq__()</code>
+method.</p>
+<h1 id="reducefunction-iterable-initializer">reduce(function, iterable
+[, initializer])</h1>
+<blockquote>
+<p>This is the same function as <a
+target="_blank" rel="noopener" href="https://docs.python.org/2/library/functions.html#reduce">reduce()</a>.</p>
+</blockquote>
+<p>It is made available in this module to allow writing code mode
+forward-compatible with Python 3.</p>
+<h1 id="partialfun-args-keywords">partial(fun [,*args] [,
+**keywords])</h1>
+<blockquote>
+<p>Return a new partial object which when called will behave like func
+called with the positional arguments args and keyword arguments
+keywords. If more arguments are supplied to the call, they are appended
+to args. If additional keyword arguments are supplied, they extend and
+override keywords. Roughly equivalent to:</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">partial</span>(<span class="params">func, *args, **keywords</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">newfunc</span>(<span class="params">*fargs, **fkeywords</span>):</span><br><span class="line">        newkeywords = keywords.copy()</span><br><span class="line">        newkeywords.update(fkeywords)</span><br><span class="line">        <span class="keyword">return</span> func(*(args + fargs), **newkeywords)</span><br><span class="line">    newfunc.func = func</span><br><span class="line">    newfunc.args = args</span><br><span class="line">    newfunc.keywords = keywords</span><br><span class="line">    <span class="keyword">return</span> newfunc</span><br></pre></td></tr></table></figure>
+<h2 id="partial-objects">partial objects</h2>
+<p>partial objects are callable objects created by
+<code>partial()</code>. They have three read-only attributes:</p>
+<ul>
+<li><code>func</code> - A callable object or function. Calls to the
+partial object will be forwarded to func with new arguments and
+keywords.</li>
+<li><code>args</code> - The leftmost positional arguments that will be
+prepended to the positional arguments provided to a partial object
+call.</li>
+<li><code>keywords</code> - The keyword arguments that will be supplied
+when the partial object is called.</li>
+</ul>
+<p><strong>partial objects</strong> are like <em>function objects</em>
+in that they are callable, weak referencable, and can have attributes.
+There are some important differences:</p>
+<ul>
+<li>For instance, the <code>__name__</code> and <code>__doc__</code>
+attributes are not created automatically.</li>
+<li>Also, partial objects defined in classes behave like static methods
+and do not transform into bound methods during instance attribute
+look-up</li>
+</ul>
+<h1
+id="update_wrapperwrapper-wrapped-assigned-updated">update_wrapper(wrapper,
+wrapped [, assigned] [, updated])</h1>
+<blockquote>
+<p>Update a <em>wrapper</em> function to look like the <em>wrapped</em>
+function.</p>
+</blockquote>
+<p>The optional arguments are tuples to specify which attributes of the
+original function are assigned directly to the matching attributes on
+the wrapper function and which attributes of the wrapper function are
+updated with the corresponding attributes from the original function.
+The default values for these arguments are the module level constants
+<code>WRAPPER_ASSIGNMENTS</code> (which assigns to the wrapper
+function’s <code>__name__</code>, <code>__module__</code> and
+<code>__doc__</code>, the documentation string) and
+<code>WRAPPER_UPDATES</code> (which updates the wrapper function’s
+<code>__dict__</code>, i.e. the instance dictionary).</p>
+<h1 id="wrapswrapped-assigned-updated">wraps(wrapped [, assigned] [,
+updated])</h1>
+<blockquote>
+<p>This is a convenienve function for invokeing
+<code>update_wrapper()</code> as a function decorator when defining a
+wrapper function.</p>
+</blockquote>
+<p>It is equivalent to
+<code>partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated)</code>.
+For example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_decorator</span>(<span class="params">f</span>):</span><br><span class="line"><span class="meta">    @wraps(<span class="params">f</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwds</span>):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;Calling decorated funcion&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> f(*args, **kwds)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@my_decorator</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">example</span>()</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Docstring&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;Called example function&#x27;</span></span><br><span class="line"></span><br><span class="line">example()</span><br><span class="line"><span class="comment"># Calling decorated function</span></span><br><span class="line"><span class="comment"># Called example function</span></span><br><span class="line"></span><br><span class="line">example.__name__</span><br><span class="line"><span class="comment"># &#x27;example&#x27;</span></span><br><span class="line"></span><br><span class="line">example.__doc__</span><br><span class="line"><span class="comment"># &#x27;Docstring&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>Withoud the use of this decorator factory, the name of the example
+function would have been <code>wrapper</code>, and the docstring of the
+original <code>example()</code> would have been lost.</p>
+<h1 id="references">References</h1>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/2/library/functools.html">functools
+- Higher-order functions and operations on callable objects</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2019/08/16/cheatsheet/reference/python-functools/" title="functools @ python">https://wrran.github.io/blog/2019/08/16/cheatsheet/reference/python-functools/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/cheatsheet/" rel="tag"># cheatsheet</a>
+              <a href="/tags/functools/" rel="tag"># functools</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/16/cheatsheet/reference/python-itertools/" rel="prev" title="itertools @ python">
+                  <i class="fa fa-angle-left"></i> itertools @ python
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2019/08/16/learn/hexo/index/" rel="next" title="深入理解Hexo">
+                  深入理解Hexo <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

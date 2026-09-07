@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="survey word representation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式单词表示综述（一）">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/05/26/note/paper-reading/word%20embedding/2018-05-27/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="survey word representation">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-05-26T03:51:17.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.732Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="distributed word representation">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/05/26/note/paper-reading/word%20embedding/2018-05-27/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/05/26/note/paper-reading/word%20embedding/2018-05-27/","path":"blog/2018/05/26/note/paper-reading/word embedding/2018-05-27/","title":"分布式单词表示综述（一）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式单词表示综述（一） | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%BB%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-text">单词分布式表示学习主要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="nav-text">神经网络语言模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8A%A0%E9%80%9F"><span class="nav-text">神经网络语言模型的加速</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F%E6%A8%A1%E5%9E%8B"><span class="nav-text">排序模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%95%E8%AF%8D%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B"><span class="nav-text">上下文单词预测模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%E6%A8%A1%E5%9E%8B"><span class="nav-text">矩阵分解模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%81%94%E7%B3%BB"><span class="nav-text">模型联系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E7%BB%84%E5%90%88%E4%B8%8E%E7%BA%B5%E5%90%91%E8%81%9A%E5%90%88"><span class="nav-text">横向组合与纵向聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3"><span class="nav-text">神经网络与矩阵分解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%AE%9E%E9%AA%8C%E6%AF%94%E8%BE%83"><span class="nav-text">模型实验比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D%E7%9B%B8%E4%BC%BC%E5%BA%A6"><span class="nav-text">单词相似度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D%E7%B1%BB%E6%AF%94"><span class="nav-text">单词类比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D%E8%A1%A8%E7%A4%BA%E7%94%A8%E4%BD%9C%E7%89%B9%E5%BE%81"><span class="nav-text">单词表示用作特征</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/05/26/note/paper-reading/word%20embedding/2018-05-27/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式单词表示综述（一） | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式单词表示综述（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-26 11:51:17" itemprop="dateCreated datePublished" datetime="2018-05-26T11:51:17+08:00">2018-05-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/word-embedding/" itemprop="url" rel="index"><span itemprop="name">word embedding</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>survey word representation</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概览">概览</h1>
+<p>最近在整理近些年来的词向量相关工作,发现了一篇2016年的相关综述.于是便顺着该篇综述来介绍相关的工作,其中涉及的有意思的工作可以参看后续的一些博文.</p>
+<h1 id="单词分布式表示学习主要方法">单词分布式表示学习主要方法</h1>
+<p>但更重要的问题在于为什么这样的一个神经网络可以在建模语言模型时,能够学出单词的分布式表示呢?且这种分布式表示可以包含单词间的语义关联呢?其核心思想在于：对于同一个单词，在其前面出现的上下文单词总是相似的。</p>
+<h2 id="神经网络语言模型">神经网络语言模型</h2>
+<p>Bengio等人的[神经网络概率语言模型（Neural Probabilistic Language
+Model, NPLM）][3]
+[other][37]提出了一个通用的框架学习单词的分布式表达以及任意的N元语言模型.在该模型中,语言模型是通过给定前文来计算某个单词的概率.NPLM通过将词表示为分布式形式,有效的避免了维度灾难的问题,同时编码了词与词之间的联系,因而自带平滑效果,无需传统N元语言模型中复杂的平滑算法.但该模型的缺点也很明显，主要在于计算方面，NPLM使用<span
+class="math inline">softmax</span>层估计下一个词的概率,但这一层的维度是词表大小,分母需要进行<span
+class="math display">|<em>V</em>|</span>次计算.因此导致学习和推断的过程都十分耗时.</p>
+<h3 id="神经网络语言模型的加速">神经网络语言模型的加速</h3>
+<p>为了解决上述问题,早期使用神经网络语言模型学习单词表示的工作,主要都集中在于加速神经网络语言模型工作上了.对于神经网络语言模型加速的工作,主要集中于两方面:</p>
+<ol type="1">
+<li>直接近似优化原始目标函数</li>
+<li>简化网络结构</li>
+</ol>
+<p><strong>近似优化原始目标函数</strong> Bengio与Ducharme在[Quick
+Training of Probabilistic Neural Nets by Importance
+Sampling.][44]中提出使用 <strong>重要性采样(Importance
+Sampling)</strong>
+的方法近似目标函数梯度中的期望项,提升了模型性能，但代价依旧很高.Minh等人在[A
+fast and simple algorithm for training neural probabilistic language
+models.][45]及[Learning word embeddings efficiently with
+noise-contrastive estimation.][46]中引入了
+<strong>噪声对比估计(Noise-Contrastive Estimation, NCE)</strong>
+取代了重要性采样进行训练过程中的概率估计.该方法的基本思想在于训练一个使用相同参数的逻辑斯蒂回归将真实分布的样本从噪声分布中区分出来.<br />
+<strong>简化网络结构</strong> 在[Hierarchical Probabilistic Neural
+Network Language
+Model.][48]的工作中，Morin与Bengio将原本NPLM中扁平化的<code>softmax</code>输出层转变为树状输出。这样就将<span
+class="math display">|<em>V</em>|</span>次的指数运算减少到<span
+class="math display">log |<em>V</em>|</span>次的运算过程了。之外，在[Three
+New Graphical Models for Statistical Language
+Modelling.][23]中作者使用了更简单的对数双线性模型取出了之前模型隐层中的非线性计算部分,输入单词的表示经过简单的线性变换后直接与被预测词的向量做交互.</p>
+<h2 id="排序模型">排序模型</h2>
+<p>Mikolov等人在[Neural network based language models for highly
+inflective
+languages.][51]的工作中发现，将单词表示学习与语言模型的训练分离开来进行，首先使用简单的模型在更大的语料上学习词向量，然后以此训练语言模型，同样可以取得很好的训练效果。另外，也有学者尝试将单词的分布式表示用于除语言模型之外的自然语言处理任务上，如C&amp;W模型使用多任务学习来学习单词的分布式表示。<br />
+C&amp;W模型做法与之前神经网络语言模型学习单词进行表示模型有如下改进：</p>
+<ol type="1">
+<li>同时使用单词前后的上下文进行学习；</li>
+<li>对单词序列打分使用了排序损失函数而非基于概率的极大似然估计：<br />
+<span
+class="math display">max 0, 1 − <em>s</em>(<em>w</em>, <em>c</em>) + <em>s</em>(<em>ŵ</em>, <em>c</em>)</span><br />
+这里<span class="math display"><em>c</em></span>代表单词<span
+class="math display"><em>w</em></span>的上下文，<span
+class="math display"><em>ŵ</em></span>表示将当前上下文<span
+class="math display"><em>c</em></span>中的单词<span
+class="math display"><em>w</em></span>替换为一个随机采样出的无关单词,<span
+class="math display"><em>s</em></span>代表打分函数（打分越高,说明这段文本是正确的;打分越低，则说明这段文本不合理）。显然，在大多数情况下，将普通短语中的特定单词随机替换为任意单词，得到的都不是正确的短语。因此，模型的目标便是尽量使正确的语言（也就是观测的语料）得分比随机生成的语言的分数更高。这种技术也被称为
+<strong>负采样技术</strong> 。</li>
+</ol>
+<p>而在[WordRank: Learning Word Embeddings via Robust
+Ranking][55]中Ji等人进一步将排序损失函数应用在词向量表示学习的过程中，将其建模为一个排序问题，使用精妙设计的排序函数来学习单词表示。在[Hubness
+and Pollution: Delving into Cross-Space Mapping for Zero-Shot
+Learning.][56]的工作也发现，使用此类排序损失函数可以解决单词表示空间中离得很近的点不易区分的问题。</p>
+<h2 id="上下文单词预测模型">上下文单词预测模型</h2>
+<p>Mikolov等人在[word2vec][4]的工作中也进一步简化了以往的神经网络语言模型，去除了NPLM中间的非线性隐藏层，提出了两个简单的神经网络模型（Continuos
+Bag-of-Words, CBOW及Skip-gram,
+SG）来学习单词的分布式表示.上述两种做法十分简单，CBOW通过上下文词语的分布式表示的加权和来预测单词，后者通过单词的分布式表示来预测上下文的词语.为了模型的求解过程中涉及的复杂的求和操作，使用了一系列的加速技巧都与之前的工作类似：使用哈夫曼树压缩预测空间，负采样技术等。</p>
+<h2 id="矩阵分解模型">矩阵分解模型</h2>
+<p>矩阵分解同样也是得到低维词向量的重要途径。<br />
+其中经典的单词表示学习模型,隐式语义分析模型(Latent Semantic
+Analysis/Indexing, LSA/LSI)将奇异值分解应用于单词与文档共现矩阵<span
+class="math display"><em>X</em> ∈ ℝ<sup>|<em>V</em>| × <em>n</em></sup></span>中，并只保留其中最大的<span
+class="math display"><em>k</em></span>个奇异值，如下<br />
+<span
+class="math display"><em>X</em> = <em>W</em>∑<sub><em>k</em></sub><em>D</em><sup><em>T</em></sup></span><br />
+一般使用<span
+class="math display"><em>W</em>∑<sub><em>k</em></sub></span>作为单词的向量表示.对于SVD分解单词与上下文矩阵，Levy等人在[58]中发现使用<span
+class="math display"><em>W</em>(∑<sub><em>k</em></sub>)<sup>1/2</sup></span>在语义相关任务上效果更佳，而Caron则在[59]中推荐使用<span
+class="math display"><em>W</em>(∑<sub><em>k</em></sub>)<sup><em>α</em></sup></span>（其中<span
+class="math display"><em>α</em></span>对于结果有显著影响，需要认真调整），Hu等人在[60]中发现去掉LSA得到表达的第一维后结果也会有提升（因为LSA得到的向量的第一维显著大于其他维度）。</p>
+<p>随后，Huffman等人概率化LSI，在[61]中提出PLAS(Probabilistic Latent
+Semantic Indexing)模型；Blei等人在[62]中将PLSA贝叶斯扩展为LDA(Latent
+Dirichlet Allocation)模型.</p>
+<p>除SVD外，典型相关分析（Canonical Correlation Analysis, CCA [63,
+64]）同样被广泛用于学习单词表示[65, 66, 67,
+68]；此外，Lebret与Collobert使用Hellinger距离作为PCA分解单词共现矩阵的损失函数，提出
+Hellinger
+PCA(HPCA)模型；受Mikilov等人的工作启发，Pennington等人中提出[GloVe模型][21]。</p>
+<h2 id="模型联系">模型联系</h2>
+<p>该节主要讨论上述做法中的一些相关联系。</p>
+<h3 id="横向组合与纵向聚合">横向组合与纵向聚合</h3>
+<p>上述模型实质上都基于同一个假设 <strong>分布语义假设(Distributional
+Hypothesis)[71,72]</strong>，其含义是：单词的语义来自于上下文。<br />
+不同的是，一些模型将文档作为单词的上下文，一些讲单词周边的单词作为上下文。</p>
+<p>Sun等人在[74]中表明，上下文的不同，使得不同模型建模了单词间的不同关系：横向组合关系(Syntagmatic)与纵向聚合(Paradigmatic)关系[75]。</p>
+<p><strong>横向聚合关系</strong>
+指的是两个单词同时出现在一段文本区域中。如下图中，
+“爱因斯坦”与“物理学家”两个词同时出现在一句话中，这两个词间存在着横向组合关系。此关系强调两个词可以进行组合，在句子中往往起到不同的语法作用。<br />
+而 <strong>纵向聚合关系</strong>
+指的是纵向的可替换的关系，如图中的“爱因斯坦”与“费曼”。如果两个词在一句话中互换后，不影响句子的语法正确性以及语义合理性，则这两个词间存在纵向聚合关系。
+纵向聚合关系在形式上表现为，这两个单词出现在相似的上下文环境中，
+即使这两个单词可能从未共现。<br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180527/syntagmatic_paradigmatic.PNG"
+alt="横向组合与纵向聚合实例" /></p>
+<p>使用文档作为上下文的模型，隐含的假设是，如果两个单词经常同时出现在同一个文档，则这两个单词语义相似。这类模型建模了单词间的横向组合关系，其假设单词与和它共现的单词相似。
+LSI以及LDA等通常使用在信息检索场景下的模型，都是建模的这类关系。这类模型更多的侧重于单词的话题信息，因而针对如文本分类这类侧重话题的任务，要好于使用纵向聚合关系的模型。如Tang等人[76]实验证实，在文本分类任务上，PV-DBOW（Distributed
+Bag of Words version of Paragraph Vector）要明显优于 SG
+模型，其中PV-DBOW与LSI类似，建模的是单词间的横向组合关系。</p>
+<p>而另一类模型，使用单词周边单词作为上下文。 其假设，
+如果两个单词周围的单词相似，则这两个单词语义相似，即使这两个单词可能从未同时出现在一段文本区域中。这类模型建模了单词间的纵向关系，包括NPLM、LBL、CBOW、SG、GloVe等。这也是自然语言处理中最常用关系，同时也是分布语义假设最主流的解释。这类模型更加擅长有关单词自身的各项应用。</p>
+<h3 id="神经网络与矩阵分解">神经网络与矩阵分解</h3>
+<p>Levy 和 Goldberg[77]分析表明，
+SG模型在使用负采样(SGNS)进行学习的情况下，相当于隐式地在分解单词与上下文之间偏移的点间互信息(Shifted
+Pointwise Mutual Information, shifted PMI)矩阵。
+对于PMI矩阵，它是自然语言处理领域表示单词语义的一个常用选择[78]。随后，Li
+等人[79]在表示学习的框架下证明了SGNS等同于矩阵分解。</p>
+<p>此外，Shi和Liu[80]以及 Shazeer
+等人[70]的工作都表明，GloVe模型实际上与使用负采样的SG(SGNS)模型非常相似，其区别只在于模型中的偏移项以及单词权重的选择。而Suzuki和Nagata[81]则提出了一个统一的框架囊括了这两个模型。</p>
+<h2 id="模型实验比较">模型实验比较</h2>
+<h3 id="单词相似度">单词相似度</h3>
+<p><a
+target="_blank" rel="noopener" href="http://alfonseca.org/eng/research/wordsim353.html"><code>WordSim 353 (WS 353)</code></a>
+-
+353个单词对,其中每一词对由13或者16位标注者对其进行0到10之间的打分,分数越高表示标注人员认为这两个词语语义更加相关或者更相似.最终对于每一词对都可以得到所有标注者的一个平均打分.</p>
+<p>此任务的评价标准为,计算标注者对于单词对打分与模型习得表示得到的打分之间的Spearman排序相关系数:<br />
+<span class="math display">$$
+r=\rho_{x,y}=\frac{\mathrm{cov}(x, y)}{\sigma_x\sigma_y}
+$$</span><br />
+其中<span
+class="math inline"><strong>c</strong><strong>o</strong><strong>v</strong>(<em>x</em>, <em>y</em>)</span>表示排序列表<span
+class="math inline"><em>x</em>, <em>y</em></span>之间的协方差,<span
+class="math inline"><em>σ</em><sub><em>x</em></sub></span>和<span
+class="math inline"><em>σ</em><sub><em>y</em></sub></span>代表了对应的标准差.</p>
+<p>模型得到的打分与人工标注的打分排序越一致,得分则越高.<br />
+<a
+target="_blank" rel="noopener" href="https://nlp.stanford.edu/~lmthang/morphoNLM/"><code>Rare Word (RW)</code></a>
+-
+该数据集侧重于评价模型学习稀缺单词表示的能力,其包含了2034个单词对.相比其他数据集,RW包含了更多的词形复杂而又少见的单词.</p>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/magizbox/underthesea/wiki/DATA-SIMLEX-999"><code>SimLex-999 (SL-999)</code></a>
+-
+该数据集修正了WS-353混合相关和相似的缺点,专注于单词之间的相似性,相比较WS-353,该数据集对各个词表示模型的难度更大.</p>
+<h3 id="单词类比">单词类比</h3>
+<p>在word2vec的工作中,Mikolov发现就单单词向量而言,可以通过简单的向量加减运算反映语法语义上的类比关系,如“北京之于中国,相当于巴黎之于法国”可以通过<code>vec("Beijing") - vec("China") = vec("Paris") - vec("France")</code>来捕捉到。</p>
+<h3 id="单词表示用作特征">单词表示用作特征</h3>
+<p>除了上述两个针对单词向量直接进行比较的实验外，学者们还是用单纯的单词表示作为其他任务的特征，如实体识别和情感分类。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://wenku.baidu.com/view/a225cafdf9c75fbfc77da26925c52cc58bd6901c.html">分布式单词表示综述</a><br />
+[3]: <a
+target="_blank" rel="noopener" href="http://jmlr.org/papers/volume3/bengio03a/bengio03a.pdf">http://jmlr.org/papers/volume3/bengio03a/bengio03a.pdf</a>
+“A Neural Probabilistic Language Model. Journal of Machine Learning
+Research”<br />
+[37]: <a
+target="_blank" rel="noopener" href="http://repository.cmu.edu/cgi/viewcontent.cgi?article=2405&amp;context=compsci">http://repository.cmu.edu/cgi/viewcontent.cgi?article=2405&amp;context=compsci</a>
+“Can artificial neural networks learn language models?”<br />
+[44]: <a
+target="_blank" rel="noopener" href="http://www.iro.umontreal.ca/~lisa/pointeurs/submit_aistats2003.pdf">http://www.iro.umontreal.ca/~lisa/pointeurs/submit_aistats2003.pdf</a>
+“Quick Training of Probabilistic Neural Nets by Importance
+Sampling.”<br />
+[45]: <a
+target="_blank" rel="noopener" href="https://www.cs.toronto.edu/~amnih/papers/ncelm.pdf">https://www.cs.toronto.edu/~amnih/papers/ncelm.pdf</a>
+“A fast and simple algorithm for training neural probabilistic language
+models.”<br />
+[46]: <a
+target="_blank" rel="noopener" href="https://www.cs.toronto.edu/~amnih/papers/wordreps.pdf">https://www.cs.toronto.edu/~amnih/papers/wordreps.pdf</a>
+“Learning word embeddings efficiently with noise-contrastive
+estimation.”<br />
+[48]: <a
+target="_blank" rel="noopener" href="https://www.iro.umontreal.ca/~lisa/pointeurs/hierarchical-nnlm-aistats05.pdf">https://www.iro.umontreal.ca/~lisa/pointeurs/hierarchical-nnlm-aistats05.pdf</a>
+“Hierarchical Probabilistic Neural Network Language Model.”<br />
+[23]: <a
+target="_blank" rel="noopener" href="https://www.cs.toronto.edu/~amnih/papers/threenew.pdf">https://www.cs.toronto.edu/~amnih/papers/threenew.pdf</a>
+“Three New Graphical Models for Statistical Language Modelling.”<br />
+[51]: <a
+target="_blank" rel="noopener" href="http://www.fit.vutbr.cz/research/groups/speech/publi/2009/mikolov_ic2009_nnlm_4.pdf">http://www.fit.vutbr.cz/research/groups/speech/publi/2009/mikolov_ic2009_nnlm_4.pdf</a>
+“Neural network based language models for highly inflective
+languages.”<br />
+[55]: <a
+target="_blank" rel="noopener" href="http://www.aclweb.org/anthology/D/D16/D16-1063.pdf">http://www.aclweb.org/anthology/D/D16/D16-1063.pdf</a>
+“WordRank: Learning Word Embeddings via Robust Ranking”<br />
+[56]: <a
+target="_blank" rel="noopener" href="http://www.aclweb.org/anthology/P/P15/P15-1027.pdf">http://www.aclweb.org/anthology/P/P15/P15-1027.pdf</a>
+“Hubness and Pollution: Delving into Cross-Space Mapping for Zero-Shot
+Learning.”<br />
+[4]: <a
+target="_blank" rel="noopener" href="https://arxiv.org/abs/1301.3781">https://arxiv.org/abs/1301.3781</a>
+“Efficient Estimation of Word Representations in Vector Space.”<br />
+[58]: <a
+target="_blank" rel="noopener" href="http://aclweb.org/anthology/Q15-1016">http://aclweb.org/anthology/Q15-1016</a>
+“Improving Distributional Similarity with Lessons Learned from Word
+Embeddings.”<br />
+[59]: <a
+target="_blank" rel="noopener" href="http://dl.acm.org/citation.cfm?id=762556">http://dl.acm.org/citation.cfm?id=762556</a>
+“Experiments with LSA scoring: optimal rank and basis.”<br />
+[60]: <a
+target="_blank" rel="noopener" href="http://www.academia.edu/2956517/LSA_The_first_dimension_and_dimensional_weighting">http://www.academia.edu/2956517/LSA_The_first_dimension_and_dimensional_weighting</a>
+“LSA: The first dimension and dimensional weighting.”<br />
+[21]: <a
+target="_blank" rel="noopener" href="https://nlp.stanford.edu/pubs/glove.pdf">https://nlp.stanford.edu/pubs/glove.pdf</a>
+“Glove: Global Vectors for Word Representation.”</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/05/26/note/paper-reading/word%20embedding/2018-05-27/" title="分布式单词表示综述（一）">https://wrran.github.io/blog/2018/05/26/note/paper-reading/word embedding/2018-05-27/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/distributed-word-representation/" rel="tag"># distributed word representation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/05/20/note/paper-reading/word%20embedding/2018-04-01/" rel="prev" title="Efficient Estimation of Word Representations in Vector Space">
+                  <i class="fa fa-angle-left"></i> Efficient Estimation of Word Representations in Vector Space
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/07/29/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-07-29/" rel="next" title="Efficient and Robust Question Answering from Minimal Context over Documents">
+                  Efficient and Robust Question Answering from Minimal Context over Documents <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

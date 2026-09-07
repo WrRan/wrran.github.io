@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="୧(๑•̀◡•́๑)૭">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/08/05/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-08-05/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="୧(๑•̀◡•́๑)૭">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-08-05T08:02:49.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.729Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="question answering">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/08/05/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-08-05/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/08/05/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-08-05/","path":"blog/2018/08/05/note/paper-reading/question and answering/reading comprehension/2018-08-05/","title":"Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#encoder-layer"><span class="nav-text">Encoder Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention-layer"><span class="nav-text">Attention Layer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#co-attention-fusion"><span class="nav-text">Co-attention &amp; Fusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#self-attention-fusion"><span class="nav-text">Self-attention &amp; Fusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#match-output-layer"><span class="nav-text">Match &amp; Output Layer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/08/05/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-08-05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-05 16:02:49" itemprop="dateCreated datePublished" datetime="2018-08-05T16:02:49+08:00">2018-08-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/" itemprop="url" rel="index"><span itemprop="name">question and answering</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/reading-comprehension/" itemprop="url" rel="index"><span itemprop="name">reading comprehension</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>୧(๑•̀◡•́๑)૭</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>这是首次机器阅读理解模型性能在SQuAD上超越人类性能的模型，EM高达79.2%。本博文旨在考察模型细节，以便学习掌握。<br />
+总览全文，该模型使用了很多优化技巧，总结有以下几点：</p>
+<ol type="1">
+<li>使用ELMo</li>
+<li>除了常用的co-attention，self-attention外，还使用了Fusion
+Function</li>
+<li>回答问题前，除了使用pointer network，还使用了bilinear match</li>
+<li>在推理过程中使用了手动制定的特征</li>
+</ol>
+<h1 id="模型">模型</h1>
+<p>记文档为词语序列<span
+class="math display"><em>P</em> = <em>w</em><sub><em>t</em></sub><sup><em>P</em></sup><sub><em>t</em> = 1</sub><sup><em>n</em></sup></span>,
+问题为词语序列为<span
+class="math display"><em>Q</em> = <em>w</em><sub><em>t</em></sub><sup><em>Q</em></sup><sub><em>t</em> = 1</sub><sup><em>m</em></sup></span>，其中<span
+class="math display"><em>n</em></span>为文档长度，<span
+class="math display"><em>m</em></span>为问题长度；答案为文档<span
+class="math display"><em>P</em></span>中的某个连续的文档片段。学习目标为<span
+class="math display"><em>f</em>(<em>q</em>, <em>p</em>) = arg max<sub><em>a</em> ∈ <em>A</em>(<em>p</em>)</sub>Pr (<em>a</em>|<em>q</em>, <em>p</em>)</span>。</p>
+<figure>
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com/image/180805/Hierarchical_Attention_Fusion_Network.PNG"
+alt="Hierarchical Attention Fusion Network." />
+<figcaption aria-hidden="true">Hierarchical Attention Fusion
+Network.</figcaption>
+</figure>
+<p>模型整体框架如上图，可以细分为四部分：</p>
+<ul>
+<li>Encoder Layer: 将文档和问题转化为向量表示；</li>
+<li>Attention Layer:
+捕捉文档与问题之间的相互关系，除了常用的co-attention/self-attention外，还运用了<code>Fusion Function</code>；</li>
+<li>Match Layer: 使用bi-linear match
+function捕捉问题与文档表示之间的关系；</li>
+<li>Output Layer: 使用pointer-network搜索答案。</li>
+</ul>
+<h2 id="encoder-layer">Encoder Layer</h2>
+<p>该模型除了使用常用的GloVe作为预训练的词向量外，还使用了ELMo该语言模型作为词向量表示的补充。如此，对于文档和问题我们得到了两种表示，即词向量<span
+class="math display"><em>e</em><sub><em>t</em></sub><sup><em>Q</em></sup><sub><em>t</em> = 1</sub><sup><em>m</em></sup></span>，<span
+class="math display"><em>e</em><sub><em>t</em></sub><sup><em>P</em></sup><sub><em>t</em> = 1</sub><sup><em>n</em></sup></span>和字向量<span
+class="math display"><em>c</em><sub><em>t</em></sub><sup><em>Q</em></sup><sub><em>t</em> = 1</sub><sup><em>m</em></sup></span>，<span
+class="math display"><em>c</em><sub><em>t</em></sub><sup><em>P</em></sup><sub><em>t</em> = 1</sub><sup><em>n</em></sup></span>。<br />
+之后为获取上下文信息，使用Bi-LSTM对词向量表示与字向量表示进行学习，并与字向量拼接作为该层的最终表示：<br />
+<span class="math display">$$
+\begin{align}
+u_t^Q &amp;= \Big[\text{BiLSTM}_Q([e_t^Q, c_t^Q]), c_t^Q \Big]\
+u_t^P &amp;= \Big[\text{BiLSTM}_P([e_t^P, c_t^P]), c_t^P \Big]\
+\end{align}
+$$</span></p>
+<h2 id="attention-layer">Attention Layer</h2>
+<p>该层主要负责推理，本模型基于co-attention和self-attention形成hierarchical
+attention，并在此外还使用了<code>Fusion Function</code>。</p>
+<h3 id="co-attention-fusion">Co-attention &amp; Fusion</h3>
+<p>计算出问题表示<span
+class="math display"><em>u</em><sub><em>t</em></sub><sup><em>Q</em></sup></span>及文档表示<span
+class="math display"><em>u</em><sub><em>t</em></sub><sup><em>P</em></sup></span>后，我们即可计算两者语义相似度：<br />
+<span
+class="math display"><em>S</em><sub><em>i</em><em>j</em></sub> = Att(<em>u</em><sub><em>t</em></sub><sup><em>Q</em></sup>, <em>u</em><sub><em>t</em></sub><sup><em>P</em></sup>) = ReLu(<em>W</em><sub><em>l</em><em>i</em><em>n</em></sub><sup><em>T</em></sup><em>u</em><sub><em>t</em></sub><sup><em>Q</em></sup>) ⋅ ReLu(<em>W</em><sub><em>l</em><em>i</em><em>n</em></sub><sup><em>T</em></sup><em>u</em><sub><em>t</em></sub><sup><em>P</em></sup>)</span></p>
+<p>类似之前的做法，作者基于上述未归一化的矩阵<span
+class="math display"><em>S</em></span>计算<strong>P2Q
+Attention</strong>和<strong>Q2P Attention</strong>:<br />
+<strong>P2Q Attention</strong>得到融入文档的问题表示：<br />
+<span class="math display">$$
+\begin{align}
+\alpha_j &amp;=\text{softmax}(S_{:j}) &amp; \
+\tilde{Q}_{:t} &amp;= \sum_j \alpha_{tj} \cdot Q_{:j}, &amp; \forall j
+\in [1,\cdots, m]\
+\end{align}
+$$</span></p>
+<p><strong>Q2P Attention</strong>得到融入问题的文档表示：<br />
+<span class="math display">$$
+\begin{align}
+\beta_i &amp;= \text{softmax}(S_{i:}) &amp;\
+\tilde{P}_{k:} &amp;= \sum_i \beta_{ik} \cdot P_{i:}, &amp; \forall i
+\in [1, \cdots, n]\
+\end{align}
+$$</span></p>
+<p>之后通过结合原有的文档表示和问题表示，得到：<br />
+<span class="math display">$$
+\begin{align}
+P’ &amp;= \text{Fuse}(P, \tilde{Q})\
+Q’ &amp;= \text{Fuse}(Q, \tilde{P}) \
+\end{align}
+$$</span></p>
+<p>在本文中选用了如下形式作为<span
+class="math display">Fuse</span>:<br />
+<span
+class="math display"><em>m</em>(<em>P</em>, <em>Q̃</em>) = tanh (<em>W</em><sub><em>f</em></sub>[<em>P</em>; <em>Q</em>; <em>P</em> ∘ <em>Q̃</em>; <em>P</em> − <em>Q̃</em>] + <em>b</em><sub><em>f</em></sub>)</span></p>
+<p>作者发现原先的表示反映了一些全文信息，为此引入门机制生成最终的文档或问题表示：<br />
+<span class="math display">$$
+\begin{align}
+P’ &amp;= g(P, \tilde{Q})\cdot m(P, \tilde{Q}) + (1 - g(P,
+\tilde{Q}))\cdot P\
+Q’ &amp;= g(Q, \tilde{P})\cdot m(Q, \tilde{P}) + (1 - g(Q,
+\tilde{P}))\cdot Q\
+\end{align}
+$$</span><br />
+<em>门机制的实现在后文中将详细介绍，作者设计了三种：基于标量、基于向量、基于矩阵的三种。</em></p>
+<h3 id="self-attention-fusion">Self-attention &amp; Fusion</h3>
+<p>之后对文档进行self-attention，先后通过BiLSTM、双线性的softmax及<code>Fuse Function</code>：<br />
+<span class="math display">$$
+\begin{align}
+D &amp;= \text{BiLSTM}(\Big[ P’;\text{feat}_{\text{man}}\Big]) \
+L &amp;= \text{softmax}(D\cdot W_l \cdot D^T)\
+\tilde{D} &amp;= L \cdot D \
+D’ &amp;= \text{Fuse}(D, \tilde{D})\
+D’’ &amp;= \text{BiLSTM}(D’)
+\end{align}
+$$</span><br />
+对于问题，鉴于其长度较短，没有采用上述复杂的操作方式：<br />
+<span class="math display">$$
+\begin{align}
+Q’’ &amp;= \text{BiLSTM}(Q’)\
+\gamma &amp;= \text{softmax}(w_q^T \cdot Q’’)\
+q &amp;= \sum_j \gamma_j \cdot Q’’_{:j}, \forall j \in [1, \cdots, m]\
+\end{align}
+$$</span></p>
+<h2 id="match-output-layer">Match &amp; Output Layer</h2>
+<p>作者通过下述的双线性方式得到答案的开始与结束位置：<br />
+<span class="math display">$$
+\begin{align}
+P_{start} &amp;= \text{softmax}(q \cdot W_s^T \cdot D’’)\
+P_{end} &amp;= \text{softmax}(q \cdot W_e^T \cdot D’’)\
+\end{align}
+$$</span><br />
+输出层使用常规的Pointer Network来预测文档的开始与结束位置。<br />
+在训练过程中，使用交叉熵作为目标函数；在预测过程中，使用动态规划寻找一定长度内为答案开始概率与为答案结束概率乘积最大者。</p>
+<h1 id="参考文献">参考文献</h1>
+<p><a target="_blank" rel="noopener" href="http://aclweb.org/anthology/P18-1158">Multi-Granularity
+Hierarchical Attention Fusion Networks for Reading Comprehension and
+Question Answering</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/08/05/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-08-05/" title="Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering">https://wrran.github.io/blog/2018/08/05/note/paper-reading/question and answering/reading comprehension/2018-08-05/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/question-answering/" rel="tag"># question answering</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/07/29/note/paper-reading/question%20and%20answering/reading%20comprehension/2018-07-29/" rel="prev" title="Efficient and Robust Question Answering from Minimal Context over Documents">
+                  <i class="fa fa-angle-left"></i> Efficient and Robust Question Answering from Minimal Context over Documents
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/08/26/note/paper-reading/word%20embedding/2018-08-26/" rel="next" title="Learning Chinese Word Representations From Glyphs Of Characters">
+                  Learning Chinese Word Representations From Glyphs Of Characters <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

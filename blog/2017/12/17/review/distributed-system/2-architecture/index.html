@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统 - 体系结构">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/17/review/distributed-system/2-architecture/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="三个臭皮匠赛过诸葛亮">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-17T06:33:03.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.780Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="distributed system">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/17/review/distributed-system/2-architecture/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/17/review/distributed-system/2-architecture/","path":"blog/2017/12/17/review/distributed-system/2-architecture/","title":"分布式系统 - 体系结构"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>分布式系统 - 体系结构 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">软件体系结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">系统体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E4%B8%AD%E5%BC%8F%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">集中式体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%88%86%E5%B1%82"><span class="nav-text">应用分层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">多层体系结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%9B%86%E4%B8%AD%E5%BC%8F%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">非集中式体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E7%9A%84%E7%82%B9%E5%AF%B9%E7%82%B9%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">结构化的点对点体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E7%BB%93%E6%9E%84%E5%8C%96%E7%9A%84%E7%82%B9%E5%AF%B9%E7%82%B9%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">非结构化的点对点体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8B%93%E6%89%91%E7%AE%A1%E7%90%86"><span class="nav-text">覆盖网络的拓扑管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E7%BA%A7%E5%AF%B9%E7%AD%89%E4%BD%93"><span class="nav-text">超级对等体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">混合体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F"><span class="nav-text">边界服务器系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E4%BD%9C%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F"><span class="nav-text">协作分布式系统</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-text">体系结构与中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%99%A8"><span class="nav-text">中断器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95"><span class="nav-text">自适应软件的常见方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A8%E8%AE%BA"><span class="nav-text">讨论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%87%AA%E6%88%91%E7%AE%A1%E7%90%86"><span class="nav-text">分布式系统的自我管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%9E%8B"><span class="nav-text">反馈控制模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/17/review/distributed-system/2-architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="分布式系统 - 体系结构 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式系统 - 体系结构
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-17 14:33:03" itemprop="dateCreated datePublished" datetime="2017-12-17T14:33:03+08:00">2017-12-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/distributed-system/" itemprop="url" rel="index"><span itemprop="name">distributed-system</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>三个臭皮匠赛过诸葛亮</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>察看分布式系统的组织结构的方法有多种，其中常见的一种是区分软件组件集的逻辑组织和实际物理实现的差别。<br />
+分布式系统的组织结构主要是指组成该系统的软件组件。<strong>软件体系结构</strong>告诉我们不同的软件组件是如何组织的，它们应该如何相互作用。分布式系统的真正实现要求我们真实地把软件组件放置在真实的机器上，这样做的选择有很多种。软件体系结构的最终实例又被称为<strong>系统体系结构</strong>。<br />
+分布式系统的一个重要目的就是：通过提供一个中间件层，把应用程序与底层平台分开。采用这一层是一个重要的体系结构决策，其目的是提供分布式透明性。但其背后的代价就是需要不同的技术来使得中间件为可适应的。通过使分布式系统监视自己的行为，当需要时采取适当的措施，就可以获得<em>适应性</em>。这就导致了<strong>自治系统</strong>的出现，该系统多组成反馈控制循环的形式，形成了系统设计中一个重要的体系结构元素。</p>
+<h1 id="软件体系结构">软件体系结构</h1>
+<p>我们首先将分布式系统的逻辑组织结构看为软件体系结构来开始其体系结构的讨论。体系结构样式是根据组件、组件之间互相的连接方式、组件之间的数据交换以及这些元素如何集成到一个系统中来定义的。<strong>组件</strong>是一个模块单元，它具有并且可以提供良好定义的接口，在其环境中是可替换的。<strong>链接器</strong>常被描述成这样一种机制：在组件之间传递通信、使组件互相协调和协作，如一个链接器可以利用远程过程调用、消息传递或数据流来形成。<br />
+根据组件和链接器的使用，出现了不同的配置，而被划分为不同种类，下列四种是其中最为重要的：</p>
+<ol type="1">
+<li>分层体系结构。</li>
+<li>基于对象的体系结构。</li>
+<li>以数据为中心的体系结构。</li>
+<li>基于事件的体系结构。</li>
+</ol>
+<p><strong>分层体系结构</strong>的思想很简单：组件组成不同的层，其中<span
+class="math display">L<sub><em>i</em></sub></span>层中的组件可以调用下面的层<span
+class="math display">L<sub><em>i</em> − 1</sub></span>。其关键要素是，其控制系统是从一层到另一层的：请求是从上往下，而请求结果则从下往上。<br />
+<strong>基于对象的体系结构</strong>是一种很松散的组织结构：基本上，每个对象都对应一个组件，这些组件是通过（远程）过程调用机制来连接的。<br />
+<strong>以数据为中心的体系结构</strong>的思想则是：进程通信需要通过一个公用的（主动或被动的）仓库。<br />
+<strong>基于事件的体系结构</strong>则是通过事件的传播来进行进程的通信，事件传播还可以有选择地携带数据。对于分布式系统而言，事件传播通常与<em>发布/订阅系统</em>有关。其基本思想是，进程发布事件，然后中间件将确保那些订阅了这些事件的进程才接收它们。基于事件的系统的主要优点是：进程是松散耦合的。由于进程间无需明确地引用对方，又被称为<strong>引用去耦</strong>。<br />
+基于事件的体系结构可以与以数据为中心的体系结构组合，形成<strong>共享数据空间</strong>。共享数据空间的基本是，进程也可以是去耦的：它们不需要两者在通信发生时都是活动的。</p>
+<h1 id="系统体系结构">系统体系结构</h1>
+<p>确定软件组件、这些组件之间的交互及它们的位置就是软件体系结构的一个实例，又被称为<strong>系统体系结构</strong>。下面将介绍集中式和非集中式组织结构及各种混合形式。</p>
+<h2 id="集中式体系结构">集中式体系结构</h2>
+<p>许多研究人员和实践人员都认为：根据从服务器请求服务的客户来考虑问题，有助于我们理解和管理分布式系统的复杂性。<br />
+在基本的客户-服务器模型中，分布式系统中的进程被分为两组（可能有重叠）。<strong>服务器</strong>是实现特定服务的进程，如文件系统服务或数据库服务；<strong>客户</strong>是通过往服务器发送请求来请求服务、然后等待服务器回复的进程。这种客户-服务器交互又被称为<strong>请求-回复行为</strong>。<br />
+如果底层网络很可靠（如在局域网中），通过简单的无连接协议就可以实现客户和服务器之间的通信。使用无连接协议的一个明显有点是<em>高效</em>。只要消息不丢失或损坏，请求-回复协议就能很好地工作。但是该协议很难抵抗突发的传输故障。我们唯一能做的大概就是，当没有回复消息到来时，让客户程序重新发送请求。但问题是，客户无法检测原始请求消息是否丢失，也无法检测回复消息的传输是否发生了故障。如果回复消息丢失，则重新发送请求消息会导致执行两次相同的操作。如果某个操作可以重复多次而无害处，则被称为<strong>幂等的</strong>。由于有些请求不是幂等的，因此不能用某一个解决方法来处理消息的丢失问题。<br />
+另外，在广域网这种通信并不可靠的情形下，更多客户-服务器使用可靠的基于连接的协议，尽管这种解决方法可能会有较低的性能。在这种情况下，一旦客户要请求一个服务，它首先得在发送该请求之前创建一个到该服务器的连接。通常，该服务器使用同一连接来发送回复消息，然后断开该连接；创建和断开连接的开销较高，当请求和回复消息较小时更是如此。</p>
+<h3 id="应用分层">应用分层</h3>
+<p>假如很多客户-服务器应用程序的作用是支持用户对数据库的访问，则可以将其划分为如下三层：</p>
+<ol type="1">
+<li>用户接口层：含有直接与用户交互所需的一切，如显示管理</li>
+<li>处理层：通常包含有应用程序</li>
+<li>数据层：管理要使用的实际数据</li>
+</ol>
+<p>客户通常实现用户接口层。该层由允许终端用户与应用程序交互的程序组成。复杂的用户接口程序之间区别很大。<br />
+与用户接口层和数据层不同，处理层没有太多的共同点。<br />
+客户-服务器模型中的数据层含有用于维护实际数据的程序，应用程序可以在这些数据上进行操作。该层的一个重要属性是其数据往往是**持久的*，即即使应用程序没有运行，数据也会保存在某个地方以供日后使用。数据层往往在服务器端实现。除了存储数据外，数据层还负责保持不同应用程序之间的数据一致性。当数据库正在被使用时，维护数据的一致性意味着诸如表描述符之类的元数据、项约束和特定应用程序元数据也存储在这一层中。在数据层被组织成为一个关系数据库时，数据的独立性很关键：数据组装成是与应用程序无关的，其方法是组织结构的改变不会影响应用程序，应用程序也不会影响数据组织结构。在客户-服务器模型中，使用关系数据库有助于把处理层与数据层分离开来，因为处理与数据是无关的。然而，在某些应用程序中，它们操作的是复杂的数据类型，此时数据操作以对象操作的方式表示更为容易。这使得通过基于对象或对象-关系数据库来实现数据层变得有意义。</p>
+<h3 id="多层体系结构">多层体系结构</h3>
+<p>上述讨论的三个逻辑层之间的差别，表明了物理上把客户-服务器应用分布到多个机器上的可能性。最简单的组织结构是只有两种类型的机器：1)客户机：只含有实现（部分）用户接口的程序
+2)服务器：包含了其余的部分，即实现处理和数据层的程序。<br />
+除此之外，组织客户和服务器的另一种方法是，把上一节中介绍的处理层中的程序分布到不同的机器上。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/two-layer%20architecture.PNG"
+alt="Two-Layer Architecture" /><br />
+如上图，我们先来区分只有两种机器的不同组织形式，这也被称为<strong>（物理）两层体系结构</strong>。近些年来，趋势明显：不再是把客户端软件放在终端用户机上了。在这些情况下，大多数的处理操作和数据存储在服务器端完成，其原因也很简单：尽管客户机可以做不少工作，但它们问题也更多，难以管理。把更多的功能放在客户机上，使得客户端软件更容易出错，且更依赖于客户端的底层平台（如操作系统和资源）。从系统管理的角度来说，使用<strong>胖客户（fat
+client）</strong>并不是最优的；相反，使用(a)~(c)的<strong>瘦用户</strong>配置更容易，可以使得用户接口更简单，获得客户可察觉的性能提升。<br />
+现在再来考虑更为复杂的情形，有时候服务器可能需要更多层次。三层体系结构的一个典型示例就是事务处理。如前所述，名为事务处理监视器的单独进程负责协调所有事务，这些事务可能分散在不同的数据服务器上。</p>
+<h2 id="非集中式体系结构">非集中式体系结构</h2>
+<p>多层客户-服务器把应用程序分成用户接口层、处理层和数据层。不同层直接对应应用程序的逻辑组织结构。在某些商业环境中，分布式处理就等同于把客户-处理器应用程序组织成一个多层体系结构。这种类型的分布被称为<strong>垂直分布性（vertical
+distribution）</strong>，其特征就是：垂直分布下是通过按逻辑把不同组件放在不同机器上来获得的。同样，从系统管理的角度来说，具有垂直分布性有助于：功能可以从逻辑上和物理上分割在多台机器上，每台机器按照特定的功能组进行定制。<br />
+在现代体系结构中经常包含了客户和服务器的分布性。被称为<strong>水平分布性（horizontal
+distribution）</strong>。在该类型的分布式系统中，客户或服务器可能在物理上被分割成逻辑上相等的几个部分，但每部分都操作在整个数据集中自己共享的部分，从而实现负载的平衡。接下来就将介绍一种现代的、能够支持水平分布性的系统体系结构，被称为<strong>点对点系统（peer-peer
+system）</strong>。<br />
+从高层的角度看，构成点对点系统的进程是全部相等的。这意味着需要执行的功能由构成分布式系统的每个进程来表示。因此，进程间的很多交互是对称的：每个进程作为客户的同时又是服务器（这也被称为<strong>服务器客户（servent）</strong>）。如此，基于点对点体系结构的应用就不必操心如何组织进程的问题，即网络中的结点是由进程和表示各种可能的通信通道的链接形成的。通常，一个进程不能与另外任意一个进程直接通信，而是要通过一个可用的通信通道来发送消息。<br />
+现在有两种类型的覆盖网络：一种是结构化的，另一种是非结构化的。我们下面将逐一予以介绍。</p>
+<h3 id="结构化的点对点体系结构">结构化的点对点体系结构</h3>
+<p>在结构化的点对点体系结构中，覆盖网络是用一个确定性的过程来构成的。使用最多的是通过一个<strong>分布式哈希表（Distributed
+Hash Table,
+DHT）</strong>来组织进程的。在基于DHT的系统中，从一个大的标识符空间中选取一个随机关键值赋给数据项，如128位的标识符；同样，我们也可以从这个标识符空间中选取一个随机数赋给该系统中的结点。实质上每一个基于DHT的系统<strong>核心</strong>就是实现一种高效且确定的方案，根据某种距离尺度把数据项的关键值唯一地映射给结点的标识符。最重要的是，当查找数据项时，会返回对应数据项的结点的网络地址；这可以通过把数据项的请求路由给相应的结点来完成。在这样的系统中，设计者要重点关注如何把结点组织成一个覆盖网络，即<strong>成员管理（membership
+management）</strong>。</p>
+<h3 id="非结构化的点对点体系结构">非结构化的点对点体系结构</h3>
+<p>非结构化的点对点体系结构主要依靠<strong>随机化</strong>的算法来构造覆盖网络。其主要思想就是，每个结点维护一个邻结点列表，但该列表是一种或多或少为随机的方法来构造的；同样，数据项也是假定随机地放在结点中的。因此，当结点要定位某个特定的数据项时，它所能有效地做的唯一事情就是用一个查找查询来<em>泛洪</em>该网络。此处只关注成员管理。<br />
+很多非结构化的点对点系统的一个目标就是构造一个类似于<strong>随机图（random
+graph）</strong>的覆盖网络。其基本模型是每个结点都维护一个含有<span
+class="math display"><em>c</em></span>个邻结点的列表，在理想情况下，每个这种邻结点表示都是从当前结点集中随机选择出来的“活”结点。这个邻结点列表又被称为<strong>部分视图（partial
+view）</strong>。</p>
+<h3 id="覆盖网络的拓扑管理">覆盖网络的拓扑管理</h3>
+<p>上述的结构化和非结构化的点对点体系结构其实并不是严格独立的类型，通过仔细地交换和选择部分视图，就可以构造和维护覆盖网络的特殊拓扑结构。如下图所示，采用一种两层的方法就可以实现拓扑管理。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/two-layer%20architecture%20for%20p2p.PNG"
+alt="使用非结构化的点对点系统的技术构造和维护特殊覆盖拓扑的两层方法" /><br />
+最底层构成了一个非结构化的点对点系统，其中的结点定期地交换部分视图中的项目，目的是维护一个精确的随机视图。此处的精确性是指，应该用指向随机选择的“活的”结点的项目来填充部分视图。之后最底层把其部分视图传递给更高层，再次进行另外的项目选择。这就产生了对应于所希望的拓扑结构的邻结点的第二个列表。</p>
+<h3 id="超级对等体">超级对等体</h3>
+<p>在非结构化的点对点系统中，随着组织网络的增大，相关数据项的定位会变得很困难。产生这种可扩展性问题的原因也很简单，即不存在一种确定的方法把查找请求路由到特定的数据项，结点所能借助的唯一技术是泛洪该请求。但泛洪的危害很多，作为一种替代方法，很多点对点系统都提出了使用能够维护数据项索引的特殊结点。<br />
+这些能维护数据项索引或充当一个代理程序的结点通常被称为<strong>超级对等体（superpeer）</strong>。其常常也是组织在点对点系统网络中，形成一个分层组织结构。在这种组织结构中，每个常规对等体作为一个客户连接到超级对等体；所有往来于常规对等体的通信都先通过与该对等体关联的超级对等体的。在很多情况下，客户-超级对等体的关系是固定的：一个对等体只要加入到网络中，它就只归依于某一个超级对等体，并一直保持不变，直至它离开该网络。这无疑要求超级对等体应是生存期较长的进程，且具有较高的可用性。为弥补超级对等体的不稳定性，可以部署备用方案，如把每个超级对等体与另一个配对，并要求客户与这两个超级对等体同时连接。同时，在某些场景下与超级对等体有着固定的关联并不总是最好的解决方法。<br />
+但是，也应当注意超级网络引入了一个新问题，即如何选择合适结点成为超级对等体。该问题与领导者选举问题有着密切的关系，请参考后续文章。</p>
+<h2 id="混合体系结构">混合体系结构</h2>
+<p>下面将介绍一些特殊的分布式系统，其将客户-服务器体系结构和非集中式体系结构结合在一起了。</p>
+<h3 id="边界服务器系统">边界服务器系统</h3>
+<p><strong>边界服务器系统</strong>是混合体系结构中一种重要的分布式系统。这种系统部署在因特网上，其中服务器被放置在网络的“边界”上。这种边界是由企业网络和实际因特网之间的分界线形成的，如对于因特网服务提供商而言，家庭终端用户通过ISP连接到因特网，则该ISP就可以被认为是因特网的边界了。边界服务器的主要目的是在进行过滤和编码转换后提供内容服务；同时，边界服务器也可以用于优化内容和应用程序的分布性。</p>
+<h3 id="协作分布式系统">协作分布式系统</h3>
+<p>混合结构也体现在<strong>协作分布式系统</strong>中。在<strong>协作分布式系统</strong>中,会先启动一个一个传统的客户-服务器结构,一旦某个结点要加入系统,就可以使用完全非集中式的组织结构以用于协作了.<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/design%20of%20BitTorrent.PNG"
+alt="BitTorrent的工作原理" /><br />
+BitTorrent是一种点对点的文件下载系统，其基本思想就是：当一个终端用户要查找某个文件时，他可以从其他用户那儿下载文件块，直到所下载的文件块能够组装成完整的文件为止。要下载一个文件时，用户需要访问一个全局目录，它只是一些知名Web站点中的一个。这些目录含有指向名为<code>.torrent</code>文件的引用，该文件含有要下载特定文件的信息。其中特别的是，它会指向一个<strong>跟踪器（tracker）</strong>。跟踪器实质上是一个服务器，它保持有活动结点的精确记录，而这些结点具有所请求的文件块。一个活动结点就是当前正在下载另一个文件的结点。显然，这意味着会有很多跟踪器，但通常每个文件（或文件集）只有一个跟踪器。一旦结点确定了从哪里可以下载文件块，下载结点就变成活动的。此时，他就被强制为其他结点提供帮助，如提供他正在下载但其他结点还没有的文件块。</p>
+<h1 id="体系结构与中间件">体系结构与中间件</h1>
+<p>中间件在应用程序和分布式平台之间形成一个层。如此设计的一个重要目的就是提供一定程度的透明性，即一定程度上向应用程序隐藏数据处理和控制的分布性。使中间件按照特定的体系结构融合到系统中，有利于使应用程序的设计变得更简单；但一个明显的缺陷是中间件可能不是应用程序开发人员脑海中的最佳选择。另外，尽管中间件意味着能提供分布式透明性，人们也多认为：特定的解决方法应该能适应应用程序的需求。这个问题的一个解决方案是：实现中间件的多个版本，每个版本按照特定类型的应用程序进行裁剪。通常认为一种更好的解决方案是：使中间件系统按照应用程序的需要能很容易配置、适应和定制；因此现在系统的开发在策略与机制之间有更严格的分离。</p>
+<h2 id="中断器">中断器</h2>
+<p>从概念上来说，中断器只不过是一种软件结构，它能中断正常的控制流，从而允许其他（应用程序特定的）代码运行。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/interrupter%20for%20rpc.PNG"
+alt="使用中断器来处理远程对象激活" /><br />
+为理解该机制，我们具体讨论如上图所示的情景。上述的远程对象调用是按照如下三步骤进行的：</p>
+<ol type="1">
+<li>对象A提供一个本地接口，该接口与对象B提供的接口完全相同。A只需调用该接口中的一个方法即可。</li>
+<li>A的调用转换为一个通用的对象激活，这可以通过由与A在同一机器的中间件所提供的对象激活接口来完成。</li>
+<li>最后，该通用对象激活转换为一个消息，该消息可以通过由A的本地操作系统所提供的传输层网络接口来发送。</li>
+</ol>
+<p>该过程中就涉及到两个中断器。<strong>请求级中断器（Request-Level
+Interceptor）</strong>在A的调用被转换为通用对象激活后起作用，其要完成的是为每一个副本调用该方法。这种调用方式的美妙之处在于，只需要请求级中断器才需要知道B的副本，而其他部分完全不用知道。最后一步中<strong>消息级中断器（Message-Level
+Interceptor）</strong>可以协助把该激活转移到目标对象，如假想参数是一个十分巨大的数据数组，此时明智的做法就是将该数据数组切分为很多小块，并在目的地进行组装。这种拆分可以提高性能和可靠性。同样，中间件也并不需要知道这种拆分的细节，低层的中断器可以透明地处理与本地操作系统通信的其他工作。</p>
+<h2 id="自适应软件的常见方法">自适应软件的常见方法</h2>
+<p>实际上，中断器所提供的是适应性中间件的一种方法。自适应的需要是源于：分布式应用程序所运行的环境是不断变化的。对这些变化的相应处理不是由应用程序来负责，而是把该工作放到中间件中。<br />
+有学者将实现软件自适应的基本技术分为以下三种：</p>
+<ol type="1">
+<li>要点分离</li>
+<li>计算映像</li>
+<li>基于组件的设计</li>
+</ol>
+<p>要点分离与模块化系统的传统方法有关：把实现功能的部分与负责诸如可靠性、性能、安全等其他事情（称为额外功能）的部分分开。但利用模块化的方法把这些额外功能分开并不容易。近些年来，分离并进而把这些要点编织到分布式系统成为<strong>面向方面软件开发（Aspect-Oriented
+Software Developement）</strong>所要解决的主要题目。<br />
+计算映像指的是程序检查自己，及如有必要调整其行为的能力。这部分功能有的已经被植入到程序设计语言（如Java）中，为运行时调整提供了一个强大的工具。<br />
+基于组件的设计是通过组件的不同组合来支持自适应。系统可以是在设计时静态配置的，或是在运行时动态配置的。后者则要求支持<em>后绑定</em>，即一种已成功应用于程序设计语义环境中的技术。</p>
+<h2 id="讨论">讨论</h2>
+<p>分布式系统的软件体系结构,主要以中间件为基础,是庞大而复杂的。在很大程度上,这种庞大和复杂性是来自于提供分布式透明性的要求的。同时,应用程序具有特定的额外功能要求,这与完全实现透明性是相冲突的。这种通用性和特殊性需求之间的冲突,使得中间件应是高度灵活的.但是,付出的代价是复杂性.</p>
+<p>考虑到现在所有大型软件系统都要求运行在网络环境下,我们可以问问自己,分布式系统的复杂性是否是试图取得分布式透明性固有的特性?当然,诸如开放性之类的问题也同样重要,但对灵活性的需要从未有像中间件那样普遍.<br />
+(Coyle等2003)认为所需的是应更加关注外部简单性,即利用组件构建中间件的更简单方法,以及应用程序的独立性.上面所介绍的技术的解决方案都值得探讨.但另一方面,到目前为止所提出的技术都没有被大范围地采用,它们也没有被成功地应用到大型系统的记录.</p>
+<p>这里的基本假设是,我们所需要的自适应软件是软件应可以随着环境的变化而改变.但是,你应该问问,适应变化环境是否是改变软件的很好理由.硬件故障、安全攻击、能量消耗等看上去都是环境影响因素,都是软件所期望解决的.<br />
+支持自适应软件最有力、当然也是最有效的理由是,很多分布式系统是不能停机的.这个限制要求有替代和提升组件的解决方案,但不清楚上面提出的解决方案是否是处理这种可持续问题的最好办法。<br />
+剩余的问题是分布式系统应能对环境的变化做出反应,例如,通过更换分配资源的策略等.所有能启用自适应的软件组件都应处在合适的位置,包含在这些组件中的算法和行为指令能改变其位置.这里的困难是让这种响应行为在无人干预的情况下发生.</p>
+<h1 id="分布式系统的自我管理">分布式系统的自我管理</h1>
+<p>分布式系统主要与它们相关的中间件需要提供常见的解决方案以屏蔽掉网络所固有的某些“坏”特性，这样它们就可以支持尽可能多的应用程序。另一方面，完全透明性并不是大多数应用程序所真正需要的，它们还需要支持特定应用程序的解决方案。基于上述原因，我们认为，分布式系统是自适应的，但主要是<strong>调整它们的运行行为，而不是软件组件</strong>。<br />
+当需要自适应自动完成时，系统体系结构与软件体系结构之间将会有很强的相互作用。并且，我们需要以某种方式来组织分布式系统的组件，使得其能够实现监视和调整；同时，还需要决定处理自适应的进程在何处运行。<br />
+本节将介绍以高级反馈控制系统的形式来组织分布式系统，它允许自动自适应变化。这种现象被称为<strong>自治计算</strong>或<strong>自主系统</strong>，其蕴含了：自我管理、自我恢复、自我配置、自我优化等。</p>
+<h2 id="反馈控制模型">反馈控制模型</h2>
+<p>对自我管理系统的最常用的观点就是假设自适应是通过一种或多种<strong>反馈控制循环</strong>来实现的。相应地，以这些循环组织的系统称为<strong>反馈控制系统</strong>。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image/review-distributed-system/logistic%20organization%20-%20feedback%20control%20system.PNG"
+alt="反馈控制系统的逻辑组织结构" /><br />
+反馈控制系统的核心由需要管理的组件形成。这些组件能通过可控输入参数驱动，但它们的行为会受到所有不可控输入（也被称为干扰或噪声输入）的影响。<br />
+形成反馈控制循环有三个元素。首先，系统本身需要被监视，这要求对系统的各个方面进行测量。由于实际测量过程中的难度，控制反馈循环中往往包含有一个逻辑<strong>尺度预测组件（metric
+estimation
+component）</strong>。反馈循环控制的另一部分就是分析上述测量值，并把它们与参考值进行比较，即<strong>反馈分析组件</strong>，它是控制循环的核心部分，因为其包含了决定自适应的各种算法。其他的组件组是由不同的机制组成的，这些组件直接影响着系统的行为。如：副本的放置、调度优先权的改变、服务交换、因可用性而移动数据、重定向对不同服务器的请求等。分析组件需要知道这些组件对其系统行为的（预期）影响。显然，要恰当地分析所测量的数据和触发正确的动作，这些都意味着自我管理系统的开发十分困难。<br />
+值得注意的是，上图是自我管理系统的逻辑组织结构，它与我们讨论软件体系结构时所见到的软件逻辑组织结构相对应，而物理组织结构就可能有很大的不同了。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="https://book.douban.com/subject/3108801/">分布式系统的原理与范型</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/17/review/distributed-system/2-architecture/" title="分布式系统 - 体系结构">https://wrran.github.io/blog/2017/12/17/review/distributed-system/2-architecture/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/review/" rel="tag"># review</a>
+              <a href="/tags/distributed-system/" rel="tag"># distributed system</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/16/review/distributed-system/1-introduction/" rel="prev" title="分布式系统 - 概述">
+                  <i class="fa fa-angle-left"></i> 分布式系统 - 概述
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/18/review/distributed-system/3-processes/" rel="next" title="分布式系统 - 进程">
+                  分布式系统 - 进程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

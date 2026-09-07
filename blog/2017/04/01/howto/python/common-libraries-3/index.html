@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="What can I do for ya?  Toolz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python常用工具库 （三）">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/04/01/howto/python/common-libraries-3/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="What can I do for ya?  Toolz">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-31T19:05:03.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.675Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/04/01/howto/python/common-libraries-3/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/04/01/howto/python/common-libraries-3/","path":"blog/2017/04/01/howto/python/common-libraries-3/","title":"Python常用工具库 （三）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python常用工具库 （三） | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#api"><span class="nav-text">API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#itertoolz"><span class="nav-text">Itertoolz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#functoolz"><span class="nav-text">Functoolz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dicttoolz"><span class="nav-text">Dicttoolz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sandbox"><span class="nav-text">Sandbox</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/04/01/howto/python/common-libraries-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Python常用工具库 （三） | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python常用工具库 （三）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-04-01 03:05:03" itemprop="dateCreated datePublished" datetime="2017-04-01T03:05:03+08:00">2017-04-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/" itemprop="url" rel="index"><span itemprop="name">howto</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/howto/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>What can I do for ya?</p>
+<ul>
+<li>Toolz</li>
+</ul>
+</blockquote>
+<span id="more"></span>
+<h1 id="api">API</h1>
+<p>This page contains a comprehensive list of all functions within
+<em>toolz</em>. Docstrings should provide sufficient understanding for
+any individual function.</p>
+<h2 id="itertoolz">Itertoolz</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Function</th>
+<th>Results</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accumulate(binop, seq[, initial])</td>
+<td>Repeatedly apply binary function to a sequence, accumulating
+results</td>
+</tr>
+<tr>
+<td>concat(seqs)</td>
+<td>Concatenate zero or more iterables, any of which may be
+infinite.</td>
+</tr>
+<tr>
+<td>concatv(*seqs)</td>
+<td>Variadic version of concat</td>
+</tr>
+<tr>
+<td>cons(el, seq)</td>
+<td>Add el to beginning of (possibly infinite) sequence seq.</td>
+</tr>
+<tr>
+<td>count(seq)</td>
+<td>Count the number of items in seq</td>
+</tr>
+<tr>
+<td>diff(*seqs, **kwargs)</td>
+<td>Return those items that differ between sequences</td>
+</tr>
+<tr>
+<td>drop(n, seq)</td>
+<td>The sequence following the first n elements</td>
+</tr>
+<tr>
+<td>first(seq)</td>
+<td>The first element in a sequence</td>
+</tr>
+<tr>
+<td>frequencies(seq)</td>
+<td>Find number of occurrences of each value in seq</td>
+</tr>
+<tr>
+<td>get(ind, seq[, default])</td>
+<td>Get element in a sequence or dict</td>
+</tr>
+<tr>
+<td>groupby(key, seq)</td>
+<td>Group a collection by a key function</td>
+</tr>
+<tr>
+<td>interleave(seqs)</td>
+<td>Interleave a sequence of sequences</td>
+</tr>
+<tr>
+<td>interpose(el, seq)</td>
+<td>Introduce element between each pair of elements in seq</td>
+</tr>
+<tr>
+<td>isdistinct(seq)</td>
+<td>All values in sequence are distinct</td>
+</tr>
+<tr>
+<td>isiterable(x)</td>
+<td>Is x iterable?</td>
+</tr>
+<tr>
+<td>iterate(func, x)</td>
+<td>Repeatedly apply a function func onto an original input</td>
+</tr>
+<tr>
+<td>join(leftkey, leftseq, rightkey, rightseq[, …])</td>
+<td>Join two sequences on common attributes</td>
+</tr>
+<tr>
+<td>last(seq)</td>
+<td>The last element in a sequence</td>
+</tr>
+<tr>
+<td>mapcat(func, seqs)</td>
+<td>Apply func to each sequence in seqs, concatenating results.</td>
+</tr>
+<tr>
+<td>merge_sorted(*seqs, **kwargs)</td>
+<td>Merge and sort a collection of sorted collections</td>
+</tr>
+<tr>
+<td>nth(n, seq)</td>
+<td>The nth element in a sequence</td>
+</tr>
+<tr>
+<td>partition(n, seq[, pad])</td>
+<td>Partition sequence into tuples of length n</td>
+</tr>
+<tr>
+<td>partition_all(n, seq)</td>
+<td>Partition all elements of sequence into tuples of length at most
+n</td>
+</tr>
+<tr>
+<td>peek(seq)</td>
+<td>Retrieve the next element of a sequence</td>
+</tr>
+<tr>
+<td>pluck(ind, seqs[, default])</td>
+<td>plucks an element or several elements from each item in a
+sequence.</td>
+</tr>
+<tr>
+<td>random_sample(prob, seq[, random_state])</td>
+<td>Return elements from a sequence with probability of prob</td>
+</tr>
+<tr>
+<td>reduceby(key, binop, seq[, init])</td>
+<td>Perform a simultaneous groupby and reduction</td>
+</tr>
+<tr>
+<td>remove(predicate, seq)</td>
+<td>Return those items of sequence for which predicate(item) is
+False</td>
+</tr>
+<tr>
+<td>second(seq)</td>
+<td>The second element in a sequence</td>
+</tr>
+<tr>
+<td>sliding_window(n, seq)</td>
+<td>A sequence of overlapping subsequences</td>
+</tr>
+<tr>
+<td>tail(n, seq)</td>
+<td>The last n elements of a sequence</td>
+</tr>
+<tr>
+<td>take(n, seq)</td>
+<td>The first n elements of a sequence</td>
+</tr>
+<tr>
+<td>take_nth(n, seq)</td>
+<td>Every nth item in seq</td>
+</tr>
+<tr>
+<td>topk(k, seq[, key])</td>
+<td>Find the k largest elements of a sequence</td>
+</tr>
+<tr>
+<td>unique(seq[, key])</td>
+<td>Return only unique elements of a sequence</td>
+</tr>
+<tr>
+<td>countby(key, seq)</td>
+<td>Count elements of a collection by a key function</td>
+</tr>
+<tr>
+<td>partitionby(func, seq)</td>
+<td>Partition a sequence according to a function</td>
+</tr>
+</tbody>
+</table>
+<h2 id="functoolz">Functoolz</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Function</th>
+<th>Results</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>complement(func)</td>
+<td>Convert a predicate function to its logical complement.</td>
+</tr>
+<tr>
+<td>compose(*funcs)</td>
+<td>Compose functions to operate in series.</td>
+</tr>
+<tr>
+<td>curry(*args, **kwargs)</td>
+<td>Curry a callable function</td>
+</tr>
+<tr>
+<td>do(func, x)</td>
+<td>Runs func on x, returns x</td>
+</tr>
+<tr>
+<td>excepts(exc, func[, handler])</td>
+<td>A wrapper around a function to catch exceptions and dispatch to a
+handler.</td>
+</tr>
+<tr>
+<td>flip</td>
+<td>Call the function call with the arguments flipped</td>
+</tr>
+<tr>
+<td>identity(x)</td>
+<td>Identity function.</td>
+</tr>
+<tr>
+<td>juxt(*funcs)</td>
+<td>Creates a function that calls several functions with the same
+arguments</td>
+</tr>
+<tr>
+<td>memoize</td>
+<td>Cache a function’s result for speedy future evaluation</td>
+</tr>
+<tr>
+<td>pipe(data, *funcs)</td>
+<td>Pipe a value through a sequence of functions</td>
+</tr>
+<tr>
+<td>thread_first(val, *forms)</td>
+<td>Thread value through a sequence of functions/forms</td>
+</tr>
+<tr>
+<td>thread_last(val, *forms)</td>
+<td>Thread value through a sequence of functions/forms</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dicttoolz">Dicttoolz</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Function</th>
+<th>Results</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>assoc(d, key, value[, factory])</td>
+<td>Return a new dict with new key value pair</td>
+</tr>
+<tr>
+<td>dissoc(d, *keys)</td>
+<td>Return a new dict with the given key(s) removed.</td>
+</tr>
+<tr>
+<td>assoc_in(d, keys, value[, factory])</td>
+<td>Return a new dict with new, potentially nested, key value pair</td>
+</tr>
+<tr>
+<td>get_in(keys, coll[, default, no_default])</td>
+<td>Returns coll[i0][i1]…[iX] where [i0, i1, …, iX]==keys.</td>
+</tr>
+<tr>
+<td>keyfilter(predicate, d[, factory])</td>
+<td>Filter items in dictionary by key</td>
+</tr>
+<tr>
+<td>keymap(func, d[, factory])</td>
+<td>Apply function to keys of dictionary</td>
+</tr>
+<tr>
+<td>itemfilter(predicate, d[, factory])</td>
+<td>Filter items in dictionary by item</td>
+</tr>
+<tr>
+<td>itemmap(func, d[, factory])</td>
+<td>Apply function to items of dictionary</td>
+</tr>
+<tr>
+<td>merge(*dicts, **kwargs)</td>
+<td>Merge a collection of dictionaries</td>
+</tr>
+<tr>
+<td>merge_with(func, *dicts, **kwargs)</td>
+<td>Merge dictionaries and apply function to combined values</td>
+</tr>
+<tr>
+<td>update_in(d, keys, func[, default, factory])</td>
+<td>Update value in a (potentially) nested dictionary</td>
+</tr>
+<tr>
+<td>valfilter(predicate, d[, factory])</td>
+<td>Filter items in dictionary by value</td>
+</tr>
+<tr>
+<td>valmap(func, d[, factory])</td>
+<td>Apply function to values of dictionary</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sandbox">Sandbox</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Function</th>
+<th>Results</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>parallel.fold(binop, seq [,default, map, …])</td>
+<td>Reduce without guarantee of ordered reduction.</td>
+</tr>
+<tr>
+<td>core.EqualityHashKey(key, item)</td>
+<td>Create a hash key that uses equality comparisons between items.</td>
+</tr>
+<tr>
+<td>core.zip(seq)</td>
+<td>Inverse of <code>zip</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="http://toolz.readthedocs.io/en/latest/index.html">PyToolz
+API Documentation</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/04/01/howto/python/common-libraries-3/" title="Python常用工具库 （三）">https://wrran.github.io/blog/2017/04/01/howto/python/common-libraries-3/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/04/01/howto/python/common-libraries-2/" rel="prev" title="Python常用工具库 （二）">
+                  <i class="fa fa-angle-left"></i> Python常用工具库 （二）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/04/01/learn/python/iterators_iterable/" rel="next" title="Python中的Iterator与Iterable">
+                  Python中的Iterator与Iterable <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

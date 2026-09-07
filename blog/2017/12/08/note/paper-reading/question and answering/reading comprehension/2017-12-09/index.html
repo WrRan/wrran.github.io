@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="读书百遍，其义自见">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reinforced mnemonic reader for machine comprehension">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/12/08/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-12-09/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="读书百遍，其义自见">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-08T12:24:52.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.729Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="question and answering">
+<meta property="article:tag" content="reading comprehension">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/12/08/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-12-09/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/12/08/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-12-09/","path":"blog/2017/12/08/note/paper-reading/question and answering/reading comprehension/2017-12-09/","title":"Reinforced mnemonic reader for machine comprehension"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Reinforced mnemonic reader for machine comprehension | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#feature-rich-encoder"><span class="nav-text">Feature-rich Encoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterative-aligner"><span class="nav-text">Iterative Aligner</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#interactive-aligning"><span class="nav-text">Interactive Aligning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#semantic-fusion-unit"><span class="nav-text">Semantic Fusion Unit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#self-aligning"><span class="nav-text">Self Aligning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aggregating"><span class="nav-text">Aggregating</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#memory-based-answer-pointer"><span class="nav-text">Memory-based Answer Pointer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#training-procedure"><span class="nav-text">Training Procedure</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/12/08/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-12-09/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Reinforced mnemonic reader for machine comprehension | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Reinforced mnemonic reader for machine comprehension
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-08 20:24:52" itemprop="dateCreated datePublished" datetime="2017-12-08T20:24:52+08:00">2017-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/" itemprop="url" rel="index"><span itemprop="name">question and answering</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/question-and-answering/reading-comprehension/" itemprop="url" rel="index"><span itemprop="name">reading comprehension</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>读书百遍，其义自见</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>本文是我认为处理机器阅读理解问题的又一代表性框架。机器阅读理解问题如若比作人类的阅读活动，则可以分解为三步：理解、推理和回答。对应到机器阅读理解问题上，就是：表示、推理和回答。<br />
+作者提出了<code>Reinforced Memonic Reader</code>将MemNN与Attention
+Mechanism结合起来。在“表示”层面，融入更多的句法、语言学等的特征；在“推理”上，不仅使用”Attention
+Mechanism”还借助”MemNN”来表示与推理；在“回答”上，较为创新的地方在于运用增强学习的思路，将SQuAD问题中<code>F1-score</code>作为奖赏来优化模型，并且还在多次“hop”中输出答案的起止位置以精修答案。</p>
+<h1 id="模型">模型</h1>
+<p>对于机器阅读理解问题而言，就是在阅读了上下文<span
+class="math display"><em>C</em></span>和问题<span
+class="math display"><em>Q</em></span>之后，预测出答案<span
+class="math display"><em>A</em></span>（在SQuAD问题中，<span
+class="math display"><em>A</em></span>一定是<span
+class="math display"><em>C</em></span>的某个片段）。形式化描述，就是求解问题<span
+class="math display"><em>p</em><sub><em>θ</em></sub>(<em>A</em>|<em>C</em>, <em>Q</em>)</span>，其中<span
+class="math display"><em>θ</em></span>为模型参数。下图就是该模型的概览图，涉及到三个组件：“Feature-rich
+Encoder”、“Iterative Aligner”和“Memory-based Answer
+Pointer”。其实，也分别对应：表示、推理和回答三个步骤。<br />
+<img
+src="http://ow3xn0dt6.bkt.clouddn.com//image/171210/high-level%20overview%20of%20Reinforced%20Mnemonic%20Reader.PNG"
+title="The high-level overview of Reinforced Mnemonic Reader, from [1]."
+alt="The high-level overview of Reinforced Mnemonic Reader, from [1]." /></p>
+<h2 id="feature-rich-encoder">Feature-rich Encoder</h2>
+<p>这层负责将上下文<span
+class="math display"><em>C</em></span>与问题<span
+class="math display"><em>Q</em></span>中的文字表示成稠密的低维表示后，交给后续网络进行处理。与之前做法相似，都使用了”word-level
+embedding”，也使用了通过biLSTM编码后的”char-level
+embedding”（只取最后一个隐状态表示）拼接后作为该词语的“word-embedding”。<br />
+除此之外，作者还涉及了如下几种特征来增强低维稠密表示的信息：</p>
+<ol type="1">
+<li>“Exact Matching”:
+上下文中的词是否在问题中出现过或问题中的词是否在上下文中出现过，为一个0-1的布尔量</li>
+<li>“Part-of-Speech”:
+对上下文与问题中的每个词语都打上POS标签，之后转换为稠密向量与”word-embedding”拼接起来。</li>
+<li>“Named-Entitiy”: 与2类似，不过打上的是命名实体标签。</li>
+<li>“Query-Category”:
+问题询问的类别往往决定了推理过程中关注信息的重点，如问“when”时更多关注时间实体，问“where”时更多关注地点等。为此作者还抽取出数量最多的几个类别，并将该问题类别的表示添加到问题表示序列中去。</li>
+</ol>
+<p>获取了上述字词层面的表示之后，作者再使用biLSTM获得上下文和问题的中间表示：<br />
+<span
+class="math display"><em>q</em><sub><em>i</em></sub> = biLSTM(<em>q</em><sub><em>i</em> − 1</sub>, <em>x̃</em><sub><em>i</em></sub><sup><em>q</em></sup>), ∀<em>i</em> ∈ [1, …, <em>n</em>]</span><br />
+<span
+class="math display"><em>c</em><sub><em>j</em></sub> = biLSTM(<em>c</em><sub><em>j</em> − 1</sub>, <em>x̃</em><sub><em>j</em></sub><sup><em>c</em></sup>), ∀<em>j</em> ∈ [1, …, <em>m</em>]</span><br />
+其中，<span
+class="math display"><em>q</em><sub><em>i</em></sub> ∈ ℝ<sup>2<em>h</em></sup></span>和<span
+class="math display"><em>c</em><sub><em>j</em></sub> ∈ ℝ<sup>2<em>h</em></sup></span>，<span
+class="math display"><em>h</em></span>为隐层状态的维度大小；<span
+class="math display"><em>Q</em>’ = <em>q</em><sub><em>i</em></sub><sub><em>i</em> = 1</sub><sup><em>n</em></sup> ∈ ℝ<sup>2<em>h</em> × <em>n</em></sup></span>为问题的最终表示，<span
+class="math display"><em>C</em>’ = <em>c</em><sub><em>j</em></sub><sub><em>j</em> = 1</sub><sup><em>m</em></sup> ∈ ℝ<sup>2<em>h</em> × <em>m</em></sup></span>为上下文的最终表示。</p>
+<h2 id="iterative-aligner">Iterative Aligner</h2>
+<p>该部分的构架就借鉴了MemNN的做法，通过了多个”hop”。并在每一个”hop”中，根据与问题表示的交互（”co-attention”）和与自己的交互（”self-attention”）更新表示。</p>
+<h3 id="interactive-aligning">Interactive Aligning</h3>
+<p>迭代对齐操作会在共<span
+class="math display"><em>T</em></span>次”hops”中都执行。以第<span
+class="math display"><em>t</em></span>次”hop”而言，我们首先会计算出”coattention
+matrix”:<span
+class="math display"><em>B</em><sup><em>t</em></sup> ∈ ℝ<sup><em>n</em> × <em>m</em></sup></span>，其中<span
+class="math display"><em>B</em><sub><em>i</em><em>j</em></sub><sup><em>t</em></sup> = <em>q</em><sub><em>i</em></sub><sup><em>T</em></sup> ⋅ <em>c̆</em><sub><em>j</em></sub><sup><em>t</em> − 1</sup></span>（注意，<span
+class="math display"><em>c̆</em><sub><em>j</em></sub><sup><em>t</em> − 1</sup></span>是指上一次”hop”过程中上下文第<span
+class="math display"><em>j</em></span>个词语的表示，且<span
+class="math display"><em>c̆</em><sub><em>j</em></sub><sup>0</sup> = <em>c</em><sub><em>j</em></sub></span>。可以将<span
+class="math display"><em>B</em><sub><em>i</em><em>j</em></sub><sup><em>t</em></sup></span>理解为问题中第<span
+class="math display"><em>i</em></span>个词语和上下文第<span
+class="math display"><em>j</em></span>个词语的相似度。<br />
+对于问题部分，如下操作：<br />
+<span
+class="math display"><em>b</em><sub><em>j</em></sub><sup><em>t</em></sup> = softmax(<em>B</em><sub> : <em>j</em></sub><sup><em>t</em></sup>)</span><br />
+<span
+class="math display"><em>q̃</em><sub><em>j</em></sub><sup><em>t</em></sup> = <em>Q</em>’ ⋅ <em>b</em><sub><em>j</em></sub><sup><em>t</em></sup>, ∀<em>j</em> ∈ [1, ⋯, <em>m</em>]</span><br />
+此处的<span
+class="math display"><em>q̃</em><sub><em>j</em></sub><sup><em>t</em></sup></span>可以理解为阅读到第<span
+class="math display"><em>j</em></span>个词语后该如何理解问题（个人理解，我将之称为”context-awared
+query”）。<br />
+为了计算”query-awared
+context”，作者使用下文将介绍的<code>SFU</code>进行计算：<br />
+<span
+class="math display"><em>c̄</em><sub><em>j</em></sub><sup><em>t</em></sup> = SFU(<em>c̆</em><sub><em>j</em></sub><sup><em>t</em> − 1</sup>, <em>q̃</em><sub><em>j</em></sub><sup><em>t</em></sup>, <em>c̆</em><sub><em>j</em></sub><sup><em>t</em> − 1</sup> ∘ <em>q̃</em><sub><em>j</em></sub><sup><em>t</em></sup>, <em>c̆</em><sub><em>j</em></sub><sup><em>t</em> − 1</sup> − <em>q̃</em><sub><em>j</em></sub><sup><em>t</em></sup>)</span><br />
+其中，<span
+class="math display"><em>Ĉ</em><sup><em>t</em></sup> = <em>ĉ</em><sub><em>j</em></sub><sup><em>t</em></sup><sub><em>j</em> = 1</sub><sup><em>m</em></sup></span>表示的即为第<span
+class="math display"><em>t</em></span>次”hop”时的”query-aware
+context”的表示。<span class="math display">∘</span>表示”element-wise
+multiplication”，<span class="math display">−</span>表示”element-wise
+subtraction”。</p>
+<h3 id="semantic-fusion-unit">Semantic Fusion Unit</h3>
+<p><code>SFU</code>表示的是一个语义融合计算单元，”Semantic Fusion
+Unit”。其输入为一个向量<span
+class="math display"><em>r</em></span>及一系列融合向量<span
+class="math display"><em>f</em><sub><em>i</em></sub><sub><em>i</em> = 1</sub><sup><em>k</em></sup></span>；其输出为向量<span
+class="math display"><em>o</em></span>。注意，<span
+class="math display"><em>r</em></span>、<span
+class="math display"><em>f</em><sub><em>i</em></sub><sub><em>i</em> = 1</sub><sup><em>k</em></sup></span>及<span
+class="math display"><em>o</em></span>的维度都是相同的。设计该计算单元目的不仅在于揭示融合向量的相关内容，还可以保存输入的一些内容不变。其计算公式如下：<br />
+<span
+class="math display"><em>r̃</em> = tanh(<em>W</em><sub><em>r</em></sub>([<em>r</em>; <em>f</em><sub>1</sub>; ⋯; <em>f</em><sub><em>k</em></sub>]) + <em>b</em><sub><em>r</em></sub>)</span><br />
+<span
+class="math display"><em>g</em> = <em>σ</em>(<em>W</em><sub><em>g</em></sub>[<em>r</em>; <em>f</em><sub>1</sub>; ⋯; <em>f</em><sub><em>k</em></sub>] + <em>b</em><sub><em>g</em></sub>)</span><br />
+<span
+class="math display"><em>o</em> = <em>g</em> ∘ <em>r̃</em> + (1 − <em>g</em>) ∘ <em>r</em></span><br />
+其中，<span
+class="math display"><em>W</em><sub><em>r</em></sub></span>、<span
+class="math display"><em>W</em><sub><em>g</em></sub></span>、<span
+class="math display"><em>b</em><sub><em>r</em></sub></span>和<span
+class="math display"><em>b</em><sub><em>g</em></sub></span>是需要学习的参数，<span
+class="math display"><em>σ</em></span>表示Sigmoid激活函数。</p>
+<h3 id="self-aligning">Self Aligning</h3>
+<p>在通过上面计算之后，我们可以获取到”query-aware
+context”表示；但是这种表示也许只局限于局部信息，而没有太多获取全局信息的能力。为此，作者又设计了”self
+attention”机制。同样，先计算相似度矩阵<span
+class="math display"><em>B̃</em><sup><em>t</em></sup> ∈ ℝ<sup><em>m</em> × <em>m</em></sup></span>：<br />
+<span
+class="math display"><em>B̃</em><sub><em>i</em><em>j</em></sub><sup><em>t</em></sup> = 𝟙(<em>i</em> ≠ <em>j</em>)<em>ĉ</em><sub><em>i</em></sub><sup><em>t</em></sup><sup><em>T</em></sup> ⋅ <em>ĉ</em><sub><em>j</em></sub><sup><em>t</em></sup></span><br />
+其中，<span
+class="math display"><em>B</em><sub><em>i</em><em>j</em></sub><sup><em>t</em></sup></span>即表示第<span
+class="math display"><em>i</em></span>个词语与第<span
+class="math display"><em>j</em></span>个词语的相似度，同时对角线上的元素被置为<span
+class="math display">0</span>。<br />
+后面的处理过程与上述的”Iteractive Aligner”类似，通过<span
+class="math display">softmax</span>和<span
+class="math display">SFU</span>之后将得到矩阵<span
+class="math display"><em>Ĉ</em><sup><em>t</em></sup> = <em>ĉ</em><sub><em>j</em></sub><sup><em>t</em></sup><sub><em>j</em> = 1</sub><sup><em>m</em></sup></span>。</p>
+<h3 id="aggregating">Aggregating</h3>
+<p>最后，再使用一个biLSTM对<span
+class="math display"><em>ĉ</em><sub><em>j</em></sub><sup><em>t</em></sup></span>的表示序列进行编码，并将自己的隐层状态序列<span
+class="math display"><em>Č</em><sup><em>t</em></sup> = <em>č</em><sub><em>j</em></sub><sup><em>t</em></sup><sub><em>j</em> = 1</sub><sup><em>m</em></sup></span>输入到下一次”hop”或作为答案预测模块的输入。</p>
+<h2 id="memory-based-answer-pointer">Memory-based Answer Pointer</h2>
+<p>总的来说，在SQuAD问题上答案一定是上下文的某个片段；因此答案预测可以简化为答案开始与结束位置的预测。与之前的做法不同，作者将该过程建模为:<br />
+<span
+class="math display"><em>p</em><sub><em>θ</em></sub>(<em>A</em>|<em>C</em>, <em>Q</em>) = <em>p</em><sub><em>s</em></sub>(<em>i</em>|<em>C</em>, <em>Q</em>) ⋅ <em>p</em><sub><em>e</em></sub>(<em>j</em>|<em>i</em>, <em>C</em>, <em>Q</em>)</span><br />
+而非独立预测开始与结束位置，更加贴近实际问题。下文用<span
+class="math display"><em>p</em><sub><em>s</em></sub>(<em>i</em>)</span>表示<span
+class="math display"><em>p</em><sub><em>s</em></sub>(<em>i</em>|<em>C</em>, <em>Q</em>)</span>，用<span
+class="math display"><em>p</em><sub><em>e</em></sub>(<em>j</em>)</span>表示<span
+class="math display"><em>p</em><sub><em>e</em></sub>(<em>j</em>|<em>i</em>, <em>C</em>, <em>Q</em>)</span>。<br />
+在此处作者也沿用了MemNN的思想，用一个向量来表示之前的预测答案或者相关信息。该记忆向量<span
+class="math display"><em>z</em><sub><em>s</em></sub><sup><em>l</em></sup></span>使用问题的总体表示<span
+class="math display"><em>q⃗</em> ∈ ℝ<sup>2<em>h</em></sup></span>来初始化，后期不断迭代优化。<br />
+每一次的”hop”都会进行答案的预测。以第<span
+class="math display"><em>l</em></span>次hop为例，预测<em>答案开始边界</em>时如下：<br />
+<span
+class="math display"><em>s</em><sub><em>i</em></sub><sup><em>l</em></sup> = FN(<em>č</em><sub><em>i</em></sub><sup><em>T</em></sup>, <em>z</em><sub><em>s</em></sub><sup><em>l</em></sup>, <em>č</em><sub><em>i</em></sub><sup><em>T</em></sup> ∘ <em>z</em><sub><em>s</em></sub><sup><em>l</em></sup>)</span><br />
+<span
+class="math display"><em>p</em><sub><em>s</em></sub><sup><em>l</em></sup>(<em>i</em>) = softmax(<em>w</em><sub><em>s</em></sub><sup><em>l</em></sup><em>s</em><sub><em>i</em></sub><sup><em>l</em></sup>)</span><br />
+其中，<span
+class="math display">FN</span>表示一个前馈神经网络。经过上述操作之后，我们也可以得到一个”attention-pooling
+context”向量<span
+class="math display"><em>u</em><sub><em>s</em></sub><sup><em>l</em></sup> ∈ ℝ<sup>2<em>h</em></sup></span>：<span
+class="math display"><em>u</em><sub><em>s</em></sub><sup><em>l</em></sup> = <em>Č</em><sup><em>T</em></sup> ⋅ <em>p</em><sub><em>s</em></sub><sup><em>l</em></sup></span>；而预测<em>答案结束边界</em>的记忆向量则据此进行更新<span
+class="math display"><em>z</em><sub><em>e</em></sub><sup><em>l</em></sup> = SFU(<em>z</em><sub><em>s</em></sub><sup><em>l</em></sup>, <em>u</em><sub><em>s</em></sub><sup><em>l</em></sup>)</span>。与上述操作类似，我们通过下述计算过程得出其在上下文各处的概率分布：<br />
+<span
+class="math display"><em>e</em><sub><em>j</em></sub><sup><em>l</em></sup> = FN(<em>č</em><sub><em>j</em></sub><sup><em>T</em></sup>, <em>z</em><sub><em>e</em></sub><sup><em>l</em></sup>, <em>č</em><sub><em>j</em></sub><sup><em>T</em></sup> ∘ <em>z</em><sub><em>e</em></sub><sup><em>l</em></sup>)</span><br />
+<span
+class="math display"><em>p</em><sub><em>e</em></sub><sup><em>l</em></sup>(<em>j</em>) = softmax(<em>w</em><sub><em>e</em></sub><sup><em>l</em></sup><em>e</em><sub><em>j</em></sub><sup><em>l</em></sup>)</span><br />
+如果当前的”hop”不是最后一次，则再计算”attention-pooling
+context”表示并通过<span
+class="math display">SFU</span>计算后更新下一次”hop”计算的记忆向量。</p>
+<h2 id="training-procedure">Training Procedure</h2>
+<p>作者除了采用常规的做法，即将答案开始位置与答案结束位置的负对数似然作为目标函数外：<br />
+<span class="math display">$$J_{MLE}(\theta)=-\sum_{i=1}^N\mathrm{log}\
+p_s^L(y_i^s)+\mathrm{log}\ p_e^L(y_i^e)$$</span><br />
+还认为上述目标仅仅优化了SQuAD中的“Exact Matching”评估指标，而忽略了“F1
+score”。故此，添加如下目标函数：<br />
+<span
+class="math display"><em>J</em><sub><em>R</em><em>L</em></sub>(<em>θ</em>) = −𝔼<sub><em>Â</em> ∼ <em>p</em><sub><em>θ</em></sub>(<em>A</em>|<em>C</em>, <em>Q</em>)</sub>[R(<em>Â</em>, <em>A</em><sup>*</sup>)]</span><br />
+其中的<span
+class="math display"><em>p</em><sub><em>θ</em></sub>(⋅)</span>即为要学习的策略，<span
+class="math display">R</span>则为根据”F1 score”评判给出的得分。<br />
+综上，最后的训练目标为<span
+class="math display"><em>J</em>(<em>θ</em>) = <em>λ</em><em>J</em><sub><em>M</em><em>L</em><em>E</em></sub>(<em>θ</em>) + (1 − <em>λ</em>)<em>J</em><sub><em>R</em><em>L</em></sub>(<em>θ</em>)</span></p>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1705.02798">[1] Minghao Hu, Yuxing
+Peng, &amp; Xipeng Qiu. (2017). Reinforced mnemonic reader for machine
+comprehension.</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/12/08/note/paper-reading/question%20and%20answering/reading%20comprehension/2017-12-09/" title="Reinforced mnemonic reader for machine comprehension">https://wrran.github.io/blog/2017/12/08/note/paper-reading/question and answering/reading comprehension/2017-12-09/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/question-and-answering/" rel="tag"># question and answering</a>
+              <a href="/tags/reading-comprehension/" rel="tag"># reading comprehension</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/01/note/miscellaneous/2017-12-01/" rel="prev" title="团队建设建议">
+                  <i class="fa fa-angle-left"></i> 团队建设建议
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/12/08/review/reinforcement-learning/" rel="next" title="强化学习复习">
+                  强化学习复习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

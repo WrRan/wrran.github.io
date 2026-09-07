@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Show you how to run deep learning algorithms using Theano.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="theano实战 - Getting Started">
+<meta property="og:url" content="https://wrran.github.io/blog/2017/03/08/howto/theano/1-getting-started/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="Show you how to run deep learning algorithms using Theano.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-08T14:50:34.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.680Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="theano">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2017/03/08/howto/theano/1-getting-started/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2017/03/08/howto/theano/1-getting-started/","path":"blog/2017/03/08/howto/theano/1-getting-started/","title":"theano实战 - Getting Started"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>theano实战 - Getting Started | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-text">概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-text">下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-text">数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mnist-dataset"><span class="nav-text">MNIST Dataset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%B0%E5%8F%B7"><span class="nav-text">记号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86-1"><span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7"><span class="nav-text">数学符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-text">Python命名空间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9B%91%E7%9D%A3%E4%BC%98%E5%8C%96%E7%9A%84%E7%AE%80%E4%BB%8B"><span class="nav-text">深度学习中监督优化的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E4%B8%80%E4%B8%AA%E5%88%86%E7%B1%BB%E5%99%A8"><span class="nav-text">学习一个分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sgd"><span class="nav-text">SGD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96%E9%A1%B9"><span class="nav-text">正则化项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#theanopython%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-text">Theano&#x2F;Python常用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-text">加载&#x2F;保存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E4%B8%AD%E9%97%B4%E7%BB%93%E6%9E%9C"><span class="nav-text">绘制中间结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2017/03/08/howto/theano/1-getting-started/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="theano实战 - Getting Started | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          theano实战 - Getting Started
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-03-08 22:50:34" itemprop="dateCreated datePublished" datetime="2017-03-08T22:50:34+08:00">2017-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/" itemprop="url" rel="index"><span itemprop="name">learn</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/learn/theano/" itemprop="url" rel="index"><span itemprop="name">theano</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>Show you how to run deep learning algorithms using <a
+target="_blank" rel="noopener" href="http://deeplearning.net/software/theano">Theano</a>.</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概要">概要</h1>
+<p>建议读者直接阅读参考资料中的原文，该博文只是我杂乱的笔记。</p>
+<h1 id="下载">下载</h1>
+<p>每个学习算法的页面，你都可以单独下载对应的文件。如果你想一次性下载所有文件，可以尝试执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/lisa-lab/DeepLearningTutorials.git</span><br></pre></td></tr></table></figure>
+<h1 id="数据集">数据集</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cPickle, gzip, numpy</span><br><span class="line"></span><br><span class="line"><span class="comment"># load the dataset</span></span><br><span class="line">f = gzip.<span class="built_in">open</span>(<span class="string">&#x27;mnist.pkl.gz&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">train_set, valid_set, test_set = cPickle.load(f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">shared_dataset</span>(<span class="params">data_y</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot; Function that loads the dataset into shared variables</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    The reason we store our dataset in shared variables is to allow</span></span><br><span class="line"><span class="string">    Theano to copy it into the GPU memory (when code is run on GPU).</span></span><br><span class="line"><span class="string">    Since copying data into the GPU is slow, copying a minibatch everytime</span></span><br><span class="line"><span class="string">    is needed (the default behaviour if the data is not in a shared</span></span><br><span class="line"><span class="string">    variable) would lead to a large decrease in performance.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    data_x, data_y = data_xy</span><br><span class="line">    shared_x = theano.shared(numpy.asarray(data_x, dtype=theano.config.floatX))</span><br><span class="line">    shared_y = theano.shared(numpy.asarray(data_y, dtype=theano.config.floatX))</span><br><span class="line">    <span class="comment"># When storing data on the GPU it has to be stored as floats</span></span><br><span class="line">    <span class="comment"># therefore we will store the labels as ``floatX`` as well</span></span><br><span class="line">    <span class="comment"># (``shared_y`` does exactly that). But during our computations</span></span><br><span class="line">    <span class="comment"># we need them as ints (we use labels as index, and if they are</span></span><br><span class="line">    <span class="comment"># floats it doesn&#x27;t make sense) therefore instead of returning</span></span><br><span class="line">    <span class="comment"># ``shared_y`` we will have to cast it to int. This little hack</span></span><br><span class="line">    <span class="comment"># lets us get around this issue</span></span><br><span class="line">    <span class="keyword">return</span> shared_x, T.cast(shared_y, <span class="string">&#x27;int32&#x27;</span>)</span><br><span class="line"></span><br><span class="line">test_set_x, test_set_y = shared_dataset(test_set)</span><br><span class="line">valid_set_x, valid_set_y = shared_dataset(valid_set)</span><br><span class="line">train_set_x, train_set_y = shared_dataset(train_set)</span><br><span class="line"></span><br><span class="line">batch_size = <span class="number">500</span>  <span class="comment"># size of the minibatch</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># accessing the third minibatch of the training set</span></span><br><span class="line">data = train_set_x[<span class="number">2</span> * batch_size: <span class="number">3</span> * batch_size]</span><br><span class="line">label = train_set_y[<span class="number">2</span> * batch_size: <span class="number">3</span> * batch_size]</span><br></pre></td></tr></table></figure>
+<h2 id="mnist-dataset">MNIST Dataset</h2>
+<h1 id="记号">记号</h1>
+<h2 id="数据集-1">数据集</h2>
+<table>
+<thead>
+<tr>
+<th>记号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math display"><em>D</em></span></td>
+<td>数据集</td>
+</tr>
+<tr>
+<td><span
+class="math display"><em>D</em><sub><em>t</em><em>r</em><em>a</em><em>i</em><em>n</em></sub></span></td>
+<td>训练集</td>
+</tr>
+<tr>
+<td><span
+class="math display"><em>D</em><sub><em>v</em><em>a</em><em>l</em><em>i</em><em>d</em></sub></span></td>
+<td>验证集</td>
+</tr>
+<tr>
+<td><span
+class="math display"><em>D</em><sub><em>t</em><em>e</em><em>s</em><em>t</em></sub></span></td>
+<td>测试集</td>
+</tr>
+</tbody>
+</table>
+<p>注：验证集用来挑选模型及超参；测试集用来评估模型的泛化能力，并比较不同算法下模型的性能。</p>
+<p>该教程大部分处理的是分类任务，所以数据集<span
+class="math display"><em>D</em></span>是一系列数据对<span
+class="math display">(<em>x</em><sup>(<em>i</em>)</sup>, <em>y</em><sup>(<em>i</em>)</sup>)</span>。我们使用上标来区分训练集中不同的实例：<span
+class="math display"><em>x</em><sup>(<em>i</em>)</sup> ∈ <em>R</em><sup><em>D</em></sup></span>表示的就是维度为<span
+class="math inline"><em>D</em></span>的第<span
+class="math inline"><em>i</em></span>个训练实例。相似的，<span
+class="math inline"><em>y</em><sup>(<em>i</em>)</sup> ∈ 0, ⋯, <em>L</em></span>表示输入<span
+class="math inline"><em>x</em><sup><em>i</em></sup></span>的标签。</p>
+<h2 id="数学符号">数学符号</h2>
+<table>
+<thead>
+<tr>
+<th>记号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline"><em>W</em></span></td>
+<td>除非另有说明，否则就是指矩阵</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>W</em><sub><em>i</em><em>j</em></sub></span></td>
+<td>矩阵<span class="math inline"><em>W</em></span>的第<span
+class="math inline"><em>i</em></span>行第<span
+class="math inline"><em>j</em></span>列的元素</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>W</em><sub><em>i</em>·</sub></span></td>
+<td>向量，矩阵<span class="math inline"><em>W</em></span>的第<span
+class="math inline"><em>i</em></span>行</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>W</em><sub><em>i</em></sub></span></td>
+<td>向量，矩阵<span class="math inline"><em>W</em></span>的第<span
+class="math inline"><em>j</em></span>行</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>W</em><sub>·<em>j</em></sub></span></td>
+<td>向量，矩阵<span class="math inline"><em>W</em></span>的第<span
+class="math inline"><em>j</em></span>列</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>b</em></span></td>
+<td>除非另有说明，否则就是指向量</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>b</em><sub><em>i</em></sub></span></td>
+<td>向量 <span class="math inline"><em>b</em></span> 的第<span
+class="math inline"><em>i</em></span>个元素</td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他">其他</h2>
+<table>
+<thead>
+<tr>
+<th>记号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline"><em>D</em></span></td>
+<td>输入数据的维数</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>D</em><sub><em>h</em></sub><sup>(<em>i</em>)</sup></span></td>
+<td>第<span class="math inline"><em>i</em></span>层隐层表示的维数</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>f</em>(<em>x</em>)</span></td>
+<td>*见注释</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>L</em></span></td>
+<td>标签数</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>L</em>(<em>θ</em>, <em>D</em>)</span></td>
+<td>参数为<span class="math inline"><em>θ</em></span>的模型关于数据<span
+class="math inline"><em>D</em></span>的对数似然</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>l</em>(<em>θ</em>, <em>D</em>)</span></td>
+<td>参数为<span class="math inline"><em>θ</em></span>的预测函数<span
+class="math inline"><em>f</em></span>关于数据<span
+class="math inline"><em>D</em></span>的经验损失</td>
+</tr>
+<tr>
+<td>NLL</td>
+<td>负对数似然</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>θ</em></span></td>
+<td>某个指定模型的所有参数</td>
+</tr>
+</tbody>
+</table>
+<p>注：<span
+class="math inline"><em>f</em><sub><em>θ</em></sub>(<em>x</em>)</span>为模型<span
+class="math inline"><em>P</em>(<em>Y</em>|<em>x</em>, <em>θ</em>)</span>的分类函数，定义为<span
+class="math inline"><em>a</em><em>r</em><em>g</em><em>m</em><em>a</em><em>x</em><em>P</em>(<em>Y</em> = <em>k</em>|<em>x</em>, <em>θ</em>)</span>。实际使用中常常省略参数<span
+class="math inline"><em>θ</em></span></p>
+<h2 id="python命名空间">Python命名空间</h2>
+<p>该教程中的代码都是实现执行了如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> theano</span><br><span class="line"><span class="keyword">import</span> theano.tensor <span class="keyword">as</span> T</span><br><span class="line"><span class="keyword">import</span> numpy</span><br></pre></td></tr></table></figure>
+<h1 id="深度学习中监督优化的简介">深度学习中监督优化的简介</h1>
+<h2 id="学习一个分类器">学习一个分类器</h2>
+<p><strong>Zero-One loss</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># zero_one_loss is a Theano variable representing a symbolic</span></span><br><span class="line"><span class="comment"># expression of the zero one loss ; to get the actual value this</span></span><br><span class="line"><span class="comment"># symbolic expression has to be compiled into a Theano function (see</span></span><br><span class="line"><span class="comment"># the Theano tutorial for more details)</span></span><br><span class="line">zero_one_loss = T.<span class="built_in">sum</span>(T.neq(T.argmax(p_y_given_x), y))</span><br></pre></td></tr></table></figure>
+<p><strong>Negative Log-Likelihood Loss</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># NLL is a symbolic variable ; to get the actual value of NLL, this symbolic</span></span><br><span class="line"><span class="comment"># expression has to be compiled into a Theano function (see the Theano</span></span><br><span class="line"><span class="comment"># tutorial for more details)</span></span><br><span class="line">NLL = -T.<span class="built_in">sum</span>(T.log(p_y_given_x)[T.arange(y.shape[<span class="number">0</span>]), y])</span><br><span class="line"><span class="comment"># note on syntax: T.arange(y.shape[0]) is a vector of integers [0,1,2,...,len(y)].</span></span><br><span class="line"><span class="comment"># Indexing a matrix M by the two vectors [0,1,...,K], [a,b,...,k] returns the</span></span><br><span class="line"><span class="comment"># elements M[0,a], M[1,b], ..., M[K,k] as a vector.  Here, we use this</span></span><br><span class="line"><span class="comment"># syntax to retrieve the log-probability of the correct labels, y.</span></span><br></pre></td></tr></table></figure>
+<h2 id="sgd">SGD</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADIENT DESCENT pseudocode</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    loss = f(params)</span><br><span class="line">    d_loss_wrt_params = ... <span class="comment"># compute gradient</span></span><br><span class="line">    params -= learning_rate * d_loss_wrt_params</span><br><span class="line">    <span class="keyword">if</span> &lt;stopping condition <span class="keyword">is</span> met&gt;:</span><br><span class="line">        <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># STOCHASTIC GRADIENT DESCENT pseudocode</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (x_i, y_i) <span class="keyword">in</span> training_set:</span><br><span class="line">                              <span class="comment"># imagine on infinite generator</span></span><br><span class="line">                              <span class="comment"># that may repeat examples (if there is only a finite training set)</span></span><br><span class="line">    loss = f(params, x_i, y_i)</span><br><span class="line">    d_loss_wrt_params = ...  <span class="comment"># compute gradient</span></span><br><span class="line">    params -= learning_rate * d_loss_wrt_params</span><br><span class="line">    <span class="keyword">if</span> &lt;stopping condition <span class="keyword">is</span> met&gt;:</span><br><span class="line">        <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MINIBATCH SGD pseudocode</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (x_batch, y_batch) <span class="keyword">in</span> train_batches:</span><br><span class="line">                            <span class="comment"># imagine on infinite generator</span></span><br><span class="line">                            <span class="comment"># that may repeat examples</span></span><br><span class="line">    loss = f(params, x_batch, y_batch)</span><br><span class="line">    d_loss_wrt_params = ... <span class="comment"># compute gradient using theano</span></span><br><span class="line">    params -= learning_rate * d_loss_wrt_params</span><br><span class="line">    <span class="keyword">if</span> &lt;stopping condition <span class="keyword">is</span> met&gt;:</span><br><span class="line">        <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Minibatch Stochastic Gradient Descent</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># assume loss is a symboilc description of the loss function given</span></span><br><span class="line"><span class="comment"># the symbolic variables params (shared variable), x_batch, y_batch;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># compute gradient of loss with respect to params</span></span><br><span class="line">d_loss_wrt_params = T.grad(loss, params)</span><br><span class="line"></span><br><span class="line"><span class="comment"># compile the MSGD step into a theano function</span></span><br><span class="line">updates = [(params, params - learning_rate * d_loss_wrt_params)]</span><br><span class="line">MSGD = theano.function([x_batch, y_batch], loss, updates=updates)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (x_batch, y_batch) <span class="keyword">in</span> train_batches:</span><br><span class="line">    <span class="comment"># here x_batch and y_batch are elements of train_batches and</span></span><br><span class="line">    <span class="comment"># therefore numpy arrays; function MSGD also updates the params</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Current loss is&#x27;</span>, MSGD(x_batch, y_batch))</span><br><span class="line">    <span class="keyword">if</span> stopping_codiction_is_met:</span><br><span class="line">        <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<h2 id="正则化项">正则化项</h2>
+<p><strong>L1 and L2 regularization</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># symbolic Theano variable that represents the L1 regularization term</span></span><br><span class="line">L1 = T.<span class="built_in">sum</span>(<span class="built_in">abs</span>(param))</span><br><span class="line"></span><br><span class="line"><span class="comment"># symbolic Theano variable that represents the squared L2 term</span></span><br><span class="line">L2 = T.<span class="built_in">sum</span>(param ** <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># the loss</span></span><br><span class="line">loss = NLL + lambda_1 * L1 + lambda_2 * L2</span><br></pre></td></tr></table></figure>
+<p><strong>Early-Stopping</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># early-stopping parameters</span></span><br><span class="line">patience = <span class="number">5000</span>  <span class="comment"># look as this many examples regardless</span></span><br><span class="line">patience_increase = <span class="number">2</span>  <span class="comment"># wait this much longer when a new best is found</span></span><br><span class="line">improvement_threshold = <span class="number">0.95</span>  <span class="comment"># a relative improvement of this much is considered significant</span></span><br><span class="line">validation_frequency = <span class="built_in">min</span>(n_train_batches, patience/<span class="number">2</span>)</span><br><span class="line">                             <span class="comment"># go through this many minibatches</span></span><br><span class="line">                             <span class="comment"># before checking the network</span></span><br><span class="line">                             <span class="comment"># on the validation set</span></span><br><span class="line">                             <span class="comment"># in this case we check every epoch</span></span><br><span class="line"></span><br><span class="line">best_params = <span class="literal">None</span></span><br><span class="line">best_validation_loss = numpy.inf</span><br><span class="line">test_score = <span class="number">0.</span></span><br><span class="line">start_time = time.clock()</span><br><span class="line"></span><br><span class="line">done_looping = <span class="literal">False</span></span><br><span class="line">epoch = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> (epoch &lt; n_epochs) <span class="keyword">and</span> (<span class="keyword">not</span> done_looping):</span><br><span class="line">    <span class="comment"># Report `1` for first epoch, `n_epochs` for last epoch</span></span><br><span class="line">    epoch = epoch + <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> minibatch_index <span class="keyword">in</span> <span class="built_in">range</span>(n_train_batches):</span><br><span class="line">        </span><br><span class="line">        d_loss_wrt_params = ...  <span class="comment"># compute gradient</span></span><br><span class="line">        params -= learning_rate * d_loss_wrt_params  <span class="comment"># gradient descent</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># iteration number. We want it to start at 0.</span></span><br><span class="line">        <span class="built_in">iter</span> = (epoch - <span class="number">1</span>) * n_train_batches + minibatch_index</span><br><span class="line">        <span class="comment"># note that if we do `iter % validation_frequency`</span></span><br><span class="line">        <span class="comment"># it will be true for iter = 0</span></span><br><span class="line">        <span class="comment"># which we do not want.</span></span><br><span class="line">        <span class="comment"># We want it true for iter = validation_frequency - 1</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">iter</span> + <span class="number">1</span>) % validation_frequency == <span class="number">0</span>:</span><br><span class="line"></span><br><span class="line">            this_validation_loss = ... <span class="comment"># compute zero-one loss on validation set</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> this_validation_loss &lt; best_validation_loss:</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># improve patience if loss improvement is good enough</span></span><br><span class="line">                <span class="keyword">if</span> this_validation_loss &lt; best_validation_loss * improvement_threshold:</span><br><span class="line">                    patience = <span class="built_in">max</span>(patience, <span class="built_in">iter</span> * patience_increase)</span><br><span class="line">                best_params = copy.deepcopy(params)</span><br><span class="line">                best_validation_loss = this_validation_loss</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">if</span> patience &lt;= <span class="built_in">iter</span>:</span><br><span class="line">            done_looping = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># POSTCONDITION</span></span><br><span class="line"><span class="comment"># best_params refers to the best out-of-sample parameters observed during the optimization</span></span><br></pre></td></tr></table></figure>
+<h2 id="测试">测试</h2>
+<h2 id="总结">总结</h2>
+<h1 id="theanopython常用技巧">Theano/Python常用技巧</h1>
+<h2 id="加载保存模型">加载/保存模型</h2>
+<p>实际实验时，往往会花费很长时间。及时保存模型就显得很重要啦。</p>
+<p><strong>使用cPickle保存你的共享变量</strong><br />
+保存/压缩模型参数的最好方式是使用<strong>pickle/deepcopy</strong>。举例来说，假设我们有共享变量<code>w, v, u</code>，那么我们可以在命令行中执行如下命令保存它们：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cPickle</span><br><span class="line">save_file = <span class="built_in">open</span>(<span class="string">&#x27;path&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>)  <span class="comment"># this will overwrite current contents</span></span><br><span class="line">cPickle.dump(w.get_value(borrow=<span class="literal">True</span>), save_file, -<span class="number">1</span>)  <span class="comment"># the -1 is for HIGHEST_PROTOCOL</span></span><br><span class="line">cPickle.dump(v.get_value(borrow=<span class="literal">True</span>), save_file, -<span class="number">1</span>)  <span class="comment"># ... and it triggers much more efficient</span></span><br><span class="line">cPickle.dump(u.get_value(borrow=<span class="literal">True</span>), save_file, -<span class="number">1</span>)  <span class="comment"># ... storage than numpy&#x27;s default</span></span><br><span class="line">save_file.close()</span><br></pre></td></tr></table></figure>
+<p>载入时就可以执行如下命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">save_file = <span class="built_in">open</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line">w.set_value(cPickle.load(save_file), borrow=<span class="literal">True</span>)</span><br><span class="line">v.set_value(cPickle.load(save_file), borrow=<span class="literal">True</span>)</span><br><span class="line">u.set_value(cPickle.load(save_file), borrow=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>别使用cPickle长期保存你的训练/测试函数</strong><br />
+Theano中的function是兼容Python中的<code>deepcopy/pickle</code>机制的，但是不应当使用这些机制长期保存这些函数。因为Theano内部处在活跃发展阶段，保存函数之后可能就没法再次<code>un-pickle</code>。正确的打开方式是，使用这些机制来短期保存function。</p>
+<p>更多详情，可以参见<a
+target="_blank" rel="noopener" href="http://deeplearning.net/software/theano/tutorial/loading_and_saving.html">serialization
+in Theano</a>或者<a
+target="_blank" rel="noopener" href="http://docs.python.org/library/pickle.html">Python’s
+pickling</a>。</p>
+<h2 id="绘制中间结果">绘制中间结果</h2>
+<p>可视化有助于我们了解模型或者训练算法正在做什么。如果你有充足的硬盘空间，你的训练脚本可以保存这些中间模型，之后再使用可视化脚本处理这些被保存的模型。<br />
+那些可能有助于你可视化的库：<a
+target="_blank" rel="noopener" href="http://www.pythonware.com/products/pil">Python Image
+Library</a>与<a
+target="_blank" rel="noopener" href="http://matplotlib.sourceforge.net/">matplotlib</a>。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a
+target="_blank" rel="noopener" href="http://www.deeplearning.net/tutorial/gettingstarted.html#gettingstarted">Getting
+Started</a><br />
+<a target="_blank" rel="noopener" href="http://www.deeplearning.net/tutorial/">Deep Learning
+Tutorials</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2017/03/08/howto/theano/1-getting-started/" title="theano实战 - Getting Started">https://wrran.github.io/blog/2017/03/08/howto/theano/1-getting-started/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/theano/" rel="tag"># theano</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2017/03/01/learn/git/git-patch-1-submodule/" rel="prev" title="简单了解Git Submodule">
+                  <i class="fa fa-angle-left"></i> 简单了解Git Submodule
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2017/03/09/cheatsheet/shortcut/pycharm/" rel="next" title="PyCharm常用设置">
+                  PyCharm常用设置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

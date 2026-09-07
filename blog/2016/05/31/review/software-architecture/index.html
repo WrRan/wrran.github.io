@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="不快也光  我悄悄的来…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件体系结构复习">
+<meta property="og:url" content="https://wrran.github.io/blog/2016/05/31/review/software-architecture/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="不快也光  我悄悄的来…">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-05-31T02:11:19.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.792Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="WrRan, AI, NLP, software engineering">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2016/05/31/review/software-architecture/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2016/05/31/review/software-architecture/","path":"blog/2016/05/31/review/software-architecture/","title":"软件体系结构复习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>软件体系结构复习 | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%83%E8%AF%95%E9%A2%98%E5%9E%8B"><span class="nav-text">考试题型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#review"><span class="nav-text">REVIEW</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ch1-%E6%A6%82%E8%BF%B0"><span class="nav-text">CH1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ch2-%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%9A%84%E7%A0%94%E7%A9%B6%E4%B8%8E%E5%8F%91%E5%B1%95"><span class="nav-text">CH2 软件体系结构的研究与发展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ch3-%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%9A%84%E5%B1%82%E6%AC%A1%E6%80%A7"><span class="nav-text">CH3 软件体系结构的层次性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ch4-%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86"><span class="nav-text">CH4 软件体系结构的设计原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ch5-%E9%83%A8%E4%BB%B6%E5%92%8C%E8%BF%9E%E6%8E%A5%E5%99%A8"><span class="nav-text">CH5 部件和连接器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ch6-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%80%E8%88%AC%E6%8F%8F%E8%BF%B0%E4%BA%86%E8%A7%A3"><span class="nav-text">CH6 体系结构的一般描述（了解）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ch7-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">CH7 设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bridge-pattern"><span class="nav-text">Bridge Pattern</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#other"><span class="nav-text">Other</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2016/05/31/review/software-architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="软件体系结构复习 | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件体系结构复习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-31 10:11:19" itemprop="dateCreated datePublished" datetime="2016-05-31T10:11:19+08:00">2016-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/review/" itemprop="url" rel="index"><span itemprop="name">review</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>不快也光</p>
+</blockquote>
+<p>我悄悄的来…</p>
+<span id="more"></span>
+<h2 id="考试题型">考试题型</h2>
+<ol type="1">
+<li>名词解释（5）</li>
+<li>填空（10）</li>
+<li>选择（30）</li>
+<li>简答（5）</li>
+<li>设计题（2）</li>
+</ol>
+<h2 id="review">REVIEW</h2>
+<p>体系结构是指整个系统构成的基本和主体形态。<br />
+软件体系结构是软件在设计构成上的基本、可供设计选择的形态和总体结构。</p>
+<hr />
+<h3 id="ch1-概述">CH1 概述</h3>
+<ol type="1">
+<li>软件体系结构：软件体系结构定义了软件的局部和总体计算部件的构成，以及这些部件之间的互相作用关系。总的来看，体系结构是由结构和功能各异、互相作用的部件集合，按照层次构成的。</li>
+<li>当前的软件设计：体系结构的设计选择对于软件的长远成功是至关重要的；体系结构描述的不规范性；体系结构的理论和工具</li>
+<li>软件设计的层次：结构级、代码级、执行级</li>
+<li>体系结构与软件工程</li>
+<li>软件体系结构的知识体系</li>
+</ol>
+<hr />
+<h3 id="ch2-软件体系结构的研究与发展">CH2 软件体系结构的研究与发展</h3>
+<ol type="1">
+<li><p>软件工程设计和软件体系结构：软件设计目标：便于维护和升级，因而应该是模块化的；设计应该是便于移植（移植比重新设计花费要小的多）;设计过程应该受到理性的控制；设计应该表现出概念的完整性</p></li>
+<li><p>什么是软件体系结构</p>
+<blockquote>
+<p>An architecture is the set of significant decisions about the
+organization of a software system, the selection of the structural
+elements and their interfaces by which the system is composed, together
+with their behavior as specified in the collaborations among those
+elements, the composition of these structural and behavioral elements
+into progressively larger subsystems, and the architectural style that
+guides this organization—these elements and their interfaces, their
+collaborations, and their composition.</p>
+</blockquote></li>
+<li><p>软件体系结构的意义和目标</p>
+<ul>
+<li>软件体系结构是软甲开发过程初期的产品，对于开发进度和软件质量的一切资金和劳务投入，可以获得最好的回报</li>
+<li>体系结构设计是形成投资高回报的重要因素</li>
+<li>正确有效的体系结构设计会给软件开发带来极大的便利</li>
+</ul></li>
+<li><p>软件体系结构的研究范畴：体系结构描述语言与工具；产品线与标准（企业、需求、架构、系统），软件体系结构风格及风格应用，体系结构文档化</p></li>
+</ol>
+<hr />
+<h3 id="ch3-软件体系结构的层次性">CH3 软件体系结构的层次性</h3>
+<ol type="1">
+<li>体系结构的基础和层次特性：基础、层次、模式、角色划分（我是傻汪）</li>
+<li>软件体系结构的层次结构模型：6层（重要）</li>
+<li>从层次结构看软件体系结构：体系结构是关于软件的构成部件及其连接的分层的结构框架，体系结构分析与设计涵盖并指导着从逻辑结构设计到运行实现的软件工程的全部过程</li>
+</ol>
+<hr />
+<h3 id="ch4-软件体系结构的设计原理">CH4 软件体系结构的设计原理</h3>
+<ol type="1">
+<li>体系结构设计中遵循的原理：抽象，封装（数据和代码的同时切割），数据隐藏，模块化，注意点分离，耦合和内聚，充分性、完备性和原始性，策略和实现的分离，接口和实现的分离，分而治之，层次化</li>
+<li>软件的非功能特性：可变性（为变化而设计），互操作性，效率，可靠性，可测试性，可重用性</li>
+</ol>
+<hr />
+<h3 id="ch5-部件和连接器">CH5 部件和连接器</h3>
+<p>部件和连接器被公认为体系结构的两大类构成部分</p>
+<hr />
+<h3 id="ch6-体系结构的一般描述了解">CH6 体系结构的一般描述（了解）</h3>
+<ol type="1">
+<li>通用的一般的描述方法：主子程序，数据抽象和面向对象，层次结构</li>
+<li>理论的形式化方法：Z Notation，CSP，类属理论，化学抽象机模型</li>
+<li>软件体系结构集成环境：UniCon，Darwin，Wright，ACME</li>
+</ol>
+<hr />
+<h3 id="ch7-设计模式">CH7 设计模式</h3>
+<p>设计模式的类型：</p>
+<table>
+<thead>
+<tr>
+<th>创造型</th>
+<th>结构型</th>
+<th>行为型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Factory</td>
+<td><a href="#bridge_pattern">Bridge</a></td>
+<td>Chain of Responsibility</td>
+</tr>
+<tr>
+<td>Abstract Factory</td>
+<td>Composite</td>
+<td>Command</td>
+</tr>
+<tr>
+<td>Builder</td>
+<td>Decorator</td>
+<td>Iterator</td>
+</tr>
+<tr>
+<td>Prototype</td>
+<td>Facade</td>
+<td>Mediator</td>
+</tr>
+<tr>
+<td>Singleton</td>
+<td>Flyweight</td>
+<td>Memonto</td>
+</tr>
+<tr>
+<td></td>
+<td>Proxy</td>
+<td>Observer</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>State</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Visitor</td>
+</tr>
+</tbody>
+</table>
+<h4 id="bridge-pattern">Bridge Pattern</h4>
+<blockquote>
+<p><strong>Bridge Pattern</strong>: Decouple an abstraction from its
+implementation so that the two can vary independently.</p>
+</blockquote>
+<p>涉及4个角色：</p>
+<ul>
+<li>Abstraction：定义出该角色的行为，同时保存一个Implementor的引用，该类一般为抽象类。</li>
+<li>Implementor：定义角色必需的行为和属性，该类一般为接口。</li>
+<li>RefinedAbstraction：引用Implementor或ConcreteImplementor对Abstraction进行修正。</li>
+<li>ConcreteImplementor：实现Implementor定义的方法或属性。</li>
+</ul>
+<figure>
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Bridge_UML_class_diagram.svg"
+title="Bridge结构" alt="Bridge结构" />
+<figcaption aria-hidden="true">Bridge结构</figcaption>
+</figure>
+<p>Bridge的目的：类有两个方面的责任，一是<strong>抽象</strong>，二是<strong>行为</strong>，他们应该能够相互独立。而类继承机制将这两者的独立关系打破，绑定在一起，导致扩展困难。<br />
+举例来说，一杯咖啡可以是小杯加奶、大杯加奶、小杯不加奶、大杯不加奶。倘若之后变更需求，希望可以在原有的基础上选择是否加热的话，就需要新增四个类。但如果我们将之分为两个层次，一是抽象–大杯咖啡或小杯咖啡，二是行为–加奶或不加奶。如此，我们只需要再新增一类行为–加热或不加热。</p>
+<p><strong>JAVA DEMO</strong><br />
+要求：使用Bridge实现星巴克咖啡制作，Mocha要先加泡再加奶。<br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image%2Freview-software-architecture%2FBridge%E4%BD%9C%E4%B8%9A_Coffee_%E8%A6%81%E6%B1%821.png"
+title="要求一" alt="要求一" /><br />
+<img
+src="http://7xuthx.com1.z0.glb.clouddn.com/image%2Freview-software-architecture%2FBridge%E4%BD%9C%E4%B8%9A_Coffee_%E8%A6%81%E6%B1%822.png"
+title="要求二" alt="要求二" /></p>
+<p>解决方案：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Abstraction*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Coffee</span> &#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="type">ICup</span> <span class="variable">cup</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="type">IFoam</span> <span class="variable">foam</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="type">IMilk</span> <span class="variable">milk</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">ICup</span> <span class="title function_">getCup</span><span class="params">()</span> &#123; <span class="keyword">return</span> cup; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">setCup</span><span class="params">(ICup cup)</span> &#123; <span class="built_in">this</span>.cup = cup; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">IFoam</span> <span class="title function_">getFoam</span><span class="params">()</span> &#123; <span class="keyword">return</span> foam; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">setFoam</span><span class="params">(IFoam foam)</span> &#123; <span class="built_in">this</span>.foam = foam; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">IMilk</span> <span class="title function_">getMilk</span><span class="params">()</span> &#123; <span class="keyword">return</span> milk; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">setMilk</span><span class="params">(IMilk milk)</span> &#123; <span class="built_in">this</span>.milk = milk; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Implementor One */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ICup</span> &#123;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Implementor Two */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">IFoam</span> &#123;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Implementor Three */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">IMilk</span> &#123;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** ConcreteImplementor of ICup */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Grande</span> <span class="keyword">implements</span> <span class="title class_">ICup</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Grand&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Short</span> <span class="keyword">implements</span> <span class="title class_">ICup</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Short&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Tall</span> <span class="keyword">implements</span> <span class="title class_">ICup</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Tall&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Venti</span> <span class="keyword">implements</span> <span class="title class_">ICup</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Venti&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** ConcreteImplementor of IFoam */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Extra</span> <span class="keyword">implements</span> <span class="title class_">IFoam</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Extra&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Light</span> <span class="keyword">implements</span> <span class="title class_">IFoam</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Light&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NoFoam</span> <span class="keyword">implements</span> <span class="title class_">IFoam</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;No Foam&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** ConcreteImplementor of IMilk */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NoMilk</span> <span class="keyword">implements</span> <span class="title class_">IMilk</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;No Milk&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LowFat</span> <span class="keyword">implements</span> <span class="title class_">IMilk</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Low Fat&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Soy</span> <span class="keyword">implements</span> <span class="title class_">IMilk</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123; System.out.println(<span class="string">&quot;Soy&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Refined Abstraction One */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">American</span> <span class="keyword">extends</span> <span class="title class_">Coffee</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;American&quot;</span>);</span><br><span class="line">        milk.sell();</span><br><span class="line">        foam.sell();</span><br><span class="line">        cup.sell();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Refined Abstraction Two */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Cappuccino</span> <span class="keyword">extends</span> <span class="title class_">Coffee</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Cappuccino&quot;</span>);</span><br><span class="line">        milk.sell();</span><br><span class="line">        foam.sell();</span><br><span class="line">        cup.sell();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Refined Abstraction Three */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Espresso</span> <span class="keyword">extends</span> <span class="title class_">Coffee</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Espresso&quot;</span>);</span><br><span class="line">        milk.sell();</span><br><span class="line">        foam.sell();</span><br><span class="line">        cup.sell();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Refined Abstraction Four */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Mocha</span> <span class="keyword">extends</span> <span class="title class_">Coffee</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">sell</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Mocha&quot;</span>);</span><br><span class="line">        milk.sell();</span><br><span class="line">        foam.sell();</span><br><span class="line">        cup.sell();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试用例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> bridge;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> bridge.*; <span class="comment">// import above classes</span></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Coffee</span> <span class="variable">coffee</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">Scanner</span> <span class="variable">scanner</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">        <span class="type">int</span> <span class="variable">in</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;What kind of coffee do you want? &quot;</span> +</span><br><span class="line">        <span class="string">&quot;(1:Espresso 2:American 3:Cappuccino 4: Mocha)&quot;</span>);</span><br><span class="line">        in = scanner.nextInt();</span><br><span class="line">        <span class="keyword">switch</span> (in) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>: coffee = <span class="keyword">new</span> <span class="title class_">Espresso</span>(); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>: coffee = <span class="keyword">new</span> <span class="title class_">American</span>(); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>: coffee = <span class="keyword">new</span> <span class="title class_">Cappuccino</span>(); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>: coffee = <span class="keyword">new</span> <span class="title class_">Mocha</span>(); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;Invalid input :(&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;What kind of milk do you want to add? &quot;</span> +</span><br><span class="line">         <span class="string">&quot;(1:No Milk 2:Low-fat 3:Soy)&quot;</span>);</span><br><span class="line">        in = scanner.nextInt();</span><br><span class="line">        <span class="keyword">switch</span> (in) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>: coffee.setMilk(<span class="keyword">new</span> <span class="title class_">NoMilk</span>()); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>: coffee.setMilk(<span class="keyword">new</span> <span class="title class_">LowFat</span>());<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>: coffee.setMilk(<span class="keyword">new</span> <span class="title class_">Soy</span>()); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;Invalid input :(&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;How much foam do you want to add? &quot;</span> +</span><br><span class="line">        <span class="string">&quot;(1:No foam 2:Light 3:Extra)&quot;</span>);</span><br><span class="line">        in = scanner.nextInt();</span><br><span class="line">        <span class="keyword">switch</span> (in) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>: coffee.setFoam(<span class="keyword">new</span> <span class="title class_">NoFoam</span>()); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>: coffee.setFoam(<span class="keyword">new</span> <span class="title class_">Light</span>()); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>: coffee.setFoam(<span class="keyword">new</span> <span class="title class_">Extra</span>()); <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;Invalid input :(&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Which cupsize do you prefer? &quot;</span> +</span><br><span class="line">        <span class="string">&quot;(1:Short 2:Tall 3:Grande 4:Venti)&quot;</span>);</span><br><span class="line">        in = scanner.nextInt();</span><br><span class="line">        <span class="keyword">switch</span> (in) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>: coffee.setCup(<span class="keyword">new</span> <span class="title class_">Short</span>());<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                coffee.setCup(<span class="keyword">new</span> <span class="title class_">Tall</span>());</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                coffee.setCup(<span class="keyword">new</span> <span class="title class_">Grande</span>());</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">                coffee.setCup(<span class="keyword">new</span> <span class="title class_">Venti</span>());</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;Invalid input :(&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        coffee.sell();</span><br><span class="line">        scanner.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，上述设计中可以看出<code>RefinedAbstraction</code>,<code>American</code>等中的<code>sell()</code>代码是相同的，那为什么不合并呢？是因为要求中明确提出<code>Mocha</code>需要先加<code>Foam</code>后加<code>Milk</code>，所以将<code>Abstraction</code>,<code>Coffee</code>中<code>sell()</code>留给子类实现，增加灵活性；而不是写在父类中。</p>
+<hr />
+<h3 id="other">Other</h3>
+<ol type="1">
+<li><p>The “4+1” View Model of Software Architecture：Logical
+View，Process View，Development View，Physical View，Scenario</p></li>
+<li><p>体系结构风格：数据流、调用和返回、独立构件、虚拟机、数据中心</p></li>
+<li><p>一些面向对象的设计法则</p>
+<blockquote>
+<p>Liskov Substitution Principle, <strong>LSP</strong>: If for each
+object o1 of type S there is an object o2 of type T such that for all
+programs P defined in terms of T, the behavior of P is unchanged when o1
+is substituted for o2 then S is a subtype of T.</p>
+</blockquote>
+<blockquote>
+<p>Dependence Inversion Principle, <strong>DIP</strong>: High level
+modules should not depend upon low level modules. Both should depend
+upon abstractions. Abstractions should not depend upon details. Details
+should depend upon abstractions.</p>
+</blockquote>
+<blockquote>
+<p>Interface Segregation Principle, <strong>ISP</strong>: The dependency
+of one class to another one should depend on the smallest possible
+interface.</p>
+</blockquote>
+<blockquote>
+<p>Open Closed Principle, <strong>OCP</strong>: Software entites like
+classes, modules and functions should be open for extension but closed
+for modifications.</p>
+</blockquote>
+<blockquote>
+<p>Law of Demeter, <strong>LoD</strong> or Principle of Least Knowledge:
+Each unit should only talk to its friends, don’t talk to strangers.</p>
+</blockquote></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2016/05/31/review/software-architecture/" title="软件体系结构复习">https://wrran.github.io/blog/2016/05/31/review/software-architecture/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2016/05/30/learn/git/git-1/" rel="prev" title="Git学习记录 - 1">
+                  <i class="fa fa-angle-left"></i> Git学习记录 - 1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2016/05/31/review/it-project-management/" rel="next" title="IT项目管理复习">
+                  IT项目管理复习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

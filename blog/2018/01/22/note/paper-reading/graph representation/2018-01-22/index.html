@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="无为而治">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node2vec - Scalable Feature Learning for Networks">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/01/22/note/paper-reading/graph%20representation/2018-01-22/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="无为而治">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-22T12:55:27.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.725Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="node2vec">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/01/22/note/paper-reading/graph%20representation/2018-01-22/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/01/22/note/paper-reading/graph%20representation/2018-01-22/","path":"blog/2018/01/22/note/paper-reading/graph representation/2018-01-22/","title":"node2vec - Scalable Feature Learning for Networks"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>node2vec - Scalable Feature Learning for Networks | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BD%A2%E5%BC%8F%E5%8C%96"><span class="nav-text">形式化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E7%AD%96%E7%95%A5"><span class="nav-text">采样策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/01/22/note/paper-reading/graph%20representation/2018-01-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="node2vec - Scalable Feature Learning for Networks | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          node2vec - Scalable Feature Learning for Networks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-01-22 20:55:27" itemprop="dateCreated datePublished" datetime="2018-01-22T20:55:27+08:00">2018-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/graph-representation/" itemprop="url" rel="index"><span itemprop="name">graph representation</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>无为而治</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p>网络节点的学习主要关注于让最终学习到的表示包含节点之间的关系，而实践中主要依据两方面来度量节点间的相似性：(1)邻近性，即节点在图上的距离越近越相似
+(2)同构性，即如果节点周边结构越相近，则两节点之间越相似。<br />
+node2vec则是使用神经网络来学习网络节点的一种方式，其基本想法源自DeepWalk，对其中的采样部分进行了改良。<br />
+具体说来，node2vec将网络学习分为了三个关键步骤：数据预处理、节点路径采样、节点表示学习。数据预处理往往由数据集、任务及模型三者共同决定;后两者则是交替进行，换言之，是采样一次路径后就对这些路径上的节点表示进行学习，反复多次，直至所有节点表示都被学习过至少一次。<br />
+再来详细讨论下，node2vec模型的算法细节。如前所述，考量网络节点相似性时要从两个角度出发。而在实现过程中，最基本的两种手段就是BFS(宽度优先搜素)及DFS(深度优先搜索)。BFS很好的考量了邻近性，因为相近节点BFS出来的节点列表也很相近。而DFS则是实现考量同构性的必然要求，借助这种手段才能更好的考量图中远距离节点是否具有同构性。因此综合使用两种方式才能真正提高网络节点学习得出的表示质量，而这就体现在节点路径采样过程中。</p>
+<h1 id="形式化">形式化</h1>
+<p>记将学习的网络为<span
+class="math display"><em>G</em> = (<em>V</em>, <em>E</em>)</span>，而需要我们学习的就是映射函数<span
+class="math display">f : <em>V</em> ↦ ℝ<sup><em>d</em></sup></span>，即将节点表示成<span
+class="math display"><em>d</em></span>维的实数向量以便后续任务的处理。换言之，映射函数<span
+class="math display">f</span>就是一个大小为<span
+class="math display">|<em>V</em>|×<em>d</em></span>矩阵。对于每一个图上的源节点<span
+class="math display"><em>u</em> ∈ <em>V</em></span>，记<span
+class="math display">N<sub><em>S</em></sub>(<em>u</em>) ∈ <em>V</em></span>为通过采样策略<span
+class="math display"><em>S</em></span>从节点<span
+class="math display"><em>u</em></span>得到的邻居节点。<br />
+与word2vec中的skip-gram类似，作者希望通过源节点的表示<span
+class="math display">f(<em>u</em>)</span>来尽可能最大化预测出邻居节点<span
+class="math display">N<sub><em>S</em></sub>(<em>u</em>)</span>的概率，如下式：<br />
+<span class="math display">$$
+\underset{\mathrm{f}}{\max} \sum_{u\in V}\mathrm{log}\
+\mathrm{Pr}(\mathrm{N}_S(u)\vert \mathrm{f}(u))
+$$</span><br />
+为了让上式易于计算，作者又做出了如下两点假设：</p>
+<ol type="1">
+<li>条件独立性(Conditional
+Independence)：指的是观察到特定源节点的表示之后，多个邻居节点的预测是条件独立的，如此可得下式:<br />
+<span
+class="math display">Pr(N<sub><em>S</em></sub>(<em>u</em>)|f(<em>u</em>)) = ∏<sub><em>n</em><sub><em>i</em></sub> ∈ N<sub><em>S</em></sub><em>u</em></sub>Pr(<em>n</em><sub><em>i</em></sub>|f(<em>u</em>))</span></li>
+<li>特征对称性(Symmetry in Feature
+Space)：指的是在特征空间中，源节点与它对应的邻居节点在各自关系中发挥着相同的作用。据此，将条件概率设置为以节点对为单元去进行计算的模式：<br />
+<span class="math display">$$
+\mathrm{Pr}(n_i\vert\mathrm{f}(u))=\frac{\mathrm{exp}(\mathrm{f}(n_i)\cdot\mathrm{f}(u))}{\sum_{u\in
+V}\mathrm{exp}(\mathrm{f}(v)\cdot\mathrm{f}(u))}
+$$</span></li>
+</ol>
+<p>基于上面两点假设，整体来看需要学习的目标函数就变成了：<br />
+<span class="math display">$$
+\underset{\mathrm{f}}{\max} \sum_{u\in V}[-\mathrm{log}\ Z_u +
+\sum_{n_i\in\mathrm{N}_S(u)}\mathrm{f}(n_i)\cdot\mathrm{f}(u)]
+$$</span><br />
+其中，<span
+class="math display"><em>Z</em><sub><em>u</em></sub> = ∑<sub><em>v</em> ∈ <em>V</em></sub>exp(f(<em>u</em>) ⋅ f(<em>v</em>))</span>计算量很大，作者使用负采样的方式来近似。</p>
+<h1 id="采样策略">采样策略</h1>
+<p>鉴于skip-gram框架是源自自然语言处理这样的序列结构数据上的方法，并不十分适合网络结构，更加需要精妙的采样方式，需要综合权衡DFS与BFS。假定当前源节点为<span
+class="math display"><em>u</em></span>，随机游走路径长度为<span
+class="math display"><em>l</em></span>，记路径中第<span
+class="math display"><em>i</em></span>个节点为<span
+class="math display"><em>c</em><sub><em>i</em></sub></span>。如此，路径最开端的节点<span
+class="math display"><em>c</em><sub>0</sub> = <em>u</em></span>，而节点<span
+class="math display"><em>c</em><sub><em>i</em></sub></span>通过下式的分布采样得到：<br />
+<span class="math display">$$
+\mathrm{Pr}(c_i=x\vert c_{i-1}=v)=
+\begin{cases}
+\frac{\pi_{vx}}{Z} &amp; \text{if } (v,x)\in E\
+0 &amp; \text{otherwise}
+\end{cases}
+$$</span><br />
+其中<span
+class="math display"><em>π</em><sub><em>v</em><em>x</em></sub></span>是节点<span
+class="math display"><em>v</em></span>与<span
+class="math display"><em>x</em></span>之间未归一化的转移概率，而<span
+class="math display"><em>Z</em></span>则是用来归一化因子。</p>
+<p>如此通过设计转移概率<span
+class="math display"><em>π</em><sub><em>v</em><em>x</em></sub></span>就可以定制化采样策略了。假定上次采样的路径为<span
+class="math display">(<em>t</em>, <em>v</em>)</span>，当前采样源节点为<span
+class="math display"><em>v</em></span>。下次采样的节点则根据边<span
+class="math display">(<em>v</em>, <em>x</em>)</span>上的转移概率<span
+class="math display"><em>π</em><sub><em>v</em><em>x</em></sub></span>来决定。作者将其设置为形如<span
+class="math display"><em>π</em><sub><em>v</em><em>x</em></sub> = <em>α</em><sub><em>p</em><em>q</em></sub>(<em>t</em>, <em>x</em>) ⋅ <em>w</em><sub><em>v</em><em>x</em></sub></span>，其中<span
+class="math display"><em>w</em><sub><em>v</em><em>x</em></sub></span>为图中的静态系数(如在无向图中相连节点间的权重常设为1)，而<br />
+<span class="math display">$$
+\alpha_{pq}(t, x) =
+\begin{cases}
+\frac{1}{p} &amp; \text{if } d_{tx}=0\
+1 &amp; \text{if } d_{tx}=1\
+\frac{1}{q} &amp; \text{if } d_{tx}=2
+\end{cases}
+$$</span><br />
+其中，<span
+class="math display"><em>d</em><sub><em>t</em><em>x</em></sub></span>表示节点<span
+class="math display"><em>t</em></span>和节点<span
+class="math display"><em>x</em></span>之间的最短路径，并且设定范围为<span
+class="math display">0, 1, 2</span>。值得注意的是，通过上式也可以看出随机采样<span
+class="math display"><em>p</em><em>i</em><sub><em>v</em><em>x</em></sub></span>是满足二阶马尔可夫性质的。而<span
+class="math display"><em>p</em></span>及<span
+class="math display"><em>q</em></span>为人为设定的超参，权衡DFS及BFS等基本搜索策略，讨论如下。</p>
+<p><strong>回溯参数,p</strong>：参数<span
+class="math display"><em>p</em></span>控制回溯上一节点的概率。如果将该值设置得偏大(如<span
+class="math display"><em>p</em> &gt; max (<em>q</em>, 1)</span>)可以保证我们在后续的两个步骤尽量不回溯已经被采样过的节点(除非无其他邻居节点)。该策略适合用于探索或者避免采样中的重复。如果该值被设置得偏小(如<span
+class="math display"><em>p</em> &lt; min (<em>q</em>, 1)</span>)，则趋向于让随机游走尽量回溯，也意味着采样结果将更加关注于节点<span
+class="math display"><em>u</em></span>的局部信息。<br />
+<strong>出入参数,q</strong>：参数<span
+class="math display"><em>q</em></span>控制“向内”节点和“向外”节点的搜索权衡。如果<span
+class="math display"><em>q</em> &gt; 1</span>，则随机游走采样得出的节点更接近源节点<span
+class="math display"><em>t</em></span>。如此便可以获取到源节点<span
+class="math display"><em>t</em></span>附近的局部信息，换言之，此情形下该策略在某种程度上类似BFS。如果<span
+class="math display"><em>q</em> &lt; 1</span>，则随机游走的结果更趋向于远离节点<span
+class="math display"><em>t</em></span>。也就是说，在这种情形下，作者实质上实现了随机游走框架类似DFS的搜索策略。另外，随机游走还可以保证高效的性能。</p>
+<p>讨论完超参的语义，我们再来探讨下随机游走相较于纯粹的BFS或DFS策略的优势。简言之，随机游走在时间上与空间上都是高效的。<br />
+存储图中每个节点的邻接关系(边)需要<span
+class="math display">O(|<em>E</em>|)</span>的空间。对于二阶随机游走策略而言，直接存储节点之间的关联更有效，这需要花费<span
+class="math display">O(<em>a</em><sup>2</sup>|<em>V</em>|)</span>的空间(其中<span
+class="math display"><em>a</em></span>为图中节点的平均度数)。<br />
+再来讨论时间复杂度：在传统的BFS、DFS中，采样过程依赖于源节点;而随机游走策略并不依赖于源节点。更具体的说，针对随机游走路径长度为<span
+class="math display"><em>l</em></span>的采样来说，由于随机游走的马尔可夫特性，在采样出一次路径之后，就可以得到<span
+class="math display"><em>l</em> − <em>k</em></span>个样本的<span
+class="math display"><em>k</em></span>个邻居节点(要求<span
+class="math display"><em>l</em> &gt; <em>k</em></span>)。因此，综合来看，每个节点所平摊的时间复杂度为<span
+class="math display">$$\mathrm{O}(\frac{l}{k(l-k)})$$</span>.</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.00653.pdf">node2vec: Scalable
+Feature Learning for Networks</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/01/22/note/paper-reading/graph%20representation/2018-01-22/" title="node2vec - Scalable Feature Learning for Networks">https://wrran.github.io/blog/2018/01/22/note/paper-reading/graph representation/2018-01-22/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/node2vec/" rel="tag"># node2vec</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/01/21/note/paper-reading/2018-01-21/" rel="prev" title="Empower Sequence Labeling with Task-Aware Neural Language Model">
+                  <i class="fa fa-angle-left"></i> Empower Sequence Labeling with Task-Aware Neural Language Model
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/01/26/people-say/luxun/180126-01/" rel="next" title="求乞者">
+                  求乞者 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>

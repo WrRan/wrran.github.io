@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+  <meta name="baidu-site-verification" content="1SzRDU50sB">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wrran.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="众里寻他千百度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="struc2vec - Learning Node Representations from Structural Identity">
+<meta property="og:url" content="https://wrran.github.io/blog/2018/03/18/note/paper-reading/2018-03-18/index.html">
+<meta property="og:site_name" content="WrRan の 杂货铺">
+<meta property="og:description" content="众里寻他千百度">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-03-18T14:26:43.000Z">
+<meta property="article:modified_time" content="2026-09-07T16:24:29.724Z">
+<meta property="article:author" content="WrRan">
+<meta property="article:tag" content="paper reading">
+<meta property="article:tag" content="note">
+<meta property="article:tag" content="struc2vec">
+<meta name="twitter:card" content="&lt;twitter:card&gt;">
+<meta name="twitter:creator" content="@&lt;twitter:creator&gt;">
+<meta name="twitter:site" content="<twitter:site>">
+
+
+<link rel="canonical" href="https://wrran.github.io/blog/2018/03/18/note/paper-reading/2018-03-18/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://wrran.github.io/blog/2018/03/18/note/paper-reading/2018-03-18/","path":"blog/2018/03/18/note/paper-reading/2018-03-18/","title":"struc2vec - Learning Node Representations from Structural Identity"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>struc2vec - Learning Node Representations from Structural Identity | WrRan の 杂货铺</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?6d4f6172d2d7b5703b9c1560a5af22a5"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","display_overflow":"scroll","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.js","integrity":"sha256-ihPtDDm7pTmSF9ViEsItlvsrBTsNkz0MOXMchzOwCQw="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WrRan の 杂货铺</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%A7%88"><span class="nav-text">模型概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E7%9B%B8%E4%BC%BC%E6%80%A7"><span class="nav-text">结构相似性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E5%B1%82%E5%8A%A0%E6%9D%83%E5%9B%BE"><span class="nav-text">多层加权图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WrRan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">WrRan</p>
+  <div class="site-description" itemprop="description">WrRan的技术分享等博文</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">247</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WrRan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WrRan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://wrran.github.io/blog/2018/03/18/note/paper-reading/2018-03-18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="WrRan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WrRan の 杂货铺">
+      <meta itemprop="description" content="WrRan的技术分享等博文">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="struc2vec - Learning Node Representations from Structural Identity | WrRan の 杂货铺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          struc2vec - Learning Node Representations from Structural Identity
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-03-18 22:26:43" itemprop="dateCreated datePublished" datetime="2018-03-18T22:26:43+08:00">2018-03-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/paper-reading/" itemprop="url" rel="index"><span itemprop="name">paper-reading</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-file-o"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>众里寻他千百度</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="概述">概述</h1>
+<p><code>struc2vec</code>是KDD
+2017年的关于图表示学习的一个模型。在图表示学习中，节点表示的学习主要依赖于临近性与同构性，前者是指距离越近的节点得到的表示也应该相互靠近，后者是指结构相似的节点得到的表示也应该相互接近。与<code>DeepWalk</code>、<code>node2vec</code>这类通过模仿DFS/BFS来权衡同构性/邻近性不同，<code>struc2vec</code>试图通过直接定量地挖掘图中节点的结构来得到更多保存图中“同构性”的表示。</p>
+<h1 id="模型概览">模型概览</h1>
+<p>为了让模型尽可能多地保存节点之间结构信息，作者认为应当在设计模型的过程中着重注意以下两点：</p>
+<ol type="1">
+<li>表示之间的距离应该与节点结构相似性高度相关；</li>
+<li>表示的学习不应当依赖于任何节点或者边的属性，包括节点的类别。</li>
+</ol>
+<p>按照以上两点理念，作者将<code>struc2vec</code>设计为下列四大步骤：</p>
+<ol type="1">
+<li>定量描述图中节点的结构相似性，同时由考虑“邻域”的大小自然地划分为不同的层次；</li>
+<li>由第一步中得到的信息构造多层加权图，图中每一层与第一步中的不同“邻域”形成的层次相对应；</li>
+<li>通过第二步中构造的多层加权图，随机游走得到每一节点的上下文信息；</li>
+<li>由<code>Skip-Gram</code>模型对游走序列进行学习，得到节点表示。</li>
+</ol>
+<p>由此可知，上述步骤中较为独特和关键的为第一、二步，详述见下。</p>
+<h1 id="结构相似性">结构相似性</h1>
+<p><code>struc2vec</code>中结构相似性的目的是不依赖于图中节点和边的属性来定量描述节点的结构相似性。直观地说，如果两个节点的度相近则他们之间的结构相似度也应该高，而如果这两个节点的邻居节点的度也是相同，则他们之间的结构相似度也应该更高。<br />
+记<span
+class="math inline"><em>G</em> = (<em>V</em>, <em>E</em>)</span>表示无向无权图，其中<span
+class="math inline"><em>V</em></span>表示节点集合，<span
+class="math inline"><em>E</em></span>表示边集合，<span
+class="math inline"><em>n</em> = |<em>V</em>|</span>表示图的节点数，<span
+class="math inline"><em>k</em><sup>*</sup></span>表示图的直径。记<span
+class="math inline"><em>R</em><sub><em>k</em></sub>(<em>u</em>)</span>表示图<span
+class="math inline"><em>G</em></span>中距离节点<span
+class="math inline"><em>u</em></span>为<span
+class="math inline"><em>k</em></span>的节点集合，其中<span
+class="math inline"><em>k</em> ≥ 0</span>。记<span
+class="math inline">s(<em>S</em>)</span>表示节点集合<span
+class="math inline"><em>S</em> ⊂ <em>V</em></span>的有序度序列。<br />
+进而，我们就可以在上述概念上定义结构相似性。具体来说，定义函数<span
+class="math inline">f<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</span>，该函数用来衡量节点<span
+class="math inline"><em>u</em></span>和<span
+class="math inline"><em>v</em></span>之间的结构相似性，该结构相似性考虑的范围为<span
+class="math inline"><em>k</em></span>，即与节点<span
+class="math inline"><em>u</em></span>或<span
+class="math inline"><em>v</em></span>距离小于等于<span
+class="math inline"><em>k</em></span>的节点才会被考虑。函数<span
+class="math inline">f<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</span>定义如下：<br />
+<span
+class="math display">f<sub><em>k</em></sub>(<em>u</em>, <em>v</em>) = f<sub><em>k</em> − 1</sub>(<em>u</em>, <em>v</em>) + g(s(R<sub><em>k</em></sub>(<em>u</em>)), s(R<sub><em>k</em></sub>(<em>v</em>))), <em>k</em> ≥ 0
+and
+|R<sub><em>k</em></sub>(<em>u</em>)|, |R<sub><em>k</em></sub>(<em>v</em>)| &gt; 0</span><br />
+其中，函数<span
+class="math inline">g(<em>D</em><sub>1</sub>, <em>D</em><sub>2</sub>) ≥ 0</span>是衡量两个度序列<span
+class="math inline"><em>D</em><sub>1</sub></span>和<span
+class="math inline"><em>D</em><sub>2</sub></span>距离的函数，并且<span
+class="math inline">f<sub>−1</sub> = 0</span>。由上述<span
+class="math inline">f<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</span>的定义可知，该函数是非减函数，并且只有在节点<span
+class="math inline"><em>u</em></span>和<span
+class="math inline"><em>v</em></span>存在距离为<span
+class="math inline"><em>k</em></span>的邻居节点时才有定义。<br />
+接着就要确定比较两个度序列的函数<span
+class="math inline">g(⋅, ⋅)</span>了。首先，对于度序列<span
+class="math inline">s(R<sub><em>k</em></sub>(<em>u</em>))</span>和<span
+class="math inline">s(R<sub><em>k</em></sub>(<em>v</em>))</span>，他们可能大小不一致，且序列元素可能是<span
+class="math inline">[0, <em>n</em> − 1]</span>内元素的任意组合。在本文中，作者使用<code>Dynamic Time Warping (DTW)</code>来作为该函数，并针对图的某些特性进行了定制化。</p>
+<h1 id="多层加权图">多层加权图</h1>
+<p>多层加权图的构造是为了更准确地表达节点之间的结构相似度。由上述记法，将<span
+class="math inline"><em>G</em> = (<em>V</em>, <em>E</em>)</span>记为原始图，<span
+class="math inline"><em>k</em><sup>*</sup></span>记为图直径。用<span
+class="math inline"><em>M</em></span>表示构造的多层图，而第<span
+class="math inline"><em>k</em></span>层图即是通过节点和与之距离为<span
+class="math inline"><em>k</em></span>的邻居节点构成的图。<br />
+每一层<span
+class="math inline"><em>k</em> = 0, ⋯, <em>k</em><sup>*</sup></span>都是定义在节点集合<span
+class="math inline"><em>V</em></span>上面的无向有权完全图，即共有<span
+class="math inline">$n \choose
+2$</span>个边。而边的权重通过下式得出：<br />
+<span
+class="math display">w<sub><em>k</em></sub>(<em>u</em>, <em>v</em>) = <em>e</em><sup>−f<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</sup>, <em>k</em> = 0, ⋯, <em>k</em><sup>*</sup></span><br />
+其中函数<span
+class="math inline">w<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</span>只有在<span
+class="math inline">f<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</span>有定义处才有定义，且该函数的值小于等于<span
+class="math inline">1</span>。当<span
+class="math inline">f<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</span>越小时，<span
+class="math inline">w<sub><em>k</em></sub>(<em>u</em>, <em>v</em>)</span>越大。并且与节点<span
+class="math inline"><em>u</em></span>结构相似的节点在不同层次的图中的边权都会更大些。<br />
+每一个节点都与相邻层次的图中对应节点相连（如果存在的话），记在第<span
+class="math inline"><em>k</em></span>层图中的节点为<span
+class="math inline"><em>u</em> ∈ <em>V</em></span>，第<span
+class="math inline"><em>k</em> − 1</span>层中对应的节点为<span
+class="math inline"><em>u</em><sub><em>k</em> − 1</sub></span>，第<span
+class="math inline"><em>k</em> + 1</span>层中对应的节点为<span
+class="math inline"><em>u</em><sub><em>k</em> + 1</sub></span>。则如下定义各个节点之间的权重：<br />
+<span
+class="math display">w(<em>u</em><sub><em>k</em></sub>, <em>u</em><sub><em>k</em> + 1</sub>) = log(Γ<sub><em>k</em></sub>(<em>u</em>) + <em>e</em>), <em>k</em> = 0, ⋯, <em>k</em><sup>*</sup> − 1</span><br />
+<span
+class="math display">w(<em>u</em><sub><em>k</em></sub>, <em>u</em><sub><em>k</em> − 1</sub>) = 1, <em>k</em> = 1, ⋯, <em>k</em><sup>*</sup></span><br />
+其中，<span
+class="math inline">Γ<sub><em>k</em></sub>(<em>u</em>)</span>定义为：<br />
+<span
+class="math display">Γ<sub><em>k</em></sub>(<em>u</em>) = ∑<sub><em>v</em> ∈ <em>V</em></sub>1(w<sub><em>k</em></sub>(<em>u</em>, <em>v</em>) &gt; <em>(̂</em><em>w</em>)<sub><em>k</em></sub>)</span><br />
+其中，<span class="math display">$$\hat(w_k)=\frac{\sum_{(u, v)\in{V
+\choose 2}}\mathrm{w}_k(u, v)}{n \choose 2}$$</span>.</p>
+<h1 id="其他">其他</h1>
+<p>由上述多层加权图的构造过程，我们可以知道，该多层加权图也可以被当作一个巨大的有向有权图，之后作者又详细讨论了如何在这张图上进行采样的算法。其中涉及到一些更细节的游走策略，在此不再赘述。最后作者也介绍了下语言模型的学习过程。</p>
+<h1 id="参考资料">参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1704.03165.pdf">struc2vec: Learning
+Node Representations from Structural Identity</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>WrRan
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://wrran.github.io/blog/2018/03/18/note/paper-reading/2018-03-18/" title="struc2vec - Learning Node Representations from Structural Identity">https://wrran.github.io/blog/2018/03/18/note/paper-reading/2018-03-18/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/paper-reading/" rel="tag"># paper reading</a>
+              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/struc2vec/" rel="tag"># struc2vec</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2018/03/12/people-say/luxun/180312-04/" rel="prev" title="四十一">
+                  <i class="fa fa-angle-left"></i> 四十一
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2018/03/26/people-say/180326-01/" rel="next" title="我想和这个世界谈谈">
+                  我想和这个世界谈谈 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ4OC85MDQ5"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WrRan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="/js/third-party/comments/livere.js" defer></script>
+
+</body>
+</html>
